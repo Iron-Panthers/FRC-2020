@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package com.ironpanthers.frc2020;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
