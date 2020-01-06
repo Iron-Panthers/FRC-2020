@@ -5,14 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.subsystems;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
+import com.ironpanthers.frc2020.Constants;
 
 public class Alignment{
   public float calculateDistance(){
     float d = (Constants.h2-Constants.h1) / tan(Constants.a1+ty); //ty: vertical offset angle in degrees
     return d; 
   }
-  
 }
