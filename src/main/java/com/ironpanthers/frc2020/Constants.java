@@ -7,6 +7,8 @@
 
 package com.ironpanthers.frc2020;
 
+import static edu.wpi.first.wpilibj.util.Units.inchesToMeters;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -30,4 +32,27 @@ public final class Constants {
      * decide what their failure behavior should be.
      */
     public static final boolean kCompetitionMode = false;
+
+    /*
+     * UNIVERSAL CONSTANTS
+     */
+    public static final int kFalconCPR = 2048; // TODO(ingi)
+
+    /*
+     * DRIVEBASE CONSTANTS
+     */
+
+    public static final double kGearRatio = 9.07; // TODO(ingi)
+    public static final double kTrackWidthMeters = inchesToMeters(21); // TODO(ingi)
+    public static final double kWheelRadiusMeters = inchesToMeters(3);
+
+    // GENERATE FROM CHARACTERIZATION TOOL TODO(ingi)
+    // LAST GENERATED: NEVER
+    // BY: NO ONE
+    // UPDATE THIS COMMENT IF YOU CHANGE ANY OF THE DRIVEBASE GAINS
+    public static final double kDriveKs = 0;
+    public static final double kDriveKv = 0;
+    public static final double kDriveKa = 0;
+
+    public static final double kDriveKp = 0;
 }
