@@ -4,6 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+package com.ironpanthers.frc2020.util;
 
 import com.ironpanthers.frc2020.Constants;
 
