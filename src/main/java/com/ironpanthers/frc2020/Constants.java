@@ -18,4 +18,16 @@ package com.ironpanthers.frc2020;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    private Constants() {
+        /* disallow construction of this class */
+        throw new UnsupportedOperationException("don't try to construct an instance of Constants");
+    }
+
+    /**
+     * When competition mode is enabled, most throwable errors are disregarded.
+     * Classes in the project should use the competition mode variable in order to
+     * decide what their failure behavior should be.
+     */
+    public static final boolean kCompetitionMode = false;
 }
