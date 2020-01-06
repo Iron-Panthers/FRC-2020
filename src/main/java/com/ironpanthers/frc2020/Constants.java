@@ -19,6 +19,9 @@ package com.ironpanthers.frc2020;
  */
 public final class Constants {
 
+    public static final float h1 = 5.0f; // height from ground to limelight (unofficial)
+    public static final float a1 = 25.0f; // angle from mount to limelight in degrees (unofficial)
+
     private Constants() {
         /* disallow construction of this class */
         throw new UnsupportedOperationException("don't try to construct an instance of Constants");
