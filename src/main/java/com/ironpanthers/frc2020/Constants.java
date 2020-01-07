@@ -19,9 +19,12 @@ package com.ironpanthers.frc2020;
  */
 public final class Constants {
 
-    public static final float h1 = 5.0f; // height from ground to limelight (unofficial)
-    public static final float h2 = 10.0f; // height from ground to target (unofficial)
-    public static final float a1 = 25.0f; // angle from mount to limelight in degrees (unofficial)
+    public static final float h1 = 5.0f; // Height from ground to limelight (unofficial)
+    public static final float h2 = 10.0f; // Height from ground to target (unofficial)
+    public static final float a1 = 25.0f; // Angle from mount to limelight in degrees (unofficial)
+    public static final float Kp = -0.1f; // Proportional control constant (not tuned)
+    public static final float MINIMUM_POWER = 0.03f; // Minimum amount of power to move robot (not tuned)
+    public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9; // Button port to adjust angle of robot
 
     private Constants() {
         /* disallow construction of this class */
