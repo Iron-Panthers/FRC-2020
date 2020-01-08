@@ -16,9 +16,9 @@ public class TurnToTarget extends CommandBase {
 
   public static VisionWrapper limelight;
 
-  public float x;
-  public float y;
-  public float v;
+  public double x;
+  public double y;
+  public double v;
 
   public TurnToTarget() {    
     x = limelight.getX();
@@ -36,10 +36,10 @@ public class TurnToTarget extends CommandBase {
   @Override
   public void execute() {
     
-    float leftSteeringAngle = 0.0f; // Amount of degrees to steer left
-    float rightSteeringAngle = 0.0f; // Amount of degrees to steer right
-    float horizontalError = -x; // Horizontal error from limelight to target
-    float adjustedSteeringValue = 0.0f; // Calculated amount of degrees to steer
+    double leftSteeringAngle = 0.0; // Amount of degrees to steer left
+    double rightSteeringAngle = 0.0; // Amount of degrees to steer right
+    double horizontalError = -x; // Horizontal error from limelight to target
+    double adjustedSteeringValue = 0.0; // Calculated amount of degrees to steer
 
     if (v == 0.0) {
       adjustedSteeringValue = 0.3f;

@@ -5,24 +5,27 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class VisionWrapper {
+
     public static NetworkTable table;
     public static NetworkTableEntry tx;
     public static NetworkTableEntry ty;
     public static NetworkTableEntry ta;
     public static NetworkTableEntry tv;
-    public static float x;
-    public static float y;
-    public static float v;
+    public static double x;
+    public static double y;
+    public static double v;
+
     public VisionWrapper() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
         tx = table.getEntry("tx");
         ty = table.getEntry("ty");
         tv = table.getEntry("tv");
         ta = table.getEntry("ta");
-        x = (float) tx.getDouble(0.0);
-        y = (float) ty.getDouble(0.0);
-        v = (float) tv.getDouble(0.0);
+        x = tx.getDouble(0.0);
+        y = ty.getDouble(0.0);
+        v = tv.getDouble(0.0);
     } 
+
     public NetworkTableEntry getTableX() {
         return tx;
     }
@@ -35,12 +38,13 @@ public class VisionWrapper {
     public NetworkTableEntry getTableA() {
         return ta;
     }
-    public float getX() {
+    
+    public double getX() {
         return x;
     }
-    public float getY() {
+    public double getY() {
         return y;
-    }public float getV() {
+    }public double getV() {
         return v;
     }
 }

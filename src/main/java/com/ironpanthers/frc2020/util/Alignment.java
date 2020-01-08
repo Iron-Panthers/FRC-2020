@@ -10,9 +10,9 @@ import com.ironpanthers.frc2020.Constants;
 
 public class Alignment {
 
-  public float calculateDistance() {
+  public double calculateDistance() {
     double ty = 0.0; // dummy variable, remove later
-    float d = (float) ((Constants.h2 - Constants.h1) / Math.tan(Constants.a1 + ty)); // ty: vertical offset angle in degrees
+    double d = (Constants.h2 - Constants.h1) / Math.tan(Constants.a1 + ty); // ty: vertical offset angle in degrees
     return d;
   }
 
