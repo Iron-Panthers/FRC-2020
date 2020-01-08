@@ -6,18 +6,13 @@
 /*----------------------------------------------------------------------------*/
 package com.ironpanthers.frc2020.util;
 
-import com.fasterxml.jackson.core.util.TextBuffer;
 import com.ironpanthers.frc2020.Constants;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Alignment {
 
   public float calculateDistance() {
-    float d = (Constants.h2 - Constants.h1) / tan(Constants.a1 + ty); // ty: vertical offset angle in degrees
+    double ty = 0.0; // dummy variable, remove later
+    float d = (float) ((Constants.h2 - Constants.h1) / Math.tan(Constants.a1 + ty)); // ty: vertical offset angle in degrees
     return d;
   }
 
