@@ -8,32 +8,22 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.util.VisionWrapper;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
 
-  public static NetworkTable table;
-  public static NetworkTableEntry tx;
-  public static NetworkTableEntry ty;
-  public static NetworkTableEntry ta;
-  public static NetworkTableEntry tv;
-  public static float x;
-  public static float y;
-  public static float v;
+  public static VisionWrapper limelight;
 
-  public TurnToTarget() {
-    table = NetworkTableInstance.getDefault().getTable("limelight");
-    tx = table.getEntry("tx");
-    ty = table.getEntry("ty");
-    tv = table.getEntry("tv");
-    ta = table.getEntry("ta");
-    x = (float) tx.getDouble(0.0);
-    y = (float) ty.getDouble(0.0);
-    v = (float) tv.getDouble(0.0);
+  public float x;
+  public float y;
+  public float v;
+
+  public TurnToTarget() {    
+    x = limelight.getX();
+    y = limelight.getY();
+    v = limelight.getV();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
