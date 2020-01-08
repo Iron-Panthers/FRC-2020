@@ -23,6 +23,8 @@ public final class Constants {
     public static final double h2 = 10.0; // Height from ground to target (unofficial)
     public static final double a1 = 25.0; // Angle from mount to limelight in degrees (unofficial)
     public static final double Kp = -0.1; // Proportional control constant (not tuned)
+    public static final double Ki = 0.01; //I value in PID (not tuned)
+    public static final double Kd = 0.001; //D value in PID (not tuned)
     public static final double MINIMUM_POWER = 0.03; // Minimum amount of power to move robot (not tuned)
     public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9; // Button port to adjust angle of robot
 
