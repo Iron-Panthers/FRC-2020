@@ -7,12 +7,8 @@
 
 package com.ironpanthers.frc2020.commands;
 
-import java.util.ArrayList;
-
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.util.VisionWrapper;
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
