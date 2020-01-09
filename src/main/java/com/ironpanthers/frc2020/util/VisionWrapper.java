@@ -7,35 +7,37 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class VisionWrapper {
 
     public static NetworkTable table;
-    public static NetworkTableEntry tx;
-    public static NetworkTableEntry ty;
-    public static NetworkTableEntry ta;
-    public static NetworkTableEntry tv;
+    public static double tx;
+    public static double ty;
+    public static double ta;
+    public static double tv;
+    public static double ts;
+    public static double tvert;
+    public static double thor;
     public static double x;
     public static double y;
     public static double v;
-
     public VisionWrapper() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
-        tx = table.getEntry("tx");
-        ty = table.getEntry("ty");
-        tv = table.getEntry("tv");
-        ta = table.getEntry("ta");
-        x = tx.getDouble(0.0);
-        y = ty.getDouble(0.0);
-        v = tv.getDouble(0.0);
+        tx = table.getEntry("tx").getDouble(0.0);
+        ty = table.getEntry("ty").getDouble(0.0);
+        tv = table.getEntry("tv").getDouble(0.0);
+        ta = table.getEntry("ta").getDouble(0.0);
+        ts = table.getEntry("ts").getDouble(0.0);
+        tvert = table.getEntry("tvert").getDouble(0.0);
+        thor = table.getEntry("thor").getDouble(0.0);
     } 
 
-    public NetworkTableEntry getTableX() {
+    public double getTableX() {
         return tx;
     }
-    public NetworkTableEntry getTableY() {
+    public double getTableY() {
         return ty;
     }
-    public NetworkTableEntry getTableV() {
+    public double getTableV() {
         return tv;
     }
-    public NetworkTableEntry getTableA() {
+    public double getTableA() {
         return ta;
     }
     
@@ -46,5 +48,11 @@ public class VisionWrapper {
         return y;
     }public double getV() {
         return v;
+    }public double getTvert() {
+        return tvert;
+    }public double getThor() {
+        return thor;
+    }public double getTs() {
+        return ts;
     }
 }
