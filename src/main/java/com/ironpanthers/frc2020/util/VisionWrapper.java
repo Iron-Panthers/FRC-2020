@@ -6,29 +6,33 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class VisionWrapper {
 
-    public static NetworkTable table;
-    public static double[] camtran;
-    public static double tx;
-    public static double ty;
-    public static double ta;
-    public static double tv;
-    public static double ts;
-    public static double tvert;
-    public static double thor;
-    public static double x;
-    public static double y;
-    public static double v;
+    public NetworkTable table;
+    public double camtran;
+    public double tx;
+    public double ty;
+    public double ta;
+    public double tv;
+    public double ts;
+    public double tvert;
+    public double thor;
+    public double x;
+    public double y;
+    public double v;
     public VisionWrapper() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
+        initialize();
+    } 
+
+    public void initialize() {
         tx = table.getEntry("tx").getDouble(0.0);
         ty = table.getEntry("ty").getDouble(0.0);
         tv = table.getEntry("tv").getDouble(0.0);
         ta = table.getEntry("ta").getDouble(0.0);
         ts = table.getEntry("ts").getDouble(0.0);
-        camtran = table.getEntry("camtran").getDoubleArray(new double[]{0.0,0.0,0.0});
+        camtran = table.getEntry("camtran").getDouble(0);
         tvert = table.getEntry("tvert").getDouble(0.0);
         thor = table.getEntry("thor").getDouble(0.0);
-    } 
+    }
 
     public double getTableX() {
         return tx;
@@ -56,5 +60,8 @@ public class VisionWrapper {
         return thor;
     }public double getTs() {
         return ts;
+    }
+    public double getCamtran() {
+        return camtran;
     }
 }

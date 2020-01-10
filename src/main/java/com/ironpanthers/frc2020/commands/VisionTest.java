@@ -12,10 +12,13 @@ import com.ironpanthers.frc2020.util.VisionWrapper;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class VisionTest extends CommandBase {
+  VisionWrapper visionWrapper;
+
   /**
    * Creates a new VisionTest.
    */
   public VisionTest() {
+    visionWrapper = new VisionWrapper();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,10 +30,8 @@ public class VisionTest extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.print("Camtran Values: "); 
-    for(double i : VisionWrapper.camtran) {
-      System.out.print(i + "\t"); 
-    }
+    visionWrapper.initialize();
+    System.out.print("TY Values: " + visionWrapper.ty); 
   }
 
   // Called once the command ends or is interrupted.
