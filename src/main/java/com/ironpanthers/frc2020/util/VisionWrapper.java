@@ -20,10 +20,10 @@ public class VisionWrapper {
     public double v;
     public VisionWrapper() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
-        initialize();
+        loadVariables();
     } 
 
-    public void initialize() {
+    public void loadVariables() {
         tx = table.getEntry("tx").getDouble(0.0);
         ty = table.getEntry("ty").getDouble(0.0);
         tv = table.getEntry("tv").getDouble(0.0);

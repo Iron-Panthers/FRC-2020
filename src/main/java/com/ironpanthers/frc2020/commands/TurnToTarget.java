@@ -8,12 +8,10 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.util.VisionWrapper;
+import com.ironpanthers.frc2020.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
-
-  public static VisionWrapper limelight;
 
   public double x;
   public double y;
@@ -23,9 +21,9 @@ public class TurnToTarget extends CommandBase {
   double sumOfErrors;
 
   public TurnToTarget() {    
-    x = limelight.getX();
-    y = limelight.getY();
-    v = limelight.getV();
+    x = Robot.visionWrapper.getX();
+    y = Robot.visionWrapper.getY();
+    v = Robot.visionWrapper.getV();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

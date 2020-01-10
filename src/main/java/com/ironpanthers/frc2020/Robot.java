@@ -8,6 +8,7 @@
 package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.commands.VisionTest;
+import com.ironpanthers.frc2020.util.Alignment;
 import com.ironpanthers.frc2020.util.VisionWrapper;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -24,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
 	private RobotContainer m_robotContainer;
+	public static VisionWrapper visionWrapper;
+	public static Alignment alignment;
 
 
 	/**
@@ -35,7 +38,8 @@ public class Robot extends TimedRobot {
 		// Instantiate our RobotContainer. This will perform all our button bindings,
 		// and put our
 		// autonomous chooser on the dashboard.
-
+		alignment = new Alignment();
+		visionWrapper = new VisionWrapper();
 
 		m_robotContainer = new RobotContainer();
 	}

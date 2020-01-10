@@ -7,11 +7,12 @@
 package com.ironpanthers.frc2020.util;
 
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.Robot;
 
 public class Alignment {
 
-  public double calculateDistance() {
-    double ty = 0.0; // dummy variable, remove later
+  public double calculateHorizontalDistance() {
+    double ty = Robot.visionWrapper.ty;
     double d = (Constants.h2 - Constants.h1) / Math.tan(Constants.a1 + ty); // ty: vertical offset angle in degrees
     return d;
   }
