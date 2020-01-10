@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
-import com.ironpanthers.frc2020.commands.DriveCharacterizationCommand;
 import com.ironpanthers.frc2020.commands.ManualDriveCommand;
 import com.ironpanthers.frc2020.subsystems.Drive;
 
@@ -38,8 +37,6 @@ public class RobotContainer {
 	public RobotContainer() {
 		drive.setDefaultCommand(
 				new ManualDriveCommand(joystick1::getY, joystick1::getX, new JoystickButton(joystick1, 1), drive));
-
-		SmartDashboard.putData("Characterize!", new DriveCharacterizationCommand(drive));
 
 		// Configure the button bindings
 		configureButtonBindings();
