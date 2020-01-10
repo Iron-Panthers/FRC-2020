@@ -67,7 +67,7 @@ public class VisionWrapper {
     }
 
     public double calculateHorizontalDistance() {
-        double d = (Constants.HEIGHT_GROUND_TO_TARGET - Constants.HEIGHT_GROUND_TO_LIMELIGHT) / Math.tan((Constants.HEIGHT_GROUND_TO_LIMELIGHT*(Math.PI/180)) + (ty*(Math.PI/180))); // ty: vertical offset angle in degrees
+        double d = (Constants.HEIGHT_GROUND_TO_TARGET - Constants.HEIGHT_GROUND_TO_LIMELIGHT) / Math.tan((Constants.ANGLE_MOUNT_TO_LIMELIGHT*(Math.PI/180)) + (ty*(Math.PI/180))); // ty: vertical offset angle in degrees
         System.out.println("Horizontal distance: " + d);
         return d;
       }
