@@ -8,7 +8,6 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Robot;
-import com.ironpanthers.frc2020.util.Alignment;
 import com.ironpanthers.frc2020.util.VisionWrapper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -33,7 +32,7 @@ public class VisionTest extends CommandBase {
   public void execute() {
     Robot.visionWrapper.loadVariables();
     System.out.print("Horizontle distance:  "); 
-    System.out.println(Robot.alignment.calculateHorizontalDistance());
+    System.out.println(Robot.visionWrapper.calculateHorizontalDistance());
   }
 
   // Called once the command ends or is interrupted.
