@@ -7,6 +7,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class VisionWrapper {
 
     public static NetworkTable table;
+    public static double[] camtran;
     public static double tx;
     public static double ty;
     public static double ta;
@@ -24,6 +25,7 @@ public class VisionWrapper {
         tv = table.getEntry("tv").getDouble(0.0);
         ta = table.getEntry("ta").getDouble(0.0);
         ts = table.getEntry("ts").getDouble(0.0);
+        camtran = table.getEntry("camtran").getDoubleArray(new double[]{0.0,0.0,0.0});
         tvert = table.getEntry("tvert").getDouble(0.0);
         thor = table.getEntry("thor").getDouble(0.0);
     } 
