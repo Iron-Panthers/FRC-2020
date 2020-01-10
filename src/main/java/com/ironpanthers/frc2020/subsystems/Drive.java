@@ -50,8 +50,11 @@ public class Drive extends SubsystemBase {
         right2.follow(right1);
 
         // Configuration
-        left1.setInverted(false);
-        right1.setInverted(true);
+        left1.setInverted(true);
+        left2.setInverted(true);
+        right1.setInverted(false);
+        right2.setInverted(false);
+
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
 
@@ -65,6 +68,7 @@ public class Drive extends SubsystemBase {
          * right1.enableVoltageCompensation(true);
          */
 
+        gyro.configFactoryDefault();
         gyro.setFusedHeading(0 /* degrees */);
     }
 
@@ -75,12 +79,12 @@ public class Drive extends SubsystemBase {
     public DifferentialDriveWheelSpeeds speeds() {
         return new DifferentialDriveWheelSpeeds(// CONVERSION FROM ENCODER TO LEFT AND RIGHT SPEEDS (METERS PER SECOND):
                 left1.getSelectedSensorVelocity() // (raw sensor units) per 100 ms
-                        / Constants.kFalconCPR // (motor shaft revolutions) per 100 ms
+                        / Constants.kFalconTicksToRevs // (motor shaft revolutions) per 100 ms
                         / Constants.kGearRatio // (wheel shaft revolutions) per 100 ms
                         * 2 * Math.PI * Constants.kWheelRadiusMeters // meters (wheel circum) per 100 ms
                         / 60, // meters per 10(100ms) => second
                 right1.getSelectedSensorVelocity() // (raw sensor units) per 100 ms
-                        / Constants.kFalconCPR // (motor shaft revolutions) per 100 ms
+                        / Constants.kFalconTicksToRevs // (motor shaft revolutions) per 100 ms
                         / Constants.kGearRatio // (wheel shaft revolutions) per 100 ms
                         * 2 * Math.PI * Constants.kWheelRadiusMeters // meters (wheel circum) per 100 ms
                         * 10 // meters per 10(100ms) => second
@@ -97,7 +101,7 @@ public class Drive extends SubsystemBase {
 
     public double leftDistanceMeters() {
         return left1.getSelectedSensorPosition() // value of raw sensor units
-                / Constants.kFalconCPR // value of motor shaft revolutions "elapsed"
+                / Constants.kFalconTicksToRevs // value of motor shaft revolutions "elapsed"
                 / Constants.kGearRatio // value of wheel shaft revolutions "elapsed"
                 * 2 * Math.PI * Constants.kWheelRadiusMeters; // value of meters "elapsed" (turning wheel revolutions
                                                               // into meters via circumference)
@@ -105,7 +109,7 @@ public class Drive extends SubsystemBase {
 
     public double rightDistanceMeters() {
         return right1.getSelectedSensorPosition() // value of raw sensor units
-                / Constants.kFalconCPR // value of motor shaft revolutions "elapsed"
+                / Constants.kFalconTicksToRevs // value of motor shaft revolutions "elapsed"
                 / Constants.kGearRatio // value of wheel shaft revolutions "elapsed"
                 * 2 * Math.PI * Constants.kWheelRadiusMeters; // value of meters "elapsed" (turning wheel revolutions
                                                               // into meters via circumference)
@@ -183,6 +187,8 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
         SmartDashboard.putString("drive/wheelSpeeds", speeds().toString());
         SmartDashboard.putString("drive/heading", heading().toString());
+        SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
+        SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
 
         currentPose = odometry.update(heading, leftDistanceMeters, rightDistanceMeters);
     }

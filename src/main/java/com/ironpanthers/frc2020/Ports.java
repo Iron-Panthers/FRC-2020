@@ -14,10 +14,10 @@ public final class Ports {
 
     // public static final int kMyPort = 1;
 
-    public static final int kCANDriveLeft1 = 2;
-    public static final int kCANDriveLeft2 = 22;
-    public static final int kCANDriveRight1 = 1;
-    public static final int kCANDriveRight2 = 21;
+    public static final int kCANDriveLeft1 = 11;
+    public static final int kCANDriveLeft2 = 12;
+    public static final int kCANDriveRight1 = 13;
+    public static final int kCANDriveRight2 = 14;
 
-    public static final int kCANPigeonTalon = 5;
+    public static final int kCANPigeonTalon = 31;
 }

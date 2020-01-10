@@ -36,13 +36,13 @@ public final class Constants {
     /*
      * UNIVERSAL CONSTANTS
      */
-    public static final int kFalconCPR = 2048; // TODO(ingi)
+    public static final int kFalconTicksToRevs = 4096; // TODO(ingi)
 
     /*
      * DRIVEBASE CONSTANTS
      */
 
-    public static final double kGearRatio = 9.07; // TODO(ingi)
+    public static final double kGearRatio = 5.10; // TODO(ingi)
     public static final double kTrackWidthMeters = inchesToMeters(21); // TODO(ingi)
     public static final double kWheelRadiusMeters = inchesToMeters(3);
 
