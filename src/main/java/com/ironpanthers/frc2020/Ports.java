@@ -11,6 +11,11 @@ public final class Ports {
         /* disallow construction of this class */
         throw new UnsupportedOperationException("don't try to construct an instance of Ports");
     }
+    
+    //placeholder values
+    public static final int shooter1 = 1;
+    public static final int shooter2 = 2;
+    public static final int shooter3 = 3;
 
     // public static final int kMyPort = 1;
 }
