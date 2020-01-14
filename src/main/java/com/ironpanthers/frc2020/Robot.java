@@ -7,6 +7,7 @@
 
 package com.ironpanthers.frc2020;
 
+import com.ironpanthers.frc2020.commands.TuneShooterPID;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -107,6 +108,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		CommandScheduler.getInstance().schedule(new TuneShooterPID());
 	}
 
 	@Override
