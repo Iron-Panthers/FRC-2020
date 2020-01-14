@@ -30,6 +30,8 @@ public class Shooter extends SubsystemBase {
 		shooter1 = new TalonFX(Ports.shooter1);
 		shooter2 = new TalonFX(Ports.shooter2);
 		shooter3 = new TalonSRX(Ports.shooter3);
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, Constants.SHOOTER_CURRENT_LIMIT, 0, 0);
+		shooter1.configSupplyCurrentLimit(currentConfig);
 		shooter2.follow(shooter1);
 		shooter3.follow(shooter1);
 	}

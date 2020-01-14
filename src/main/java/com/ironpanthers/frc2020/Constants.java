@@ -33,4 +33,5 @@ public final class Constants {
     public static final double shooterSpeed = 0.5;
 	public static final boolean kCompetitionMode = false;
 	public static final int SHOOTER_VELOCITY_IDX = 0;
+	public static final double SHOOTER_CURRENT_LIMIT = 60;
 }
