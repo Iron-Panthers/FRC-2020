@@ -9,11 +9,11 @@ package com.ironpanthers.frc2020.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Shooter extends CommandBase {
+public class ShooterCommand extends CommandBase {
   /**
    * Creates a new Shooter.
    */
-  public Shooter() {
+  public ShooterCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

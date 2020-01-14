@@ -43,8 +43,9 @@ public final class Constants {
     public final class Shooter {
         public static final int SHOOTER_ONE_PORT = 0;
         public static final int SHOOTER_TWO_PORT = 0;
-        public static final int SHOOTER_THREE_PORT = 0;
+		public static final int SHOOTER_THREE_PORT = 0;
 
+		public static final int SHOOTER_VELOCITY_IDX = 0;
     }
    
 

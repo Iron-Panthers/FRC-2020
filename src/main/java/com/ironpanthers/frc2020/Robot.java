@@ -8,6 +8,7 @@
 package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.commands.VisionTest;
+import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.VisionWrapper;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -25,7 +26,7 @@ public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
 	private RobotContainer m_robotContainer;
 	public static VisionWrapper visionWrapper;
-
+	public static Shooter shooter;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -37,7 +38,7 @@ public class Robot extends TimedRobot {
 		// and put our
 		// autonomous chooser on the dashboard.
 		visionWrapper = new VisionWrapper();
-
+		shooter = new Shooter();
 		m_robotContainer = new RobotContainer();
 	}
 
