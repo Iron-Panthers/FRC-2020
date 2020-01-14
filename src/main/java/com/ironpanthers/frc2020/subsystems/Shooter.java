@@ -7,7 +7,9 @@
 
 package com.ironpanthers.frc2020.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ironpanthers.frc2020.Ports;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,17 +20,22 @@ public class Shooter extends SubsystemBase {
    * Creates a new Shooter.
    */
 
-  private final TalonFX shooter1;
-  private final TalonFX shooter2;
-  private final TalonFX shooter3;
+  public final TalonFX shooter1;
+  public final TalonFX shooter2;
+  public final TalonSRX shooter3;
 
   public Shooter() {
     shooter1 = new TalonFX(Ports.shooter1);
     shooter2 = new TalonFX(Ports.shooter2);
-    shooter3 = new TalonFX(Ports.shooter3);
+    shooter3 = new TalonSRX(Ports.shooter3);
+
+    shooter2.follow(shooter1);
+    shooter3.follow(shooter1);
   }
 
-  
+  public void shootWithSpeed(double speed){
+    shooter1.set(ControlMode.PercentOutput, speed);
+  }
 
   @Override
   public void periodic() {
