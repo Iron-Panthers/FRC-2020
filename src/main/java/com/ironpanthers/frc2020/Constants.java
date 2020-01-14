@@ -29,5 +29,7 @@ public final class Constants {
      * Classes in the project should use the competition mode variable in order to
      * decide what their failure behavior should be.
      */
+    //TODO figure out how to get shooter speed based on distance
+    public static final double shooterSpeed = 0.5;
     public static final boolean kCompetitionMode = false;
 }

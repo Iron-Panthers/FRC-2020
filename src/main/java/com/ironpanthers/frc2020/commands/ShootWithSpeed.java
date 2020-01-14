@@ -7,6 +7,9 @@
 
 package com.ironpanthers.frc2020.commands;
 
+import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.Robot;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ShootWithSpeed extends CommandBase {
@@ -15,6 +18,7 @@ public class ShootWithSpeed extends CommandBase {
    */
   public ShootWithSpeed() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(Robot.shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -25,11 +29,13 @@ public class ShootWithSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    Robot.shooter.shootWithSpeed(Constants.shooterSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    Robot.shooter.stopShooter();
   }
 
   // Returns true when the command should end.

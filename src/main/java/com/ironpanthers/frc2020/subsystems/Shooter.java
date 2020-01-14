@@ -14,7 +14,6 @@ import com.ironpanthers.frc2020.Ports;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
 public class Shooter extends SubsystemBase {
   /**
    * Creates a new Shooter.
@@ -33,8 +32,12 @@ public class Shooter extends SubsystemBase {
     shooter3.follow(shooter1);
   }
 
-  public void shootWithSpeed(double speed){
+  public void shootWithSpeed(double speed) {
     shooter1.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void stopShooter() {
+    shooter1.set(ControlMode.PercentOutput, 0);
   }
 
   @Override
