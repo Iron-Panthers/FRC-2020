@@ -31,5 +31,6 @@ public final class Constants {
      */
     //TODO figure out how to get shooter speed based on distance
     public static final double shooterSpeed = 0.5;
-    public static final boolean kCompetitionMode = false;
+	public static final boolean kCompetitionMode = false;
+	public static final int SHOOTER_VELOCITY_IDX = 0;
 }
