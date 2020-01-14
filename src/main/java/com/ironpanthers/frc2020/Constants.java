@@ -18,29 +18,35 @@ package com.ironpanthers.frc2020;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-     /** Height from ground to limelight in inches */
-     public static final double HEIGHT_GROUND_TO_LIMELIGHT = 38.5; 
-     /** Height from ground to target in inches */
-     public static final double HEIGHT_GROUND_TO_TARGET = 93.0; 
-     /** Angle from mount to limelight in degrees */
-     public static final double ANGLE_MOUNT_TO_LIMELIGHT = 33.0; 
-     /** Proportional control constant */
-     public static final double Kp = -0.1; 
-     /** I value in PID */
-     public static final double Ki = 0.01; 
-     /**  D value in PID */
-     public static final double Kd = 0.001; 
-     /** Minimum amount of power to move robot */
-     public static final double MINIMUM_POWER = 0.03;
-     /** Button port to adjust angle of robot */
-     public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
-
-
     private Constants() {
         /* disallow construction of this class */
         throw new UnsupportedOperationException("don't try to construct an instance of Constants");
     }
+    public final class Vision {
+        /** Height from ground to limelight in inches */
+        public static final double HEIGHT_GROUND_TO_LIMELIGHT = 38.5;
+        /** Height from ground to target in inches */
+        public static final double HEIGHT_GROUND_TO_TARGET = 93.0;
+        /** Angle from mount to limelight in degrees */
+        public static final double ANGLE_MOUNT_TO_LIMELIGHT = 33.0;
+        /** Proportional control constant */
+        public static final double Kp = -0.1;
+        /** I value in PID */
+        public static final double Ki = 0.01;
+        /** D value in PID */
+        public static final double Kd = 0.001;
+        /** Minimum amount of power to move robot */
+        public static final double MINIMUM_POWER = 0.03;
+        /** Button port to adjust angle of robot */
+        public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
+    }
+    public final class Shooter {
+        public static final int SHOOTER_ONE_PORT = 0;
+        public static final int SHOOTER_TWO_PORT = 0;
+        public static final int SHOOTER_THREE_PORT = 0;
+
+    }
+   
 
     /**
      * When competition mode is enabled, most throwable errors are disregarded.

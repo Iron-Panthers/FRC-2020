@@ -67,12 +67,12 @@ public class VisionWrapper {
     }
 
     public double calculateHorizontalDistance() {
-        double d = (Constants.HEIGHT_GROUND_TO_TARGET - Constants.HEIGHT_GROUND_TO_LIMELIGHT) / Math.tan((Constants.ANGLE_MOUNT_TO_LIMELIGHT*(Math.PI/180)) + (ty*(Math.PI/180))); // ty: vertical offset angle in degrees
+        double d = (Constants.Vision.HEIGHT_GROUND_TO_TARGET - Constants.Vision.HEIGHT_GROUND_TO_LIMELIGHT) / Math.tan((Constants.Vision.ANGLE_MOUNT_TO_LIMELIGHT*(Math.PI/180)) + (ty*(Math.PI/180))); // ty: vertical offset angle in degrees
         return d;
       }
     
       public double calculateDiagonalDistance(){
-        double d = Math.sqrt(Math.pow(calculateHorizontalDistance(),2) + Math.pow(Constants.HEIGHT_GROUND_TO_TARGET-Constants.HEIGHT_GROUND_TO_LIMELIGHT, 2));
+        double d = Math.sqrt(Math.pow(calculateHorizontalDistance(),2) + Math.pow(Constants.Vision.HEIGHT_GROUND_TO_TARGET-Constants.Vision.HEIGHT_GROUND_TO_LIMELIGHT, 2));
         return d;
       }
 }

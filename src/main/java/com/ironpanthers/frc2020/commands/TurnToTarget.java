@@ -60,9 +60,9 @@ public class TurnToTarget extends CommandBase {
     }
     else {
       if (x > 0.0) {
-        adjustedSteeringValue = Constants.Kp * horizontalError + Constants.Ki * sumOfErrors + Constants.Kd * recentError - Constants.MINIMUM_POWER;
+        adjustedSteeringValue = Constants.Vision.Kp * horizontalError + Constants.Vision.Ki * sumOfErrors + Constants.Vision.Kd * recentError - Constants.Vision.MINIMUM_POWER;
       } else if (x < 0.0) {
-        adjustedSteeringValue = Constants.Kp * horizontalError + Constants.Ki * sumOfErrors + Constants.Kd * recentError + Constants.MINIMUM_POWER;
+        adjustedSteeringValue = Constants.Vision.Kp * horizontalError + Constants.Vision.Ki * sumOfErrors + Constants.Vision.Kd * recentError + Constants.Vision.MINIMUM_POWER;
       }
     }
 
