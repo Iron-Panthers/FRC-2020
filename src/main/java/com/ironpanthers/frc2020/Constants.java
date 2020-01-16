@@ -39,6 +39,17 @@ public final class Constants {
         public static final double MINIMUM_POWER = 0.03;
         /** Button port to adjust angle of robot */
         public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
+        /** Conversion constant estimating magnitude of top line as it moves further away */
+        public static final double TOP_LINE_MAGNITUDE_AT_DISTANCE = 0; //TODO measure
+        /** Conversion constant estimating magnitude of bottom line as it moves further away */
+        public static final double BOTTOM_LINE_MAGNITUDE_AT_DISTANCE = 0; //TODO measure
+        /** Conversion constant relating distance from outer goal to hole to the length of the line on the top of the outer goal*/
+        public static final double OUTER_TO_HOLE_DISTANCE_PER_TL_LENGTH = 0; //TODO measure
+        /**Conversion constant relating distance from outer goal to hole to the length of the line between the bottom two outer goal points*/
+        public static final double OUTER_TO_HOLE_DISTANCE_PER_BL_LENGTH = 0; //TODO measure
+        /** Converts between degrees off from center of outer goal to inner hole to a usable horizontal error for turning */
+        public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure
+
     }
     public final class Shooter {
         public static final int SHOOTER_ONE_PORT = 0;
