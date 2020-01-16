@@ -29,18 +29,9 @@ public final class Constants {
      * Classes in the project should use the competition mode variable in order to
      * decide what their failure behavior should be.
      */
-
-    public static final double SHOOTER_SPEED = 0.5;
+    //TODO figure out how to get shooter speed based on distance
+    public static final double shooterSpeed = 0.5;
 	public static final boolean kCompetitionMode = false;
 	public static final int SHOOTER_VELOCITY_IDX = 0;
-    public static final double SHOOTER_CURRENT_LIMIT = 40;
-    
-    //PID testing constants
-    public static final double RADIANS_TO_DEGREES = Math.PI/180;
-    public static final double METER_TO_FOOT = 3.28084;
-    public static final double PID_TESTING_DIAGONAL_TO_SPEED = 0.03333333333; 
-    public static final double ANGLE_MOUNT_TO_LIMELIGHT = 35.0;
-    public static final double GRAVITY_CONSTANT = 9.80665;
-    public static final double SHOOTER_ANGLE = 35; 
-    //TODO get conversion from power percentage to m/s
+	public static final double SHOOTER_CURRENT_LIMIT = 40;
 }

@@ -58,26 +58,6 @@ public class Shooter extends SubsystemBase {
 	public void stop() {
 		shootWithSpeed(0);
 	}
-	
-	/**
- 	* @return value to be tested in PID based on diagonal distance 
- 	*/
-	public double getPIDTestingSpeed(double horizontal){
-		double diagonal = horizontal / Math.sin(Constants.ANGLE_MOUNT_TO_LIMELIGHT);
-		double speed = Constants.PID_TESTING_DIAGONAL_TO_SPEED * diagonal;
-		return speed;
-	}
-
-	public double getShooterSpeed(double horizontal, double angle){
-		double startingSpeed = getPIDTestingSpeed(horizontal);
-
-		return 0;
-	}
-	
-	public double calculateVerticalDisplacement(double horizontal, double angle, double speed){
-		double height = (horizontal * Math.tan(angle * Constants.RADIANS_TO_DEGREES) - (0.5 * Constants.GRAVITY_CONSTANT * (Math.pow(horizontal / (speed * Math.cos(angle * Constants.RADIANS_TO_DEGREES)), 2))));
-		return height;
-	}
 
 	public double getVelocity() {
 		return shooter1.getSelectedSensorVelocity();
