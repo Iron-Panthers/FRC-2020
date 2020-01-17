@@ -68,7 +68,7 @@ public class TuneShooterPID extends CommandBase {
 			isChanged = true;
 		}
 		if (isChanged) {
-			Robot.shooter.configPIDF(p, i, d, f, Constants.SHOOTER_VELOCITY_IDX);
+			Robot.shooter.configPIDF(p, i, d, f, Constants.Shooter.SHOOTER_VELOCITY_IDX);
 		}
 		if (vel != nVel) {
 			vel = nVel;

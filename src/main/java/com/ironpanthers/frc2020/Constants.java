@@ -49,16 +49,13 @@ public final class Constants {
         public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
     }
     public final class Shooter {
-        public static final int SHOOTER_ONE_PORT = 0;
-        public static final int SHOOTER_TWO_PORT = 0;
-		public static final int SHOOTER_THREE_PORT = 0;
+        public static final int SHOOTER_ONE_PORT = 1;
+        public static final int SHOOTER_TWO_PORT = 2;
+		public static final int SHOOTER_THREE_PORT = 3;
         public static final double shooterSpeed = 0.5;
         public static final boolean kCompetitionMode = false;
         public static final int SHOOTER_VELOCITY_IDX = 0;
         public static final double SHOOTER_CURRENT_LIMIT = 40;
-        public static final int SHOOTER_MOTER_ONE_PORT = 1;
-        public static final int SHOOTER_MOTER_TWO_PORT = 2;
-        public static final int SHOOTER_MOTER_THREE_PORT = 3;
 
     }
 
