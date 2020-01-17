@@ -59,7 +59,7 @@ public final class Constants {
         public static final double SHOOTER_F = 0.053;
         public static final double SHOOTER_P = 0.2;
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; //Native units
-        public static final double SHOOTER_RAMP_RATE = 4; // Seconds to full power during PID control
+        public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
     }
 
 }
