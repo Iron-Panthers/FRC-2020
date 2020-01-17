@@ -45,7 +45,8 @@ public class ThreeDimensionalSegment {
      */
     public double getOffsetAngle(double outerGoalToHole, double distanceToOuterGoal) {
         
-        return (180/Math.PI) * Math.acos( ( Math.pow(distanceToOuterGoal, 2) + Math.pow(getDistanceToHole(outerGoalToHole, distanceToOuterGoal), 2) - Math.pow(outerGoalToHole, 2) ) 
+        //law of cosines with known side lengths
+        return Math.acos( ( Math.pow(distanceToOuterGoal, 2) + Math.pow(getDistanceToHole(outerGoalToHole, distanceToOuterGoal), 2) - Math.pow(outerGoalToHole, 2) ) 
         / (2 * distanceToOuterGoal * getDistanceToHole(outerGoalToHole, distanceToOuterGoal) ) );
 
     }
@@ -58,4 +59,5 @@ public class ThreeDimensionalSegment {
 
         return Math.sqrt( Math.pow(goalToHoleZComp + distanceToOuterGoal, 2) + Math.pow(goalToHoleXComp, 2) );
     }
+
 }

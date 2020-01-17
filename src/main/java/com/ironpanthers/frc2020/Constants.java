@@ -30,7 +30,7 @@ public final class Constants {
         /** Angle from mount to limelight in degrees */
         public static final double ANGLE_MOUNT_TO_LIMELIGHT = 33.0;
         /** Proportional control constant */
-        public static final double Kp = -0.1;
+        public static final double Kp = 0.1;
         /** I value in PID */
         public static final double Ki = 0.01;
         /** D value in PID */

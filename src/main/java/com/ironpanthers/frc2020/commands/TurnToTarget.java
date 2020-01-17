@@ -9,6 +9,8 @@ package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.Robot;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
@@ -21,9 +23,9 @@ public class TurnToTarget extends CommandBase {
   double sumOfErrors;
 
   public TurnToTarget() {    
-    x = Robot.visionWrapper.getX();
-    y = Robot.visionWrapper.getY();
-    v = Robot.visionWrapper.getV();
+    x = Robot.visionWrapper.getTableX();
+    y = Robot.visionWrapper.getTableY();
+    v = Robot.visionWrapper.getTableV();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -40,9 +42,11 @@ public class TurnToTarget extends CommandBase {
   public void execute() {
     double leftSteeringAngle = 0.0; // Amount of degrees to steer left
     double rightSteeringAngle = 0.0; // Amount of degrees to steer right
-    double horizontalError = -x; // Horizontal error from limelight to target
+    double horizontalError = x + Robot.visionWrapper.calcHoleOffset(); // Horizontal error from limelight to target
     double adjustedSteeringValue = 0.0; // Calculated amount of degrees to steer
     double recentError = 0.0;
+
+    SmartDashboard.putNumber("Hole offset value", Robot.visionWrapper.calcHoleOffset());
 
     for(int i = 98; i>=0; i--){
       totalErrors[i+1] = totalErrors[i];

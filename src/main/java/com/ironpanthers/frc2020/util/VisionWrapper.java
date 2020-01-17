@@ -26,7 +26,7 @@ public class VisionWrapper {
 
     public VisionWrapper() {
         loadVariables();
-    } 
+    }
 
     public void loadVariables() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -55,15 +55,7 @@ public class VisionWrapper {
     public double getTableA() {
         return ta;
     }
-    
-    public double getX() {
-        return x;
-    }
-    public double getY() {
-        return y;
-    }public double getV() {
-        return v;
-    }public double getTvert() {
+    public double getTvert() {
         return tvert;
     }public double getThor() {
         return thor;
@@ -78,7 +70,7 @@ public class VisionWrapper {
         double d = (Constants.Vision.HEIGHT_GROUND_TO_TARGET - Constants.Vision.HEIGHT_GROUND_TO_LIMELIGHT) / Math.tan((Constants.Vision.ANGLE_MOUNT_TO_LIMELIGHT + ty)*(Math.PI/180)); // ty: vertical offset angle in degrees
         return d;
     }
-    
+
     public double calculateDiagonalDistance(){
         double d = Math.sqrt(Math.pow(calculateHorizontalDistance(),2) + Math.pow(Constants.Vision.HEIGHT_GROUND_TO_TARGET-Constants.Vision.HEIGHT_GROUND_TO_LIMELIGHT, 2));
         return d;
@@ -144,7 +136,11 @@ public class VisionWrapper {
         double offsetAngle = ( topLine.getOffsetAngle( topLine.magnitude * Constants.Vision.OUTER_TO_HOLE_DISTANCE_PER_TL_LENGTH, calculateHorizontalDistance()) + 
         botLine.getOffsetAngle(botLine.magnitude * Constants.Vision.OUTER_TO_HOLE_DISTANCE_PER_BL_LENGTH, calculateHorizontalDistance()) ) / 2;
         
-        return offsetAngle * Constants.Vision.X_ADJUST_PER_DEGREE;
+        double leftHeight = tlefty - blefty;
+        double rightHeight = trighty - brighty;
+
+        //copysign() to determine whether the adjust is going to be left or right
+        return Math.copySign( Math.sin(offsetAngle) * Constants.Vision.X_ADJUST_PER_DEGREE / calculateDiagonalDistance(), leftHeight - rightHeight );
 
     }
 }
