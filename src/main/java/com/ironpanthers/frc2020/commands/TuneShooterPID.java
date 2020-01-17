@@ -17,11 +17,7 @@ public class TuneShooterPID extends CommandBase {
 	/**
 	 * Creates a new TuneShooterPID.
 	 */
-	double p;
-	double i;
-	double d;
-	double f;
-	double vel;
+	double p, i, d, f, vel;
 	public TuneShooterPID() {
 		// Use addRequirements() here to declare subsystem dependencies.
 		addRequirements(Robot.shooter);
@@ -30,25 +26,25 @@ public class TuneShooterPID extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		SmartDashboard.putNumber("Shooter P", 0.0);
+		SmartDashboard.putNumber("Shooter P", Constants.Shooter.SHOOTER_P);
 		SmartDashboard.putNumber("Shooter I", 0.0);
 		SmartDashboard.putNumber("Shooter D", 0.0);
-		SmartDashboard.putNumber("Shooter F", 0.0);
+		SmartDashboard.putNumber("Shooter F", Constants.Shooter.SHOOTER_F);
 		SmartDashboard.putNumber("Target Velocity", 0.0);
-		p = SmartDashboard.getNumber("Shooter P", 0.0);
+		p = SmartDashboard.getNumber("Shooter P", Constants.Shooter.SHOOTER_P);
 		i = SmartDashboard.getNumber("Shooter I", 0.0);
 		d = SmartDashboard.getNumber("Shooter D", 0.0);
-		f = SmartDashboard.getNumber("Shooter P", 0.0);
+		f = SmartDashboard.getNumber("Shooter F", Constants.Shooter.SHOOTER_F);
 		vel = SmartDashboard.getNumber("Target Velocity", 0.0);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		double nP = SmartDashboard.getNumber("Shooter P", 0.0);
+		double nP = SmartDashboard.getNumber("Shooter P", Constants.Shooter.SHOOTER_P);
 		double nI = SmartDashboard.getNumber("Shooter I", 0.0);
 		double nD = SmartDashboard.getNumber("Shooter D", 0.0);
-		double nF = SmartDashboard.getNumber("Shooter F", 0.0);
+		double nF = SmartDashboard.getNumber("Shooter F", Constants.Shooter.SHOOTER_F);
 		double nVel = SmartDashboard.getNumber("Target Velocity", 0.0);
 		boolean isChanged = false;
 		if (p != nP) {

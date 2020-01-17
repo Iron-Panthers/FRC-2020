@@ -8,10 +8,10 @@
 package com.ironpanthers.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ironpanthers.frc2020.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -28,8 +28,16 @@ public class Shooter extends SubsystemBase {
 		shooter1 = new TalonFX(Constants.Shooter.SHOOTER_ONE_PORT);
 		shooter2 = new TalonFX(Constants.Shooter.SHOOTER_TWO_PORT);
 		shooter3 = new TalonFX(Constants.Shooter.SHOOTER_THREE_PORT);
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
+
+		// Config
+		shooter1.setNeutralMode(NeutralMode.Coast);
+		shooter2.setNeutralMode(NeutralMode.Coast);
+		shooter3.setNeutralMode(NeutralMode.Coast);
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+				Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
 		shooter1.configSupplyCurrentLimit(currentConfig);
+
+		// Follow
 		shooter2.follow(shooter1);
 		shooter3.follow(shooter1);
 	}

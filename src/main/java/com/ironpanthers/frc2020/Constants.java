@@ -56,7 +56,9 @@ public final class Constants {
         public static final boolean kCompetitionMode = false;
         public static final int SHOOTER_VELOCITY_IDX = 0;
         public static final double SHOOTER_CURRENT_LIMIT = 40;
-
+        public static final double SHOOTER_F = 0.069;
+        public static final double SHOOTER_P = 0.2;
+        public static final double SHOOTER_MAX_SAFE_VEL = 12000; //Native units
     }
 
 }
