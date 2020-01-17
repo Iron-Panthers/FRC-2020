@@ -95,9 +95,9 @@ public class VisionWrapper {
         for (int i = 0; i < tcornx.length; i++) {
             for(int n = 0; n < orderedx.length; n++) {
                 if( (double) tcornx[i] < orderedx[n] || orderedx[n] == 0.0) {
-                    for(int j = n; j < orderedx.length; j++) {
+                    for(int j = n; j < orderedx.length - 2; j++) {
                         orderedx[j+1] = orderedx[j];
-                        orderedy[j+1] = orderedx[j];
+                        orderedy[j+1] = orderedy[j];
                     }
                     orderedx[n] = (double) tcornx[i];
                     orderedy[n] = (double) tcorny[i];
