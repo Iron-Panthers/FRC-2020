@@ -22,13 +22,13 @@ public class Shooter extends SubsystemBase {
 
 	public final TalonFX shooter1;
 	public final TalonFX shooter2;
-	public final TalonSRX shooter3;
+	public final TalonFX shooter3;
 
 	public Shooter() {
-		shooter1 = new TalonFX(Constants.Shooter.SHOOTER_MOTER_ONE_PORT);
-		shooter2 = new TalonFX(Constants.Shooter.SHOOTER_MOTER_TWO_PORT);
-		shooter3 = new TalonSRX(Constants.Shooter.SHOOTER_MOTER_THREE_PORT);
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
+		shooter1 = new TalonFX(Ports.shooter1);
+		shooter2 = new TalonFX(Ports.shooter2);
+		shooter3 = new TalonFX(Ports.shooter3);
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, Constants.SHOOTER_CURRENT_LIMIT, 0, 0);
 		shooter1.configSupplyCurrentLimit(currentConfig);
 		shooter2.follow(shooter1);
 		shooter3.follow(shooter1);

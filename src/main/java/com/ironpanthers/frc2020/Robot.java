@@ -8,11 +8,10 @@
 package com.ironpanthers.frc2020;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ironpanthers.frc2020.commands.TuneShooterPID;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -28,9 +27,6 @@ public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
 	public static Shooter shooter;
 	private RobotContainer m_robotContainer;
-	public static TalonFX motor;
-	public static TalonFX motor2;
-	public static TalonFX motor3;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -41,14 +37,7 @@ public class Robot extends TimedRobot {
 		// Instantiate our RobotContainer. This will perform all our button bindings,
 		// and put our
 		// autonomous chooser on the dashboard.
-		// shooter = new Shooter();
-		motor = new TalonFX(1);
-		motor2 = new TalonFX(2);
-		motor3 = new TalonFX(3);
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
-		motor.configSupplyCurrentLimit(currentConfig);
-		motor2.follow(motor);
-		motor3.follow(motor);
+		shooter = new Shooter();
 		m_robotContainer = new RobotContainer();
 	}
 
@@ -114,6 +103,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		CommandScheduler.getInstance().schedule(new TuneShooterPID());
 	}
 
 	/**
@@ -121,7 +111,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		motor.set(TalonFXControlMode.PercentOutput, 12.0 / RobotController.getBatteryVoltage());
 	}
 
 	@Override

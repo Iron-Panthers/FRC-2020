@@ -17,6 +17,11 @@ public class TuneShooterPID extends CommandBase {
 	/**
 	 * Creates a new TuneShooterPID.
 	 */
+	double p;
+	double i;
+	double d;
+	double f;
+	double vel;
 	public TuneShooterPID() {
 		// Use addRequirements() here to declare subsystem dependencies.
 		addRequirements(Robot.shooter);
@@ -25,18 +30,50 @@ public class TuneShooterPID extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		SmartDashboard.putNumber("Shooter P", 0);
-		SmartDashboard.putNumber("Shooter I", 0);
-		SmartDashboard.putNumber("Shooter D", 0);
-		SmartDashboard.putNumber("Shooter F", 0);
-		SmartDashboard.putNumber("Target Velocity", 0);
+		SmartDashboard.putNumber("Shooter P", 0.0);
+		SmartDashboard.putNumber("Shooter I", 0.0);
+		SmartDashboard.putNumber("Shooter D", 0.0);
+		SmartDashboard.putNumber("Shooter F", 0.0);
+		SmartDashboard.putNumber("Target Velocity", 0.0);
+		p = SmartDashboard.getNumber("Shooter P", 0.0);
+		i = SmartDashboard.getNumber("Shooter I", 0.0);
+		d = SmartDashboard.getNumber("Shooter D", 0.0);
+		f = SmartDashboard.getNumber("Shooter P", 0.0);
+		vel = SmartDashboard.getNumber("Target Velocity", 0.0);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		Robot.shooter.configPIDF(SmartDashboard.getNumber("Shooter P", 0), SmartDashboard.getNumber("Shooter I", 0), SmartDashboard.getNumber("Shooter D", 0), SmartDashboard.getNumber("Shooter F", 0), Constants.Shooter.SHOOTER_VELOCITY_IDX);
-		Robot.shooter.setVelocity(SmartDashboard.getNumber("Target Velocity", 0));
+		double nP = SmartDashboard.getNumber("Shooter P", 0.0);
+		double nI = SmartDashboard.getNumber("Shooter I", 0.0);
+		double nD = SmartDashboard.getNumber("Shooter D", 0.0);
+		double nF = SmartDashboard.getNumber("Shooter F", 0.0);
+		double nVel = SmartDashboard.getNumber("Target Velocity", 0.0);
+		boolean isChanged = false;
+		if (p != nP) {
+			p = nP;
+			isChanged = true;
+		}
+		if (i != nI) {
+			i = nI;
+			isChanged = true;
+		}
+		if (d != nD) {
+			d = nD;
+			isChanged = true;
+		}
+		if (f != nF) {
+			f = nF;
+			isChanged = true;
+		}
+		if (isChanged) {
+			Robot.shooter.configPIDF(p, i, d, f, Constants.SHOOTER_VELOCITY_IDX);
+		}
+		if (vel != nVel) {
+			vel = nVel;
+		}
+		Robot.shooter.setVelocity(vel);
 		SmartDashboard.putNumber("Actual Velocity", Robot.shooter.getVelocity());
 	}
 
