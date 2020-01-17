@@ -18,6 +18,8 @@ package com.ironpanthers.frc2020;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final double CONVEYOR_BELT_MOTOR_POWER = 0.5;
+    public static final double POWER_CELL_DIAMETER = 7; //in inches
 
     private Constants() {
         /* disallow construction of this class */

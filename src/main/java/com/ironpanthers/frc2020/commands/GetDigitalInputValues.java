@@ -7,9 +7,7 @@
 
 package com.ironpanthers.frc2020.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class GetDigitalInputValues extends CommandBase {
@@ -23,14 +21,14 @@ public class GetDigitalInputValues extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (ConveyorBelt.input.get()) {
-    }
-    else {
+      ConveyorBelt.moveOneBall();
     }
   }
 
