@@ -7,6 +7,7 @@ package com.ironpanthers.frc2020;
  */
 public final class Ports {
 
+    public static final int DIGITAL_INPUT_PORT = 0;
     private Ports() {
         /* disallow construction of this class */
         throw new UnsupportedOperationException("don't try to construct an instance of Ports");
