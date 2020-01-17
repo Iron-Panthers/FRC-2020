@@ -29,7 +29,7 @@ public class ShootWithSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.shooter.shootWithSpeed(Constants.shooterSpeed);
+    Robot.shooter.shootWithSpeed(Constants.Shooter.shooterSpeed);
   }
 
   // Called once the command ends or is interrupted.

@@ -13,8 +13,6 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.Ports;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
@@ -27,10 +25,10 @@ public class Shooter extends SubsystemBase {
 	public final TalonSRX shooter3;
 
 	public Shooter() {
-		shooter1 = new TalonFX(Ports.shooter1);
-		shooter2 = new TalonFX(Ports.shooter2);
-		shooter3 = new TalonSRX(Ports.shooter3);
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, Constants.SHOOTER_CURRENT_LIMIT, 0, 0);
+		shooter1 = new TalonFX(Constants.Shooter.SHOOTER_MOTER_ONE_PORT);
+		shooter2 = new TalonFX(Constants.Shooter.SHOOTER_MOTER_TWO_PORT);
+		shooter3 = new TalonSRX(Constants.Shooter.SHOOTER_MOTER_THREE_PORT);
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
 		shooter1.configSupplyCurrentLimit(currentConfig);
 		shooter2.follow(shooter1);
 		shooter3.follow(shooter1);

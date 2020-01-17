@@ -35,7 +35,7 @@ public class TuneShooterPID extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		Robot.shooter.configPIDF(SmartDashboard.getNumber("Shooter P", 0), SmartDashboard.getNumber("Shooter I", 0), SmartDashboard.getNumber("Shooter D", 0), SmartDashboard.getNumber("Shooter F", 0), Constants.SHOOTER_VELOCITY_IDX);
+		Robot.shooter.configPIDF(SmartDashboard.getNumber("Shooter P", 0), SmartDashboard.getNumber("Shooter I", 0), SmartDashboard.getNumber("Shooter D", 0), SmartDashboard.getNumber("Shooter F", 0), Constants.Shooter.SHOOTER_VELOCITY_IDX);
 		Robot.shooter.setVelocity(SmartDashboard.getNumber("Target Velocity", 0));
 		SmartDashboard.putNumber("Actual Velocity", Robot.shooter.getVelocity());
 	}

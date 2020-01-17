@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
 		motor = new TalonFX(1);
 		motor2 = new TalonFX(2);
 		motor3 = new TalonFX(3);
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, Constants.SHOOTER_CURRENT_LIMIT, 0, 0);
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
 		motor.configSupplyCurrentLimit(currentConfig);
 		motor2.follow(motor);
 		motor3.follow(motor);
