@@ -36,6 +36,8 @@ public class Shooter extends SubsystemBase {
 		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
 				Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
 		shooter1.configSupplyCurrentLimit(currentConfig);
+		shooter1.configClosedloopRamp(Constants.Shooter.SHOOTER_RAMP_RATE); // Ramp rate for Velocity PID
+		shooter1.configOpenloopRamp(Constants.Shooter.SHOOTER_RAMP_RATE); // Ramp rate for open loop control
 
 		// Follow
 		shooter2.follow(shooter1);
@@ -67,6 +69,14 @@ public class Shooter extends SubsystemBase {
 
 	public double getVelocity() {
 		return shooter1.getSelectedSensorVelocity();
+	}
+
+	public double getVoltage() {
+		return shooter1.getBusVoltage();
+	}
+
+	public double getCurrent() {
+		return shooter1.getStatorCurrent();
 	}
 
 	@Override

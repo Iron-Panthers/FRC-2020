@@ -71,6 +71,8 @@ public class TuneShooterPID extends CommandBase {
 		}
 		Robot.shooter.setVelocity(vel);
 		SmartDashboard.putNumber("Actual Velocity", Robot.shooter.getVelocity());
+		SmartDashboard.putNumber("Motor Voltage", Robot.shooter.getVoltage());
+		SmartDashboard.putNumber("Motor Current", Robot.shooter.getCurrent());
 	}
 
 	// Called once the command ends or is interrupted.

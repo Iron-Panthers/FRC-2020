@@ -56,9 +56,10 @@ public final class Constants {
         public static final boolean kCompetitionMode = false;
         public static final int SHOOTER_VELOCITY_IDX = 0;
         public static final double SHOOTER_CURRENT_LIMIT = 40;
-        public static final double SHOOTER_F = 0.069;
+        public static final double SHOOTER_F = 0.053;
         public static final double SHOOTER_P = 0.2;
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; //Native units
+        public static final double SHOOTER_RAMP_RATE = 4; // Seconds to full power during PID control
     }
 
 }
