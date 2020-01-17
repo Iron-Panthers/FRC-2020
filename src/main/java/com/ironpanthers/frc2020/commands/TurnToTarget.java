@@ -46,8 +46,6 @@ public class TurnToTarget extends CommandBase {
     double adjustedSteeringValue = 0.0; // Calculated amount of degrees to steer
     double recentError = 0.0;
 
-    SmartDashboard.putNumber("Hole offset value", Robot.visionWrapper.calcHoleOffset());
-
     for(int i = 98; i>=0; i--){
       totalErrors[i+1] = totalErrors[i];
     }

@@ -6,6 +6,7 @@ import com.ironpanthers.frc2020.Constants;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionWrapper {
 
@@ -129,18 +130,31 @@ public class VisionWrapper {
             brightx = orderedy[2];
         }
 
+        SmartDashboard.putNumber("top left x: ", tleftx);
+        SmartDashboard.putNumber("top left y: ", tlefty);
+        SmartDashboard.putNumber("top right x: ", trightx);
+        SmartDashboard.putNumber("top right y: ", trighty);
+        SmartDashboard.putNumber("bottom left x: ", bleftx);
+        SmartDashboard.putNumber("bottom left y: ", blefty);
+        SmartDashboard.putNumber("bottom right x: ", brightx);
+        SmartDashboard.putNumber("bottom right y: ", brighty);
+
+        SmartDashboard.putNumber("diagonal distance from target: ", calculateDiagonalDistance());
+        SmartDashboard.putNumber("horizontal distance from target: ", calculateHorizontalDistance());
+
         ThreeDimensionalSegment topLine = new ThreeDimensionalSegment(tleftx, tlefty, trightx, trighty, Constants.Vision.TOP_LINE_MAGNITUDE_AT_DISTANCE / calculateDiagonalDistance());
-        ThreeDimensionalSegment botLine = new ThreeDimensionalSegment(bleftx, blefty, brightx, brighty, Constants.Vision.BOTTOM_LINE_MAGNITUDE_AT_DISTANCE / calculateDiagonalDistance());
+        //ThreeDimensionalSegment botLine = new ThreeDimensionalSegment(bleftx, blefty, brightx, brighty, Constants.Vision.BOTTOM_LINE_MAGNITUDE_AT_DISTANCE / calculateDiagonalDistance());
 
         //average of the estimated angles using the top and bottom lines
-        double offsetAngle = ( topLine.getOffsetAngle( topLine.magnitude * Constants.Vision.OUTER_TO_HOLE_DISTANCE_PER_TL_LENGTH, calculateHorizontalDistance()) + 
-        botLine.getOffsetAngle(botLine.magnitude * Constants.Vision.OUTER_TO_HOLE_DISTANCE_PER_BL_LENGTH, calculateHorizontalDistance()) ) / 2;
+        double offsetAngle = topLine.getOffsetAngle( topLine.magnitude * Constants.Vision.OUTER_TO_HOLE_DISTANCE_PER_TL_LENGTH, calculateHorizontalDistance() );
         
+        SmartDashboard.putNumber("hole offset angle: ", offsetAngle);
+
         double leftHeight = tlefty - blefty;
         double rightHeight = trighty - brighty;
 
         //copysign() to determine whether the adjust is going to be left or right
-        return Math.copySign( Math.sin(offsetAngle) * Constants.Vision.X_ADJUST_PER_DEGREE / calculateDiagonalDistance(), leftHeight - rightHeight );
+        return Math.copySign(offsetAngle, rightHeight - leftHeight);
 
     }
 }
