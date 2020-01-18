@@ -15,6 +15,7 @@ import com.ironpanthers.frc2020.commands.ManualDriveCommand;
 import com.ironpanthers.frc2020.subsystems.Drive;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -37,6 +38,8 @@ public class RobotContainer {
 	public RobotContainer() {
 		drive.setDefaultCommand(
 				new ManualDriveCommand(joystick1::getY, joystick1::getX, new JoystickButton(joystick1, 1), drive));
+
+		SmartDashboard.putData("delete soon. fow now: reset drive", new RunCommand(() -> drive.reset()));
 
 		// Configure the button bindings
 		configureButtonBindings();

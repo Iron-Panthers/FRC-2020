@@ -1,5 +1,7 @@
 package com.ironpanthers.frc2020.subsystems;
 
+import java.util.List;
+
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -28,7 +30,7 @@ public class Drive extends SubsystemBase {
     private final TalonFX right1 = new TalonFX(Ports.kCANDriveRight1);
     private final TalonFX right2 = new TalonFX(Ports.kCANDriveRight2);
 
-    private final PigeonIMU gyro = new PigeonIMU(new TalonSRX(Ports.kCANPigeonTalon));
+    // private final PigeonIMU gyro = new PigeonIMU(new TalonSRX(Ports.kCANPigeonTalon));
 
     private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.kTrackWidthMeters);
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(heading());
@@ -55,6 +57,10 @@ public class Drive extends SubsystemBase {
         right1.setInverted(false);
         right2.setInverted(false);
 
+        for (var m : List.of(left1, left2, right1, right2)) {
+            PhoenixUtil.checkError(m.configFactoryDefault(), "drive: fac def conf");
+        }
+
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
 
@@ -68,12 +74,13 @@ public class Drive extends SubsystemBase {
          * right1.enableVoltageCompensation(true);
          */
 
-        gyro.configFactoryDefault();
-        gyro.setFusedHeading(0 /* degrees */);
+        // gyro.configFactoryDefault();
+        // gyro.setFusedHeading(0 /* degrees */);
     }
 
     public Rotation2d heading() {
-        return Rotation2d.fromDegrees(gyro.getFusedHeading());
+        // return Rotation2d.fromDegrees(gyro.getFusedHeading());
+        return Rotation2d.fromDegrees(0.0);
     }
 
     public DifferentialDriveWheelSpeeds speeds() {
