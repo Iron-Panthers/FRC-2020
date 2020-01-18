@@ -7,34 +7,38 @@
 
 package com.ironpanthers.frc2020.commands;
 
-import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
+import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.Robot;
+import com.ironpanthers.frc2020.RobotContainer;
+import com.ironpanthers.frc2020.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class GetDigitalInputValues extends CommandBase {
+public class ShootWithSpeed extends CommandBase {
   /**
-   * Creates a new GetDigitalInputValues.
+   * Creates a new ShootWithSpeed.
    */
-  public GetDigitalInputValues() {
+  Shooter shooter = new Shooter();
+  public ShootWithSpeed(Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (ConveyorBelt.input.get()) {
-      ConveyorBelt.moveOneBall();
-    }
+    shooter.shootWithSpeed(Constants.Shooter.shooterSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    shooter.stopShooter();
   }
 
   // Returns true when the command should end.

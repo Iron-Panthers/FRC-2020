@@ -7,8 +7,14 @@
 
 package com.ironpanthers.frc2020;
 
+import com.ironpanthers.frc2020.commands.IntakeSequence;
+import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
+import com.ironpanthers.frc2020.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -23,8 +29,13 @@ public class RobotContainer {
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
+	public final Shooter shooter = new Shooter();
+	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
+	private final Joystick joystick = new Joystick(Constants.OI.JOYSTICK_PORT);
+	private final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
 	public RobotContainer() {
 		// Configure the button bindings
+
 		configureButtonBindings();
 	}
 
@@ -35,6 +46,7 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
+		intakeButton.whenPressed(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 	}
 
 	/**

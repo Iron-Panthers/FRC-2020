@@ -7,6 +7,11 @@
 
 package com.ironpanthers.frc2020;
 
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ironpanthers.frc2020.commands.TuneShooterPID;
+import com.ironpanthers.frc2020.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -20,7 +25,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
-
 	private RobotContainer m_robotContainer;
 
 	/**
@@ -97,6 +101,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		CommandScheduler.getInstance().schedule(new TuneShooterPID(m_robotContainer.shooter));
 	}
 
 	/**
