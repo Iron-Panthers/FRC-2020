@@ -38,21 +38,19 @@ public final class Constants {
      */
     public static final int kFalconTicksToRevs = 4096; // TODO(ingi)
 
-    /*
-     * DRIVEBASE CONSTANTS
-     */
+    public static class Drive {
+        public static final double kGearRatio = 5.10; // TODO(ingi)
+        public static final double kTrackWidthMeters = inchesToMeters(21); // TODO(ingi)
+        public static final double kWheelRadiusMeters = inchesToMeters(3);
 
-    public static final double kGearRatio = 5.10; // TODO(ingi)
-    public static final double kTrackWidthMeters = inchesToMeters(21); // TODO(ingi)
-    public static final double kWheelRadiusMeters = inchesToMeters(3);
+        // GENERATE FROM CHARACTERIZATION TOOL TODO(ingi)
+        // LAST GENERATED: NEVER
+        // BY: NO ONE
+        // UPDATE THIS COMMENT IF YOU CHANGE ANY OF THE DRIVEBASE GAINS
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
 
-    // GENERATE FROM CHARACTERIZATION TOOL TODO(ingi)
-    // LAST GENERATED: NEVER
-    // BY: NO ONE
-    // UPDATE THIS COMMENT IF YOU CHANGE ANY OF THE DRIVEBASE GAINS
-    public static final double kDriveKs = 0;
-    public static final double kDriveKv = 0;
-    public static final double kDriveKa = 0;
-
-    public static final double kDriveKp = 0;
+        public static final double kP = 0;
+    }
 }

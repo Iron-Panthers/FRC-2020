@@ -1,11 +1,9 @@
 package com.ironpanthers.frc2020.subsystems;
 
-import java.util.List;
-
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
+// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+// import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.Ports;
 import com.ironpanthers.util.PhoenixUtil;
@@ -30,16 +28,18 @@ public class Drive extends SubsystemBase {
     private final TalonFX right1 = new TalonFX(Ports.kCANDriveRight1);
     private final TalonFX right2 = new TalonFX(Ports.kCANDriveRight2);
 
-    // private final PigeonIMU gyro = new PigeonIMU(new TalonSRX(Ports.kCANPigeonTalon));
+    // private final PigeonIMU gyro = new PigeonIMU(new
+    // TalonSRX(Ports.kCANPigeonTalon));
 
-    private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.kTrackWidthMeters);
+    private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
+            Constants.Drive.kTrackWidthMeters);
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(heading());
 
-    private final SimpleMotorFeedforward characterizedFeedforward = new SimpleMotorFeedforward(Constants.kDriveKs,
-            Constants.kDriveKv, Constants.kDriveKa);
+    private final SimpleMotorFeedforward characterizedFeedforward = new SimpleMotorFeedforward(Constants.Drive.kS,
+            Constants.Drive.kV, Constants.Drive.kA);
 
-    private final PIDController left = new PIDController(Constants.kDriveKp, 0.0, 0.0);
-    private final PIDController right = new PIDController(Constants.kDriveKp, 0.0, 0.0);
+    private final PIDController left = new PIDController(Constants.Drive.kP, 0.0, 0.0);
+    private final PIDController right = new PIDController(Constants.Drive.kP, 0.0, 0.0);
 
     private Pose2d currentPose = new Pose2d();
 
@@ -56,10 +56,6 @@ public class Drive extends SubsystemBase {
         left2.setInverted(true);
         right1.setInverted(false);
         right2.setInverted(false);
-
-        for (var m : List.of(left1, left2, right1, right2)) {
-            PhoenixUtil.checkError(m.configFactoryDefault(), "drive: fac def conf");
-        }
 
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
@@ -87,13 +83,13 @@ public class Drive extends SubsystemBase {
         return new DifferentialDriveWheelSpeeds(// CONVERSION FROM ENCODER TO LEFT AND RIGHT SPEEDS (METERS PER SECOND):
                 left1.getSelectedSensorVelocity() // (raw sensor units) per 100 ms
                         / Constants.kFalconTicksToRevs // (motor shaft revolutions) per 100 ms
-                        / Constants.kGearRatio // (wheel shaft revolutions) per 100 ms
-                        * 2 * Math.PI * Constants.kWheelRadiusMeters // meters (wheel circum) per 100 ms
+                        / Constants.Drive.kGearRatio // (wheel shaft revolutions) per 100 ms
+                        * 2 * Math.PI * Constants.Drive.kWheelRadiusMeters // meters (wheel circum) per 100 ms
                         / 60, // meters per 10(100ms) => second
                 right1.getSelectedSensorVelocity() // (raw sensor units) per 100 ms
                         / Constants.kFalconTicksToRevs // (motor shaft revolutions) per 100 ms
-                        / Constants.kGearRatio // (wheel shaft revolutions) per 100 ms
-                        * 2 * Math.PI * Constants.kWheelRadiusMeters // meters (wheel circum) per 100 ms
+                        / Constants.Drive.kGearRatio // (wheel shaft revolutions) per 100 ms
+                        * 2 * Math.PI * Constants.Drive.kWheelRadiusMeters // meters (wheel circum) per 100 ms
                         * 10 // meters per 10(100ms) => second
         );
     }
@@ -109,17 +105,17 @@ public class Drive extends SubsystemBase {
     public double leftDistanceMeters() {
         return left1.getSelectedSensorPosition() // value of raw sensor units
                 / Constants.kFalconTicksToRevs // value of motor shaft revolutions "elapsed"
-                / Constants.kGearRatio // value of wheel shaft revolutions "elapsed"
-                * 2 * Math.PI * Constants.kWheelRadiusMeters; // value of meters "elapsed" (turning wheel revolutions
-                                                              // into meters via circumference)
+                / Constants.Drive.kGearRatio // value of wheel shaft revolutions "elapsed"
+                * 2 * Math.PI * Constants.Drive.kWheelRadiusMeters; // value of meters "elapsed" (turning wheel
+                                                                    // revolutions into meters via circumference)
     }
 
     public double rightDistanceMeters() {
         return right1.getSelectedSensorPosition() // value of raw sensor units
                 / Constants.kFalconTicksToRevs // value of motor shaft revolutions "elapsed"
-                / Constants.kGearRatio // value of wheel shaft revolutions "elapsed"
-                * 2 * Math.PI * Constants.kWheelRadiusMeters; // value of meters "elapsed" (turning wheel revolutions
-                                                              // into meters via circumference)
+                / Constants.Drive.kGearRatio // value of wheel shaft revolutions "elapsed"
+                * 2 * Math.PI * Constants.Drive.kWheelRadiusMeters; // value of meters "elapsed" (turning wheel
+                                                                    // revolutions into meters via circumference)
     }
 
     public DifferentialDriveKinematics kinematics() {
