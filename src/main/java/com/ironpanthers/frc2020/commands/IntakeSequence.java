@@ -18,12 +18,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class IntakeSequence extends SequentialCommandGroup {
-  /**
-   * Creates a new IntakeSequence.
-   */
-  public IntakeSequence(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-      super(new PrepareConveyor(conveyor), new Intake(shooter, conveyor, button), new ConveyorToDefault(conveyor));
-  }
+	/**
+	 * Creates a new IntakeSequence.
+	 */
+	public IntakeSequence(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button) {
+		// Add your commands in the super() call, e.g.
+		// super(new FooCommand(), new BarCommand());
+		super(new PrepareConveyor(conveyor), new Intake(shooter, conveyor, button), new ConveyorToDefault(conveyor));
+	}
 }

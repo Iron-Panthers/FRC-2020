@@ -13,52 +13,57 @@ import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ConveyorToDefault extends CommandBase {
-  /**
-   * Creates a new ConveyorToDefault.
-   */
-  private boolean bannerSensor;
-  private double encoderStartTicks;
-  private ConveyorBelt conveyor = new ConveyorBelt();
-  public ConveyorToDefault(ConveyorBelt conveyor) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(conveyor);
-  }
+	/**
+	 * Creates a new ConveyorToDefault.
+	 */
+	private boolean bannerSensor;
+	private double encoderStartTicks;
+	private ConveyorBelt conveyor;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    if(conveyor.conveyorFull())
-      cancel();
+	public ConveyorToDefault(ConveyorBelt conveyor) {
+		// Use addRequirements() here to declare subsystem dependencies.
+		addRequirements(conveyor);
+		this.conveyor = conveyor;
+	}
 
-    bannerSensor = conveyor.getBannerSensor();
-    encoderStartTicks = conveyor.encoder.getPosition();
-  }
+	// Called when the command is initially scheduled.
+	@Override
+	public void initialize() {
+		if (conveyor.conveyorFull())
+			cancel();
+		bannerSensor = conveyor.getBannerSensor();
+		encoderStartTicks = conveyor.encoder.getPosition();
+	}
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-      if (bannerSensor) {
-        conveyor.setPower(Constants.Conveyor.CONVEYOR_BELT_MOTOR_POWER);
-      } else {
-        conveyor.setPower(-Constants.Conveyor.CONVEYOR_BELT_MOTOR_POWER);
-      }
-    
-  }
+	// Called every time the scheduler runs while the command is scheduled.
+	@Override
+	public void execute() {
+		// After the inital banner sensor input, if it saw a ball, run the conveyor belt
+		// forwards to the default state which has balls fully contained within the conveyor.
+		// If the banner is not seen this means no ball was taken in and thus run the conveyor
+		// backwards to the state prior to intaking.
+		if (bannerSensor) {
+			conveyor.setPower(Constants.Conveyor.CONVEYOR_BELT_MOTOR_POWER);
+		} else {
+			conveyor.setPower(-Constants.Conveyor.CONVEYOR_BELT_MOTOR_POWER);
+		}
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
+	}
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-      if (bannerSensor) {
-        return (conveyor.encoder.getPosition() - encoderStartTicks) > Constants.Conveyor.DEFAULT_DISTANCE;
-      } else {
-        return -(conveyor.encoder.getPosition() - encoderStartTicks) > Constants.Conveyor.PREPARATION_DISTANCE;
-      }
-    
-    
-  }
+	// Called once the command ends or is interrupted.
+	@Override
+	public void end(boolean interrupted) {
+		conveyor.stop();
+	}
+
+	// Returns true when the command should end.
+	@Override
+	public boolean isFinished() {
+		if (bannerSensor) {
+			return (conveyor.encoder.getPosition() - encoderStartTicks) > Constants.Conveyor.DEFAULT_DISTANCE;
+		} else {
+			return -(conveyor.encoder.getPosition() - encoderStartTicks) > Constants.Conveyor.PREPARATION_DISTANCE;
+		}
+
+	}
 }

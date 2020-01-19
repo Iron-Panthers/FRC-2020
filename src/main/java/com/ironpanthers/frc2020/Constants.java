@@ -45,8 +45,8 @@ public final class Constants {
 		public static final int CONVEYOR_BELT_MOTOR_PORT = 0; //tbd
 		public static final double DISTANCE_PERENCODER_ROTATION = .1;
 		public static final double PULSES_PERENCODER_ROTATION = .25;
-		public static final double INTAKE_MOTOR_SPEED = 0; //tbd
-        public static final double SHOOTER_MOTOR_SPEED = 0; //tbd
+		public static final double INTAKE_MOTOR_SPEED = 0.5; //tbd
+        public static final double SHOOTER_MOTOR_SPEED = 0.25; //tbd
 		public static final double PREPARATION_DISTANCE = 0; //tbd
 		public static final double DEFAULT_DISTANCE = 0; //tbd
 		public static final int CANCODER_PORT = 0;

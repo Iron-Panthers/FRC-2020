@@ -8,20 +8,19 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.Robot;
-import com.ironpanthers.frc2020.RobotContainer;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ShootWithSpeed extends CommandBase {
+public class ShootWithPower extends CommandBase {
   /**
    * Creates a new ShootWithSpeed.
    */
-  Shooter shooter = new Shooter();
-  public ShootWithSpeed(Shooter shooter) {
+  Shooter shooter;
+  public ShootWithPower(Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter);
+	addRequirements(shooter);
+	this.shooter = shooter;
   }
 
   // Called when the command is initially scheduled.
@@ -32,7 +31,7 @@ public class ShootWithSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.shootWithSpeed(Constants.Shooter.shooterSpeed);
+    shooter.shootWithPower(Constants.Shooter.shooterSpeed);
   }
 
   // Called once the command ends or is interrupted.

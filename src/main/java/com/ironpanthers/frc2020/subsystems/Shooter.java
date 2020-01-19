@@ -23,18 +23,17 @@ public class Shooter extends SubsystemBase {
 
 	public final TalonFX shooter1;
 	public final TalonFX shooter2;
-  public final TalonFX shooter3;
-  public final TalonSRX b;
-
+	public final TalonFX shooter3;
+	public final TalonSRX b;
 
 	public Shooter() {
 		shooter1 = new TalonFX(Constants.Shooter.SHOOTER_ONE_PORT);
 		shooter2 = new TalonFX(Constants.Shooter.SHOOTER_TWO_PORT);
-    shooter3 = new TalonFX(Constants.Shooter.SHOOTER_THREE_PORT);
-    b = new TalonSRX(Constants.Conveyor.CONVEYOR_BELT_MOTOR_PORT);
+		shooter3 = new TalonFX(Constants.Shooter.SHOOTER_THREE_PORT);
+		b = new TalonSRX(Constants.Conveyor.CONVEYOR_BELT_MOTOR_PORT);
 
-    // Config
-    b.setNeutralMode(NeutralMode.Coast);
+		// Config
+		b.setNeutralMode(NeutralMode.Coast);
 		shooter1.setNeutralMode(NeutralMode.Coast);
 		shooter2.setNeutralMode(NeutralMode.Coast);
 		shooter3.setNeutralMode(NeutralMode.Coast);
@@ -48,11 +47,17 @@ public class Shooter extends SubsystemBase {
 		shooter2.follow(shooter1);
 		shooter3.follow(shooter1);
 	}
-  public void setIntakeMotors(double intakeMotorSpeed,double ShooterMotorSpeed) {
-    b.set(ControlMode.PercentOutput, intakeMotorSpeed);
-    shooter1.set(ControlMode.PercentOutput, ShooterMotorSpeed);
-  }
-	public void shootWithSpeed(double speed) {
+
+	public void setIntakeMotors(double intakeMotorSpeed, double ShooterMotorSpeed) {
+		b.set(ControlMode.PercentOutput, intakeMotorSpeed);
+		shooter1.set(ControlMode.PercentOutput, ShooterMotorSpeed);
+	}
+
+	public void stopIntake() {
+		setIntakeMotors(0, 0);
+	}
+
+	public void shootWithPower(double speed) {
 		shooter1.set(ControlMode.PercentOutput, speed);
 	}
 
@@ -69,10 +74,6 @@ public class Shooter extends SubsystemBase {
 		shooter1.config_kI(idx, i);
 		shooter1.config_kD(idx, d);
 		shooter1.config_kF(idx, f);
-	}
-
-	public void stop() {
-		shootWithSpeed(0);
 	}
 
 	public double getVelocity() {
