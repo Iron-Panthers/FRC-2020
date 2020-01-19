@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.Ports;
 import com.ironpanthers.util.PhoenixUtil;
 
 import edu.wpi.first.wpilibj.RobotController;
@@ -23,13 +22,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * Subsystem for controlling the robot's drivetrain.
  */
 public class Drive extends SubsystemBase {
-    private final TalonFX left1 = new TalonFX(Ports.kCANDriveLeft1);
-    private final TalonFX left2 = new TalonFX(Ports.kCANDriveLeft2);
-    private final TalonFX right1 = new TalonFX(Ports.kCANDriveRight1);
-    private final TalonFX right2 = new TalonFX(Ports.kCANDriveRight2);
+    private final TalonFX left1 = new TalonFX(Constants.Drive.kLeft1Id);
+    private final TalonFX left2 = new TalonFX(Constants.Drive.kLeft2Id);
+    private final TalonFX right1 = new TalonFX(Constants.Drive.kRight1Id);
+    private final TalonFX right2 = new TalonFX(Constants.Drive.kRight2Id);
 
-    // private final PigeonIMU gyro = new PigeonIMU(new
-    // TalonSRX(Ports.kCANPigeonTalon));
+    // private final PigeonIMU gyro = new PigeonIMU(new TalonSRX(Constants.Drive.kPigeonTalonId));
 
     private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
             Constants.Drive.kTrackWidthMeters);

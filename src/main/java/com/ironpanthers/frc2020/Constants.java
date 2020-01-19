@@ -39,6 +39,13 @@ public final class Constants {
     public static final int kFalconTicksToRevs = 4096; // TODO(ingi)
 
     public static class Drive {
+        public static final int kLeft1Id = 11;
+        public static final int kLeft2Id = 12;
+        public static final int kRight1Id = 13;
+        public static final int kRight2Id = 14;
+    
+        public static final int kPigeonTalonId = 31;
+
         public static final double kGearRatio = 5.10; // TODO(ingi)
         public static final double kTrackWidthMeters = inchesToMeters(21); // TODO(ingi)
         public static final double kWheelRadiusMeters = inchesToMeters(3);
