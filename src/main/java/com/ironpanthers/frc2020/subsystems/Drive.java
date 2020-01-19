@@ -83,7 +83,7 @@ public class Drive extends SubsystemBase {
                         / Constants.kFalconTicksToRevs // (motor shaft revolutions) per 100 ms
                         / Constants.Drive.kGearRatio // (wheel shaft revolutions) per 100 ms
                         * 2 * Math.PI * Constants.Drive.kWheelRadiusMeters // meters (wheel circum) per 100 ms
-                        / 60, // meters per 10(100ms) => second
+                        * 10, // meters per 10(100ms) => second
                 right1.getSelectedSensorVelocity() // (raw sensor units) per 100 ms
                         / Constants.kFalconTicksToRevs // (motor shaft revolutions) per 100 ms
                         / Constants.Drive.kGearRatio // (wheel shaft revolutions) per 100 ms
