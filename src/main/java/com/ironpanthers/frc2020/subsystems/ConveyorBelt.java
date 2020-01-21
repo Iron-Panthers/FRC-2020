@@ -18,12 +18,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ConveyorBelt extends SubsystemBase {
 	public static TalonFX conveyorMotor;
 	private static DigitalInput input;
-	public static CANCoder encoder;
-	public static int ballsHeld;
+	public CANCoder encoder;
+	public int ballsHeld;
 
 	public ConveyorBelt() {
-		input = new DigitalInput(Constants.Conveyor.DIGITAL_INPUT_PORT);
-		conveyorMotor = new TalonFX(Constants.Conveyor.CONVEYOR_BELT_MOTOR_PORT);
+    conveyorMotor = new TalonFX(Constants.Conveyor.CONVEYOR_BELT_MOTOR_PORT);
+    conveyorMotor.config_kP(0, .420);
+    conveyorMotor.configClosedloopRamp(.4);
+
+
 		encoder = new CANCoder(Constants.Conveyor.CANCODER_PORT);
 		ballsHeld = 0;
 	}
@@ -31,7 +34,9 @@ public class ConveyorBelt extends SubsystemBase {
 	public boolean getBannerSensor() {
 		return input.get();
 	}
-
+  public void setPosition(double ticks) {
+    conveyorMotor.set(TalonFXControlMode.Position, ticks);
+  }
 	public void setPower(double power) {
 		conveyorMotor.set(TalonFXControlMode.PercentOutput, power);
 	}

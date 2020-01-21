@@ -33,23 +33,29 @@ public final class Constants {
      * Classes in the project should use the competition mode variable in order to
      * decide what their failure behavior should be.
      */
-    //TODO figure out how to get shooter speed based on distance
     public final class OI {
         public static final int JOYSTICK_PORT = 0;
         public static final int INTAKE_BUTTON_PORT = 0;
     }
     public final class Conveyor {
-        public static final double CONVEYOR_BELT_MOTOR_POWER = 0.5; //tbd
+        //Ports
+        public static final int CANCODER_PORT = 0; //tbd
+        public static final int CONVEYOR_BELT_MOTOR_PORT = 0; //tbd
+
+        //Size Constants
         public static final double POWER_CELL_DIAMETER = 7; //in inches
-		public static final int DIGITAL_INPUT_PORT = 0; //tbd
-		public static final int CONVEYOR_BELT_MOTOR_PORT = 0; //tbd
+
+        //Powers
+        public static final double CONVEYOR_BELT_MOTOR_POWER = 0.5; //tbd
+        public static final double INTAKE_MOTOR_POWER = 0.5; //tbd
+        public static final double SHOOTER_MOTOR_POWER = 0.25; //tbd
+
+        //Encoder Stuff
 		public static final double DISTANCE_PERENCODER_ROTATION = .1;
 		public static final double PULSES_PERENCODER_ROTATION = .25;
-		public static final double INTAKE_MOTOR_SPEED = 0.5; //tbd
-        public static final double SHOOTER_MOTOR_SPEED = 0.25; //tbd
-		public static final double PREPARATION_DISTANCE = 0; //tbd
-		public static final double DEFAULT_DISTANCE = 0; //tbd
-		public static final int CANCODER_PORT = 0;
+        public static final double TICK_ERROR_TOLLERANCE = 0;//TODO:find acceptable error tolerance
+        /**needs to move conveyer exactly one ball length backward */
+        public static final double TICKS_PREP_DISTANCE = 0;//TODO:figure out what this needs to be using motion magic
     }
     public final class Vision {
         /** Height from ground to limelight in inches */
@@ -82,5 +88,4 @@ public final class Constants {
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; //Native units
         public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
     }
-
 }

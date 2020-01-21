@@ -7,10 +7,7 @@
 
 package com.ironpanthers.frc2020;
 
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.commands.TuneShooterPID;
-import com.ironpanthers.frc2020.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;

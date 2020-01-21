@@ -42,11 +42,9 @@ public class ConveyorToDefault extends CommandBase {
 		// forwards to the default state which has balls fully contained within the conveyor.
 		// If the banner is not seen this means no ball was taken in and thus run the conveyor
 		// backwards to the state prior to intaking.
-		if (bannerSensor) {
-			conveyor.setPower(Constants.Conveyor.CONVEYOR_BELT_MOTOR_POWER);
-		} else {
-			conveyor.setPower(-Constants.Conveyor.CONVEYOR_BELT_MOTOR_POWER);
-		}
+		if (!bannerSensor) {
+			conveyor.setPosition(encoderStartTicks + Constants.Conveyor.TICKS_PREP_DISTANCE);
+		} 
 
 	}
 
@@ -59,10 +57,10 @@ public class ConveyorToDefault extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (bannerSensor) {
-			return (conveyor.encoder.getPosition() - encoderStartTicks) > Constants.Conveyor.DEFAULT_DISTANCE;
+		if (!bannerSensor) {
+			return (conveyor.encoder.getPosition() - encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE) < Constants.Conveyor.TICK_ERROR_TOLLERANCE;
 		} else {
-			return -(conveyor.encoder.getPosition() - encoderStartTicks) > Constants.Conveyor.PREPARATION_DISTANCE;
+			return true;
 		}
 
 	}

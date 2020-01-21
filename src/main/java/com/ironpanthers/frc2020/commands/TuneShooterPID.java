@@ -8,8 +8,6 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.Robot;
-import com.ironpanthers.frc2020.RobotContainer;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

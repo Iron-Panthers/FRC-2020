@@ -38,8 +38,9 @@ public class PrepareConveyor extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		conveyor.setPower(Constants.Conveyor.CONVEYOR_BELT_MOTOR_POWER);
-	}
+    conveyor.setPosition(encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE); //TODO:Test TICKS_PREP_DISTANCE constant using motion magic in order to move the conveyer 7 inches backward
+                                                                                      //also +- signs may be wrong needs to be tested
+  }
 
 	// Called once the command ends or is interrupted.
 	@Override
@@ -50,7 +51,7 @@ public class PrepareConveyor extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-
-		return (conveyor.encoder.getPosition() - encoderStartTicks) > Constants.Conveyor.PREPARATION_DISTANCE;
+		return (conveyor.encoder.getPosition() - encoderStartTicks + Constants.Conveyor.TICKS_PREP_DISTANCE) < Constants.Conveyor.TICK_ERROR_TOLLERANCE;
+		//+- signs may need to be switched around
 	}
 }
