@@ -29,8 +29,6 @@ public class ConveyorToDefault extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (conveyor.conveyorFull())
-			cancel();
 		bannerSensor = conveyor.getBannerSensor();
 		encoderStartTicks = conveyor.encoder.getPosition();
 	}
