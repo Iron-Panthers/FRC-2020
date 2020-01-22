@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.util.PhoenixUtil;
+import com.ironpanthers.util.PoseLoggingTable;
 
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -15,7 +16,6 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -45,6 +45,11 @@ public class Drive extends SubsystemBase {
      * Create a new Drive subsystem.
      */
     public Drive() {
+        left1.configFactoryDefault();
+        left2.configFactoryDefault();
+        right1.configFactoryDefault();
+        right2.configFactoryDefault();
+
         // Followers
         left2.follow(left1);
         right2.follow(right1);
@@ -57,16 +62,6 @@ public class Drive extends SubsystemBase {
 
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
-
-        // NOTE for testing onboard voltage compensation-based solution
-        /*
-         * PhoenixUtil.checkError(left1.configVoltageCompSaturation(12.0, 0),
-         * "drive: failed to configure right voltage comp saturation");
-         * left1.enableVoltageCompensation(true);
-         * PhoenixUtil.checkError(right1.configVoltageCompSaturation(12.0, 0),
-         * "drive: failed to configure right voltage comp saturation");
-         * right1.enableVoltageCompensation(true);
-         */
 
         // gyro.configFactoryDefault();
         // gyro.setFusedHeading(0 /* degrees */);
@@ -181,16 +176,21 @@ public class Drive extends SubsystemBase {
         var rightDistanceMeters = rightDistanceMeters();
 
         // DEBUG VALUES
-        SmartDashboard.putNumber("drive/heading", heading.getDegrees());
-        SmartDashboard.putNumber("drive/leftVoltage (v)", leftVoltage());
-        SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
-        SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
-        SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
-        SmartDashboard.putString("drive/wheelSpeeds", speeds().toString());
-        SmartDashboard.putString("drive/heading", heading().toString());
-        SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
-        SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
+        // SmartDashboard.putNumber("drive/heading", heading.getDegrees());
+        // SmartDashboard.putNumber("drive/leftVoltage (v)", leftVoltage());
+        // SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
+        // SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
+        // SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
+        // SmartDashboard.putString("drive/wheelSpeeds", speeds().toString());
+        // SmartDashboard.putString("drive/heading", heading().toString());
+        // SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
+        // SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
+        // SmartDashboard.putNumber("drive/left1PctOut", left1.getMotorOutputPercent());
+        // SmartDashboard.putNumber("drive/left2PctOut", left2.getMotorOutputPercent());
+        // SmartDashboard.putNumber("drive/right1PctOut", right1.getMotorOutputPercent());
+        // SmartDashboard.putNumber("drive/right2PctOut", right2.getMotorOutputPercent());
 
         currentPose = odometry.update(heading, leftDistanceMeters, rightDistanceMeters);
+        PoseLoggingTable.getInstance().publishRobotPose(currentPose);
     }
 }

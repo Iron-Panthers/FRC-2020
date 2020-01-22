@@ -2,6 +2,7 @@ package com.ironpanthers.frc2020.auto.commands;
 
 import java.util.List;
 
+import com.ironpanthers.frc2020.commands.ReportingRAMSETECommand;
 import com.ironpanthers.frc2020.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.controller.RamseteController;
@@ -12,7 +13,6 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -29,7 +29,7 @@ public class TestAutonomous extends SequentialCommandGroup {
                 // End 3 meters straight ahead of where we started, facing forward
                 new Pose2d(3, 0, new Rotation2d(0)), config);
 
-        var initialDriveCommand = new RamseteCommand(trajectory, drive::currentPose, new RamseteController(2, 0.7),
+        var initialDriveCommand = new ReportingRAMSETECommand(trajectory, drive::currentPose, new RamseteController(2, 0.7),
                 drive.ff(), drive.kinematics(), drive::speeds, drive.leftPIDController(), drive.rightPIDController(),
                 drive::setOutputVolts, drive);        
 
