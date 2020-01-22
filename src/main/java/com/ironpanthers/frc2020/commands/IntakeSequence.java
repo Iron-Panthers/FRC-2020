@@ -25,5 +25,6 @@ public class IntakeSequence extends SequentialCommandGroup {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
 		super(new PrepareConveyor(conveyor), new Intake(shooter, conveyor, button));
+		//TODO:Need working banner sensor
 	}
 }

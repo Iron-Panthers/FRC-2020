@@ -7,8 +7,6 @@
 
 package com.ironpanthers.frc2020;
 
-import com.ironpanthers.frc2020.commands.ResetConveyor;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
-	private RobotContainer robotContainer;
+	private RobotContainer m_robotContainer;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -92,9 +90,6 @@ public class Robot extends TimedRobot {
 		// this line or comment it out.
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
-		}
-		if(!robotContainer.conveyorBelt.getBannerSensor() && robotContainer.conveyorBelt.ballsHeld > 0) {
-			new ResetConveyor(robotContainer.conveyorBelt);
 		}
 		
 		//CommandScheduler.getInstance().schedule(new IntakeSequence(m_robotContainer.shooter));
