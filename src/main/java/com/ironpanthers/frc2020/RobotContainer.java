@@ -8,6 +8,7 @@
 package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.commands.IntakeSequence;
+import com.ironpanthers.frc2020.commands.ResetConveyor;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
@@ -30,9 +31,10 @@ public class RobotContainer {
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public final Shooter shooter = new Shooter();
-	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
-	private final Joystick joystick = new Joystick(Constants.OI.JOYSTICK_PORT);
-	private final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
+	public final ConveyorBelt conveyorBelt = new ConveyorBelt();
+	public final Joystick joystick = new Joystick(Constants.OI.JOYSTICK_PORT);
+	public final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
+
 	public RobotContainer() {
 		// Configure the button bindings
 
@@ -47,6 +49,7 @@ public class RobotContainer {
 	 */
 	private void configureButtonBindings() {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
+		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
 	}
 
 	/**

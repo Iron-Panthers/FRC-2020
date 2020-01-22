@@ -7,6 +7,8 @@
 
 package com.ironpanthers.frc2020;
 
+import com.ironpanthers.frc2020.commands.ResetConveyor;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -20,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
 	private Command m_autonomousCommand;
-	private RobotContainer m_robotContainer;
+	private RobotContainer robotContainer;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -28,10 +30,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// Instantiate our RobotContainer. This will perform all our button bindings,
-		// and put our
-		// autonomous chooser on the dashboard.
-		m_robotContainer = new RobotContainer();
+		new RobotContainer();
 	}
 
 	/**
@@ -75,9 +74,6 @@ public class Robot extends TimedRobot {
 	//	m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.schedule();
-		}
 	}
 
 	/**
@@ -96,6 +92,10 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		if(!robotContainer.conveyorBelt.getBannerSensor() && robotContainer.conveyorBelt.ballsHeld > 0) {
+			new ResetConveyor(robotContainer.conveyorBelt);
+		}
+		
 		//CommandScheduler.getInstance().schedule(new IntakeSequence(m_robotContainer.shooter));
 	}
 

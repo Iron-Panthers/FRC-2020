@@ -36,6 +36,7 @@ public final class Constants {
     public final class OI {
         public static final int JOYSTICK_PORT = 0;
         public static final int INTAKE_BUTTON_PORT = 4;
+		public static final int RESET_CONVEYOR_BUTTON_PORT = 3;
     }
     public final class Conveyor {
         //Ports
@@ -55,10 +56,9 @@ public final class Constants {
         //Encoder Stuff
 		public static final double DISTANCE_PERENCODER_ROTATION = .1;
 		public static final double PULSES_PERENCODER_ROTATION = .25;
-        public static final int TICK_ERROR_TOLLERANCE = 700;//TODO:find acceptable error tolerance
+        public static final int TICK_ERROR_TOLLERANCE = 700;
         /**needs to move conveyer exactly one ball length backward */
-        public static final int TICKS_PREP_DISTANCE = -21000;//TODO:figure out what this needs to be using motion magic
-
+        public static final int TICKS_PREP_DISTANCE = -21000;
     }
     public final class Vision {
         /** Height from ground to limelight in inches */

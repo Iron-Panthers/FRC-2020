@@ -12,7 +12,7 @@ import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ConveyorToDefault extends CommandBase {
+public class ResetConveyor extends CommandBase {
 	/**
 	 * Creates a new ConveyorToDefault.
 	 */
@@ -20,7 +20,7 @@ public class ConveyorToDefault extends CommandBase {
 	private double encoderStartTicks;
 	private ConveyorBelt conveyor;
 
-	public ConveyorToDefault(ConveyorBelt conveyor) {
+	public ResetConveyor(ConveyorBelt conveyor) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		addRequirements(conveyor);
 		this.conveyor = conveyor;
@@ -42,11 +42,10 @@ public class ConveyorToDefault extends CommandBase {
 		// If the banner is not seen this means no ball was taken in and thus run the conveyor
 		// backwards to the state prior to intaking.
 		if (!bannerSensor) {
-			conveyor.setPosition(encoderStartTicks + Constants.Conveyor.TICKS_PREP_DISTANCE);
+			conveyor.setPosition(encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE);
 		} 
 
 	}
-
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
