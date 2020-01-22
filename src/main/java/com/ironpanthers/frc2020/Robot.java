@@ -10,6 +10,7 @@ package com.ironpanthers.frc2020;
 import com.ironpanthers.frc2020.commands.ResetConveyor;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -104,6 +105,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putNumber("Shooter Current", m_robotContainer.shooter.shooter1.getStatorCurrent());
 	}
 
 	@Override
