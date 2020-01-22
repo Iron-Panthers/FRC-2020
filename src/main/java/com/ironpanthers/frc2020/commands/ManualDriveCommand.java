@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.function.DoubleSupplier;
 
 import com.ironpanthers.frc2020.subsystems.Drive;
+import com.ironpanthers.util.Deadband;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,8 +31,8 @@ public class ManualDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        final var y = forward.getAsDouble();
-        final var x = turn.getAsDouble();
+        final var y = Deadband.apply(forward.getAsDouble(), 0.1);
+        final var x = Deadband.apply(turn.getAsDouble(), 0.1);
         final var direction = reverseTrigger.get();
 
         final var leftOutputUnscaled = direction ? y + x : -y - x;
