@@ -46,7 +46,7 @@ public class RobotContainer {
 	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-		intakeButton.whenPressed(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
+		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 	}
 
 	/**

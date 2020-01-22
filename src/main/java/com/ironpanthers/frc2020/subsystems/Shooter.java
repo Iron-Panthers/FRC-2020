@@ -24,16 +24,16 @@ public class Shooter extends SubsystemBase {
 	public final TalonFX shooter1;
 	public final TalonFX shooter2;
 	public final TalonFX shooter3;
-	public final TalonSRX b;
+	public final TalonFX intakeMotor;
 
 	public Shooter() {
 		shooter1 = new TalonFX(Constants.Shooter.SHOOTER_ONE_PORT);
 		shooter2 = new TalonFX(Constants.Shooter.SHOOTER_TWO_PORT);
 		shooter3 = new TalonFX(Constants.Shooter.SHOOTER_THREE_PORT);
-		b = new TalonSRX(Constants.Conveyor.CONVEYOR_BELT_MOTOR_PORT);
+		intakeMotor = new TalonFX(Constants.Conveyor.INTAKE_MOTOR_PORT);
 
 		// Config
-		b.setNeutralMode(NeutralMode.Coast);
+		intakeMotor.setNeutralMode(NeutralMode.Coast);
 		shooter1.setNeutralMode(NeutralMode.Coast);
 		shooter2.setNeutralMode(NeutralMode.Coast);
 		shooter3.setNeutralMode(NeutralMode.Coast);
@@ -49,7 +49,7 @@ public class Shooter extends SubsystemBase {
 	}
 
 	public void setIntakeMotors(double intakeMotorSpeed, double ShooterMotorSpeed) {
-		b.set(ControlMode.PercentOutput, intakeMotorSpeed);
+		intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
 		shooter1.set(ControlMode.PercentOutput, ShooterMotorSpeed);
 	}
 

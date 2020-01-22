@@ -35,27 +35,30 @@ public final class Constants {
      */
     public final class OI {
         public static final int JOYSTICK_PORT = 0;
-        public static final int INTAKE_BUTTON_PORT = 0;
+        public static final int INTAKE_BUTTON_PORT = 4;
     }
     public final class Conveyor {
         //Ports
-        public static final int CANCODER_PORT = 0; //tbd
-        public static final int CONVEYOR_BELT_MOTOR_PORT = 0; //tbd
+        public static final int CONVEYOR_BELT_MOTOR_PORT = 3;
+        public static final int INTAKE_MOTOR_PORT = 1;
+        public static final int BANNER_SENSOR_PORT = 0;
+
 
         //Size Constants
         public static final double POWER_CELL_DIAMETER = 7; //in inches
 
         //Powers
         public static final double CONVEYOR_BELT_MOTOR_POWER = 0.5; //tbd
-        public static final double INTAKE_MOTOR_POWER = 0.5; //tbd
-        public static final double SHOOTER_MOTOR_POWER = 0.25; //tbd
+        public static final double INTAKE_MOTOR_POWER = -1; //tbd
+        public static final double SHOOTER_MOTOR_POWER = -.5; //tbd
 
         //Encoder Stuff
 		public static final double DISTANCE_PERENCODER_ROTATION = .1;
 		public static final double PULSES_PERENCODER_ROTATION = .25;
-        public static final double TICK_ERROR_TOLLERANCE = 0;//TODO:find acceptable error tolerance
+        public static final int TICK_ERROR_TOLLERANCE = 700;//TODO:find acceptable error tolerance
         /**needs to move conveyer exactly one ball length backward */
-        public static final double TICKS_PREP_DISTANCE = 0;//TODO:figure out what this needs to be using motion magic
+        public static final int TICKS_PREP_DISTANCE = -21000;//TODO:figure out what this needs to be using motion magic
+
     }
     public final class Vision {
         /** Height from ground to limelight in inches */
@@ -76,9 +79,9 @@ public final class Constants {
         public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
     }
     public final class Shooter {
-        public static final int SHOOTER_ONE_PORT = 1;
+        public static final int SHOOTER_ONE_PORT = 2;
         public static final int SHOOTER_TWO_PORT = 2;
-		public static final int SHOOTER_THREE_PORT = 3;
+		public static final int SHOOTER_THREE_PORT = 2;
         public static final double shooterSpeed = 0.5;
         public static final boolean kCompetitionMode = false;
         public static final int SHOOTER_VELOCITY_IDX = 0;

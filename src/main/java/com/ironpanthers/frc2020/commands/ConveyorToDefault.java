@@ -29,8 +29,9 @@ public class ConveyorToDefault extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		if (conveyor.conveyorFull()) cancel();
 		bannerSensor = conveyor.getBannerSensor();
-		encoderStartTicks = conveyor.encoder.getPosition();
+		encoderStartTicks = conveyor.getPosition();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -56,10 +57,8 @@ public class ConveyorToDefault extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		if (!bannerSensor) {
-			return (conveyor.encoder.getPosition() - encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE) < Constants.Conveyor.TICK_ERROR_TOLLERANCE;
-		} else {
-			return true;
-		}
-
+			return conveyor.getPosition() >= encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE - Constants.Conveyor.TICK_ERROR_TOLLERANCE;
+		} 
+		return true;
 	}
 }

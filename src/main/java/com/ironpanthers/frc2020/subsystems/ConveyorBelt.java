@@ -9,34 +9,37 @@ package com.ironpanthers.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.sensors.CANCoder;
 import com.ironpanthers.frc2020.Constants;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ConveyorBelt extends SubsystemBase {
-	public static TalonFX conveyorMotor;
-	private static DigitalInput input;
-	public CANCoder encoder;
+	public TalonFX conveyorMotor;
+	public DigitalInput input;
 	public int ballsHeld;
 
 	public ConveyorBelt() {
-    conveyorMotor = new TalonFX(Constants.Conveyor.CONVEYOR_BELT_MOTOR_PORT);
-    conveyorMotor.config_kP(0, .420);
-    conveyorMotor.configClosedloopRamp(.4);
-
-
-		encoder = new CANCoder(Constants.Conveyor.CANCODER_PORT);
+		input = new DigitalInput(Constants.Conveyor.BANNER_SENSOR_PORT);
+		conveyorMotor = new TalonFX(Constants.Conveyor.CONVEYOR_BELT_MOTOR_PORT);
+		conveyorMotor.config_kP(0, .13);
+		conveyorMotor.configClosedloopRamp(.6);
 		ballsHeld = 0;
+		conveyorMotor.setSelectedSensorPosition(0);
+	}
+
+	public int getPosition() {
+		return conveyorMotor.getSelectedSensorPosition();
 	}
 
 	public boolean getBannerSensor() {
 		return input.get();
 	}
-  public void setPosition(double ticks) {
-    conveyorMotor.set(TalonFXControlMode.Position, ticks);
-  }
+
+	public void setPosition(double ticks) {
+		conveyorMotor.set(TalonFXControlMode.Position, ticks);
+	}
+
 	public void setPower(double power) {
 		conveyorMotor.set(TalonFXControlMode.PercentOutput, power);
 	}

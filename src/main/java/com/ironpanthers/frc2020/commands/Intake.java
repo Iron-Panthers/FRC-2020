@@ -44,12 +44,13 @@ public class Intake extends CommandBase {
 	@Override
 	public void execute() {
 		shooter.setIntakeMotors(Constants.Conveyor.INTAKE_MOTOR_POWER, Constants.Conveyor.SHOOTER_MOTOR_POWER);
+		System.out.println(conveyor.getBannerSensor());
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		shooter.stopIntake();
+		shooter.setIntakeMotors(0, 0);
 	}
 
 	// Returns true when the command should end.

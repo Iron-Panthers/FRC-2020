@@ -7,8 +7,6 @@
 
 package com.ironpanthers.frc2020;
 
-import com.ironpanthers.frc2020.commands.TuneShooterPID;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -98,7 +96,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		CommandScheduler.getInstance().schedule(new TuneShooterPID(m_robotContainer.shooter));
+		//CommandScheduler.getInstance().schedule(new IntakeSequence(m_robotContainer.shooter));
 	}
 
 	/**
