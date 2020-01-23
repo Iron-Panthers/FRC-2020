@@ -16,7 +16,7 @@
     # Encoder pulses-per-revolution (*NOT* cycles per revolution!)
     # This value should be the pulses per revolution *of the wheels*, and so
     # should take into account gearing between the encoder and the wheels
-    "encoderPPR": 4096,
+    "encoderEPR": 4096,
     # Whether the left encoder is inverted
     "leftEncoderInverted": False,
     # Whether the right encoder is inverted:
@@ -33,3 +33,4 @@
     # "" (NavX using default SPI, ADXRS450 using onboard CS0, or no gyro)
     "gyroPort": "",
 }
+
