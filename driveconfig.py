@@ -2,9 +2,9 @@
     "rightControllerTypes": ["WPI_TalonFX", "WPI_TalonFX"],
     "leftControllerTypes": ["WPI_TalonFX", "WPI_TalonFX"],
     # Ports for the left-side motors
-    "leftMotorPorts": [11, 12],
+    "leftMotorPorts": [1, 21],
     # Ports for the right-side motors
-    "rightMotorPorts": [13, 14],
+    "rightMotorPorts": [2, 22],
     # Inversions for the left-side motors
     "leftMotorsInverted": [True, True],
     # Inversions for the right side motors
@@ -22,7 +22,7 @@
     # Whether the right encoder is inverted:
     "rightEncoderInverted": False,
     # Your gyro type (one of "NavX", "Pigeon", "ADXRS450", "AnalogGyro", or "None")
-    "gyroType": "None",
+    "gyroType": "Pigeon",
     # Whatever you put into the constructor of your gyro
     # Could be:
     # "SPI.Port.kMXP" (MXP SPI port for NavX or ADXRS450),
@@ -31,6 +31,6 @@
     # "new WPI_TalonSRX(3)" (Pigeon on a Talon SRX),
     # "leftSlave" (Pigeon on the left slave Talon SRX/FX),
     # "" (NavX using default SPI, ADXRS450 using onboard CS0, or no gyro)
-    "gyroPort": "",
+    "gyroPort": "31",
 }
 

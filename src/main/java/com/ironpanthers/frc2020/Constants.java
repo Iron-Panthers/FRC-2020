@@ -39,10 +39,10 @@ public final class Constants {
     public static final int kFalconTicksToRevs = 4096; // TODO(ingi)
 
     public static class Drive {
-        public static final int kLeft1Id = 11;
-        public static final int kLeft2Id = 12;
-        public static final int kRight1Id = 13;
-        public static final int kRight2Id = 14;
+        public static final int kLeft1Id = 1;
+        public static final int kLeft2Id = 21;
+        public static final int kRight1Id = 2;
+        public static final int kRight2Id = 22;
     
         public static final int kPigeonTalonId = 31;
 
