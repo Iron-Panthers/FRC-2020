@@ -32,8 +32,8 @@ public class VisionTest extends CommandBase {
   @Override
   public void execute() {
     Robot.visionWrapper.loadVariables();
-    SmartDashboard.putNumber("Horizontal distance: ", Robot.visionWrapper.calculateHorizontalDistance());
-
+    System.out.println(Robot.visionWrapper.calculateHorizontalDistance());
+    SmartDashboard.putNumber("angle adjust ", Robot.visionWrapper.calcHoleOffset());
   }
 
   // Called once the command ends or is interrupted.

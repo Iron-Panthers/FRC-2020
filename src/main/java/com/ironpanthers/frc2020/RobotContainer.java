@@ -7,6 +7,9 @@
 
 package com.ironpanthers.frc2020;
 
+import com.ironpanthers.frc2020.commands.TurnToTarget;
+import com.ironpanthers.frc2020.commands.VisionTest;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +48,6 @@ public class RobotContainer {
 	 */
 	public Command getAutonomousCommand() {
 		// An ExampleCommand will run in autonomous
-		return null;
+		return new VisionTest();
 	}
 }
