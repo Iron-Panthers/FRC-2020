@@ -17,6 +17,15 @@ import com.ironpanthers.frc2020.subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import com.ironpanthers.frc2020.commands.IntakeSequence;
+import com.ironpanthers.frc2020.commands.ResetConveyor;
+import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
+import com.ironpanthers.frc2020.subsystems.Shooter;
+
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -35,6 +44,11 @@ public class RobotContainer {
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
+	public final Shooter shooter = new Shooter();
+	public final ConveyorBelt conveyorBelt = new ConveyorBelt();
+	public final Joystick joystick = new Joystick(Constants.OI.JOYSTICK_PORT);
+	public final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
+
 	public RobotContainer() {
 		drive.setDefaultCommand(
 				new ManualDriveCommand(joystick1::getY, joystick1::getX, new JoystickButton(joystick1, 1), drive));
@@ -42,6 +56,7 @@ public class RobotContainer {
 		SmartDashboard.putData("delete soon. fow now: reset drive", new RunCommand(() -> drive.reset()));
 
 		// Configure the button bindings
+
 		configureButtonBindings();
 	}
 
@@ -49,6 +64,8 @@ public class RobotContainer {
 	 * Applies all button->command mappings.
 	 */
 	private void configureButtonBindings() {
+		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
+		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
 	}
 
 	/**
