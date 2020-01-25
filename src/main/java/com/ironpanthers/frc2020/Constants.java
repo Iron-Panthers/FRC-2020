@@ -20,12 +20,8 @@ import static edu.wpi.first.wpilibj.util.Units.inchesToMeters;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    
 
-
-
-
-	private Constants() {
+    private Constants() {
         /* disallow construction of this class */
         throw new UnsupportedOperationException("don't try to construct an instance of Constants");
     }
@@ -47,7 +43,7 @@ public final class Constants {
         public static final int kLeft2Id = 21;
         public static final int kRight1Id = 2;
         public static final int kRight2Id = 22;
-    
+
         public static final int kPigeonTalonId = 31;
 
         public static final double kGearRatio = 5.10; // TODO(ingi)
@@ -64,33 +60,35 @@ public final class Constants {
 
         public static final double kP = 0;
     }
+
     public final class OI {
         public static final int JOYSTICK_PORT = 0;
         public static final int INTAKE_BUTTON_PORT = 4;
-		public static final int RESET_CONVEYOR_BUTTON_PORT = 3;
+        public static final int RESET_CONVEYOR_BUTTON_PORT = 3;
     }
+
     public final class Conveyor {
-        //Ports
-        public static final int CONVEYOR_BELT_MOTOR_PORT = 3;
-        public static final int INTAKE_MOTOR_PORT = 1;
+        // Ports
+        public static final int CONVEYOR_BELT_MOTOR_PORT = 4;
+        public static final int INTAKE_MOTOR_PORT = 3;
         public static final int BANNER_SENSOR_PORT = 0;
 
+        // Size Constants
+        public static final double POWER_CELL_DIAMETER = 7; // in inches
 
-        //Size Constants
-        public static final double POWER_CELL_DIAMETER = 7; //in inches
+        // Powers
+        public static final double CONVEYOR_BELT_MOTOR_POWER = 0.5; // tbd
+        public static final double INTAKE_MOTOR_POWER = -1; // tbd
+        public static final double SHOOTER_MOTOR_POWER = -.5; // tbd
 
-        //Powers
-        public static final double CONVEYOR_BELT_MOTOR_POWER = 0.5; //tbd
-        public static final double INTAKE_MOTOR_POWER = -1; //tbd
-        public static final double SHOOTER_MOTOR_POWER = -.5; //tbd
-
-        //Encoder Stuff
-		public static final double DISTANCE_PERENCODER_ROTATION = .1;
-		public static final double PULSES_PERENCODER_ROTATION = .25;
+        // Encoder Stuff
+        public static final double DISTANCE_PERENCODER_ROTATION = .1;
+        public static final double PULSES_PERENCODER_ROTATION = .25;
         public static final int TICK_ERROR_TOLLERANCE = 700;
-        /**needs to move conveyer exactly one ball length backward */
+        /** needs to move conveyer exactly one ball length backward */
         public static final int TICKS_PREP_DISTANCE = -21000;
     }
+
     public final class Vision {
         /** Height from ground to limelight in inches */
         public static final double HEIGHT_GROUND_TO_LIMELIGHT = 38.5;
@@ -109,17 +107,17 @@ public final class Constants {
         /** Button port to adjust angle of robot */
         public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
     }
+
     public final class Shooter {
-        public static final int SHOOTER_ONE_PORT = 2;
-        public static final int SHOOTER_TWO_PORT = 2;
-		public static final int SHOOTER_THREE_PORT = 2;
+        public static final int SHOOTER_ONE_PORT = 5;
+        public static final int SHOOTER_TWO_PORT = 6;
+        public static final int SHOOTER_THREE_PORT = 7;
         public static final double shooterSpeed = 0.5;
-        public static final boolean kCompetitionMode = false;
         public static final int SHOOTER_VELOCITY_IDX = 0;
         public static final double SHOOTER_CURRENT_LIMIT = 40;
         public static final double SHOOTER_F = 0.053;
         public static final double SHOOTER_P = 0.2;
-        public static final double SHOOTER_MAX_SAFE_VEL = 12000; //Native units
+        public static final double SHOOTER_MAX_SAFE_VEL = 12000; // Native units
         public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
     }
 }

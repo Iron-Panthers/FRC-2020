@@ -22,11 +22,6 @@ import com.ironpanthers.frc2020.commands.ResetConveyor;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -38,20 +33,18 @@ public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
 	private final Drive drive = new Drive();
 
-	// OI devices...
-	private final Joystick joystick1 = new Joystick(0);
+	public final Joystick joystick = new Joystick(Constants.OI.JOYSTICK_PORT);
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public final Shooter shooter = new Shooter();
 	public final ConveyorBelt conveyorBelt = new ConveyorBelt();
-	public final Joystick joystick = new Joystick(Constants.OI.JOYSTICK_PORT);
 	public final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
-				new ManualDriveCommand(joystick1::getY, joystick1::getX, new JoystickButton(joystick1, 1), drive));
+				new ManualDriveCommand(joystick::getY, joystick::getX, new JoystickButton(joystick, 1), drive));
 
 		SmartDashboard.putData("delete soon. fow now: reset drive", new RunCommand(() -> drive.reset()));
 
