@@ -122,5 +122,20 @@ public final class Constants {
 		public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
 		public static final int SHOOTER_VELOCITY_THRESHOLD = 300; // Acceptable error in velocity before shooting
 		public static final int SHOOTER_TEST_VELOCITY = 15000;
-    }
+	}
+	
+	public final class Arm {
+		public static final int ARM_LEFT_PORT = 9;
+		public static final int ARM_RIGHT_PORT = 10;
+		public static final boolean IS_LEFT_ARM_INVERTED = true;
+		public static final boolean IS_RIGHT_ARM_INVERTED = false;
+		public static final int ARM_POSITION_PID_SLOT = 0;
+		public static final int ARM_VELOCITY_PID_SLOT = 1;
+
+		public static final double ARM_POSITION_P = 0;
+		public static final double ARM_POSITION_I = 0;
+		public static final double ARM_POSITION_D = 0;
+		public static final double ARM_POSITION_F = 0;
+
+	}
 }

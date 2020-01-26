@@ -80,7 +80,7 @@ public class Shooter extends SubsystemBase {
 	}
 
 	public double getVoltage() {
-		return shooter1.getBusVoltage();
+		return shooter1.getMotorOutputVoltage();
 	}
 
 	public double getCurrent() {
