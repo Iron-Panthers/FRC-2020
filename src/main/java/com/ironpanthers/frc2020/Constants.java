@@ -64,7 +64,8 @@ public final class Constants {
     public final class OI {
         public static final int JOYSTICK_PORT = 0;
         public static final int INTAKE_BUTTON_PORT = 4;
-        public static final int RESET_CONVEYOR_BUTTON_PORT = 3;
+		public static final int RESET_CONVEYOR_BUTTON_PORT = 3;
+		public static final int SHOOT_WITH_VELOCITY_PORT = 5;
     }
 
     public final class Conveyor {
@@ -118,6 +119,8 @@ public final class Constants {
         public static final double SHOOTER_F = 0.053;
         public static final double SHOOTER_P = 0.2;
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; // Native units
-        public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
+		public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
+		public static final int SHOOTER_VELOCITY_THRESHOLD = 300; // Acceptable error in velocity before shooting
+		public static final int SHOOTER_TEST_VELOCITY = 15000;
     }
 }
