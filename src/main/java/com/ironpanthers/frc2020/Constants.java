@@ -24,9 +24,9 @@ public final class Constants {
     }
     public final class Vision {
         /** Height from ground to limelight in inches */
-        public static final double HEIGHT_GROUND_TO_LIMELIGHT = 18;
+        public static final double HEIGHT_GROUND_TO_LIMELIGHT = 0.0;
         /** Height from ground to target in inches */
-        public static final double HEIGHT_GROUND_TO_TARGET = 108;
+        public static final double HEIGHT_GROUND_TO_TARGET = 52.5;
         /** Angle from mount to limelight in degrees */
         public static final double ANGLE_MOUNT_TO_LIMELIGHT = 31.0;
         /** Proportional control constant */

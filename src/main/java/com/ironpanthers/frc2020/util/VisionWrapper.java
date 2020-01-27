@@ -22,8 +22,7 @@ public class VisionWrapper {
     public double x;
     public double y;
     public double v;
-    public double[] tcornx;
-    public double[] tcorny;
+    public double[] tcornxy;
     // public Number[] tcornx;
     // public Number[] tcorny;
 
@@ -32,7 +31,7 @@ public class VisionWrapper {
     }
 
     public void loadVariables() {
-        table = NetworkTableInstance.getDefault().getTable("limelight-a");
+        table = NetworkTableInstance.getDefault().getTable("limelight");
         tx = table.getEntry("tx").getDouble(0.0);
         ty = table.getEntry("ty").getDouble(0.0);
         tv = table.getEntry("tv").getDouble(0.0);
@@ -43,10 +42,7 @@ public class VisionWrapper {
         thor = table.getEntry("thor").getDouble(0.0);
         // tcornx = table.getEntry("tcornx").getNumberArray(new Number[1]);
         // tcorny = table.getEntry("tcorny").getNumberArray(new Number[1]);
-        tcorny = table.getEntry("tcorny").getDoubleArray(new double[4]);
-        tcornx = table.getEntry("tcornx").getDoubleArray(new double[1]);
-        System.out.print(table.getEntry("tcornx").getDoubleArray(new double[1]));
-
+        tcornxy = table.getEntry("tcornxy").getDoubleArray(new double[1]);
     }
 
     public double getTableX() {
@@ -84,10 +80,18 @@ public class VisionWrapper {
 
     public double calcHoleOffset() {
 
-        if(tcornx.length < 4 || tcorny.length < 4) {
-            SmartDashboard.putNumber("tcornx length", tcornx.length);
+        if(tcornxy.length != 8) {
+            SmartDashboard.putNumber("tcornxy length", tcornxy.length);
+            SmartDashboard.putNumber("four corners of the target cannot be used", 0);
             return 0.0;
         }
+
+        // for(int i = 0; i < tcornxy.length; i++) {
+        //     SmartDashboard.putNumber("tcornxy " + i, tcornxy[i]);
+        // }
+
+        double[] tcornx = {tcornxy[0], tcornxy[2], tcornxy[4], tcornxy[6]};
+        double[] tcorny = {tcornxy[1], tcornxy[3], tcornxy[5], tcornxy[7]};
 
         double tleftx = 0; //x coord of top left corner of hexagon
         double tlefty = 0;
@@ -100,15 +104,6 @@ public class VisionWrapper {
 
         double[] orderedx = new double[4];
         double[] orderedy = new double[4];
-
-        SmartDashboard.putNumber("corn1x", tcornx[0]);
-        SmartDashboard.putNumber("corn2x", tcornx[1]);
-        SmartDashboard.putNumber("corn3x", tcornx[2]);
-        SmartDashboard.putNumber("corn4x", tcornx[3]);
-        SmartDashboard.putNumber("corn1y", tcorny[0]);
-        SmartDashboard.putNumber("corn2y", tcorny[1]);
-        SmartDashboard.putNumber("corn3y", tcorny[2]);
-        SmartDashboard.putNumber("corn4y", tcorny[3]);
 
         //keeps associated x and y values from tcornx and tcorn y at the same index as each other in the new lists.
         //orders the list from lowest to highest x

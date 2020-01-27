@@ -32,7 +32,7 @@ public class VisionTest extends CommandBase {
   @Override
   public void execute() {
     Robot.visionWrapper.loadVariables();
-    System.out.println(Robot.visionWrapper.calculateHorizontalDistance());
+    SmartDashboard.putNumber("x offset from center screem", Robot.visionWrapper.getTableX());
     SmartDashboard.putNumber("angle adjust ", Robot.visionWrapper.calcHoleOffset());
   }
 
