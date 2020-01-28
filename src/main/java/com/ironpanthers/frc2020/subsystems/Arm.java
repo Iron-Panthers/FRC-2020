@@ -7,6 +7,8 @@
 
 package com.ironpanthers.frc2020.subsystems;
 
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -16,7 +18,6 @@ import com.ironpanthers.frc2020.subsystems.Arm;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
@@ -75,8 +76,6 @@ public class Arm extends SubsystemBase {
 		armLeft.set(TalonFXControlMode.MotionMagic, target);
 	}
 
-<<<<<<< HEAD
-=======
 	public void setFeedForward(int target){ //TODO figure out how to get target position
 		double scaledAngle = Math.cos(Math.toRadians(getCurrentAngle()));
 		armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward, Constants.Arm.MAX_FF * scaledAngle);
@@ -90,7 +89,6 @@ public class Arm extends SubsystemBase {
 		return currentAngle;
 	}
 	
->>>>>>> temporary-combined-mechanisms
 	public int getVelocity() {
 		return armLeft.getSelectedSensorVelocity();
 	}
