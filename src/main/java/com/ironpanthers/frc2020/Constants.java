@@ -130,7 +130,11 @@ public final class Constants {
 		public static final boolean IS_LEFT_ARM_INVERTED = true;
 		public static final boolean IS_RIGHT_ARM_INVERTED = false;
 		public static final int ARM_POSITION_PID_SLOT = 0;
-		public static final int ARM_VELOCITY_PID_SLOT = 1;
+        public static final int ARM_VELOCITY_PID_SLOT = 1;
+        public static final double TICKS_TO_DEGREES = 360 * 4096;
+        public static final double ARM_ANGLE_OFFSET = 0; //TODO find this value
+        public static final double ARM_INITIAL_HEIGHT = 0; //TODO find this value
+        public static final double MAX_FF = 0.07;
 
 		public static final double ARM_POSITION_P = 0;
 		public static final double ARM_POSITION_I = 0;
