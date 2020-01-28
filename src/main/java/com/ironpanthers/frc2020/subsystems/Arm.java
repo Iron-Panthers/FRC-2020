@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
@@ -66,14 +67,16 @@ public class Arm extends SubsystemBase {
 		armLeft.set(TalonFXControlMode.MotionMagic, target);
 	}
 
-	public void setFeedForward(double targetPos){ //TODO figure out how to get target position
+	public void setFeedForward(int target){ //TODO figure out how to get target position
 		double scaledAngle = Math.cos(Math.toRadians(getCurrentAngle()));
-		armLeft.set(ControlMode.MotionMagic, targetPos, DemandType.ArbitraryFeedForward, Constants.Arm.MAX_FF * scaledAngle);
+		armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward, Constants.Arm.MAX_FF * scaledAngle);
+		SmartDashboard.putNumber("Arbitrary Feedforward", Constants.Arm.MAX_FF * scaledAngle);
 	}
 
 	//return angle in degrees
 	public double getCurrentAngle(){
 		double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.TICKS_TO_DEGREES) + Constants.Arm.ARM_ANGLE_OFFSET;
+		SmartDashboard.putNumber("Current angle", currentAngle);
 		return currentAngle;
 	}
 	
