@@ -33,7 +33,7 @@ public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
 	private final Drive drive = new Drive();
 
-	public final Joystick joystick = new Joystick(Constants.OI.JOYSTICK_PORT);
+	public static final Joystick joystick = new Joystick(Constants.OI.JOYSTICK_PORT);
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.

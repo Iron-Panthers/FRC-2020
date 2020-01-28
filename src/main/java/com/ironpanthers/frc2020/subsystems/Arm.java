@@ -7,18 +7,24 @@
 
 package com.ironpanthers.frc2020.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.RobotContainer;
+import com.ironpanthers.frc2020.subsystems.Arm;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
-	private TalonFX armLeft;
-	private TalonFX armRight;
+	public static TalonFX armLeft;
+	public static TalonFX armRight;
+	private DigitalInput forwardLimitSwitch;
+	private DigitalInput reverseLimitSwitch;
+	private RobotContainer robotContainer;
+
 	/**
 	 * Creates a new Arm.
 	 */
@@ -31,6 +37,8 @@ public class Arm extends SubsystemBase {
 		armLeft.setNeutralMode(NeutralMode.Brake);
 		armRight.setNeutralMode(NeutralMode.Brake);
 		armRight.follow(armLeft);
+		forwardLimitSwitch = new DigitalInput(Constants.Arm.FORWARD_LIMIT_SWTICH_PORT);
+		reverseLimitSwitch = new DigitalInput(Constants.Arm.REVERSE_LIMIT_SWITCH_PORT);
 	}
 
 	public void setPower(double power) {
@@ -66,17 +74,6 @@ public class Arm extends SubsystemBase {
 		armLeft.set(TalonFXControlMode.MotionMagic, target);
 	}
 
-	public void setFeedForward(double targetPos){ //TODO figure out how to get target position
-		double scaledAngle = Math.cos(Math.toRadians(getCurrentAngle()));
-		armLeft.set(ControlMode.MotionMagic, targetPos, DemandType.ArbitraryFeedForward, Constants.Arm.MAX_FF * scaledAngle);
-	}
-
-	//return angle in degrees
-	public double getCurrentAngle(){
-		double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.TICKS_TO_DEGREES) + Constants.Arm.ARM_ANGLE_OFFSET;
-		return currentAngle;
-	}
-	
 	public int getVelocity() {
 		return armLeft.getSelectedSensorVelocity();
 	}
@@ -91,6 +88,16 @@ public class Arm extends SubsystemBase {
 
 	@Override
 	public void periodic() {
+		int output = (int) RobotContainer.joystick.getY();
+		if (forwardLimitSwitch.get()) {
+			output = Math.min(-output, 0);
+		}
+		else if (reverseLimitSwitch.get()) {
+			output = Math.max(-output, 0);
+		}	
+		Arm.armLeft.set(TalonFXControlMode.PercentOutput, output*Constants.Arm.LIMIT_SWITCH_P);
+		Arm.armRight.set(TalonFXControlMode.PercentOutput, output*Constants.Arm.LIMIT_SWITCH_P);
+		SmartDashboard.putNumber("Shooter Current", robotContainer.shooter.shooter1.getStatorCurrent());
 		// This method will be called once per scheduler run
 	}
 }

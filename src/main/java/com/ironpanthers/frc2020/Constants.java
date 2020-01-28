@@ -139,7 +139,12 @@ public final class Constants {
 		public static final double ARM_POSITION_P = 0;
 		public static final double ARM_POSITION_I = 0;
 		public static final double ARM_POSITION_D = 0;
-		public static final double ARM_POSITION_F = 0;
+        public static final double ARM_POSITION_F = 0;
+        
+        public static final int REVERSE_LIMIT_SWITCH_PORT = 0;
+        public static final int FORWARD_LIMIT_SWTICH_PORT = 0;
+        
+        public static final double LIMIT_SWITCH_P = 0.1;
 
 	}
 }
