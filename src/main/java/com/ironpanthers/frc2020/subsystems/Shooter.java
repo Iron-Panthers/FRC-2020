@@ -49,6 +49,7 @@ public class Shooter extends SubsystemBase {
 		// Follow
 		shooter2.follow(shooter1);
 		shooter3.follow(shooter1);
+		configPIDF(Constants.Shooter.SHOOTER_P, 0, 0, Constants.Shooter.SHOOTER_F, Constants.Shooter.SHOOTER_VELOCITY_IDX);
 	}
 
 	public void setIntakeMotors(double intakeMotorSpeed, double ShooterMotorSpeed) {

@@ -47,7 +47,7 @@ public class RobotContainer {
 	public final Arm arm = new Arm();
 	// Driver A Buttons
 	public final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
-	public final JoystickButton shooterButton = new JoystickButton(joystick, Constants.OI.SHOOT_WITH_VELOCITY_PORT);
+	public final JoystickButton shooterButton = new JoystickButton(joystick, 5);
 
 	// Driver B Buttons
 	public final JoystickButton manualArm = new JoystickButton(armJoystick, Constants.OI.MANUAL_ARM_BUTTON);
