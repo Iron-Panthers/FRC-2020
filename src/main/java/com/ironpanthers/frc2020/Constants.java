@@ -151,8 +151,10 @@ public final class Constants {
 		public static final int BOTTOM_SOFT_LIMIT = SOFT_LIMIT_THRESHOLD;
 		public static final int TOP_SOFT_LIMIT = TOP_ARM_POSITION - SOFT_LIMIT_THRESHOLD;
 		public static final double MAX_ARM_PID_OUTPUT = 0.5; // Used for both positive and negative direction
-		public static final double SLOW_ARM_THRESHOLD = 1000; // Threshold to hard limit in which the output of the arm motors are scaled down
-		public static final double SLOW_ARM_SCALAR = 0.5;
+		public static final int SLOW_ARM_THRESHOLD = 1000; // Threshold to soft limit in which the output of the arm motors are scaled down
+		public static final double SLOW_ARM_PID_OUTPUT = 0.25;
+		public static final int BOTTOM_SLOW_LIMIT = BOTTOM_SOFT_LIMIT + SLOW_ARM_THRESHOLD;
+		public static final int TOP_SLOW_LIMIT = TOP_SOFT_LIMIT - SLOW_ARM_THRESHOLD;
 
 		public static final double ARM_CURRENT_LIMIT = 60.0; // Amps
 	}

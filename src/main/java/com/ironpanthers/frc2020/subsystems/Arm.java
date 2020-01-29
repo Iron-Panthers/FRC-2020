@@ -24,12 +24,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Arm extends SubsystemBase {
 	public static TalonFX armLeft;
 	public static TalonFX armRight;
-	public Encoder encoder;
 	private DigitalInput forwardLimitSwitch;
 	private DigitalInput reverseLimitSwitch;
 	private RobotContainer robotContainer;
 	private int target;
-	private double horizontalHoldOuput; //TODO figure out this value by testing
+	private double horizontalHoldOuput; // TODO figure out this value by testing
 
 	/**
 	 * Creates a new Arm. For limits, forward refers to the front, in which the arm
@@ -86,6 +85,7 @@ public class Arm extends SubsystemBase {
 
 	public void setPosition(int target) {
 		armLeft.set(TalonFXControlMode.Position, target);
+		this.target = target;
 	}
 
 	/**
@@ -95,9 +95,10 @@ public class Arm extends SubsystemBase {
 		armLeft.set(TalonFXControlMode.MotionMagic, target);
 	}
 
-	public void setFeedForward() { 
+	public void setFeedForward() {
 		double scaledAngle = Math.cos(Math.toRadians(getCurrentAngle()));
-		armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward, Constants.Arm.MAX_FF * scaledAngle);
+		armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward,
+				Constants.Arm.MAX_FF * scaledAngle);
 		SmartDashboard.putNumber("Arbitrary Feedforward", horizontalHoldOuput * scaledAngle);
 	}
 
@@ -106,8 +107,12 @@ public class Arm extends SubsystemBase {
 		double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.TICKS_TO_DEGREES)
 				+ Constants.Arm.ARM_ANGLE_OFFSET;
 		SmartDashboard.putNumber("Current angle", currentAngle);
-		//returns angle in degrees
-		return currentAngle; 
+		// returns angle in degrees
+		return currentAngle;
+	}
+
+	public int getPosition() {
+		return armLeft.getSelectedSensorPosition();
 	}
 
 	public int getVelocity() {
@@ -128,13 +133,15 @@ public class Arm extends SubsystemBase {
 			armLeft.setSelectedSensorPosition(0);
 		} else if (reverseLimitSwitch.get()) {
 			armLeft.setSelectedSensorPosition(Constants.Arm.TOP_ARM_POSITION);
-		if (encoder.getDistance() < Constants.Arm.ARM_TICKS && encoder.getDistance() > Constants.Arm.ARM_TICKS-1000) {
-			Arm.armLeft.set(TalonFXControlMode.PercentOutput, 0.001*(Constants.Arm.ARM_TICKS - encoder.getDistance()));
 		}
-		// TODO: if within the slow threshold, limit output to scaled regular output
-		else if (encoder.getDistance() >0  && encoder.getDistance() < 1000) {
-			Arm.armLeft.set(TalonFXControlMode.PercentOutput, 0.001*(Constants.Arm.ARM_TICKS - encoder.getDistance()));
-		}	
+		// If within the slow threshold, limit output to scaled regular output
+		if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() > Constants.Arm.TOP_SLOW_LIMIT) {
+			armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.SLOW_ARM_PID_OUTPUT);
+		}
+		// If out of the slow threshold, reset output to correct value
+		else {
+			armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
+		}
 		SmartDashboard.putNumber("Shooter Current", robotContainer.shooter.shooter1.getStatorCurrent());
 		
 		// This method will be called once per scheduler run
