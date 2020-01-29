@@ -9,9 +9,11 @@ package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
 import com.ironpanthers.frc2020.commands.IntakeSequence;
+import com.ironpanthers.frc2020.commands.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.ResetConveyor;
 import com.ironpanthers.frc2020.commands.ShootAtVelocity;
+import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
@@ -33,15 +35,21 @@ public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
 	private final Drive drive = new Drive();
 
-	public static final Joystick joystick = new Joystick(Constants.OI.JOYSTICK_PORT);
+	public static final Joystick joystick = new Joystick(Constants.OI.DRIVE_JOYSTICK);
+	public static final Joystick armJoystick = new Joystick(Constants.OI.ARM_JOYSTICK);
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public final Shooter shooter = new Shooter();
 	public final ConveyorBelt conveyorBelt = new ConveyorBelt();
+	public final Arm arm = new Arm();
+	// Driver A Buttons
 	public final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
 	public final JoystickButton plzWorkButton = new JoystickButton(joystick, Constants.OI.SHOOT_WITH_VELOCITY_PORT);
+
+	// Driver B Buttons
+	public final JoystickButton manualArm = new JoystickButton(armJoystick, Constants.OI.MANUAL_ARM_BUTTON);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -58,9 +66,13 @@ public class RobotContainer {
 	 * Applies all button->command mappings.
 	 */
 	private void configureButtonBindings() {
+		// Driver A
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
 		plzWorkButton.whileHeld(new ShootAtVelocity(shooter, conveyorBelt, Constants.Shooter.SHOOTER_TEST_VELOCITY));
+
+		// Driver B
+		manualArm.whileHeld(new ManualArmCommand(arm, armJoystick::getY));
 	}
 
 	/**
