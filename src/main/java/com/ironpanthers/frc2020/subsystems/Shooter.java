@@ -71,6 +71,7 @@ public class Shooter extends SubsystemBase {
 
 	public void setVelocity(double nativeUnits) {
 		shooter1.set(TalonFXControlMode.Velocity, nativeUnits);
+		System.out.println("Wee you are setting the shooter to a velocity");
 	}
 
 	public void configPIDF(double p, double i, double d, double f, int idx) {

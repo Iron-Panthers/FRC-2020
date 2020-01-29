@@ -12,7 +12,6 @@ import com.ironpanthers.frc2020.commands.IntakeSequence;
 import com.ironpanthers.frc2020.commands.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.ResetConveyor;
-import com.ironpanthers.frc2020.commands.ShootAtVelocity;
 import com.ironpanthers.frc2020.commands.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
