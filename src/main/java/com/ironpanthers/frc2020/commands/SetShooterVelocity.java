@@ -8,7 +8,6 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,9 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class SetShooterVelocity extends CommandBase {
 	private Shooter shooter;
-	private ConveyorBelt conveyor;
 	private int velocity;
-	private int ballsHeld;
 	/**
 	 * Creates a new ShootAtVelocity.
 	 */
@@ -27,7 +24,6 @@ public class SetShooterVelocity extends CommandBase {
 		addRequirements(shooter);
 		this.shooter = shooter;
 		this.velocity = velocity;
-		ballsHeld = conveyor.ballsHeld;
 	}
 
 	// Called when the command is initially scheduled.
