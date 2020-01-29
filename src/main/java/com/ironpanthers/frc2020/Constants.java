@@ -149,8 +149,8 @@ public final class Constants {
 		public static final double ARM_POSITION_D = 0;
         public static final double ARM_POSITION_F = 0;
         
-        public static final int REVERSE_LIMIT_SWITCH_PORT = 1;
-        public static final int FORWARD_LIMIT_SWTICH_PORT = 0;
+        public static final int REVERSE_LIMIT_SWITCH_PORT = 0;
+        public static final int FORWARD_LIMIT_SWTICH_PORT = 1;
 		
 		// Soft Limits
 		public static final int BOTTOM_ARM_POSITION = 0;
