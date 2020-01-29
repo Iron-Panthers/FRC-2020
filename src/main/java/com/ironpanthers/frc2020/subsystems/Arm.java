@@ -16,6 +16,7 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.RobotContainer;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Arm extends SubsystemBase {
 	public static TalonFX armLeft;
 	public static TalonFX armRight;
+	public Encoder encoder;
 	private DigitalInput forwardLimitSwitch;
 	private DigitalInput reverseLimitSwitch;
 	private RobotContainer robotContainer;
@@ -43,6 +45,7 @@ public class Arm extends SubsystemBase {
 		armRight.follow(armLeft);
 		forwardLimitSwitch = new DigitalInput(Constants.Arm.FORWARD_LIMIT_SWTICH_PORT);
 		reverseLimitSwitch = new DigitalInput(Constants.Arm.REVERSE_LIMIT_SWITCH_PORT);
+		encoder.setDistancePerPulse(1./2048.);
 	}
 
 	public void setPower(double power) {
@@ -117,16 +120,14 @@ public class Arm extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		int output = (int) RobotContainer.joystick.getY();
-		if (forwardLimitSwitch.get()) {
-			output = Math.min(-output, 0);
+		if (encoder.getDistance() < Constants.Arm.ARM_TICKS && encoder.getDistance() > Constants.Arm.ARM_TICKS-1000) {
+			Arm.armLeft.set(TalonFXControlMode.PercentOutput, 0.001*(Constants.Arm.ARM_TICKS - encoder.getDistance()));
 		}
-		else if (reverseLimitSwitch.get()) {
-			output = Math.max(-output, 0);
+		else if (encoder.getDistance() >0  && encoder.getDistance() < 1000) {
+			Arm.armLeft.set(TalonFXControlMode.PercentOutput, 0.001*(Constants.Arm.ARM_TICKS - encoder.getDistance()));
 		}	
-		Arm.armLeft.set(TalonFXControlMode.PercentOutput, output*Constants.Arm.LIMIT_SWITCH_P);
-		Arm.armRight.set(TalonFXControlMode.PercentOutput, output*Constants.Arm.LIMIT_SWITCH_P);
 		SmartDashboard.putNumber("Shooter Current", robotContainer.shooter.shooter1.getStatorCurrent());
+		
 		// This method will be called once per scheduler run
 	}
 }
