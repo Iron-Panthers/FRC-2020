@@ -12,6 +12,7 @@ import com.ironpanthers.frc2020.commands.IntakeSequence;
 import com.ironpanthers.frc2020.commands.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.ResetConveyor;
 import com.ironpanthers.frc2020.commands.ShootAtVelocity;
+import com.ironpanthers.frc2020.commands.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
@@ -41,7 +42,7 @@ public class RobotContainer {
 	public final Shooter shooter = new Shooter();
 	public final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	public final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
-	public final JoystickButton plzWorkButton = new JoystickButton(joystick, Constants.OI.SHOOT_WITH_VELOCITY_PORT);
+	public final JoystickButton shooterButton = new JoystickButton(joystick, Constants.OI.SHOOT_WITH_VELOCITY_PORT);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -60,7 +61,7 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
-		plzWorkButton.whileHeld(new ShootAtVelocity(shooter, conveyorBelt, Constants.Shooter.SHOOTER_TEST_VELOCITY));
+		shooterButton.whileHeld(new ShooterSequence(shooter, conveyorBelt));
 	}
 
 	/**
