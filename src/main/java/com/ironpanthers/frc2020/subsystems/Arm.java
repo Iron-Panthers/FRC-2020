@@ -26,6 +26,8 @@ public class Arm extends SubsystemBase {
 	private DigitalInput forwardLimitSwitch;
 	private DigitalInput reverseLimitSwitch;
 	private RobotContainer robotContainer;
+	private int target;
+	private double horizontalHoldOuput; //TODO figure out this value by testing
 
 	/**
 	 * Creates a new Arm.
@@ -76,17 +78,29 @@ public class Arm extends SubsystemBase {
 		armLeft.set(TalonFXControlMode.MotionMagic, target);
 	}
 
-	public void setFeedForward(int target){ //TODO figure out how to get target position
-		double scaledAngle = Math.cos(Math.toRadians(getCurrentAngle()));
-		armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward, Constants.Arm.MAX_FF * scaledAngle);
-		SmartDashboard.putNumber("Arbitrary Feedforward", Constants.Arm.MAX_FF * scaledAngle);
+	public void handleAcceleration(int sensorUnitAccel) {
+		if(getCurrentAngle() < target){
+			armLeft.configMotionAcceleration(sensorUnitAccel); //TODO find out what parameter to put here
+			armRight.configMotionCruiseVelocity(sensorUnitAccel);
+		}
 	}
 
-	//return angle in degrees
-	public double getCurrentAngle(){
+	public void setTargetPosition(int target) {
+		this.target = target;
+		SmartDashboard.putNumber("Arm Target", target);
+	}
+
+	public void setFeedForward() { 
+		double scaledAngle = Math.cos(Math.toRadians(getCurrentAngle()));
+		armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward, Constants.Arm.MAX_FF * scaledAngle);
+		SmartDashboard.putNumber("Arbitrary Feedforward", horizontalHoldOuput * scaledAngle);
+	}
+
+	public double getCurrentAngle() { 
 		double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.TICKS_TO_DEGREES) + Constants.Arm.ARM_ANGLE_OFFSET;
 		SmartDashboard.putNumber("Current angle", currentAngle);
-		return currentAngle;
+		//returns angle in degrees
+		return currentAngle; 
 	}
 	
 	public int getVelocity() {
