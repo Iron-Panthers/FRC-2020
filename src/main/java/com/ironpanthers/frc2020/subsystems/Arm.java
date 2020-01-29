@@ -7,17 +7,18 @@
 
 package com.ironpanthers.frc2020.subsystems;
 
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.RobotContainer;
-import com.ironpanthers.frc2020.subsystems.Arm;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
@@ -26,9 +27,13 @@ public class Arm extends SubsystemBase {
 	private DigitalInput forwardLimitSwitch;
 	private DigitalInput reverseLimitSwitch;
 	private RobotContainer robotContainer;
+	private int target;
+	private double horizontalHoldOuput; // TODO figure out this value by testing
 
 	/**
-	 * Creates a new Arm.
+	 * Creates a new Arm. For limits, forward refers to the front, in which the arm
+	 * is all the way down and ready for intaking. Reverse refers to the back, in
+	 * which the arm is all the way up at the maximum angle for shooting
 	 */
 	public Arm() {
 		armLeft = new TalonFX(Constants.Arm.ARM_LEFT_PORT);
@@ -39,8 +44,20 @@ public class Arm extends SubsystemBase {
 		armLeft.setNeutralMode(NeutralMode.Brake);
 		armRight.setNeutralMode(NeutralMode.Brake);
 		armRight.follow(armLeft);
+
+		// Current Limits and Power Limits
+		armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+				Constants.Arm.ARM_CURRENT_LIMIT, 0, 0);
+		armLeft.configGetSupplyCurrentLimit(currentConfig);
+
+		// Limit switches
 		forwardLimitSwitch = new DigitalInput(Constants.Arm.FORWARD_LIMIT_SWTICH_PORT);
 		reverseLimitSwitch = new DigitalInput(Constants.Arm.REVERSE_LIMIT_SWITCH_PORT);
+		armLeft.configForwardSoftLimitEnable(true);
+		armLeft.configReverseSoftLimitEnable(true);
+		armLeft.configForwardSoftLimitThreshold(Constants.Arm.BOTTOM_SOFT_LIMIT);
+		armLeft.configReverseSoftLimitThreshold(Constants.Arm.TOP_SOFT_LIMIT);
 	}
 
 	public void setPower(double power) {
@@ -59,7 +76,8 @@ public class Arm extends SubsystemBase {
 	}
 
 	/**
-	 * Set velocity of the arm, will be used in tuning PID for velocity to get values for MotionMagic
+	 * Set velocity of the arm, will be used in tuning PID for velocity to get
+	 * values for MotionMagic
 	 */
 	public void setVelocity(double nativeUnits) {
 		armLeft.set(TalonFXControlMode.Velocity, nativeUnits);
@@ -67,6 +85,7 @@ public class Arm extends SubsystemBase {
 
 	public void setPosition(int target) {
 		armLeft.set(TalonFXControlMode.Position, target);
+		this.target = target;
 	}
 
 	/**
@@ -76,19 +95,26 @@ public class Arm extends SubsystemBase {
 		armLeft.set(TalonFXControlMode.MotionMagic, target);
 	}
 
-	public void setFeedForward(int target){ //TODO figure out how to get target position
+	public void setFeedForward() {
 		double scaledAngle = Math.cos(Math.toRadians(getCurrentAngle()));
-		armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward, Constants.Arm.MAX_FF * scaledAngle);
-		SmartDashboard.putNumber("Arbitrary Feedforward", Constants.Arm.MAX_FF * scaledAngle);
+		armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward,
+				Constants.Arm.MAX_FF * scaledAngle);
+		SmartDashboard.putNumber("Arbitrary Feedforward", horizontalHoldOuput * scaledAngle);
 	}
 
-	//return angle in degrees
-	public double getCurrentAngle(){
-		double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.TICKS_TO_DEGREES) + Constants.Arm.ARM_ANGLE_OFFSET;
+	// return angle in degrees
+	public double getCurrentAngle() {
+		double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.TICKS_TO_DEGREES)
+				+ Constants.Arm.ARM_ANGLE_OFFSET;
 		SmartDashboard.putNumber("Current angle", currentAngle);
+		// returns angle in degrees
 		return currentAngle;
 	}
-	
+
+	public int getPosition() {
+		return armLeft.getSelectedSensorPosition();
+	}
+
 	public int getVelocity() {
 		return armLeft.getSelectedSensorVelocity();
 	}
@@ -103,16 +129,21 @@ public class Arm extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		int output = (int) RobotContainer.joystick.getY();
 		if (forwardLimitSwitch.get()) {
-			output = Math.min(-output, 0);
+			armLeft.setSelectedSensorPosition(0);
+		} else if (reverseLimitSwitch.get()) {
+			armLeft.setSelectedSensorPosition(Constants.Arm.TOP_ARM_POSITION);
 		}
-		else if (reverseLimitSwitch.get()) {
-			output = Math.max(-output, 0);
-		}	
-		Arm.armLeft.set(TalonFXControlMode.PercentOutput, output*Constants.Arm.LIMIT_SWITCH_P);
-		Arm.armRight.set(TalonFXControlMode.PercentOutput, output*Constants.Arm.LIMIT_SWITCH_P);
+		// If within the slow threshold, limit output to scaled regular output
+		if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() > Constants.Arm.TOP_SLOW_LIMIT) {
+			armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.SLOW_ARM_PID_OUTPUT);
+		}
+		// If out of the slow threshold, reset output to correct value
+		else {
+			armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
+		}
 		SmartDashboard.putNumber("Shooter Current", robotContainer.shooter.shooter1.getStatorCurrent());
+		
 		// This method will be called once per scheduler run
 	}
 }
