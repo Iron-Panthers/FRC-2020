@@ -13,6 +13,8 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
@@ -72,6 +74,7 @@ public class Shooter extends SubsystemBase {
 	public void setVelocity(double nativeUnits) {
 		shooter1.set(TalonFXControlMode.Velocity, nativeUnits);
 		System.out.println("Wee you are setting the shooter to a velocity");
+		SmartDashboard.putNumber("Actual Velocity", getVelocity());
 	}
 
 	public void configPIDF(double p, double i, double d, double f, int idx) {
