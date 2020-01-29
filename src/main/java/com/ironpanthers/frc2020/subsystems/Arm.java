@@ -47,9 +47,9 @@ public class Arm extends SubsystemBase {
 
 		// Current Limits and Power Limits
 		armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-				Constants.Arm.ARM_CURRENT_LIMIT, 0, 0);
-		armLeft.configGetSupplyCurrentLimit(currentConfig);
+		// SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+		// 		Constants.Arm.ARM_CURRENT_LIMIT, 0, 0);
+		// armLeft.configGetSupplyCurrentLimit(currentConfig);
 
 		// Limit switches
 		forwardLimitSwitch = new DigitalInput(Constants.Arm.FORWARD_LIMIT_SWTICH_PORT);
@@ -142,8 +142,5 @@ public class Arm extends SubsystemBase {
 		else {
 			armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
 		}
-		SmartDashboard.putNumber("Shooter Current", robotContainer.shooter.shooter1.getStatorCurrent());
-		
-		// This method will be called once per scheduler run
 	}
 }

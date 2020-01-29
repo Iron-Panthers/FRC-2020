@@ -40,9 +40,9 @@ public class Shooter extends SubsystemBase {
 		shooter2.setInverted(true);
 		shooter3.setInverted(true);
 
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-				Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
-		shooter1.configSupplyCurrentLimit(currentConfig);
+		// SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+		// 		Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
+		// shooter1.configSupplyCurrentLimit(currentConfig);
 		shooter1.configClosedloopRamp(Constants.Shooter.SHOOTER_RAMP_RATE); // Ramp rate for Velocity PID
 		shooter1.configOpenloopRamp(Constants.Shooter.SHOOTER_RAMP_RATE); // Ramp rate for open loop control
 
