@@ -13,6 +13,7 @@ import com.ironpanthers.frc2020.commands.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.ResetConveyor;
 import com.ironpanthers.frc2020.commands.ShootAtVelocity;
+import com.ironpanthers.frc2020.commands.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -46,7 +47,7 @@ public class RobotContainer {
 	public final Arm arm = new Arm();
 	// Driver A Buttons
 	public final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
-	public final JoystickButton plzWorkButton = new JoystickButton(joystick, Constants.OI.SHOOT_WITH_VELOCITY_PORT);
+	public final JoystickButton shooterButton = new JoystickButton(joystick, Constants.OI.SHOOT_WITH_VELOCITY_PORT);
 
 	// Driver B Buttons
 	public final JoystickButton manualArm = new JoystickButton(armJoystick, Constants.OI.MANUAL_ARM_BUTTON);
@@ -69,8 +70,7 @@ public class RobotContainer {
 		// Driver A
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
-		plzWorkButton.whileHeld(new ShootAtVelocity(shooter, conveyorBelt, Constants.Shooter.SHOOTER_TEST_VELOCITY));
-
+		shooterButton.whileHeld(new ShooterSequence(shooter, conveyorBelt));
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, armJoystick::getY));
 	}
