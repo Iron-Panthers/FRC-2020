@@ -29,17 +29,13 @@ public class PreparentConveyor extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (conveyor.conveyorFull())
-			cancel();
-
 		encoderStartTicks = conveyor.getPosition();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		conveyor.setPosition(encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE);// also +- signs may be wrong
-																							// needs to be tested
+		conveyor.setPosition(encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE);// also +- signs may be wrong																						// needs to be tested
 	}
 
 	// Called once the command ends or is interrupted.

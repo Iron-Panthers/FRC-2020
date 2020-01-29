@@ -58,7 +58,9 @@ public final class Constants {
         public static final double kV = 0;
         public static final double kA = 0;
 
-        public static final double kP = 0;
+		public static final double kP = 0;
+		
+		public static final double DRIVE_CURRENT_LIMIT = 60;
     }
 
     public final class OI {
@@ -87,7 +89,7 @@ public final class Constants {
         public static final double PULSES_PERENCODER_ROTATION = .25;
         public static final int TICK_ERROR_TOLLERANCE = 700;
         /** needs to move conveyer exactly one ball length backward */
-        public static final int TICKS_PREP_DISTANCE = -19500;
+        public static final int TICKS_PREP_DISTANCE = -18500;
     }
 
     public final class Vision {

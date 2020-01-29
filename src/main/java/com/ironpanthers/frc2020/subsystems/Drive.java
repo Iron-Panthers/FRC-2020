@@ -1,5 +1,6 @@
 package com.ironpanthers.frc2020.subsystems;
 
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -25,8 +26,8 @@ public class Drive extends SubsystemBase {
     private final TalonFX left1 = new TalonFX(Constants.Drive.kLeft1Id);
     private final TalonFX left2 = new TalonFX(Constants.Drive.kLeft2Id);
     private final TalonFX right1 = new TalonFX(Constants.Drive.kRight1Id);
-    private final TalonFX right2 = new TalonFX(Constants.Drive.kRight2Id);
-
+	private final TalonFX right2 = new TalonFX(Constants.Drive.kRight2Id);
+	
     // private final PigeonIMU gyro = new PigeonIMU(new TalonSRX(Constants.Drive.kPigeonTalonId));
 
     private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
@@ -58,7 +59,12 @@ public class Drive extends SubsystemBase {
         left1.setInverted(true);
         left2.setInverted(true);
         right1.setInverted(false);
-        right2.setInverted(false);
+		right2.setInverted(false);
+		
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+				Constants.Drive.DRIVE_CURRENT_LIMIT, 0, 0);
+		left1.configGetSupplyCurrentLimit(currentConfig);
+		right1.configGetSupplyCurrentLimit(currentConfig);
 
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");

@@ -60,7 +60,7 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
-		plzWorkButton.whenPressed(new ShootAtVelocity(shooter, conveyorBelt, Constants.Shooter.SHOOTER_TEST_VELOCITY));
+		plzWorkButton.whileHeld(new ShootAtVelocity(shooter, conveyorBelt, Constants.Shooter.SHOOTER_TEST_VELOCITY));
 	}
 
 	/**
