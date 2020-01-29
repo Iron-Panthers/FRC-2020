@@ -72,7 +72,7 @@ public final class Constants {
         // Ports
         public static final int CONVEYOR_BELT_MOTOR_PORT = 4;
         public static final int INTAKE_MOTOR_PORT = 3;
-        public static final int BANNER_SENSOR_PORT = 0;
+        public static final int BANNER_SENSOR_PORT = 3;
 
         // Size Constants
         public static final double POWER_CELL_DIAMETER = 7; // in inches
@@ -87,7 +87,7 @@ public final class Constants {
         public static final double PULSES_PERENCODER_ROTATION = .25;
         public static final int TICK_ERROR_TOLLERANCE = 700;
         /** needs to move conveyer exactly one ball length backward */
-        public static final int TICKS_PREP_DISTANCE = -21000;
+        public static final int TICKS_PREP_DISTANCE = -19500;
     }
 
     public final class Vision {
@@ -119,7 +119,7 @@ public final class Constants {
         public static final double SHOOTER_F = 0.053;
         public static final double SHOOTER_P = 0.2;
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; // Native units
-		public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
+		public static final double SHOOTER_RAMP_RATE = 1.; // Seconds to full power during PID control + Open Loop
 		public static final int SHOOTER_VELOCITY_THRESHOLD = 300; // Acceptable error in velocity before shooting
 		public static final int SHOOTER_TEST_VELOCITY = 15000;
 	}

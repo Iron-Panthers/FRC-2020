@@ -36,6 +36,10 @@ public class Shooter extends SubsystemBase {
 		shooter1.setNeutralMode(NeutralMode.Coast);
 		shooter2.setNeutralMode(NeutralMode.Coast);
 		shooter3.setNeutralMode(NeutralMode.Coast);
+		shooter1.setInverted(true);
+		shooter2.setInverted(true);
+		shooter3.setInverted(true);
+
 		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
 				Constants.Shooter.SHOOTER_CURRENT_LIMIT, 0, 0);
 		shooter1.configSupplyCurrentLimit(currentConfig);

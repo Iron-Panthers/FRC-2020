@@ -32,13 +32,15 @@ public class ManualDriveCommand extends CommandBase {
     @Override
     public void execute() {
         final var y = Deadband.apply(forward.getAsDouble(), 0.1);
-        final var x = Deadband.apply(turn.getAsDouble(), 0.1);
         final var direction = reverseTrigger.get();
+        final var x = direction ? Deadband.apply(turn.getAsDouble(), 0.1) : 0-Deadband.apply(turn.getAsDouble(), 0.1);
 
-        final var leftOutputUnscaled = direction ? y + x : -y - x;
-        final var rightOutputUnscaled = direction ? y - x : -y + x;
+        final var xPowd = Math.copySign(Math.pow(Math.abs(x), 2.75), x);
 
-        final var normalizedOutputs = normalizePercents(leftOutputUnscaled, rightOutputUnscaled);
+        final var leftOutputUnscaled = (direction ? y + xPowd : -y - xPowd);
+        final var rightOutputUnscaled = (direction ? y - xPowd : -y + xPowd);
+
+        final var normalizedOutputs = normalizePercents(leftOutputUnscaled + skim(rightOutputUnscaled), rightOutputUnscaled + skim(leftOutputUnscaled));
 
         drive.setOutputPercent(normalizedOutputs[0], normalizedOutputs[1]);
         SmartDashboard.putNumberArray("drive/manual/outputs", normalizedOutputs);
@@ -67,5 +69,17 @@ public class ManualDriveCommand extends CommandBase {
             ret[i] = values[i] / greatestMagnitude;
         }
         return ret;
+    }
+
+    private double skim(double v) {
+        // Turn gain can be substituted with the slider value on the joystick, but 1.0
+        // is preferred by our drivers
+        double turnGain = 1.0;
+        if (v > 1.0) {
+            return ((v - 1.0) * turnGain);
+        } else if (v < -1.0) {
+            return ((v + 1.0) * turnGain);
+        }
+        return 0;
     }
 }
