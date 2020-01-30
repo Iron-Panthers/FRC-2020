@@ -1,5 +1,6 @@
 package com.ironpanthers.frc2020.subsystems;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -57,9 +58,9 @@ public class Drive extends SubsystemBase {
 
         // Configuration
         left1.setInverted(true);
-        left2.setInverted(true);
+        left2.setInverted(InvertType.FollowMaster);
         right1.setInverted(false);
-		right2.setInverted(false);
+		right2.setInverted(InvertType.FollowMaster);
 		
 		// SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
 		// 		Constants.Drive.DRIVE_CURRENT_LIMIT, 0, 0);

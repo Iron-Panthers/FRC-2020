@@ -83,7 +83,12 @@ public final class Constants {
         public static final int BANNER_SENSOR_PORT = 3;
 
         // Size Constants
-        public static final double POWER_CELL_DIAMETER = 7; // in inches
+		public static final double POWER_CELL_DIAMETER = 7; // in inches
+		
+		// PID
+		public static final int CONVEYOR_POSITION_IDX = 0;
+		public static final double CONVEYOR_CLOSED_LOOP_RAMP = 0.6;
+		public static final double CONVEYOR_P = 0.13;
 
         // Powers
         public static final double CONVEYOR_BELT_MOTOR_POWER = 0.5; // tbd
@@ -135,8 +140,7 @@ public final class Constants {
 	public final class Arm {
 		public static final int ARM_LEFT_PORT = 9;
 		public static final int ARM_RIGHT_PORT = 10;
-		public static final boolean IS_LEFT_ARM_INVERTED = true;
-		public static final boolean IS_RIGHT_ARM_INVERTED = false;
+		public static final boolean IS_ARM_INVERTED = true;
 		public static final int ARM_POSITION_PID_SLOT = 0;
         public static final int ARM_VELOCITY_PID_SLOT = 1;
         public static final double TICKS_TO_DEGREES = 360 * 4096;

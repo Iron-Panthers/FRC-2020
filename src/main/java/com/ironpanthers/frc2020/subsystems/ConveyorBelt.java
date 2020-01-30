@@ -22,8 +22,9 @@ public class ConveyorBelt extends SubsystemBase {
 	public ConveyorBelt() {
 		input = new DigitalInput(Constants.Conveyor.BANNER_SENSOR_PORT);
 		conveyorMotor = new TalonFX(Constants.Conveyor.CONVEYOR_BELT_MOTOR_PORT);
-		conveyorMotor.config_kP(0, .13);
-		conveyorMotor.configClosedloopRamp(.6);
+		conveyorMotor.setInverted(false);
+		conveyorMotor.config_kP(Constants.Conveyor.CONVEYOR_POSITION_IDX, Constants.Conveyor.CONVEYOR_P);
+		conveyorMotor.configClosedloopRamp(Constants.Conveyor.CONVEYOR_CLOSED_LOOP_RAMP);
 		ballsHeld = 0;
 		conveyorMotor.setSelectedSensorPosition(0);
 	}

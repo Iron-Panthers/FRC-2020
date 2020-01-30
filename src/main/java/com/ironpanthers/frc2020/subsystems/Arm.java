@@ -9,6 +9,7 @@ package com.ironpanthers.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -35,8 +36,8 @@ public class Arm extends SubsystemBase {
 		armLeft = new TalonFX(Constants.Arm.ARM_LEFT_PORT);
 		armRight = new TalonFX(Constants.Arm.ARM_RIGHT_PORT);
 		armLeft.setSensorPhase(false);
-		armLeft.setInverted(Constants.Arm.IS_LEFT_ARM_INVERTED);
-		armRight.setInverted(Constants.Arm.IS_RIGHT_ARM_INVERTED);
+		armLeft.setInverted(Constants.Arm.IS_ARM_INVERTED);
+		armRight.setInverted(InvertType.OpposeMaster);
 		armLeft.setNeutralMode(NeutralMode.Brake);
 		armRight.setNeutralMode(NeutralMode.Brake);
 		armRight.follow(armLeft);
