@@ -24,11 +24,11 @@ public final class Constants {
     }
     public final class Vision {
         /** Height from ground to limelight in inches */
-        public static final double HEIGHT_GROUND_TO_LIMELIGHT = 0.0;
+        public static final double HEIGHT_GROUND_TO_LIMELIGHT = 4.5;
         /** Height from ground to target in inches */
-        public static final double HEIGHT_GROUND_TO_TARGET = 52.5;
+        public static final double HEIGHT_GROUND_TO_TARGET = 96.0;
         /** Angle from mount to limelight in degrees */
-        public static final double ANGLE_MOUNT_TO_LIMELIGHT = 31.0;
+        public static final double ANGLE_MOUNT_TO_LIMELIGHT = 17.0;
         /** Proportional control constant */
         public static final double Kp = 0.1;
         /** I value in PID */
@@ -40,7 +40,7 @@ public final class Constants {
         /** Button port to adjust angle of robot */
         public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
         /** Conversion constant estimating magnitude of top line as it moves further away */
-        public static final double TOP_LINE_MAGNITUDE_AT_DISTANCE = 0; //TODO measure
+        public static final double TOP_LINE_MAGNITUDE_AT_DISTANCE = 51 * 201.825; //TODO measure
         /** Conversion constant estimating magnitude of bottom line as it moves further away */
         //public static final double BOTTOM_LINE_MAGNITUDE_AT_DISTANCE = 0; //TODO measure
         /** Conversion constant relating distance from outer goal to hole to the length of the line on the top of the outer goal*/

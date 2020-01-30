@@ -102,48 +102,62 @@ public class VisionWrapper {
         double brightx = 0;
         double brighty = 0;
 
-        double[] orderedx = new double[4];
-        double[] orderedy = new double[4];
+        ArrayList<Double> orderedx = new ArrayList<Double>();
+        ArrayList<Double> orderedy = new ArrayList<Double>();
 
-        //keeps associated x and y values from tcornx and tcorn y at the same index as each other in the new lists.
+        //keeps associated x and y values from tcornx and tcorny at the same index as each other in the new lists.
         //orders the list from lowest to highest x
-        for (int i = 0; i < tcornx.length; i++) {
-            for(int n = 0; n < orderedx.length; n++) {
-                if((double) tcornx[i] < orderedx[n] || orderedx[n] == 0.0) {
-                    for(int j = n; j < orderedx.length - 2; j++) {
-                        orderedx[j+1] = orderedx[j];
-                        orderedy[j+1] = orderedy[j];
-                    }
-                    orderedx[n] = (double) tcornx[i];
-                    orderedy[n] = (double) tcorny[i];
+        
+        orderedx.add(tcornx[0]);
+        orderedy.add(tcorny[0]);
+        for (int i = 1; i < tcornx.length; i++) {
+            int size = orderedx.size();
+            for(int n = 0; n < size; n++) {
+                if(tcornx[i] < orderedx.get(n)) {
+                    orderedx.add(n, tcornx[i]);
+                    orderedy.add(n, tcorny[i]);
                     break;
                 }
+                if(n==size-1) {
+                    orderedx.add(tcornx[i]);
+                    orderedy.add(tcorny[i]);
+                }
             }
+            
         }
 
-        if(orderedy[0] > orderedy[1]) {
-            tleftx = orderedx[0];
-            tlefty = orderedy[0];
-            bleftx = orderedx[1];
-            bleftx = orderedy[1];
+        tleftx = orderedx.get(0);
+        tlefty = orderedy.get(0);
+        bleftx = orderedx.get(1);
+        blefty = orderedy.get(1);
+        trightx = orderedx.get(3);
+        trighty = orderedy.get(3);
+        brightx = orderedx.get(2);
+        brighty = orderedy.get(2);
+
+        /*if(orderedy.get(0) < orderedy.get(1)) {
+            tleftx = orderedx.get(0);
+            tlefty = orderedy.get(0);
+            bleftx = orderedx.get(1);
+            blefty = orderedy.get(1);
         } else {
-            tleftx = orderedx[1];
-            tlefty = orderedy[1];
-            bleftx = orderedx[0];
-            blefty = orderedy[0];
+            tleftx = orderedx.get(1);
+            tlefty = orderedy.get(1);
+            bleftx = orderedx.get(0);
+            blefty = orderedy.get(0);
         }
 
-        if(orderedy[2] > orderedy[3]) {
-            trightx = orderedx[2];
-            trighty = orderedy[2];
-            brightx = orderedx[3];
-            brightx = orderedy[3];
+        if(orderedy.get(2) < orderedy.get(3)) {
+            trightx = orderedx.get(2);
+            trighty = orderedy.get(2);
+            brightx = orderedx.get(3);
+            brighty = orderedy.get(3);
         } else {
-            trightx = orderedx[3];
-            trighty = orderedy[3];
-            brightx = orderedx[2];
-            brightx = orderedy[2];
-        }
+            trightx = orderedx.get(3);
+            trighty = orderedy.get(3);
+            brightx = orderedx.get(2);
+            brighty = orderedy.get(2);
+        }*/
 
         SmartDashboard.putNumber("top left x: ", tleftx);
         SmartDashboard.putNumber("top left y: ", tlefty);
