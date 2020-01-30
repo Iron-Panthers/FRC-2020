@@ -13,6 +13,7 @@ import com.ironpanthers.frc2020.commands.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.ResetConveyor;
 import com.ironpanthers.frc2020.commands.ShooterSequence;
+import com.ironpanthers.frc2020.commands.ZeroArm;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -72,6 +73,7 @@ public class RobotContainer {
 		shooterButton.whileHeld(new ShooterSequence(shooter, conveyorBelt));
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, armJoystick::getY));
+		manualArm.whenPressed(new ZeroArm(arm));
 	}
 
 	/**

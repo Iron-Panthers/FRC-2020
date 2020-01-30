@@ -73,6 +73,7 @@ public final class Constants {
 		// Driver B
 		public static final int ARM_JOYSTICK = 1;
 		public static final int MANUAL_ARM_BUTTON = 1;
+		public static final int ZERO_ARM = 7;
     }
 
     public final class Conveyor {

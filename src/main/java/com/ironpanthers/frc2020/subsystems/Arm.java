@@ -10,14 +10,11 @@ package com.ironpanthers.frc2020.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.RobotContainer;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -26,7 +23,6 @@ public class Arm extends SubsystemBase {
 	public static TalonFX armRight;
 	private DigitalInput forwardLimitSwitch;
 	private DigitalInput reverseLimitSwitch;
-	private RobotContainer robotContainer;
 	private int target;
 	private double horizontalHoldOuput; // TODO figure out this value by testing
 
@@ -127,20 +123,27 @@ public class Arm extends SubsystemBase {
 		return armLeft.getStatorCurrent();
 	}
 
+	public void setZero() {
+		armLeft.setSelectedSensorPosition(0);
+	}
+
 	@Override
 	public void periodic() {
 		if (forwardLimitSwitch.get()) {
-			armLeft.setSelectedSensorPosition(0);
+			// setZero();
+			System.out.println(getPosition() + " arm position at bottom");
 		} else if (reverseLimitSwitch.get()) {
-			armLeft.setSelectedSensorPosition(Constants.Arm.TOP_ARM_POSITION);
+			// armLeft.setSelectedSensorPosition(Constants.Arm.TOP_ARM_POSITION);
+			System.out.println(getPosition() + " arm position at top");
 		}
-		// If within the slow threshold, limit output to scaled regular output
-		if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() > Constants.Arm.TOP_SLOW_LIMIT) {
-			armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.SLOW_ARM_PID_OUTPUT);
-		}
-		// If out of the slow threshold, reset output to correct value
-		else {
-			armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
-		}
+		SmartDashboard.putNumber("Arm Position", getPosition());
+		// // If within the slow threshold, limit output to scaled regular output
+		// if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() > Constants.Arm.TOP_SLOW_LIMIT) {
+		// 	armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.SLOW_ARM_PID_OUTPUT);
+		// }
+		// // If out of the slow threshold, reset output to correct value
+		// else {
+		// 	armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
+		// }
 	}
 }
