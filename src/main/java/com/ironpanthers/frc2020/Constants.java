@@ -133,7 +133,7 @@ public final class Constants {
         public static final double SHOOTER_F = 0.07;
         public static final double SHOOTER_P = 0.0;
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; // Native units
-		public static final double SHOOTER_RAMP_RATE = 1.; // Seconds to full power during PID control + Open Loop
+		public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
 		public static final int SHOOTER_VELOCITY_THRESHOLD = 300; // Acceptable error in velocity before shooting
 		public static final int SHOOTER_TEST_VELOCITY = 14000;
 	}

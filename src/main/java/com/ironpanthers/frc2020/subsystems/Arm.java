@@ -46,7 +46,7 @@ public class Arm extends SubsystemBase {
 		// Current Limits and Power Limits
 		armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
 		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-				Constants.Arm.ARM_CURRENT_LIMIT, Constants.Arm.ARM_CURRENT_LIMIT, 0);
+				Constants.Arm.ARM_CURRENT_LIMIT, Constants.Arm.ARM_CURRENT_LIMIT, 1);
 		armLeft.configSupplyCurrentLimit(currentConfig);
 
 		// Limit switches

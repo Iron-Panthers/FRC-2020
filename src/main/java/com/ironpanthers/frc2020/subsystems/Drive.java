@@ -63,7 +63,7 @@ public class Drive extends SubsystemBase {
 		right2.setInverted(InvertType.FollowMaster);
 		
 		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-				Constants.Drive.DRIVE_CURRENT_LIMIT, Constants.Drive.DRIVE_CURRENT_LIMIT, 0);
+				Constants.Drive.DRIVE_CURRENT_LIMIT, Constants.Drive.DRIVE_CURRENT_LIMIT, 1);
 		left1.configSupplyCurrentLimit(currentConfig);
 		right1.configSupplyCurrentLimit(currentConfig);
 
