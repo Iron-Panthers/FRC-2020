@@ -150,10 +150,12 @@ public final class Constants {
 		public static final double MAX_FF = 0.07; //TODO find this value
 		public static final double MAX_ARM_MANUAL_OUTPUT = 0.5;
 
-		public static final double ARM_POSITION_P = 0;
+		public static final double ARM_POSITION_P = 0.03;
 		public static final double ARM_POSITION_I = 0;
 		public static final double ARM_POSITION_D = 0;
-        public static final double ARM_POSITION_F = 0;
+		public static final double ARM_POSITION_F = 0;
+		
+		public static final double ARM_RAMP_RATE = 0.25;
         
         public static final int HIGH_LIMIT_SWITCH_PORT = 1;
         public static final int GROUND_LIMIT_SWTICH_PORT = 0;
