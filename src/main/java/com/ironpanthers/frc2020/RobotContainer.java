@@ -51,6 +51,8 @@ public class RobotContainer {
 
 	// Driver B Buttons
 	public final JoystickButton manualArm = new JoystickButton(armJoystick, Constants.OI.MANUAL_ARM_BUTTON);
+	public final JoystickButton driverBIntake = new JoystickButton(armJoystick, Constants.OI.DRIVER_B_INTAKE_BUTTON);
+	public final JoystickButton zeroArm = new JoystickButton(armJoystick, Constants.OI.ZERO_ARM_BUTTON);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -73,7 +75,8 @@ public class RobotContainer {
 		shooterButton.whileHeld(new ShooterSequence(shooter, conveyorBelt));
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, armJoystick::getY));
-		manualArm.whenPressed(new ZeroArm(arm));
+		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
+		zeroArm.whenPressed(new ZeroArm(arm));
 	}
 
 	/**

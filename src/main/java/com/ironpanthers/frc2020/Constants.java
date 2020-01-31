@@ -73,7 +73,8 @@ public final class Constants {
 		// Driver B
 		public static final int ARM_JOYSTICK = 1;
 		public static final int MANUAL_ARM_BUTTON = 1;
-		public static final int ZERO_ARM = 7;
+		public static final int DRIVER_B_INTAKE_BUTTON = 2;
+		public static final int ZERO_ARM_BUTTON = 7;
     }
 
     public final class Conveyor {
@@ -134,7 +135,7 @@ public final class Constants {
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; // Native units
 		public static final double SHOOTER_RAMP_RATE = 1.; // Seconds to full power during PID control + Open Loop
 		public static final int SHOOTER_VELOCITY_THRESHOLD = 300; // Acceptable error in velocity before shooting
-		public static final int SHOOTER_TEST_VELOCITY = 20000;
+		public static final int SHOOTER_TEST_VELOCITY = 14000;
 	}
 	
 	public final class Arm {
