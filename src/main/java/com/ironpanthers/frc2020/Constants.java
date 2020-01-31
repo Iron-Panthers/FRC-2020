@@ -75,6 +75,8 @@ public final class Constants {
 		public static final int MANUAL_ARM_BUTTON = 1;
 		public static final int DRIVER_B_INTAKE_BUTTON = 2;
 		public static final int ZERO_ARM_BUTTON = 7;
+		public static final int FAR_SHOT_POSITION_BUTTON = 9;
+		public static final int FRAME_PERIMETER_HEIGHT_BUTTON = 8;
     }
 
     public final class Conveyor {
@@ -154,11 +156,16 @@ public final class Constants {
 		public static final double ARM_POSITION_I = 0;
 		public static final double ARM_POSITION_D = 0;
 		public static final double ARM_POSITION_F = 0;
-		
+
 		public static final double ARM_RAMP_RATE = 0.25;
         
         public static final int HIGH_LIMIT_SWITCH_PORT = 1;
-        public static final int GROUND_LIMIT_SWTICH_PORT = 0;
+		public static final int GROUND_LIMIT_SWTICH_PORT = 0;
+		
+		// Setpoints
+		public static final int ARM_POSITION_TOLERANCE = 1000;
+		public static final int ARM_FAR_SHOT = 60000; // Tested angle for shooting behind control panel at 14k native units
+		public static final int ARM_FRAME_PERIMETER_HEIGHT = 45000; // Height at which robot is 45 inches tall
 		
 		// Soft Limits
 		public static final int BOTTOM_ARM_POSITION = 0;

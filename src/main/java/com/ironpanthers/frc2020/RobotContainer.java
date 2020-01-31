@@ -8,6 +8,7 @@
 package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
+import com.ironpanthers.frc2020.commands.ArmToTarget;
 import com.ironpanthers.frc2020.commands.IntakeSequence;
 import com.ironpanthers.frc2020.commands.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.ManualDriveCommand;
@@ -53,6 +54,8 @@ public class RobotContainer {
 	public final JoystickButton manualArm = new JoystickButton(armJoystick, Constants.OI.MANUAL_ARM_BUTTON);
 	public final JoystickButton driverBIntake = new JoystickButton(armJoystick, Constants.OI.DRIVER_B_INTAKE_BUTTON);
 	public final JoystickButton zeroArm = new JoystickButton(armJoystick, Constants.OI.ZERO_ARM_BUTTON);
+	public final JoystickButton farShotPosition = new JoystickButton(armJoystick, Constants.OI.FAR_SHOT_POSITION_BUTTON);
+	public final JoystickButton framePerimeterHeightPosition = new JoystickButton(armJoystick, Constants.OI.FRAME_PERIMETER_HEIGHT_BUTTON);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -77,6 +80,8 @@ public class RobotContainer {
 		manualArm.whileHeld(new ManualArmCommand(arm, armJoystick::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		zeroArm.whenPressed(new ZeroArm(arm));
+		farShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.ARM_FAR_SHOT));
+		framePerimeterHeightPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.ARM_FRAME_PERIMETER_HEIGHT));
 	}
 
 	/**
