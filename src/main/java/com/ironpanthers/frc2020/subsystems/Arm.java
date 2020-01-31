@@ -35,7 +35,7 @@ public class Arm extends SubsystemBase {
 	public Arm() {
 		armLeft = new TalonFX(Constants.Arm.ARM_LEFT_PORT);
 		armRight = new TalonFX(Constants.Arm.ARM_RIGHT_PORT);
-		armLeft.setSensorPhase(false);
+		armLeft.setSensorPhase(false); // Up is positive
 		armLeft.setInverted(Constants.Arm.IS_ARM_INVERTED);
 		armRight.setInverted(InvertType.OpposeMaster);
 		armLeft.setNeutralMode(NeutralMode.Brake);
@@ -49,12 +49,14 @@ public class Arm extends SubsystemBase {
 		// armLeft.configGetSupplyCurrentLimit(currentConfig);
 
 		// Limit switches
-		forwardLimitSwitch = new DigitalInput(Constants.Arm.FORWARD_LIMIT_SWTICH_PORT);
-		reverseLimitSwitch = new DigitalInput(Constants.Arm.REVERSE_LIMIT_SWITCH_PORT);
+		// Forward needs to be the highest positive value, so the high position
+		// Reverse needs to be the lowest value, so the ground position
+		forwardLimitSwitch = new DigitalInput(Constants.Arm.HIGH_LIMIT_SWITCH_PORT);
+		reverseLimitSwitch = new DigitalInput(Constants.Arm.GROUND_LIMIT_SWTICH_PORT);
 		armLeft.configForwardSoftLimitEnable(true);
 		armLeft.configReverseSoftLimitEnable(true);
-		armLeft.configForwardSoftLimitThreshold(Constants.Arm.BOTTOM_SOFT_LIMIT);
-		armLeft.configReverseSoftLimitThreshold(Constants.Arm.TOP_SOFT_LIMIT);
+		armLeft.configForwardSoftLimitThreshold(Constants.Arm.TOP_SOFT_LIMIT);
+		armLeft.configReverseSoftLimitThreshold(Constants.Arm.BOTTOM_SOFT_LIMIT);
 	}
 
 	public void setPower(double power) {
@@ -128,15 +130,23 @@ public class Arm extends SubsystemBase {
 		armLeft.setSelectedSensorPosition(0);
 	}
 
+	public boolean getGroundLimitPressed() {
+		return !reverseLimitSwitch.get();
+	}
+
+	public boolean getHighLimitPressed() {
+		return !forwardLimitSwitch.get();
+	}
+
 	@Override
 	public void periodic() {
-		if (forwardLimitSwitch.get()) {
-			// setZero();
-			System.out.println(getPosition() + " arm position at bottom");
-		} else if (reverseLimitSwitch.get()) {
-			// armLeft.setSelectedSensorPosition(Constants.Arm.TOP_ARM_POSITION);
-			System.out.println(getPosition() + " arm position at top");
+		if (getGroundLimitPressed()) {
+			setZero();
+		} else if (getHighLimitPressed()) {
+			armLeft.setSelectedSensorPosition(Constants.Arm.TOP_ARM_POSITION);
 		}
+		SmartDashboard.putBoolean("High Limit", getHighLimitPressed());
+		SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
 		SmartDashboard.putNumber("Arm Position", getPosition());
 		// // If within the slow threshold, limit output to scaled regular output
 		// if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() > Constants.Arm.TOP_SLOW_LIMIT) {
