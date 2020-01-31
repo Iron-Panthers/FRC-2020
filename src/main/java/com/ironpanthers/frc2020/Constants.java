@@ -160,9 +160,8 @@ public final class Constants {
 		// Soft Limits
 		public static final int BOTTOM_ARM_POSITION = 0;
 		public static final int TOP_ARM_POSITION = 88000; // Tested by James, 1/30/20
-		public static final int SOFT_LIMIT_THRESHOLD = 1000; // TBD: Placeholder, 
-		public static final int BOTTOM_SOFT_LIMIT = SOFT_LIMIT_THRESHOLD;
-		public static final int TOP_SOFT_LIMIT = TOP_ARM_POSITION - SOFT_LIMIT_THRESHOLD;
+		public static final int BOTTOM_SOFT_LIMIT = 0;
+		public static final int TOP_SOFT_LIMIT = TOP_ARM_POSITION + 500;
 		public static final int SLOW_ARM_THRESHOLD = 10000; // Threshold to soft limit in which the output of the arm motors are scaled down
 		public static final int BOTTOM_SLOW_LIMIT = BOTTOM_SOFT_LIMIT + SLOW_ARM_THRESHOLD;
 		public static final int TOP_SLOW_LIMIT = TOP_SOFT_LIMIT - SLOW_ARM_THRESHOLD;
