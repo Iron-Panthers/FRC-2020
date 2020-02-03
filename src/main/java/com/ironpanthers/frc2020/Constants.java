@@ -73,7 +73,10 @@ public final class Constants {
 		// Driver B
 		public static final int ARM_JOYSTICK = 1;
 		public static final int MANUAL_ARM_BUTTON = 1;
-		public static final int ZERO_ARM = 7;
+		public static final int DRIVER_B_INTAKE_BUTTON = 2;
+		public static final int ZERO_ARM_BUTTON = 7;
+		public static final int FAR_SHOT_POSITION_BUTTON = 9;
+		public static final int FRAME_PERIMETER_HEIGHT_BUTTON = 8;
     }
 
     public final class Conveyor {
@@ -132,9 +135,9 @@ public final class Constants {
         public static final double SHOOTER_F = 0.07;
         public static final double SHOOTER_P = 0.0;
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; // Native units
-		public static final double SHOOTER_RAMP_RATE = 1.; // Seconds to full power during PID control + Open Loop
+		public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
 		public static final int SHOOTER_VELOCITY_THRESHOLD = 300; // Acceptable error in velocity before shooting
-		public static final int SHOOTER_TEST_VELOCITY = 20000;
+		public static final int SHOOTER_TEST_VELOCITY = 14000;
 	}
 	
 	public final class Arm {
@@ -149,20 +152,26 @@ public final class Constants {
 		public static final double MAX_FF = 0.07; //TODO find this value
 		public static final double MAX_ARM_MANUAL_OUTPUT = 0.5;
 
-		public static final double ARM_POSITION_P = 0;
+		public static final double ARM_POSITION_P = 0.03;
 		public static final double ARM_POSITION_I = 0;
 		public static final double ARM_POSITION_D = 0;
-        public static final double ARM_POSITION_F = 0;
+		public static final double ARM_POSITION_F = 0;
+
+		public static final double ARM_RAMP_RATE = 0.25;
         
         public static final int HIGH_LIMIT_SWITCH_PORT = 1;
-        public static final int GROUND_LIMIT_SWTICH_PORT = 0;
+		public static final int GROUND_LIMIT_SWTICH_PORT = 0;
+		
+		// Setpoints
+		public static final int ARM_POSITION_TOLERANCE = 1000;
+		public static final int ARM_FAR_SHOT = 60000; // Tested angle for shooting behind control panel at 14k native units
+		public static final int ARM_FRAME_PERIMETER_HEIGHT = 45000; // Height at which robot is 45 inches tall
 		
 		// Soft Limits
 		public static final int BOTTOM_ARM_POSITION = 0;
 		public static final int TOP_ARM_POSITION = 88000; // Tested by James, 1/30/20
-		public static final int SOFT_LIMIT_THRESHOLD = 1000; // TBD: Placeholder, 
-		public static final int BOTTOM_SOFT_LIMIT = SOFT_LIMIT_THRESHOLD;
-		public static final int TOP_SOFT_LIMIT = TOP_ARM_POSITION - SOFT_LIMIT_THRESHOLD;
+		public static final int BOTTOM_SOFT_LIMIT = 0;
+		public static final int TOP_SOFT_LIMIT = TOP_ARM_POSITION + 500;
 		public static final int SLOW_ARM_THRESHOLD = 10000; // Threshold to soft limit in which the output of the arm motors are scaled down
 		public static final int BOTTOM_SLOW_LIMIT = BOTTOM_SOFT_LIMIT + SLOW_ARM_THRESHOLD;
 		public static final int TOP_SLOW_LIMIT = TOP_SOFT_LIMIT - SLOW_ARM_THRESHOLD;

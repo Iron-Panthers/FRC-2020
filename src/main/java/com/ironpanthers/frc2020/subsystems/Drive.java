@@ -63,10 +63,10 @@ public class Drive extends SubsystemBase {
         right1.setInverted(false);
 		right2.setInverted(InvertType.FollowMaster);
 		
-		// SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-		// 		Constants.Drive.DRIVE_CURRENT_LIMIT, 0, 0);
-		// left1.configGetSupplyCurrentLimit(currentConfig);
-		// right1.configGetSupplyCurrentLimit(currentConfig);
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+				Constants.Drive.DRIVE_CURRENT_LIMIT, Constants.Drive.DRIVE_CURRENT_LIMIT, 1);
+		left1.configSupplyCurrentLimit(currentConfig);
+		right1.configSupplyCurrentLimit(currentConfig);
 
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");

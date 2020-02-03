@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
@@ -44,9 +45,10 @@ public class Arm extends SubsystemBase {
 
 		// Current Limits and Power Limits
 		armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
-		// SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-		// 		Constants.Arm.ARM_CURRENT_LIMIT, 0, 0);
-		// armLeft.configGetSupplyCurrentLimit(currentConfig);
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+				Constants.Arm.ARM_CURRENT_LIMIT, Constants.Arm.ARM_CURRENT_LIMIT, 0);
+		armLeft.configSupplyCurrentLimit(currentConfig);
+		armLeft.configClosedloopRamp(Constants.Arm.ARM_RAMP_RATE);
 
 		// Limit switches
 		// Forward needs to be the highest positive value, so the high position
@@ -57,6 +59,8 @@ public class Arm extends SubsystemBase {
 		armLeft.configReverseSoftLimitEnable(true);
 		armLeft.configForwardSoftLimitThreshold(Constants.Arm.TOP_SOFT_LIMIT);
 		armLeft.configReverseSoftLimitThreshold(Constants.Arm.BOTTOM_SOFT_LIMIT);
+
+		configPIDF(Constants.Arm.ARM_POSITION_P, Constants.Arm.ARM_POSITION_I, Constants.Arm.ARM_POSITION_D, Constants.Arm.ARM_POSITION_F, Constants.Arm.ARM_POSITION_PID_SLOT);
 	}
 
 	public void setPower(double power) {
