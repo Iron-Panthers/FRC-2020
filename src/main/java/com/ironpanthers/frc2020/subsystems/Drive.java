@@ -10,6 +10,7 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.util.PhoenixUtil;
 import com.ironpanthers.util.PoseLoggingTable;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -28,8 +29,8 @@ public class Drive extends SubsystemBase {
     private final TalonFX left2 = new TalonFX(Constants.Drive.kLeft2Id);
     private final TalonFX right1 = new TalonFX(Constants.Drive.kRight1Id);
 	private final TalonFX right2 = new TalonFX(Constants.Drive.kRight2Id);
-	
-    // private final PigeonIMU gyro = new PigeonIMU(new TalonSRX(Constants.Drive.kPigeonTalonId));
+
+    private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
     private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
             Constants.Drive.kTrackWidthMeters);
@@ -69,14 +70,10 @@ public class Drive extends SubsystemBase {
 
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
-
-        // gyro.configFactoryDefault();
-        // gyro.setFusedHeading(0 /* degrees */);
     }
 
     public Rotation2d heading() {
-        // return Rotation2d.fromDegrees(gyro.getFusedHeading());
-        return Rotation2d.fromDegrees(0.0);
+        return Rotation2d.fromDegrees(gyro.getAngle());
     }
 
     public DifferentialDriveWheelSpeeds speeds() {
