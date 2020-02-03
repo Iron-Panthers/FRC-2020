@@ -5,61 +5,48 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.commands;
-
-import java.util.function.BooleanSupplier;
+package com.ironpanthers.frc2020.commands.shooter;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-public class Intake extends CommandBase {
+public class SetShooterVelocity extends CommandBase {
+	private Shooter shooter;
+	private int velocity;
 	/**
-	 * Creates a new Intake.
+	 * Creates a new ShootAtVelocity.
 	 */
-	Shooter shooter;
-	ConveyorBelt conveyor;
-	BooleanSupplier button;
-
-	public Intake(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button) {
-		this.button = button;
-		this.conveyor = conveyor;
-		this.shooter = shooter;
-
+	public SetShooterVelocity(Shooter shooter, int velocity) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		addRequirements(shooter);
-		addRequirements(conveyor);
+		this.shooter = shooter;
+		this.velocity = velocity;
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (conveyor.conveyorFull()) 
-			cancel();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		shooter.setIntakeMotors(Constants.Conveyor.INTAKE_MOTOR_POWER, Constants.Conveyor.SHOOTER_MOTOR_POWER);
-		System.out.println(conveyor.getBannerSensor());
+		shooter.setVelocity(velocity);
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		shooter.setIntakeMotors(0, 0);
+		shooter.stopShooter();
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (conveyor.getBannerSensor()) {
-			conveyor.ballsHeld++;
-			return true;
-		}
-		return !button.getAsBoolean();
+		return Math.abs(shooter.getVelocity() - velocity) < Constants.Shooter.SHOOTER_VELOCITY_THRESHOLD;
+			// Yeet one ball
 	}
 }

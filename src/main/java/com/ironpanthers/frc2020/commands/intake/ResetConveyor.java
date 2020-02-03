@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.commands;
+package com.ironpanthers.frc2020.commands.intake;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
@@ -42,7 +42,7 @@ public class ResetConveyor extends CommandBase {
 		// If the banner is not seen this means no ball was taken in and thus run the conveyor
 		// backwards to the state prior to intaking.
 		if (!bannerSensor) {
-			conveyor.setPosition(encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE);
+			conveyor.setPosition(encoderStartTicks + Constants.Conveyor.TICKS_PREP_DISTANCE);
 		} 
 
 	}
@@ -56,7 +56,7 @@ public class ResetConveyor extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		if (!bannerSensor) {
-			return conveyor.getPosition() >= encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE - Constants.Conveyor.TICK_ERROR_TOLLERANCE;
+			return conveyor.getPosition() >= encoderStartTicks + Constants.Conveyor.TICKS_PREP_DISTANCE - Constants.Conveyor.TICK_ERROR_TOLLERANCE;
 		} 
 		return true;
 	}

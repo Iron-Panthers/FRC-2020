@@ -8,13 +8,13 @@
 package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
-import com.ironpanthers.frc2020.commands.ArmToTarget;
-import com.ironpanthers.frc2020.commands.IntakeSequence;
-import com.ironpanthers.frc2020.commands.ManualArmCommand;
-import com.ironpanthers.frc2020.commands.ManualDriveCommand;
-import com.ironpanthers.frc2020.commands.ResetConveyor;
-import com.ironpanthers.frc2020.commands.ShooterSequence;
-import com.ironpanthers.frc2020.commands.ZeroArm;
+import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
+import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
+import com.ironpanthers.frc2020.commands.arm.ZeroArm;
+import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
+import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
+import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
+import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;

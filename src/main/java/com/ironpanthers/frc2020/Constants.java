@@ -103,7 +103,7 @@ public final class Constants {
         public static final double PULSES_PERENCODER_ROTATION = .25;
         public static final int TICK_ERROR_TOLLERANCE = 700;
         /** needs to move conveyer exactly one ball length backward */
-        public static final int TICKS_PREP_DISTANCE = -18500;
+        public static final int TICKS_PREP_DISTANCE = 18500;
     }
 
     public final class Vision {

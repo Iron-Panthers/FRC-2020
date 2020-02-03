@@ -1,4 +1,4 @@
-package com.ironpanthers.frc2020.commands;
+package com.ironpanthers.frc2020.commands.drive;
 
 import java.util.Arrays;
 import java.util.function.DoubleSupplier;

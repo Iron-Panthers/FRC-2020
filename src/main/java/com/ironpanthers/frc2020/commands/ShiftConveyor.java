@@ -43,8 +43,8 @@ public class ShiftConveyor extends CommandBase {
                 cancel();
 
         final var encoderStartTicks = conveyor.getPosition();
-        targetEncoderPosition = direction == Direction.kIn ? encoderStartTicks + Constants.Conveyor.TICKS_PREP_DISTANCE
-                : encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE;
+        targetEncoderPosition = direction == Direction.kIn ? encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE
+                : encoderStartTicks + Constants.Conveyor.TICKS_PREP_DISTANCE;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
