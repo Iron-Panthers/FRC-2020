@@ -58,25 +58,25 @@ public final class Constants {
         public static final double kV = 0;
         public static final double kA = 0;
 
-		public static final double kP = 0;
-		
-		public static final double DRIVE_CURRENT_LIMIT = 60;
+        public static final double kP = 0;
+
+        public static final double DRIVE_CURRENT_LIMIT = 60;
     }
 
     public final class OI {
-		// Driver A
-		public static final int DRIVE_JOYSTICK = 0;
+        // Driver A
+        public static final int DRIVE_JOYSTICK = 0;
         public static final int INTAKE_BUTTON_PORT = 4;
-		public static final int RESET_CONVEYOR_BUTTON_PORT = 3;
-		public static final int SHOOT_WITH_VELOCITY_PORT = 5;
+        public static final int RESET_CONVEYOR_BUTTON_PORT = 3;
+        public static final int SHOOT_WITH_VELOCITY_PORT = 5;
 
-		// Driver B
-		public static final int ARM_JOYSTICK = 1;
-		public static final int MANUAL_ARM_BUTTON = 1;
-		public static final int DRIVER_B_INTAKE_BUTTON = 2;
-		public static final int ZERO_ARM_BUTTON = 7;
-		public static final int FAR_SHOT_POSITION_BUTTON = 9;
-		public static final int FRAME_PERIMETER_HEIGHT_BUTTON = 8;
+        // Driver B
+        public static final int ARM_JOYSTICK = 1;
+        public static final int MANUAL_ARM_BUTTON = 1;
+        public static final int DRIVER_B_INTAKE_BUTTON = 2;
+        public static final int ZERO_ARM_BUTTON = 7;
+        public static final int FAR_SHOT_POSITION_BUTTON = 9;
+        public static final int FRAME_PERIMETER_HEIGHT_BUTTON = 8;
     }
 
     public final class Conveyor {
@@ -86,12 +86,12 @@ public final class Constants {
         public static final int BANNER_SENSOR_PORT = 3;
 
         // Size Constants
-		public static final double POWER_CELL_DIAMETER = 7; // in inches
-		
-		// PID
-		public static final int CONVEYOR_POSITION_IDX = 0;
-		public static final double CONVEYOR_CLOSED_LOOP_RAMP = 0.6;
-		public static final double CONVEYOR_P = 0.13;
+        public static final double POWER_CELL_DIAMETER = 7; // in inches
+
+        // PID
+        public static final int CONVEYOR_POSITION_IDX = 0;
+        public static final double CONVEYOR_CLOSED_LOOP_RAMP = 0.6;
+        public static final double CONVEYOR_P = 0.13;
 
         // Powers
         public static final double CONVEYOR_BELT_MOTOR_POWER = 0.5; // tbd
@@ -101,7 +101,7 @@ public final class Constants {
         // Encoder Stuff
         public static final double DISTANCE_PERENCODER_ROTATION = .1;
         public static final double PULSES_PERENCODER_ROTATION = .25;
-        public static final int TICK_ERROR_TOLLERANCE = 700;
+        public static final int TICK_ERROR_TOLERANCE = 350;
         /** needs to move conveyer exactly one ball length backward */
         public static final int TICKS_PREP_DISTANCE = 18500;
     }
@@ -135,50 +135,53 @@ public final class Constants {
         public static final double SHOOTER_F = 0.07;
         public static final double SHOOTER_P = 0.0;
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; // Native units
-		public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
-		public static final int SHOOTER_VELOCITY_THRESHOLD = 300; // Acceptable error in velocity before shooting
-		public static final int SHOOTER_TEST_VELOCITY = 14000;
-	}
-	
-	public final class Arm {
-		public static final int ARM_LEFT_PORT = 9;
-		public static final int ARM_RIGHT_PORT = 10;
-		public static final boolean IS_ARM_INVERTED = true;
-		public static final int ARM_POSITION_PID_SLOT = 0;
+        public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
+        public static final int SHOOTER_VELOCITY_THRESHOLD = 300; // Acceptable error in velocity before shooting (in
+                                                                  // either direction)
+        public static final int SHOOTER_TEST_VELOCITY = 14000;
+    }
+
+    public final class Arm {
+        public static final int ARM_LEFT_PORT = 9;
+        public static final int ARM_RIGHT_PORT = 10;
+        public static final boolean IS_ARM_INVERTED = true;
+        public static final int ARM_POSITION_PID_SLOT = 0;
         public static final int ARM_VELOCITY_PID_SLOT = 1;
         public static final double TICKS_TO_DEGREES = 360 * 4096;
-        public static final double ARM_ANGLE_OFFSET = 0; //TODO find this value
-        public static final double ARM_INITIAL_HEIGHT = 0; //TODO find this value
-		public static final double MAX_FF = 0.07; //TODO find this value
-		public static final double MAX_ARM_MANUAL_OUTPUT = 0.5;
+        public static final double ARM_ANGLE_OFFSET = 0; // TODO find this value
+        public static final double ARM_INITIAL_HEIGHT = 0; // TODO find this value
+        public static final double MAX_FF = 0.07; // TODO find this value
+        public static final double MAX_ARM_MANUAL_OUTPUT = 0.5;
 
-		public static final double ARM_POSITION_P = 0.03;
-		public static final double ARM_POSITION_I = 0;
-		public static final double ARM_POSITION_D = 0;
-		public static final double ARM_POSITION_F = 0;
+        public static final double ARM_POSITION_P = 0.03;
+        public static final double ARM_POSITION_I = 0;
+        public static final double ARM_POSITION_D = 0;
+        public static final double ARM_POSITION_F = 0;
 
-		public static final double ARM_RAMP_RATE = 0.25;
-        
+        public static final double ARM_RAMP_RATE = 0.25;
+
         public static final int HIGH_LIMIT_SWITCH_PORT = 1;
-		public static final int GROUND_LIMIT_SWTICH_PORT = 0;
-		
-		// Setpoints
-		public static final int ARM_POSITION_TOLERANCE = 1000;
-		public static final int ARM_FAR_SHOT = 60000; // Tested angle for shooting behind control panel at 14k native units
-		public static final int ARM_FRAME_PERIMETER_HEIGHT = 45000; // Height at which robot is 45 inches tall
-		
-		// Soft Limits
-		public static final int BOTTOM_ARM_POSITION = 0;
-		public static final int TOP_ARM_POSITION = 88000; // Tested by James, 1/30/20
-		public static final int BOTTOM_SOFT_LIMIT = 0;
-		public static final int TOP_SOFT_LIMIT = TOP_ARM_POSITION + 500;
-		public static final int SLOW_ARM_THRESHOLD = 10000; // Threshold to soft limit in which the output of the arm motors are scaled down
-		public static final int BOTTOM_SLOW_LIMIT = BOTTOM_SOFT_LIMIT + SLOW_ARM_THRESHOLD;
-		public static final int TOP_SLOW_LIMIT = TOP_SOFT_LIMIT - SLOW_ARM_THRESHOLD;
+        public static final int GROUND_LIMIT_SWTICH_PORT = 0;
 
-		public static final double MAX_ARM_PID_OUTPUT = 0.5; // Used for both positive and negative direction
-		public static final double SLOW_ARM_PID_OUTPUT = 0.25;
+        // Setpoints
+        public static final int ARM_POSITION_TOLERANCE = 1000;
+        public static final int ARM_FAR_SHOT = 60000; // Tested angle for shooting behind control panel at 14k native
+                                                      // units
+        public static final int ARM_FRAME_PERIMETER_HEIGHT = 45000; // Height at which robot is 45 inches tall
 
-		public static final double ARM_CURRENT_LIMIT = 60.0; // Amps
-	}
+        // Soft Limits
+        public static final int BOTTOM_ARM_POSITION = 0;
+        public static final int TOP_ARM_POSITION = 88000; // Tested by James, 1/30/20
+        public static final int BOTTOM_SOFT_LIMIT = 0;
+        public static final int TOP_SOFT_LIMIT = TOP_ARM_POSITION + 500;
+        public static final int SLOW_ARM_THRESHOLD = 10000; // Threshold to soft limit in which the output of the arm
+                                                            // motors are scaled down
+        public static final int BOTTOM_SLOW_LIMIT = BOTTOM_SOFT_LIMIT + SLOW_ARM_THRESHOLD;
+        public static final int TOP_SLOW_LIMIT = TOP_SOFT_LIMIT - SLOW_ARM_THRESHOLD;
+
+        public static final double MAX_ARM_PID_OUTPUT = 0.5; // Used for both positive and negative direction
+        public static final double SLOW_ARM_PID_OUTPUT = 0.25;
+
+        public static final double ARM_CURRENT_LIMIT = 60.0; // Amps
+    }
 }

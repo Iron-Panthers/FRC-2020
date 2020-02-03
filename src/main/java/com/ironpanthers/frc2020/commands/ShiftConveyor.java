@@ -2,6 +2,7 @@ package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
+import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -62,10 +63,6 @@ public class ShiftConveyor extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (direction == Direction.kIn) {
-            return conveyor.getPosition() <= targetEncoderPosition + Constants.Conveyor.TICK_ERROR_TOLLERANCE;
-        } else {
-            return conveyor.getPosition() >= targetEncoderPosition - Constants.Conveyor.TICK_ERROR_TOLLERANCE;
-        }
+        return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition, Constants.Conveyor.TICK_ERROR_TOLERANCE);
     }
 }

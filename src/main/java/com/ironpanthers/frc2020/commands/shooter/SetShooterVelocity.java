@@ -9,9 +9,9 @@ package com.ironpanthers.frc2020.commands.shooter;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class SetShooterVelocity extends CommandBase {
 	private Shooter shooter;
@@ -46,7 +46,6 @@ public class SetShooterVelocity extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Math.abs(shooter.getVelocity() - velocity) < Constants.Shooter.SHOOTER_VELOCITY_THRESHOLD;
-			// Yeet one ball
+		return Util.epsilonEquals(shooter.getVelocity(), velocity, Constants.Shooter.SHOOTER_VELOCITY_THRESHOLD);
 	}
 }
