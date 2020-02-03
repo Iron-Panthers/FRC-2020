@@ -20,11 +20,29 @@ import static edu.wpi.first.wpilibj.util.Units.inchesToMeters;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
     private Constants() {
         /* disallow construction of this class */
         throw new UnsupportedOperationException("don't try to construct an instance of Constants");
     }
+    public final class Vision {
+        /** Height from ground to limelight in inches */
+        public static final double HEIGHT_GROUND_TO_LIMELIGHT = 38.5;
+        /** Height from ground to target in inches */
+        public static final double HEIGHT_GROUND_TO_TARGET = 93.0;
+        /** Angle from mount to limelight in degrees */
+        public static final double ANGLE_MOUNT_TO_LIMELIGHT = 33.0;
+        /** Proportional control constant */
+        public static final double Kp = -0.1;
+        /** I value in PID */
+        public static final double Ki = 0.01;
+        /** D value in PID */
+        public static final double Kd = 0.001;
+        /** Minimum amount of power to move robot */
+        public static final double MINIMUM_POWER = 0.03;
+        /** Button port to adjust angle of robot */
+        public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
+    }
+   
 
     /**
      * When competition mode is enabled, most throwable errors are disregarded.
@@ -104,25 +122,6 @@ public final class Constants {
         public static final int TICK_ERROR_TOLERANCE = 350;
         /** needs to move conveyer exactly one ball length backward */
         public static final int TICKS_PREP_DISTANCE = 18500;
-    }
-
-    public final class Vision {
-        /** Height from ground to limelight in inches */
-        public static final double HEIGHT_GROUND_TO_LIMELIGHT = 38.5;
-        /** Height from ground to target in inches */
-        public static final double HEIGHT_GROUND_TO_TARGET = 93.0;
-        /** Angle from mount to limelight in degrees */
-        public static final double ANGLE_MOUNT_TO_LIMELIGHT = 33.0;
-        /** Proportional control constant */
-        public static final double Kp = -0.1;
-        /** I value in PID */
-        public static final double Ki = 0.01;
-        /** D value in PID */
-        public static final double Kd = 0.001;
-        /** Minimum amount of power to move robot */
-        public static final double MINIMUM_POWER = 0.03;
-        /** Button port to adjust angle of robot */
-        public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
     }
 
     public final class Shooter {
