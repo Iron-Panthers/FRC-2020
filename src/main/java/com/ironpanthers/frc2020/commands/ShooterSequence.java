@@ -7,9 +7,8 @@
 
 package com.ironpanthers.frc2020.commands;
 
-import java.util.function.BooleanSupplier;
-
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
@@ -25,7 +24,7 @@ public class ShooterSequence extends SequentialCommandGroup {
 	public ShooterSequence(Shooter shooter, ConveyorBelt conveyor) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new SetShooterVelocity(shooter, Constants.Shooter.SHOOTER_TEST_VELOCITY), new PreparentConveyor(conveyor));
+		super(new SetShooterVelocity(shooter, Constants.Shooter.SHOOTER_TEST_VELOCITY), new ShiftConveyor(Direction.kOut, conveyor));
 		//TODO:Need working banner sensor
 	}
 }

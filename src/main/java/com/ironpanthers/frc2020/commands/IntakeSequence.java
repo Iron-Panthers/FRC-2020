@@ -9,6 +9,7 @@ package com.ironpanthers.frc2020.commands;
 
 import java.util.function.BooleanSupplier;
 
+import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
@@ -24,7 +25,7 @@ public class IntakeSequence extends SequentialCommandGroup {
 	public IntakeSequence(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new PrepareConveyor(conveyor), new Intake(shooter, conveyor, button));
+		super(new ShiftConveyor(Direction.kIn, conveyor), new Intake(shooter, conveyor, button));
 		//TODO:Need working banner sensor
 	}
 }
