@@ -10,6 +10,7 @@ package com.ironpanthers.frc2020;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import com.ironpanthers.frc2020.commands.ExampleCommand;
+import com.ironpanthers.frc2020.subsystems.ColorMatcher;
 import com.ironpanthers.frc2020.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
 	private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+	private final ColorMatcher colorMatcher = new ColorMatcher();
 
 	private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
