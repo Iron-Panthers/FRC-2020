@@ -8,6 +8,7 @@
 package com.ironpanthers.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -42,6 +43,9 @@ public class Shooter extends SubsystemBase {
 		// Follow
 		shooter2.follow(shooter1);
 		shooter3.follow(shooter1);
+		shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
+		shooter2.setInverted(InvertType.OpposeMaster);
+		shooter3.setInverted(InvertType.OpposeMaster);
 	}
 
 	public void shootWithSpeed(double speed) {

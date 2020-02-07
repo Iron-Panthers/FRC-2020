@@ -49,14 +49,15 @@ public final class Constants {
         public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
     }
     public final class Shooter {
-        public static final int SHOOTER_ONE_PORT = 1;
-        public static final int SHOOTER_TWO_PORT = 2;
-		public static final int SHOOTER_THREE_PORT = 3;
+        public static final int SHOOTER_ONE_PORT = 5;
+        public static final int SHOOTER_TWO_PORT = 6;
+        public static final int SHOOTER_THREE_PORT = 7;
+        public static final boolean IS_SHOOTER_INVERTED = false;
         public static final double shooterSpeed = 0.5;
         public static final boolean kCompetitionMode = false;
         public static final int SHOOTER_VELOCITY_IDX = 0;
         public static final double SHOOTER_CURRENT_LIMIT = 40;
-        public static final double SHOOTER_F = 0.053;
+        public static final double SHOOTER_F = 0.051;
         public static final double SHOOTER_P = 0.2;
         public static final double SHOOTER_MAX_SAFE_VEL = 12000; //Native units
         public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
