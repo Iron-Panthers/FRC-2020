@@ -99,17 +99,22 @@ public class Arm extends SubsystemBase {
     }
 
     public void setFeedForward() {
-        double scaledAngle = Math.cos(Math.toRadians(getCurrentAngle()));
+        double scaledAngle = Math.cos(Math.toRadians(getAngle()));
         armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward,
                 Constants.Arm.kMaxFF * scaledAngle);
         SmartDashboard.putNumber("Arbitrary Feedforward", horizontalHoldOuput * scaledAngle);
     }
 
+    public double getHeight() {
+        return Constants.Vision.kLimelightToPivotPlaneInches * Math.cos(getAngle() * Math.PI / 180)
+                + Constants.Vision.kPivotToLLDeg * Math.sin(getAngle() * Math.PI / 180)
+                + Constants.Vision.kGroundToPivotInches;
+    }
+
     // return angle in degrees
-    public double getCurrentAngle() {
+    public double getAngle() {
         double currentAngle = (armLeft.getSelectedSensorPosition() * 360 * 4096) + Constants.Arm.kArmAngleOffset;
-        SmartDashboard.putNumber("Current angle", currentAngle);
-        // returns angle in degrees
+
         return currentAngle;
     }
 
@@ -152,12 +157,15 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
         SmartDashboard.putNumber("Arm Position", getPosition());
         // // If within the slow threshold, limit output to scaled regular output
-        // if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() > Constants.Arm.TOP_SLOW_LIMIT) {
-        // 	armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.SLOW_ARM_PID_OUTPUT);
+        // if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() >
+        // Constants.Arm.TOP_SLOW_LIMIT) {
+        // armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT,
+        // Constants.Arm.SLOW_ARM_PID_OUTPUT);
         // }
         // // If out of the slow threshold, reset output to correct value
         // else {
-        // 	armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT, Constants.Arm.MAX_ARM_PID_OUTPUT);
+        // armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT,
+        // Constants.Arm.MAX_ARM_PID_OUTPUT);
         // }
     }
 }

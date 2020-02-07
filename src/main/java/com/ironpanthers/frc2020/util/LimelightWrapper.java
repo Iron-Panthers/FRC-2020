@@ -75,17 +75,4 @@ public class LimelightWrapper {
     public double getCamtran() {
         return camtran;
     }
-
-    public double calculateHorizontalDistance() {
-        double d = (Constants.Vision.kGroundToTargetInches - Constants.Vision.kGroundToLLInches)
-                / Math.tan((Constants.Vision.kMountToLLAngleDeg * (Math.PI / 180)) + (ty * (Math.PI / 180)));
-        // ty: vertical offset angle in degrees
-        return d;
-    }
-
-    public double calculateDiagonalDistance() {
-        double d = Math.sqrt(Math.pow(calculateHorizontalDistance(), 2)
-                + Math.pow(Constants.Vision.kGroundToTargetInches - Constants.Vision.kGroundToLLInches, 2));
-        return d;
-    }
 }
