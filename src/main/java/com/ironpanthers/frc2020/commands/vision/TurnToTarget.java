@@ -51,7 +51,8 @@ public class TurnToTarget extends CommandBase {
         double horizontalError = -x; // Horizontal error from limelight to target
         double adjustedSteeringValue = 0.0; // Calculated amount of degrees to steer
         double recentError = 0.0;
-        double horizontalDistance = (Constants.Vision.kGroundToTargetInches - arm.get)
+        double horizontalDistance = (Constants.Vision.kGroundToTargetInches - arm.getHeight())
+                / Math.tan((arm.getAngle() + limelightWrapper.getTableY()) * Math.PI / 180);
 
         for (int i = 98; i >= 0; i--) {
             totalErrors[i + 1] = totalErrors[i];
