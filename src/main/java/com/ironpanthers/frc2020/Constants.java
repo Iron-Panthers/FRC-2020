@@ -138,8 +138,8 @@ public final class Constants {
         public static final double kP = 0.2;
         public static final double kRampRate = 0.25; // seconds 0->full
 
-        public static final int kVelocityThreshold = 25;
-        public static final int kTestVelocity = 19000;
+        public static final int kVelocityThreshold = 250;
+        public static final int kTestVelocity = 18000;
 
         public static final double kCurrentLimit = 40; // amps
     }
