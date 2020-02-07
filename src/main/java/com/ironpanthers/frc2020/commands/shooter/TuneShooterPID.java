@@ -27,25 +27,25 @@ public class TuneShooterPID extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		SmartDashboard.putNumber("Shooter P", Constants.Shooter.SHOOTER_P);
+		SmartDashboard.putNumber("Shooter P", Constants.Shooter.kP);
 		SmartDashboard.putNumber("Shooter I", 0.0);
 		SmartDashboard.putNumber("Shooter D", 0.0);
-		SmartDashboard.putNumber("Shooter F", Constants.Shooter.SHOOTER_F);
+		SmartDashboard.putNumber("Shooter F", Constants.Shooter.kF);
 		SmartDashboard.putNumber("Target Velocity", 0.0);
-		p = SmartDashboard.getNumber("Shooter P", Constants.Shooter.SHOOTER_P);
+		p = SmartDashboard.getNumber("Shooter P", Constants.Shooter.kP);
 		i = SmartDashboard.getNumber("Shooter I", 0.0);
 		d = SmartDashboard.getNumber("Shooter D", 0.0);
-		f = SmartDashboard.getNumber("Shooter F", Constants.Shooter.SHOOTER_F);
+		f = SmartDashboard.getNumber("Shooter F", Constants.Shooter.kF);
 		vel = SmartDashboard.getNumber("Target Velocity", 0.0);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		double nP = SmartDashboard.getNumber("Shooter P", Constants.Shooter.SHOOTER_P);
+		double nP = SmartDashboard.getNumber("Shooter P", Constants.Shooter.kP);
 		double nI = SmartDashboard.getNumber("Shooter I", 0.0);
 		double nD = SmartDashboard.getNumber("Shooter D", 0.0);
-		double nF = SmartDashboard.getNumber("Shooter F", Constants.Shooter.SHOOTER_F);
+		double nF = SmartDashboard.getNumber("Shooter F", Constants.Shooter.kF);
 		double nVel = SmartDashboard.getNumber("Target Velocity", 0.0);
 		boolean isChanged = false;
 		if (p != nP) {
@@ -65,7 +65,7 @@ public class TuneShooterPID extends CommandBase {
 			isChanged = true;
 		}
 		if (isChanged) {
-			shooter.configPIDF(p, i, d, f, Constants.Shooter.SHOOTER_VELOCITY_IDX);
+			shooter.configPIDF(p, i, d, f, Constants.Shooter.kPIDIdx);
 		}
 		if (vel != nVel) {
 			vel = nVel;

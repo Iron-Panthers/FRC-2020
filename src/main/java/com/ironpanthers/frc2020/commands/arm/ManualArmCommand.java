@@ -35,7 +35,7 @@ public class ManualArmCommand extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		arm.setPower(forward.getAsDouble() * Constants.Arm.MAX_ARM_MANUAL_OUTPUT);
+		arm.setPower(forward.getAsDouble() * Constants.Arm.kMaxManualSpeed);
 	}
 
 	// Called once the command ends or is interrupted.

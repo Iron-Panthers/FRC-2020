@@ -7,8 +7,6 @@
 
 package com.ironpanthers.frc2020;
 
-import static edu.wpi.first.wpilibj.util.Units.inchesToMeters;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -24,25 +22,6 @@ public final class Constants {
         /* disallow construction of this class */
         throw new UnsupportedOperationException("don't try to construct an instance of Constants");
     }
-    public final class Vision {
-        /** Height from ground to limelight in inches */
-        public static final double HEIGHT_GROUND_TO_LIMELIGHT = 38.5;
-        /** Height from ground to target in inches */
-        public static final double HEIGHT_GROUND_TO_TARGET = 93.0;
-        /** Angle from mount to limelight in degrees */
-        public static final double ANGLE_MOUNT_TO_LIMELIGHT = 33.0;
-        /** Proportional control constant */
-        public static final double Kp = -0.1;
-        /** I value in PID */
-        public static final double Ki = 0.01;
-        /** D value in PID */
-        public static final double Kd = 0.001;
-        /** Minimum amount of power to move robot */
-        public static final double MINIMUM_POWER = 0.03;
-        /** Button port to adjust angle of robot */
-        public static final int ANGLE_ADJUSTING_BUTTON_PORT = 9;
-    }
-   
 
     /**
      * When competition mode is enabled, most throwable errors are disregarded.
@@ -51,10 +30,7 @@ public final class Constants {
      */
     public static final boolean kCompetitionMode = false;
 
-    /*
-     * UNIVERSAL CONSTANTS
-     */
-    public static final int kFalconTicksToRevs = 4096; // TODO(ingi)
+    public static final int kFalconEPR = 4096;
 
     public static class Drive {
         public static final int kLeft1Id = 1;
@@ -62,125 +38,145 @@ public final class Constants {
         public static final int kRight1Id = 2;
         public static final int kRight2Id = 22;
 
-        public static final int kPigeonTalonId = 31;
+        public static final double kGearRatio = 5.10;
+        public static final double kTrackWidthMeters = 0.7204688778663988; // empirical from characterization data
+        public static final double kWheelDiameterMeters = 0.1524;
+        public static final double kWheelRadiusMeters = kWheelDiameterMeters / 2;
 
-        public static final double kGearRatio = 5.10; // TODO(ingi)
-        public static final double kTrackWidthMeters = inchesToMeters(21); // TODO(ingi)
-        public static final double kWheelRadiusMeters = inchesToMeters(3);
-
-        // GENERATE FROM CHARACTERIZATION TOOL TODO(ingi)
-        // LAST GENERATED: NEVER
-        // BY: NO ONE
+        // GENERATE FROM CHARACTERIZATION TOOL
+        // LAST GENERATED: 2020-02-04
+        // BY: Ingi Helgason (helgason.ingi@gmail.com)
         // UPDATE THIS COMMENT IF YOU CHANGE ANY OF THE DRIVEBASE GAINS
-        public static final double kS = 0;
-        public static final double kV = 0;
-        public static final double kA = 0;
+        public static final double kS = 0.252;
+        public static final double kV = 2.22;
+        public static final double kA = 0.207;
 
-        public static final double kP = 0;
+        public static final double kP = 2.6;
 
-        public static final double DRIVE_CURRENT_LIMIT = 60;
+        public static final double kCurrentLimit = 60; // amps
     }
 
-    public final class OI {
+    public static class OI {
         // Driver A
-        public static final int DRIVE_JOYSTICK = 0;
-        public static final int INTAKE_BUTTON_PORT = 4;
-        public static final int RESET_CONVEYOR_BUTTON_PORT = 3;
-        public static final int SHOOT_WITH_VELOCITY_PORT = 5;
+        public static final int kDriverAJoystickPort = 0;
+        public static final int kIntakeButton = 4;
+        public static final int kResetConveyorButton = 3;
 
         // Driver B
-        public static final int ARM_JOYSTICK = 1;
-        public static final int MANUAL_ARM_BUTTON = 1;
-        public static final int DRIVER_B_INTAKE_BUTTON = 2;
-        public static final int ZERO_ARM_BUTTON = 7;
-        public static final int FAR_SHOT_POSITION_BUTTON = 9;
-        public static final int FRAME_PERIMETER_HEIGHT_BUTTON = 8;
+        public static final int kDriverBJoystickPort = 1;
+        public static final int kManualArmButton = 1;
+        public static final int kDriverBIntakeButton = 2;
+        public static final int kZeroArmButton = 7;
+        public static final int kFarShotButton = 9;
+        public static final int kFramePerimeterHeightButton = 8;
     }
 
-    public final class Conveyor {
+    public static class Conveyor {
         // Ports
-        public static final int CONVEYOR_BELT_MOTOR_PORT = 4;
-        public static final int INTAKE_MOTOR_PORT = 3;
-        public static final int BANNER_SENSOR_PORT = 3;
-
-        // Size Constants
-        public static final double POWER_CELL_DIAMETER = 7; // in inches
+        public static final int kConveyorMotorId = 4;
+        public static final int kIntakeMotorId = 3;
+        public static final int kBannerSensorPort = 3;
 
         // PID
-        public static final int CONVEYOR_POSITION_IDX = 0;
-        public static final double CONVEYOR_CLOSED_LOOP_RAMP = 0.6;
-        public static final double CONVEYOR_P = 0.13;
+        public static final int kPIDIdx = 0;
+        public static final double kConveyorClosedLoopRamp = 0.6;
+        public static final double kConveyorKp = 0.13;
 
         // Powers
-        public static final double CONVEYOR_BELT_MOTOR_POWER = 0.5; // tbd
-        public static final double INTAKE_MOTOR_POWER = -1; // tbd
-        public static final double SHOOTER_MOTOR_POWER = -.5; // tbd
+        public static final double kIntakeRollerSpeed = -1; // tbd
+        public static final double kIntakeFlywheelSpeed = -.5; // tbd
 
         // Encoder Stuff
-        public static final double DISTANCE_PERENCODER_ROTATION = .1;
-        public static final double PULSES_PERENCODER_ROTATION = .25;
-        public static final int TICK_ERROR_TOLERANCE = 350;
-        /** needs to move conveyer exactly one ball length backward */
-        public static final int TICKS_PREP_DISTANCE = 18500;
+        public static final int kPositionErrorTolerance = 350;
+        public static final int kShiftEncoderDistance = 16000;
     }
 
-    public final class Shooter {
-        public static final int SHOOTER_ONE_PORT = 5;
-        public static final int SHOOTER_TWO_PORT = 6;
-        public static final int SHOOTER_THREE_PORT = 7;
-        public static final double shooterSpeed = 0.5;
-        public static final int SHOOTER_VELOCITY_IDX = 0;
-        public static final double SHOOTER_CURRENT_LIMIT = 40;
-        public static final double SHOOTER_F = 0.07;
-        public static final double SHOOTER_P = 0.0;
-        public static final double SHOOTER_MAX_SAFE_VEL = 12000; // Native units
-        public static final double SHOOTER_RAMP_RATE = 0.25; // Seconds to full power during PID control + Open Loop
-        public static final int SHOOTER_VELOCITY_THRESHOLD = 300; // Acceptable error in velocity before shooting (in
-                                                                  // either direction)
-        public static final int SHOOTER_TEST_VELOCITY = 14000;
+    public static class Vision {
+        /**
+         * Height from ground to limelight in inches
+         */
+        public static final double kGroundToLLInches = 38.5;
+        /**
+         * Height from ground to target in inches
+         */
+        public static final double kGroundToTargetInches = 93.0;
+        /**
+         * Angle from mount to limelight in degrees
+         */
+        public static final double kMountToLLAngleDeg = 33.0;
+        /**
+         * Proportional control constant
+         */
+        public static final double kP = -0.1;
+        /**
+         * I value in PID
+         */
+        public static final double kI = 0.01;
+        /**
+         * D value in PID
+         */
+        public static final double kD = 0.001;
+        /**
+         * Minimum percent output required to break static friction
+         */
+        public static final double kS = 0.03;
     }
 
-    public final class Arm {
-        public static final int ARM_LEFT_PORT = 9;
-        public static final int ARM_RIGHT_PORT = 10;
-        public static final boolean IS_ARM_INVERTED = true;
-        public static final int ARM_POSITION_PID_SLOT = 0;
-        public static final int ARM_VELOCITY_PID_SLOT = 1;
-        public static final double TICKS_TO_DEGREES = 360 * 4096;
-        public static final double ARM_ANGLE_OFFSET = 0; // TODO find this value
-        public static final double ARM_INITIAL_HEIGHT = 0; // TODO find this value
-        public static final double MAX_FF = 0.07; // TODO find this value
-        public static final double MAX_ARM_MANUAL_OUTPUT = 0.5;
+    public static class Shooter {
+        public static final int kShooter1Id = 5;
+        public static final int kShooter2Id = 6;
+        public static final int kShooter3Id = 7;
 
-        public static final double ARM_POSITION_P = 0.03;
-        public static final double ARM_POSITION_I = 0;
-        public static final double ARM_POSITION_D = 0;
-        public static final double ARM_POSITION_F = 0;
+        public static final int kPIDIdx = 0;
+        public static final double kF = 0.07;
+        public static final double kP = 0.0;
+        public static final double kRampRate = 0.25; // seconds 0->full
 
-        public static final double ARM_RAMP_RATE = 0.25;
+        public static final int kVelocityThreshold = 25;
+        public static final int kTestVelocity = 19000;
 
-        public static final int HIGH_LIMIT_SWITCH_PORT = 1;
-        public static final int GROUND_LIMIT_SWTICH_PORT = 0;
+        public static final double kCurrentLimit = 40; // amps
+    }
+
+    public static class Arm {
+        public static final int kLeftMotorId = 9;
+        public static final int kRightMotorId = 10;
+        public static final int kHighLimitSwitchPort = 1;
+        public static final int kGroundLimitSwitchPort = 0;
+
+        public static final int kPIDIdx = 0;
+        public static final double kArmAngleOffset = 0; // TODO find this value
+        public static final double kArmInitialHeight = 0; // TODO find this value
+        public static final double kMaxFF = 0.07; // TODO find this value
+        public static final double kMaxManualSpeed = 0.5;
+
+        public static final double kP = 0.03;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kF = 0;
+
+        public static final double kRampRate = 0.25; // seconds 0->full
 
         // Setpoints
-        public static final int ARM_POSITION_TOLERANCE = 1000;
-        public static final int ARM_FAR_SHOT = 60000; // Tested angle for shooting behind control panel at 14k native
-                                                      // units
-        public static final int ARM_FRAME_PERIMETER_HEIGHT = 45000; // Height at which robot is 45 inches tall
+        public static final int kPositionErrorTolerance = 1000;
+        public static final int kFarShotHeightNativeUnits = 60000; // Tested angle for shooting behind control panel at
+                                                                   // 14k native
+        // units
+        public static final int kFrameConstrainedHeightNativeUnits = 45000; // Height at which robot is 45 inches tall
 
         // Soft Limits
-        public static final int BOTTOM_ARM_POSITION = 0;
-        public static final int TOP_ARM_POSITION = 88000; // Tested by James, 1/30/20
-        public static final int BOTTOM_SOFT_LIMIT = 0;
-        public static final int TOP_SOFT_LIMIT = TOP_ARM_POSITION + 500;
-        public static final int SLOW_ARM_THRESHOLD = 10000; // Threshold to soft limit in which the output of the arm
-                                                            // motors are scaled down
-        public static final int BOTTOM_SLOW_LIMIT = BOTTOM_SOFT_LIMIT + SLOW_ARM_THRESHOLD;
-        public static final int TOP_SLOW_LIMIT = TOP_SOFT_LIMIT - SLOW_ARM_THRESHOLD;
+        public static final int kTopPositionNativeUnits = 88000; // Tested by James, 1/30/20
+        public static final int kBottomSoftLimit = 0;
+        public static final int kTopSoftLimit = kTopPositionNativeUnits + 500;
 
-        public static final double MAX_ARM_PID_OUTPUT = 0.5; // Used for both positive and negative direction
-        public static final double SLOW_ARM_PID_OUTPUT = 0.25;
+        // TODO(james)
+        public static final int kSlowdownThreshold = 10000; // Threshold to soft limit in which the output of the arm
+        // motors are scaled down
+        public static final int kBottomSlowdownZone = kBottomSoftLimit + kSlowdownThreshold;
+        public static final int kTopSlowdownZone = kTopSoftLimit - kSlowdownThreshold;
+        public static final double kSlowClosedLoopPeakOutput = 0.25; // for when in a slow zone
+        public static final double kClosedLoopPeakOutput = 0.5; // Used for both positive and negative direction
 
-        public static final double ARM_CURRENT_LIMIT = 60.0; // Amps
+        public static final double kCurrentLimit = 60; // amps
     }
 }

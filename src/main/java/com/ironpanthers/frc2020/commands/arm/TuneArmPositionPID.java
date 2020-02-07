@@ -29,25 +29,25 @@ public class TuneArmPositionPID extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		SmartDashboard.putNumber("Arm P", Constants.Arm.ARM_POSITION_P);
-		SmartDashboard.putNumber("Arm I", Constants.Arm.ARM_POSITION_I);
-		SmartDashboard.putNumber("Arm D", Constants.Arm.ARM_POSITION_D);
-		SmartDashboard.putNumber("Arm F", Constants.Arm.ARM_POSITION_F);
+		SmartDashboard.putNumber("Arm P", Constants.Arm.kP);
+		SmartDashboard.putNumber("Arm I", Constants.Arm.kI);
+		SmartDashboard.putNumber("Arm D", Constants.Arm.kD);
+		SmartDashboard.putNumber("Arm F", Constants.Arm.kF);
 		SmartDashboard.putNumber("Target Position", 0);
-		p = SmartDashboard.getNumber("Arm P", Constants.Arm.ARM_POSITION_P);
-		i = SmartDashboard.getNumber("Arm I", Constants.Arm.ARM_POSITION_I);
-		d = SmartDashboard.getNumber("Arm D", Constants.Arm.ARM_POSITION_D);
-		f = SmartDashboard.getNumber("Arm F", Constants.Arm.ARM_POSITION_F);
+		p = SmartDashboard.getNumber("Arm P", Constants.Arm.kP);
+		i = SmartDashboard.getNumber("Arm I", Constants.Arm.kI);
+		d = SmartDashboard.getNumber("Arm D", Constants.Arm.kD);
+		f = SmartDashboard.getNumber("Arm F", Constants.Arm.kF);
 		pos = (int) SmartDashboard.getNumber("Target Position", 0);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		double nP = SmartDashboard.getNumber("Arm P", Constants.Arm.ARM_POSITION_P);
-		double nI = SmartDashboard.getNumber("Arm I", Constants.Arm.ARM_POSITION_I);
-		double nD = SmartDashboard.getNumber("Arm D", Constants.Arm.ARM_POSITION_D);
-		double nF = SmartDashboard.getNumber("Arm F", Constants.Arm.ARM_POSITION_F);
+		double nP = SmartDashboard.getNumber("Arm P", Constants.Arm.kP);
+		double nI = SmartDashboard.getNumber("Arm I", Constants.Arm.kI);
+		double nD = SmartDashboard.getNumber("Arm D", Constants.Arm.kD);
+		double nF = SmartDashboard.getNumber("Arm F", Constants.Arm.kF);
 		int nPos = (int) SmartDashboard.getNumber("Target Position", 0);
 		boolean update = false;
 		// Only reconfigure PIDF if it gets changed
@@ -68,7 +68,7 @@ public class TuneArmPositionPID extends CommandBase {
 			update = true;
 		}
 		if (update) {
-			arm.configPIDF(p, i, d, f, Constants.Arm.ARM_POSITION_PID_SLOT);
+			arm.configPIDF(p, i, d, f, Constants.Arm.kPIDIdx);
 		}
 		if (nPos != pos) {
 			pos = nPos;

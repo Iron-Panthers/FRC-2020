@@ -3,9 +3,7 @@ package com.ironpanthers.frc2020.subsystems;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-// import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.util.PhoenixUtil;
 import com.ironpanthers.util.PoseLoggingTable;
@@ -19,16 +17,17 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * Subsystem for controlling the robot's drivetrain.
  */
 public class Drive extends SubsystemBase {
-    private final static TalonFX left1 = new TalonFX(Constants.Drive.kLeft1Id);
-    private final TalonFX left2 = new TalonFX(Constants.Drive.kLeft2Id);
-    private final static TalonFX right1 = new TalonFX(Constants.Drive.kRight1Id);
-    private final TalonFX right2 = new TalonFX(Constants.Drive.kRight2Id);
+    private final WPI_TalonFX left1 = new WPI_TalonFX(Constants.Drive.kLeft1Id);
+    private final WPI_TalonFX left2 = new WPI_TalonFX(Constants.Drive.kLeft2Id);
+    private final WPI_TalonFX right1 = new WPI_TalonFX(Constants.Drive.kRight1Id);
+    private final WPI_TalonFX right2 = new WPI_TalonFX(Constants.Drive.kRight2Id);
 
     private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
@@ -39,10 +38,14 @@ public class Drive extends SubsystemBase {
     private final SimpleMotorFeedforward characterizedFeedforward = new SimpleMotorFeedforward(Constants.Drive.kS,
             Constants.Drive.kV, Constants.Drive.kA);
 
+    // These PID controllers are tuned for path following error correction
     private final PIDController left = new PIDController(Constants.Drive.kP, 0.0, 0.0);
     private final PIDController right = new PIDController(Constants.Drive.kP, 0.0, 0.0);
 
     private Pose2d currentPose = new Pose2d();
+
+    private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconEPR * 5.1)) * 2
+            * Constants.Drive.kWheelRadiusMeters * Math.PI;
 
     /**
      * Create a new Drive subsystem.
@@ -59,12 +62,17 @@ public class Drive extends SubsystemBase {
 
         // Configuration
         left1.setInverted(true);
+        left1.setSensorPhase(true);
+
         left2.setInverted(InvertType.FollowMaster);
+
         right1.setInverted(false);
+        right1.setSensorPhase(false);
+
         right2.setInverted(InvertType.FollowMaster);
 
         SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-                Constants.Drive.DRIVE_CURRENT_LIMIT, Constants.Drive.DRIVE_CURRENT_LIMIT, 1);
+                Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentLimit, 1);
         left1.configSupplyCurrentLimit(currentConfig);
         right1.configSupplyCurrentLimit(currentConfig);
 
@@ -78,17 +86,8 @@ public class Drive extends SubsystemBase {
 
     public DifferentialDriveWheelSpeeds speeds() {
         return new DifferentialDriveWheelSpeeds(// CONVERSION FROM ENCODER TO LEFT AND RIGHT SPEEDS (METERS PER SECOND):
-                left1.getSelectedSensorVelocity() // (raw sensor units) per 100 ms
-                        / Constants.kFalconTicksToRevs // (motor shaft revolutions) per 100 ms
-                        / Constants.Drive.kGearRatio // (wheel shaft revolutions) per 100 ms
-                        * 2 * Math.PI * Constants.Drive.kWheelRadiusMeters // meters (wheel circum) per 100 ms
-                        * 10, // meters per 10(100ms) => second
-                right1.getSelectedSensorVelocity() // (raw sensor units) per 100 ms
-                        / Constants.kFalconTicksToRevs // (motor shaft revolutions) per 100 ms
-                        / Constants.Drive.kGearRatio // (wheel shaft revolutions) per 100 ms
-                        * 2 * Math.PI * Constants.Drive.kWheelRadiusMeters // meters (wheel circum) per 100 ms
-                        * 10 // meters per 10(100ms) => second
-        );
+                left1.getSelectedSensorVelocity() * kEncoderToDistanceFactor * 10,
+                right1.getSelectedSensorVelocity() * kEncoderToDistanceFactor * 10);
     }
 
     public double leftVoltage() {
@@ -100,19 +99,11 @@ public class Drive extends SubsystemBase {
     }
 
     public double leftDistanceMeters() {
-        return left1.getSelectedSensorPosition() // value of raw sensor units
-                / Constants.kFalconTicksToRevs // value of motor shaft revolutions "elapsed"
-                / Constants.Drive.kGearRatio // value of wheel shaft revolutions "elapsed"
-                * 2 * Math.PI * Constants.Drive.kWheelRadiusMeters; // value of meters "elapsed" (turning wheel
-                                                                    // revolutions into meters via circumference)
+        return left1.getSelectedSensorPosition() * kEncoderToDistanceFactor;
     }
 
     public double rightDistanceMeters() {
-        return right1.getSelectedSensorPosition() // value of raw sensor units
-                / Constants.kFalconTicksToRevs // value of motor shaft revolutions "elapsed"
-                / Constants.Drive.kGearRatio // value of wheel shaft revolutions "elapsed"
-                * 2 * Math.PI * Constants.Drive.kWheelRadiusMeters; // value of meters "elapsed" (turning wheel
-                                                                    // revolutions into meters via circumference)
+        return right1.getSelectedSensorPosition() * kEncoderToDistanceFactor;
     }
 
     public DifferentialDriveKinematics kinematics() {
@@ -157,7 +148,7 @@ public class Drive extends SubsystemBase {
      * @param rightVoltage The desired/nominal voltage for the right side of the
      *                     drive.
      */
-    public static void setOutputVolts(double leftVoltage, double rightVoltage) {
+    public void setOutputVolts(double leftVoltage, double rightVoltage) {
         var batteryVoltage = RobotController.getBatteryVoltage();
         left1.set(TalonFXControlMode.PercentOutput, leftVoltage / batteryVoltage);
         right1.set(TalonFXControlMode.PercentOutput, rightVoltage / batteryVoltage);
@@ -167,7 +158,11 @@ public class Drive extends SubsystemBase {
      * Resets the robot position to the origin, while maintaining heading.
      */
     public void reset() {
-        odometry.resetPosition(new Pose2d(), heading());
+        resetToPosition(new Pose2d());
+    }
+
+    public void resetToPosition(Pose2d poseMeters) {
+        odometry.resetPosition(poseMeters, heading());
     }
 
     /**
@@ -180,19 +175,16 @@ public class Drive extends SubsystemBase {
         var rightDistanceMeters = rightDistanceMeters();
 
         // DEBUG VALUES
-        // SmartDashboard.putNumber("drive/heading", heading.getDegrees());
-        // SmartDashboard.putNumber("drive/leftVoltage (v)", leftVoltage());
-        // SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
-        // SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
-        // SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
-        // SmartDashboard.putString("drive/wheelSpeeds", speeds().toString());
-        // SmartDashboard.putString("drive/heading", heading().toString());
-        // SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
-        // SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
-        // SmartDashboard.putNumber("drive/left1PctOut", left1.getMotorOutputPercent());
-        // SmartDashboard.putNumber("drive/left2PctOut", left2.getMotorOutputPercent());
-        // SmartDashboard.putNumber("drive/right1PctOut", right1.getMotorOutputPercent());
-        // SmartDashboard.putNumber("drive/right2PctOut", right2.getMotorOutputPercent());
+        SmartDashboard.putNumber("drive/heading", heading.getDegrees());
+        SmartDashboard.putNumber("drive/leftVoltage (v)", leftVoltage());
+        SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
+        SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
+        SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
+        SmartDashboard.putString("drive/wheelSpeeds", speeds().toString());
+        SmartDashboard.putString("drive/heading", heading().toString());
+        SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
+        SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
+        SmartDashboard.putString("drive/currentPose", currentPose.toString());
 
         currentPose = odometry.update(heading, leftDistanceMeters, rightDistanceMeters);
         PoseLoggingTable.getInstance().publishRobotPose(currentPose);

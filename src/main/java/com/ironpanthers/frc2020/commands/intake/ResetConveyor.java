@@ -29,7 +29,7 @@ public class ResetConveyor extends CommandBase {
 		if (conveyor.conveyorFull())
 			cancel();
 		bannerSensor = conveyor.getBannerSensor();
-		targetEncoderPosition = conveyor.getPosition() + Constants.Conveyor.TICKS_PREP_DISTANCE;
+		targetEncoderPosition = conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance;
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -58,7 +58,7 @@ public class ResetConveyor extends CommandBase {
 	public boolean isFinished() {
 		if (!bannerSensor) {
 			return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition,
-					Constants.Conveyor.TICK_ERROR_TOLERANCE);
+					Constants.Conveyor.kPositionErrorTolerance);
 		}
 		return true;
 	}

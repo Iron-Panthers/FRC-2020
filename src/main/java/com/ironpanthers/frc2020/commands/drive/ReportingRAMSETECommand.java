@@ -165,7 +165,6 @@ public class ReportingRAMSETECommand extends CommandBase {
         m_prevTime = curTime;
         m_prevSpeeds = targetWheelSpeeds;
 
-        // TODO(ingi) fixify
         PoseLoggingTable.getInstance().publishPathSample(trajectorySample.poseMeters);
     }
 

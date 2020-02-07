@@ -21,9 +21,7 @@ import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -36,35 +34,31 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
 	private final Drive drive = new Drive();
+	private final Shooter shooter = new Shooter();
+	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
+	private final Arm arm = new Arm();
 
-	public static final Joystick joystick = new Joystick(Constants.OI.DRIVE_JOYSTICK);
-	public static final Joystick armJoystick = new Joystick(Constants.OI.ARM_JOYSTICK);
+	private static final Joystick joystick = new Joystick(Constants.OI.kDriverAJoystickPort);
+	private static final Joystick armJoystick = new Joystick(Constants.OI.kDriverBJoystickPort);
 
-	/**
-	 * The container for the robot. Contains subsystems, OI devices, and commands.
-	 */
-	public final Shooter shooter = new Shooter();
-	public final ConveyorBelt conveyorBelt = new ConveyorBelt();
-	public final Arm arm = new Arm();
 	// Driver A Buttons
-	public final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.INTAKE_BUTTON_PORT);
-	public final JoystickButton shooterButton = new JoystickButton(joystick, 5);
-	public final JoystickButton turnToTargetButton = new JoystickButton(joystick, 6);
+	private final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.kIntakeButton);
+	private final JoystickButton shooterButton = new JoystickButton(joystick, 5);
+	private final JoystickButton turnToTargetButton = new JoystickButton(joystick, 6);
+
 	// Driver B Buttons
-	public final JoystickButton manualArm = new JoystickButton(armJoystick, Constants.OI.MANUAL_ARM_BUTTON);
-	public final JoystickButton driverBIntake = new JoystickButton(armJoystick, Constants.OI.DRIVER_B_INTAKE_BUTTON);
-	public final JoystickButton zeroArm = new JoystickButton(armJoystick, Constants.OI.ZERO_ARM_BUTTON);
-	public final JoystickButton farShotPosition = new JoystickButton(armJoystick, Constants.OI.FAR_SHOT_POSITION_BUTTON);
-	public final JoystickButton framePerimeterHeightPosition = new JoystickButton(armJoystick, Constants.OI.FRAME_PERIMETER_HEIGHT_BUTTON);
+	private final JoystickButton manualArm = new JoystickButton(armJoystick, Constants.OI.kManualArmButton);
+	private final JoystickButton driverBIntake = new JoystickButton(armJoystick, Constants.OI.kDriverBIntakeButton);
+	private final JoystickButton zeroArm = new JoystickButton(armJoystick, Constants.OI.kZeroArmButton);
+	private final JoystickButton farShotPosition = new JoystickButton(armJoystick, Constants.OI.kFarShotButton);
+	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(armJoystick,
+			Constants.OI.kFramePerimeterHeightButton);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
 				new ManualDriveCommand(joystick::getY, joystick::getX, new JoystickButton(joystick, 1), drive));
 
-		SmartDashboard.putData("delete soon. fow now: reset drive", new RunCommand(() -> drive.reset()));
-
 		// Configure the button bindings
-
 		configureButtonBindings();
 	}
 
@@ -76,12 +70,14 @@ public class RobotContainer {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
 		shooterButton.whileHeld(new ShooterSequence(shooter, conveyorBelt));
+
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, armJoystick::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		zeroArm.whenPressed(new ZeroArm(arm));
-		farShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.ARM_FAR_SHOT));
-		framePerimeterHeightPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.ARM_FRAME_PERIMETER_HEIGHT));
+		farShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFarShotHeightNativeUnits));
+		framePerimeterHeightPosition
+				.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits));
 	}
 
 	/**

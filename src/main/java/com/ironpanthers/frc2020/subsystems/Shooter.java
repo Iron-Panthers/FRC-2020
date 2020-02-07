@@ -15,90 +15,84 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
-	/**
-	 * Creates a new Shooter.
-	 */
+    private final TalonFX shooter1;
+    private final TalonFX shooter2;
+    private final TalonFX shooter3;
+    private final TalonFX intakeMotor;
 
-	public final TalonFX shooter1;
-	public final TalonFX shooter2;
-	public final TalonFX shooter3;
-	public final TalonFX intakeMotor;
+    public Shooter() {
+        shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
+        shooter2 = new TalonFX(Constants.Shooter.kShooter2Id);
+        shooter3 = new TalonFX(Constants.Shooter.kShooter3Id);
+        intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
 
-	public Shooter() {
-		shooter1 = new TalonFX(Constants.Shooter.SHOOTER_ONE_PORT);
-		shooter2 = new TalonFX(Constants.Shooter.SHOOTER_TWO_PORT);
-		shooter3 = new TalonFX(Constants.Shooter.SHOOTER_THREE_PORT);
-		intakeMotor = new TalonFX(Constants.Conveyor.INTAKE_MOTOR_PORT);
+        // Config
+        intakeMotor.setNeutralMode(NeutralMode.Coast);
+        intakeMotor.setInverted(true);
 
-		// Config
-		intakeMotor.setNeutralMode(NeutralMode.Coast);
-		shooter1.setNeutralMode(NeutralMode.Coast);
-		shooter2.setNeutralMode(NeutralMode.Coast);
-		shooter3.setNeutralMode(NeutralMode.Coast);
-		shooter1.setInverted(true);
-		shooter2.setInverted(InvertType.FollowMaster);
-		shooter3.setInverted(InvertType.FollowMaster);
+        shooter1.setNeutralMode(NeutralMode.Coast);
+        shooter1.setInverted(false);
 
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-				Constants.Shooter.SHOOTER_CURRENT_LIMIT, Constants.Shooter.SHOOTER_CURRENT_LIMIT, 1);
-		shooter1.configSupplyCurrentLimit(currentConfig);
-		shooter1.configClosedloopRamp(Constants.Shooter.SHOOTER_RAMP_RATE); // Ramp rate for Velocity PID
-		shooter1.configOpenloopRamp(Constants.Shooter.SHOOTER_RAMP_RATE); // Ramp rate for open loop control
+        shooter2.setNeutralMode(NeutralMode.Coast);
+        shooter2.setInverted(InvertType.OpposeMaster);
 
-		// Follow
-		shooter2.follow(shooter1);
-		shooter3.follow(shooter1);
-		configPIDF(Constants.Shooter.SHOOTER_P, 0, 0, Constants.Shooter.SHOOTER_F, Constants.Shooter.SHOOTER_VELOCITY_IDX);
-	}
+        shooter3.setNeutralMode(NeutralMode.Coast);
+        shooter3.setInverted(InvertType.OpposeMaster);
 
-	public void setIntakeMotors(double intakeMotorSpeed, double ShooterMotorSpeed) {
-		intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
-		shooter1.set(ControlMode.PercentOutput, ShooterMotorSpeed);
-	}
+        SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+                Constants.Shooter.kCurrentLimit, Constants.Shooter.kCurrentLimit, 1);
+        shooter1.configSupplyCurrentLimit(currentConfig);
 
-	public void stopIntake() {
-		setIntakeMotors(0, 0);
-	}
+        shooter1.configClosedloopRamp(Constants.Shooter.kRampRate); // Ramp rate for Velocity PID
+        shooter1.configOpenloopRamp(Constants.Shooter.kRampRate); // Ramp rate for open loop control
 
-	public void shootWithPower(double speed) {
-		shooter1.set(ControlMode.PercentOutput, speed);
-	}
+        // Follow
+        shooter2.follow(shooter1);
+        shooter3.follow(shooter1);
+        configPIDF(Constants.Shooter.kP, 0, 0, Constants.Shooter.kF, Constants.Shooter.kPIDIdx);
+    }
 
-	public void stopShooter() {
-		shooter1.set(ControlMode.PercentOutput, 0);
-	}
+    public void setIntakeMotors(double intakeMotorSpeed, double ShooterMotorSpeed) {
+        intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
+        shooter1.set(ControlMode.PercentOutput, ShooterMotorSpeed);
+    }
 
-	public void setVelocity(double nativeUnits) {
-		shooter1.set(TalonFXControlMode.Velocity, nativeUnits);
-		System.out.println("Wee you are setting the shooter to a velocity");
-		SmartDashboard.putNumber("Actual Velocity", getVelocity());
-	}
+    public void stopShooter() {
+        shooter1.set(ControlMode.PercentOutput, 0);
+    }
 
-	public void configPIDF(double p, double i, double d, double f, int idx) {
-		shooter1.config_kP(idx, p);
-		shooter1.config_kI(idx, i);
-		shooter1.config_kD(idx, d);
-		shooter1.config_kF(idx, f);
-	}
+    public void setPercent(double percentOutput) {
+        shooter1.set(TalonFXControlMode.PercentOutput, percentOutput);
+    }
 
-	public double getVelocity() {
-		return shooter1.getSelectedSensorVelocity();
-	}
+    public void setVelocity(double nativeUnits) {
+        shooter1.set(TalonFXControlMode.Velocity, nativeUnits);
+    }
 
-	public double getVoltage() {
-		return shooter1.getMotorOutputVoltage();
-	}
+    public void configPIDF(double p, double i, double d, double f, int idx) {
+        shooter1.config_kP(idx, p);
+        shooter1.config_kI(idx, i);
+        shooter1.config_kD(idx, d);
+        shooter1.config_kF(idx, f);
+    }
 
-	public double getCurrent() {
-		return shooter1.getStatorCurrent();
-	}
+    public double getVelocity() {
+        return shooter1.getSelectedSensorVelocity();
+    }
 
-	@Override
-	public void periodic() {
-		// This method will be called once per scheduler run
-	}
+    public double getVoltage() {
+        return shooter1.getMotorOutputVoltage();
+    }
+
+    public double getCurrent() {
+        return shooter1.getStatorCurrent();
+    }
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 }

@@ -44,8 +44,8 @@ public class ShiftConveyor extends CommandBase {
                 cancel();
 
         final var encoderStartTicks = conveyor.getPosition();
-        targetEncoderPosition = direction == Direction.kIn ? encoderStartTicks - Constants.Conveyor.TICKS_PREP_DISTANCE
-                : encoderStartTicks + Constants.Conveyor.TICKS_PREP_DISTANCE;
+        targetEncoderPosition = direction == Direction.kIn ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
+                : encoderStartTicks + Constants.Conveyor.kShiftEncoderDistance;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -63,6 +63,6 @@ public class ShiftConveyor extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition, Constants.Conveyor.TICK_ERROR_TOLERANCE);
+        return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition, Constants.Conveyor.kPositionErrorTolerance);
     }
 }

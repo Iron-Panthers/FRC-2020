@@ -14,16 +14,17 @@ import com.ironpanthers.util.Util;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetShooterVelocity extends CommandBase {
-	private Shooter shooter;
-	private int velocity;
+	private final Shooter shooter;
+	private final int velocity;
+
 	/**
 	 * Creates a new ShootAtVelocity.
 	 */
 	public SetShooterVelocity(Shooter shooter, int velocity) {
 		// Use addRequirements() here to declare subsystem dependencies.
-		addRequirements(shooter);
 		this.shooter = shooter;
 		this.velocity = velocity;
+		addRequirements(shooter);
 	}
 
 	// Called when the command is initially scheduled.
@@ -40,12 +41,11 @@ public class SetShooterVelocity extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		shooter.stopShooter();
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(shooter.getVelocity(), velocity, Constants.Shooter.SHOOTER_VELOCITY_THRESHOLD);
+		return Util.epsilonEquals(shooter.getVelocity(), velocity, Constants.Shooter.kVelocityThreshold);
 	}
 }

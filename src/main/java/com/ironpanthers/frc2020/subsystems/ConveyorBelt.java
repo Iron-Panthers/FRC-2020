@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ConveyorBelt extends SubsystemBase {
@@ -20,11 +21,11 @@ public class ConveyorBelt extends SubsystemBase {
 	public int ballsHeld;
 
 	public ConveyorBelt() {
-		input = new DigitalInput(Constants.Conveyor.BANNER_SENSOR_PORT);
-		conveyorMotor = new TalonFX(Constants.Conveyor.CONVEYOR_BELT_MOTOR_PORT);
+		input = new DigitalInput(Constants.Conveyor.kBannerSensorPort);
+		conveyorMotor = new TalonFX(Constants.Conveyor.kConveyorMotorId);
 		conveyorMotor.setInverted(false);
-		conveyorMotor.config_kP(Constants.Conveyor.CONVEYOR_POSITION_IDX, Constants.Conveyor.CONVEYOR_P);
-		conveyorMotor.configClosedloopRamp(Constants.Conveyor.CONVEYOR_CLOSED_LOOP_RAMP);
+		conveyorMotor.config_kP(Constants.Conveyor.kPIDIdx, Constants.Conveyor.kConveyorKp);
+		conveyorMotor.configClosedloopRamp(Constants.Conveyor.kConveyorClosedLoopRamp);
 		ballsHeld = 0;
 		conveyorMotor.setSelectedSensorPosition(0);
 	}

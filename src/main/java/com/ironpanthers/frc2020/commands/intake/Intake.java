@@ -43,7 +43,7 @@ public class Intake extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		shooter.setIntakeMotors(Constants.Conveyor.INTAKE_MOTOR_POWER, Constants.Conveyor.SHOOTER_MOTOR_POWER);
+		shooter.setIntakeMotors(Constants.Conveyor.kIntakeRollerSpeed, Constants.Conveyor.kIntakeFlywheelSpeed);
 		System.out.println(conveyor.getBannerSensor());
 	}
 
