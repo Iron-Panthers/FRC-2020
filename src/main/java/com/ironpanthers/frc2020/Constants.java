@@ -93,17 +93,23 @@ public final class Constants {
 
     public static class Vision {
         /**
-         * Height from ground to limelight in inches
+         * Height from ground to pivot in inches
          */
-        public static final double kGroundToLLInches = 38.5;
+        public static final double kGroundToPivotInches = 10.3;
+
+        public static final double kLimelightToPivotPlaneInches = 8;
         /**
          * Height from ground to target in inches
          */
-        public static final double kGroundToTargetInches = 93.0;
+        public static final double kGroundToTargetInches = 98.0;
+        
         /**
          * Angle from mount to limelight in degrees
          */
-        public static final double kMountToLLAngleDeg = 33.0;
+        public static final double kMountToLLAngleDeg = 20.0;
+
+        public static final double kPivotToLLDeg = 23.5;
+
         /**
          * Proportional control constant
          */

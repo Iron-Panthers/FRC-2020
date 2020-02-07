@@ -9,6 +9,7 @@ package com.ironpanthers.frc2020.commands.vision;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.Robot;
+import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
     private final LimelightWrapper limelightWrapper;
+    private final Arm arm;
     private final Drive drive;
 
     private double x, y, v;
@@ -23,8 +25,9 @@ public class TurnToTarget extends CommandBase {
     private double lastError;
     private double sumOfErrors;
 
-    public TurnToTarget(LimelightWrapper limelightWrapper, Drive drive) {
+    public TurnToTarget(LimelightWrapper limelightWrapper, Arm arm, Drive drive) {
         this.limelightWrapper = limelightWrapper;
+        this.arm = arm;
         this.drive = drive;
     }
 
@@ -48,6 +51,7 @@ public class TurnToTarget extends CommandBase {
         double horizontalError = -x; // Horizontal error from limelight to target
         double adjustedSteeringValue = 0.0; // Calculated amount of degrees to steer
         double recentError = 0.0;
+        double horizontalDistance = (Constants.Vision.kGroundToTargetInches - arm.get)
 
         for (int i = 98; i >= 0; i--) {
             totalErrors[i + 1] = totalErrors[i];
@@ -74,7 +78,8 @@ public class TurnToTarget extends CommandBase {
 
         leftSteeringAngle += adjustedSteeringValue;
         rightSteeringAngle -= adjustedSteeringValue;
-        drive.setOutputVolts(leftSteeringAngle, rightSteeringAngle);
+
+        // TODO: write output to drivetrain
         lastError = horizontalError;
     }
 

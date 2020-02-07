@@ -12,6 +12,7 @@ import java.util.function.DoubleSupplier;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ManualArmCommand extends CommandBase {
@@ -36,6 +37,7 @@ public class ManualArmCommand extends CommandBase {
 	@Override
 	public void execute() {
 		arm.setPower(forward.getAsDouble() * Constants.Arm.kMaxManualSpeed);
+		SmartDashboard.putNumber("arm/angle", arm.getAngle());
 	}
 
 	// Called once the command ends or is interrupted.
