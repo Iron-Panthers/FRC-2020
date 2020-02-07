@@ -15,6 +15,7 @@ import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
+import com.ironpanthers.frc2020.commands.shooter.StopShooter;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -38,25 +39,27 @@ public class RobotContainer {
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	private final Arm arm = new Arm();
 
-	private static final Joystick joystick = new Joystick(Constants.OI.kDriverAJoystickPort);
-	private static final Joystick armJoystick = new Joystick(Constants.OI.kDriverBJoystickPort);
+	private static final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
+	private static final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
 
 	// Driver A Buttons
-	private final JoystickButton intakeButton = new JoystickButton(joystick, Constants.OI.kIntakeButton);
-	private final JoystickButton shooterButton = new JoystickButton(joystick, 5);
-	private final JoystickButton turnToTargetButton = new JoystickButton(joystick, 6);
+	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA, 3);
+	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton);
+	private final JoystickButton shooterButton = new JoystickButton(joystickA, 5);
+	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, 6);
+
 
 	// Driver B Buttons
-	private final JoystickButton manualArm = new JoystickButton(armJoystick, Constants.OI.kManualArmButton);
-	private final JoystickButton driverBIntake = new JoystickButton(armJoystick, Constants.OI.kDriverBIntakeButton);
-	private final JoystickButton zeroArm = new JoystickButton(armJoystick, Constants.OI.kZeroArmButton);
-	private final JoystickButton farShotPosition = new JoystickButton(armJoystick, Constants.OI.kFarShotButton);
-	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(armJoystick,
+	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton);
+	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton);
+	private final JoystickButton zeroArm = new JoystickButton(joystickB, Constants.OI.kZeroArmButton);
+	private final JoystickButton farShotPosition = new JoystickButton(joystickB, Constants.OI.kFarShotButton);
+	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(joystickB,
 			Constants.OI.kFramePerimeterHeightButton);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
-				new ManualDriveCommand(joystick::getY, joystick::getX, new JoystickButton(joystick, 1), drive));
+				new ManualDriveCommand(joystickA::getY, joystickA::getX, new JoystickButton(joystickA, 1), drive));
 
 		// Configure the button bindings
 		configureButtonBindings();
@@ -70,9 +73,10 @@ public class RobotContainer {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
 		shooterButton.whileHeld(new ShooterSequence(shooter, conveyorBelt));
+		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
 
 		// Driver B
-		manualArm.whileHeld(new ManualArmCommand(arm, armJoystick::getY));
+		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		zeroArm.whenPressed(new ZeroArm(arm));
 		farShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFarShotHeightNativeUnits));
