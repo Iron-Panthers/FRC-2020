@@ -9,6 +9,8 @@ package com.ironpanthers.frc2020.commands.vision;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.Robot;
+import com.ironpanthers.frc2020.subsystems.Drive;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
@@ -65,9 +67,10 @@ public class TurnToTarget extends CommandBase {
         adjustedSteeringValue = Constants.Vision.Kp * horizontalError + Constants.Vision.Ki * sumOfErrors + Constants.Vision.Kd * recentError + Constants.Vision.MINIMUM_POWER;
       }
     }
-
+  
     leftSteeringAngle += adjustedSteeringValue;
     rightSteeringAngle -= adjustedSteeringValue;
+    Drive.setOutputVolts(leftSteeringAngle, rightSteeringAngle);
     lastError = horizontalError;
   }
 

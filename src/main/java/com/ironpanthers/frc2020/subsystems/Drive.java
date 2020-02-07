@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * Subsystem for controlling the robot's drivetrain.
  */
 public class Drive extends SubsystemBase {
-    private final TalonFX left1 = new TalonFX(Constants.Drive.kLeft1Id);
+    private final static TalonFX left1 = new TalonFX(Constants.Drive.kLeft1Id);
     private final TalonFX left2 = new TalonFX(Constants.Drive.kLeft2Id);
-    private final TalonFX right1 = new TalonFX(Constants.Drive.kRight1Id);
-	private final TalonFX right2 = new TalonFX(Constants.Drive.kRight2Id);
+    private final static TalonFX right1 = new TalonFX(Constants.Drive.kRight1Id);
+    private final TalonFX right2 = new TalonFX(Constants.Drive.kRight2Id);
 
     private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
@@ -61,12 +61,12 @@ public class Drive extends SubsystemBase {
         left1.setInverted(true);
         left2.setInverted(InvertType.FollowMaster);
         right1.setInverted(false);
-		right2.setInverted(InvertType.FollowMaster);
-		
-		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-				Constants.Drive.DRIVE_CURRENT_LIMIT, Constants.Drive.DRIVE_CURRENT_LIMIT, 1);
-		left1.configSupplyCurrentLimit(currentConfig);
-		right1.configSupplyCurrentLimit(currentConfig);
+        right2.setInverted(InvertType.FollowMaster);
+
+        SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+                Constants.Drive.DRIVE_CURRENT_LIMIT, Constants.Drive.DRIVE_CURRENT_LIMIT, 1);
+        left1.configSupplyCurrentLimit(currentConfig);
+        right1.configSupplyCurrentLimit(currentConfig);
 
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
@@ -157,7 +157,7 @@ public class Drive extends SubsystemBase {
      * @param rightVoltage The desired/nominal voltage for the right side of the
      *                     drive.
      */
-    public void setOutputVolts(double leftVoltage, double rightVoltage) {
+    public static void setOutputVolts(double leftVoltage, double rightVoltage) {
         var batteryVoltage = RobotController.getBatteryVoltage();
         left1.set(TalonFXControlMode.PercentOutput, leftVoltage / batteryVoltage);
         right1.set(TalonFXControlMode.PercentOutput, rightVoltage / batteryVoltage);
