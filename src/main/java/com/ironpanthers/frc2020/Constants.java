@@ -128,8 +128,8 @@ public final class Constants {
         public static final int kShooter3Id = 7;
 
         public static final int kPIDIdx = 0;
-        public static final double kF = 0.07;
-        public static final double kP = 0.0;
+        public static final double kF = 0.051;
+        public static final double kP = 0.2;
         public static final double kRampRate = 0.25; // seconds 0->full
 
         public static final int kVelocityThreshold = 25;
