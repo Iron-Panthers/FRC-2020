@@ -8,26 +8,26 @@
 package com.ironpanthers.frc2020.commands.vision;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.Robot;
-import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
-    private final LimelightWrapper limelightWrapper;
-    private final Arm arm;
     private final Drive drive;
 
-    private double x, y, v;
+    private double x, v;
     private double[] totalErrors;
     private double lastError;
     private double sumOfErrors;
+    private LimelightWrapper limelightWrapper;
+    private double leftSteeringAngle;// Amount of degrees to steer left
+    private double rightSteeringAngle; // Amount of degrees to steer right
+    private double horizontalError; // Horizontal error from limelight to target
+    private double adjustedSteeringValue; // Calculated amount of degrees to steer
+    private double recentError;
 
-    public TurnToTarget(LimelightWrapper limelightWrapper, Arm arm, Drive drive) {
-        this.limelightWrapper = limelightWrapper;
-        this.arm = arm;
+    public TurnToTarget(Drive drive) {
         this.drive = drive;
     }
 
@@ -37,22 +37,20 @@ public class TurnToTarget extends CommandBase {
         totalErrors = new double[100];
         lastError = 0;
         sumOfErrors = 0;
-
-        x = limelightWrapper.getX();
-        y = limelightWrapper.getY();
-        v = limelightWrapper.getV();
+        leftSteeringAngle = 0.0;
+        rightSteeringAngle = 0.0;
+        horizontalError = -x;
+        adjustedSteeringValue = 0;
+        recentError = 0;
+        limelightWrapper = new LimelightWrapper();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double leftSteeringAngle = 0.0; // Amount of degrees to steer left
-        double rightSteeringAngle = 0.0; // Amount of degrees to steer right
-        double horizontalError = -x; // Horizontal error from limelight to target
-        double adjustedSteeringValue = 0.0; // Calculated amount of degrees to steer
-        double recentError = 0.0;
-        double horizontalDistance = (Constants.Vision.kGroundToTargetInches - arm.getHeight())
-                / Math.tan((arm.getAngle() + limelightWrapper.getTableY()) * Math.PI / 180);
+        limelightWrapper.periodic();
+        x = limelightWrapper.getX();
+        v = limelightWrapper.getV();
 
         for (int i = 98; i >= 0; i--) {
             totalErrors[i + 1] = totalErrors[i];
@@ -76,11 +74,10 @@ public class TurnToTarget extends CommandBase {
                         + Constants.Vision.kD * recentError + Constants.Vision.kS;
             }
         }
-
         leftSteeringAngle += adjustedSteeringValue;
         rightSteeringAngle -= adjustedSteeringValue;
 
-        // TODO: write output to drivetrain
+        drive.setOutputPercent(leftSteeringAngle, rightSteeringAngle);
         lastError = horizontalError;
     }
 

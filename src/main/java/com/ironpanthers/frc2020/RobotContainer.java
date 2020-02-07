@@ -15,6 +15,7 @@ import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
+import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -51,8 +52,7 @@ public class RobotContainer {
 	private final JoystickButton driverBIntake = new JoystickButton(armJoystick, Constants.OI.kDriverBIntakeButton);
 	private final JoystickButton zeroArm = new JoystickButton(armJoystick, Constants.OI.kZeroArmButton);
 	private final JoystickButton farShotPosition = new JoystickButton(armJoystick, Constants.OI.kFarShotButton);
-	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(armJoystick,
-			Constants.OI.kFramePerimeterHeightButton);
+	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(armJoystick,Constants.OI.kFramePerimeterHeightButton);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -70,14 +70,13 @@ public class RobotContainer {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
 		shooterButton.whileHeld(new ShooterSequence(shooter, conveyorBelt));
-
+		turnToTargetButton.whenPressed(new TurnToTarget(drive));
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, armJoystick::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		zeroArm.whenPressed(new ZeroArm(arm));
 		farShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFarShotHeightNativeUnits));
-		framePerimeterHeightPosition
-				.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits));
+		framePerimeterHeightPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits));
 	}
 
 	/**

@@ -9,8 +9,8 @@ public class LimelightWrapper {
     private final NetworkTable table;
     private double camtran, tx, ty, ta, tv, ts, tvert, thor, x, y, v;
 
-    public LimelightWrapper(String name) {
-        table = NetworkTableInstance.getDefault().getTable(name);
+    public LimelightWrapper() {
+        table = NetworkTableInstance.getDefault().getTable("limelight");
         periodic();
     }
 

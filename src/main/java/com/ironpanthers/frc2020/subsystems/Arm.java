@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,6 +28,7 @@ public class Arm extends SubsystemBase {
     private DigitalInput reverseLimitSwitch;
     private int target;
     private double horizontalHoldOuput; // TODO figure out this value by testing
+    private LimelightWrapper limelightWrapper = new LimelightWrapper();
 
     /**
      * Creates a new Arm. For limits, forward refers to the front, in which the arm
@@ -109,6 +111,9 @@ public class Arm extends SubsystemBase {
         return Constants.Vision.kLimelightToPivotPlaneInches * Math.cos(getAngle() * Math.PI / 180)
                 + Constants.Vision.kPivotToLLDeg * Math.sin(getAngle() * Math.PI / 180)
                 + Constants.Vision.kGroundToPivotInches;
+    }
+    public double getHorizontalDistance() {
+        return (Constants.Vision.kGroundToTargetInches - getHeight())/ Math.tan((getAngle() + limelightWrapper.getTableY()) * Math.PI / 180);
     }
 
     // return angle in degrees
