@@ -51,11 +51,11 @@ public class RobotContainer {
 
 
 	// Driver B Buttons
-	private final JoystickButton manualArm = new JoystickButton(armJoystick, Constants.OI.kManualArmButton);
-	private final JoystickButton driverBIntake = new JoystickButton(armJoystick, Constants.OI.kDriverBIntakeButton);
-	private final JoystickButton zeroArm = new JoystickButton(armJoystick, Constants.OI.kZeroArmButton);
-	private final JoystickButton farShotPosition = new JoystickButton(armJoystick, Constants.OI.kFarShotButton);
-	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(armJoystick,Constants.OI.kFramePerimeterHeightButton);
+	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton);
+	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton);
+	private final JoystickButton zeroArm = new JoystickButton(joystickB, Constants.OI.kZeroArmButton);
+	private final JoystickButton farShotPosition = new JoystickButton(joystickB, Constants.OI.kFarShotButton);
+	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(joystickB,Constants.OI.kFramePerimeterHeightButton);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(

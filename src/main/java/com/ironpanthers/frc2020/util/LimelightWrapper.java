@@ -1,6 +1,5 @@
 package com.ironpanthers.frc2020.util;
 
-import com.ironpanthers.frc2020.Constants;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
