@@ -84,9 +84,9 @@ public final class Constants {
         public static final double kConveyorKp = 0.13;
 
         // Powers
-        public static final double kIntakeRollerSpeed = 1;
+        public static final double kIntakeRollerSpeed = 1.0;
 		public static final double kIntakeFlywheelSpeed = -.5; // tbd
-		public static final double kOuttakeRollerSpeed = -1;
+		public static final double kOuttakeRollerSpeed = -1.0;
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;

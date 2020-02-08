@@ -85,7 +85,7 @@ public class RobotContainer {
 		zeroArm.whenPressed(new ZeroArm(arm));
 		farShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFarShotHeightNativeUnits));
 		framePerimeterHeightPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits));
-		emergencyOuttake.whileHeld(new Outtake(shooter, conveyorBelt));
+		emergencyOuttake.whileHeld(new Outtake(shooter));
 	}
 
 	/**

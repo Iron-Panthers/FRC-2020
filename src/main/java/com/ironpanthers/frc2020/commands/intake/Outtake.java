@@ -7,8 +7,6 @@
 
 package com.ironpanthers.frc2020.commands.intake;
 
-import java.util.function.BooleanSupplier;
-
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
@@ -20,15 +18,11 @@ public class Outtake extends CommandBase {
 	 * Creates a new Intake.
 	 */
 	Shooter shooter;
-	ConveyorBelt conveyor;
-
-	public Outtake(Shooter shooter, ConveyorBelt conveyor) {
-		this.conveyor = conveyor;
+	public Outtake(Shooter shooter) {
 		this.shooter = shooter;
 
 		// Use addRequirements() here to declare subsystem dependencies.
 		addRequirements(shooter);
-		addRequirements(conveyor);
 	}
 
 	// Called when the command is initially scheduled.
@@ -39,8 +33,7 @@ public class Outtake extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		shooter.setIntakeMotors(Constants.Conveyor.kIntakeRollerSpeed, 0);
-		System.out.println(conveyor.getBannerSensor());
+		shooter.setIntakeMotors(Constants.Conveyor.kOuttakeRollerSpeed, 0);
 	}
 
 	// Called once the command ends or is interrupted.

@@ -55,9 +55,9 @@ public class Shooter extends SubsystemBase {
         configPIDF(Constants.Shooter.kP, 0, 0, Constants.Shooter.kF, Constants.Shooter.kPIDIdx);
     }
 
-    public void setIntakeMotors(double intakeMotorSpeed, double ShooterMotorSpeed) {
+    public void setIntakeMotors(double intakeMotorSpeed, double shooterMotorSpeed) {
         intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
-        shooter1.set(ControlMode.PercentOutput, ShooterMotorSpeed);
+        shooter1.set(ControlMode.PercentOutput, shooterMotorSpeed);
     }
 
     public void stopShooter() {
