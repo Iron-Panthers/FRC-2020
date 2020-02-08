@@ -3,14 +3,22 @@ package com.ironpanthers.frc2020.util;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LimelightWrapper {
     private final NetworkTable table;
-    private double camtran, tx, ty, ta, tv, ts, tvert, thor, x, y, v;
+    private double camtran, tx, ty, ta, tv, ts, tvert, thor;
+    private double[] tcornxy;
+
+    private static LimelightWrapper frontLimelight = new LimelightWrapper();
 
     public LimelightWrapper() {
-        table = NetworkTableInstance.getDefault().getTable("limelight");
+        table = NetworkTableInstance.getDefault().getTable("limelight-b");
         periodic();
+    }
+
+    public static LimelightWrapper getLimelightWrapperFront() {
+        return frontLimelight;
     }
 
     /**
@@ -29,6 +37,7 @@ public class LimelightWrapper {
         camtran = table.getEntry("camtran").getDouble(0);
         tvert = table.getEntry("tvert").getDouble(0.0);
         thor = table.getEntry("thor").getDouble(0.0);
+        tcornxy = table.getEntry("tcornxy").getDoubleArray(new double[1]);
     }
 
     public double getTableX() {
@@ -47,18 +56,6 @@ public class LimelightWrapper {
         return ta;
     }
 
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getV() {
-        return v;
-    }
-
     public double getTvert() {
         return tvert;
     }
@@ -73,5 +70,17 @@ public class LimelightWrapper {
 
     public double getCamtran() {
         return camtran;
+    }
+
+    public double[] getTCornXY() {
+        return tcornxy;
+    }
+
+    public boolean targetVisible() {
+        boolean visible = getTCornXY().length == 8 && getTableV() == 1;
+        if(!visible) {
+            SmartDashboard.putNumber("can't see target or enough of the corners", 0);
+        }
+        return visible;
     }
 }

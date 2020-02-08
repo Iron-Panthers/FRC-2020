@@ -28,7 +28,7 @@ public class Arm extends SubsystemBase {
     private DigitalInput reverseLimitSwitch;
     private int target;
     private double horizontalHoldOuput; // TODO figure out this value by testing
-    private LimelightWrapper limelightWrapper = new LimelightWrapper();
+    private LimelightWrapper limelightWrapper = LimelightWrapper.getLimelightWrapperFront();
 
     /**
      * Creates a new Arm. For limits, forward refers to the front, in which the arm

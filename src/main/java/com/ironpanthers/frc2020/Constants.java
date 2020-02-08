@@ -113,15 +113,15 @@ public final class Constants {
         /**
          * Proportional control constant
          */
-        public static final double kP = -0.1;
+        public static final double kP = 0.1;
         /**
          * I value in PID
          */
-        public static final double kI = 0.01;
+        public static final double kI = 0.00;
         /**
          * D value in PID
          */
-        public static final double kD = 0.001;
+        public static final double kD = 0.000;
         /**
          * Minimum percent output required to break static friction
          */

@@ -22,6 +22,9 @@ public class SteeringAdjuster {
     private double adjustedSteeringValue;
     private double leftSteeringAngle;// power adjustment for left steering
     private double rightSteeringAngle; // power adjustment for right steering
+    private static SteeringAdjuster adjuster = new SteeringAdjuster();
+
+    LimelightWrapper limelight;
 
     public SteeringAdjuster() {
         totalErrors = new double[100];
@@ -32,16 +35,16 @@ public class SteeringAdjuster {
         adjustedSteeringValue = 0.0;
         leftSteeringAngle = 0.0;
         rightSteeringAngle = 0.0;
+        limelight = LimelightWrapper.getLimelightWrapperFront();
     }
 
-    private boolean targetVisible() {
-        return LimelightWrapper.getLimelightWrapperFront().getTableV() == 1 && 
-
+    public static SteeringAdjuster getInstance() {
+        return adjuster;
     }
 
-    public void updateSteeringValues(double x) {
+    public void updateSteeringValues() {
         //positive error should indicate the target is on the right of the screen 
-        double horizontalError = x;
+        double horizontalError = limelight.getTableX();
 
         //shift recorded error values over and set zeroth slot to the measured error
         for (int i = 98; i >= 0; i--) {
@@ -57,17 +60,12 @@ public class SteeringAdjuster {
         //calculate error delta since last recording
         deltaError = horizontalError - lastError;
  
-        if (!targetVisible()) {
-            adjustedSteeringValue = 0.0; 
-        } 
-        else {
-            if (x > 0.0) {
-                adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
-                        + Constants.Vision.kD * deltaError - Constants.Vision.kS;
-            } else if (x < 0.0) {
-                adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
-                        + Constants.Vision.kD * deltaError + Constants.Vision.kS;
-            }
+        if (horizontalError > 0.0) {
+            adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
+                    + Constants.Vision.kD * deltaError + Constants.Vision.kS;
+        } else if (horizontalError < 0.0) {
+            adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
+                    + Constants.Vision.kD * deltaError - Constants.Vision.kS;
         }
 
         //reset last recorded error to error just recorded
