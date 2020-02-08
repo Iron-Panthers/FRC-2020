@@ -27,11 +27,11 @@ public class Shooter extends SubsystemBase {
         shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
         shooter2 = new TalonFX(Constants.Shooter.kShooter2Id);
         shooter3 = new TalonFX(Constants.Shooter.kShooter3Id);
-        intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
+		intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
 
         // Config
         intakeMotor.setNeutralMode(NeutralMode.Coast);
-        intakeMotor.setInverted(true);
+        intakeMotor.setInverted(false);
 
         shooter1.setNeutralMode(NeutralMode.Coast);
         shooter1.setInverted(false);
@@ -55,9 +55,9 @@ public class Shooter extends SubsystemBase {
         configPIDF(Constants.Shooter.kP, 0, 0, Constants.Shooter.kF, Constants.Shooter.kPIDIdx);
     }
 
-    public void setIntakeMotors(double intakeMotorSpeed, double ShooterMotorSpeed) {
+    public void setIntakeMotors(double intakeMotorSpeed, double shooterMotorSpeed) {
         intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
-        shooter1.set(ControlMode.PercentOutput, ShooterMotorSpeed);
+        shooter1.set(ControlMode.PercentOutput, shooterMotorSpeed);
     }
 
     public void stopShooter() {

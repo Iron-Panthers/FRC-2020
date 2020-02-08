@@ -65,7 +65,8 @@ public final class Constants {
         // Driver B
         public static final int kDriverBJoystickPort = 1;
         public static final int kManualArmButton = 1;
-        public static final int kDriverBIntakeButton = 2;
+		public static final int kDriverBIntakeButton = 2;
+		public static final int kEmergencyOuttakeButton = 3;
         public static final int kZeroArmButton = 7;
         public static final int kFarShotButton = 9;
         public static final int kFramePerimeterHeightButton = 8;
@@ -83,8 +84,9 @@ public final class Constants {
         public static final double kConveyorKp = 0.13;
 
         // Powers
-        public static final double kIntakeRollerSpeed = -1; // tbd
-        public static final double kIntakeFlywheelSpeed = -.5; // tbd
+        public static final double kIntakeRollerSpeed = 1.0;
+		public static final double kIntakeFlywheelSpeed = -.5; // tbd
+		public static final double kOuttakeRollerSpeed = -1.0;
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;

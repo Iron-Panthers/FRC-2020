@@ -12,7 +12,9 @@ import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.arm.ZeroArm;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
+import com.ironpanthers.frc2020.commands.intake.Intake;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
+import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
@@ -56,6 +58,7 @@ public class RobotContainer {
 	private final JoystickButton zeroArm = new JoystickButton(joystickB, Constants.OI.kZeroArmButton);
 	private final JoystickButton farShotPosition = new JoystickButton(joystickB, Constants.OI.kFarShotButton);
 	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(joystickB,Constants.OI.kFramePerimeterHeightButton);
+	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -82,6 +85,7 @@ public class RobotContainer {
 		zeroArm.whenPressed(new ZeroArm(arm));
 		farShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFarShotHeightNativeUnits));
 		framePerimeterHeightPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits));
+		emergencyOuttake.whileHeld(new Outtake(shooter));
 	}
 
 	/**
