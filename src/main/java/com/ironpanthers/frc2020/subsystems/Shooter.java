@@ -27,11 +27,11 @@ public class Shooter extends SubsystemBase {
         shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
         shooter2 = new TalonFX(Constants.Shooter.kShooter2Id);
         shooter3 = new TalonFX(Constants.Shooter.kShooter3Id);
-        intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
+		intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
 
         // Config
         intakeMotor.setNeutralMode(NeutralMode.Coast);
-        intakeMotor.setInverted(true);
+        intakeMotor.setInverted(false);
 
         shooter1.setNeutralMode(NeutralMode.Coast);
         shooter1.setInverted(false);
