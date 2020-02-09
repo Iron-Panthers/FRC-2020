@@ -45,7 +45,7 @@ public class ControlPanel extends SubsystemBase {
     if(gameData.length() > 0) {
       int placement = colors.indexOf(gameData.charAt(0)) - colors.indexOf(initColor); // Distance between colors
       if(placement < 0) { 
-        if(placement == 3) { // If the color is 3 rotations away one direction, make it turn 1 rotation the opposite direction
+        if(placement == -3) { // If the color is 3 rotations away one direction, make it turn 1 rotation the opposite direction
           colorRotation(1, 1);
         } else {
           colorRotation(Math.abs(placement), -1);
@@ -58,7 +58,7 @@ public class ControlPanel extends SubsystemBase {
         }
       }
     } else {
-      //Code for no data received yet
+      // Code for no data received yet
     }
   }
 

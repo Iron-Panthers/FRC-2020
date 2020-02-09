@@ -16,6 +16,8 @@ public class PositionControl extends CommandBase {
   /**
    * Creates a new PositionControl.
    */
+  ColorMatcher colorMatcher = new ColorMatcher();
+  char initColor;
 
   public PositionControl() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,12 +26,13 @@ public class PositionControl extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    initColor = colorMatcher.getColor().charAt(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    ControlPanel.positionControl(initColor);
   }
 
   // Called once the command ends or is interrupted.

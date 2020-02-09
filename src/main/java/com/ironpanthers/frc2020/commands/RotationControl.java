@@ -28,7 +28,7 @@ public class RotationControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ControlPanel.colorRotation(Constants.COLOR_ROTATIONS, 1); 
+    ControlPanel.colorRotation(Constants.POSITION_CONTROL_ROTATIONS, 1); 
   }
 
   // Called once the command ends or is interrupted.

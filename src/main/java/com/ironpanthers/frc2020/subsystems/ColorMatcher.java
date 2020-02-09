@@ -62,18 +62,7 @@ public class ColorMatcher extends SubsystemBase {
     private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
     private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
-    @Override
-    public void periodic() {
-        /**
-         * The method GetColor() returns a normalized color value from the sensor and
-         * can be useful if outputting the color to an RGB LED or similar. To read the
-         * raw color, use GetRawColor().
-         * 
-         * The color sensor works best when within a few inches from an object in well
-         * lit conditions (the built in LED is a big help here!). The farther an object
-         * is the more light from the surroundings will bleed into the measurements and
-         * make it difficult to accurately determine its color.
-         */
+    public String getColor() {
         final var detectedColor = colorSensor.getColor();
 
         final String colorAsString;
@@ -95,5 +84,22 @@ public class ColorMatcher extends SubsystemBase {
         SmartDashboard.putNumberArray("ColorMatcher/RGB", rgbArray);
         SmartDashboard.putString("ColorMatcher/DetectedColor", colorAsString);
         SmartDashboard.putNumber("ColorMatcher/Confidence", matchResult.confidence);
+        return colorAsString;
+    }
+
+    @Override
+    public void periodic() {
+        /**
+         * The method GetColor() returns a normalized color value from the sensor and
+         * can be useful if outputting the color to an RGB LED or similar. To read the
+         * raw color, use GetRawColor().
+         * 
+         * The color sensor works best when within a few inches from an object in well
+         * lit conditions (the built in LED is a big help here!). The farther an object
+         * is the more light from the surroundings will bleed into the measurements and
+         * make it difficult to accurately determine its color.
+         */
+        final var colorAsString = getColor();
+        SmartDashboard.putString("ColorMatcher/DetectedColor", colorAsString);
     }
 }
