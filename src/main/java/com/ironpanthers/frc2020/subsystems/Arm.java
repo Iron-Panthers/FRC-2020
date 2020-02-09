@@ -115,7 +115,9 @@ public class Arm extends SubsystemBase {
     public double getHorizontalDistance() {
         return (Constants.Vision.kGroundToTargetInches - getHeight())/ Math.tan((getAngle() + limelightWrapper.getTableY()) * Math.PI / 180);
     }
-
+    public double getDiagonalDistance(){
+        return Math.sqrt(Math.pow(getHorizontalDistance(), 2) + Math.pow(Constants.Vision.kGroundToTargetInches - getHeight(), 2));
+    }
     // return angle in degrees
     public double getAngle() {
         double currentAngle = (armLeft.getSelectedSensorPosition() * 360 * 4096) + Constants.Arm.kArmAngleOffset;

@@ -17,24 +17,21 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class TurnToTarget extends CommandBase {
     private final Drive drive;
    
-    private LimelightWrapper limelightWrapper;
-    SteeringAdjuster steerer = SteeringAdjuster.getInstance();
+    SteeringAdjuster steerer;
     
-    public TurnToTarget(Drive drive) {
+    public TurnToTarget(Drive drive, SteeringAdjuster steerer) {
         this.drive = drive;
+        this.steerer = steerer;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        limelightWrapper = LimelightWrapper.getLimelightWrapperFront();
-        
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        limelightWrapper.periodic();
         steerer.updateSteeringValues();
         drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
     }

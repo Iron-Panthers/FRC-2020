@@ -23,6 +23,7 @@ import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.SteeringAdjuster;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -41,6 +42,7 @@ public class RobotContainer {
 	private final Shooter shooter = new Shooter();
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	private final Arm arm = new Arm();
+	private final SteeringAdjuster steerer = new SteeringAdjuster(arm::getHorizontalDistance, arm::getDiagonalDistance);
 
 	private static final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
 	private static final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
@@ -78,7 +80,7 @@ public class RobotContainer {
 		shooterButton.whileHeld(new ShooterSequence(shooter, conveyorBelt));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
 
-		turnToTargetButton.whenPressed(new TurnToTarget(drive));
+		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer));
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
