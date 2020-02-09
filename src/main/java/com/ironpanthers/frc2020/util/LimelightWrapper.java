@@ -78,9 +78,7 @@ public class LimelightWrapper {
 
     public boolean targetVisible() {
         boolean visible = getTCornXY().length == 8 && getTableV() == 1;
-        if(!visible) {
-            SmartDashboard.putNumber("can't see target or enough of the corners", 0);
-        }
+        SmartDashboard.putBoolean("target visible", visible);
         return visible;
     }
 }
