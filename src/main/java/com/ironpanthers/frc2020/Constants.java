@@ -164,7 +164,7 @@ public final class Constants {
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
-        public static final double kMaxFF = 0.07; // TODO find this value
+        public static final double kHorizontalHoldOutput = 0.07; // TODO find this value
         public static final double kMaxManualSpeed = 0.5;
 
         public static final double kP = 0.03;

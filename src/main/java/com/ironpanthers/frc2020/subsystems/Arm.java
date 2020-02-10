@@ -27,7 +27,6 @@ public class Arm extends SubsystemBase {
     private DigitalInput forwardLimitSwitch;
     private DigitalInput reverseLimitSwitch;
     private int target;
-    private double horizontalHoldOuput; // TODO figure out this value by testing
     private LimelightWrapper limelightWrapper = LimelightWrapper.getLimelightWrapperFront();
 
     /**
@@ -100,25 +99,32 @@ public class Arm extends SubsystemBase {
         armLeft.set(TalonFXControlMode.MotionMagic, target);
     }
 
-    public void setFeedForward() {
+    public double getFeedForward() {
         double scaledAngle = Math.cos(Math.toRadians(getAngle()));
+        double horizontalHoldOutput = Constants.Arm.kHorizontalHoldOutput;
+        SmartDashboard.putNumber("Horizontal Hold Output", horizontalHoldOutput);
+        double f = horizontalHoldOutput * scaledAngle;
         armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward,
-                Constants.Arm.kMaxFF * scaledAngle);
-        SmartDashboard.putNumber("Arbitrary Feedforward", horizontalHoldOuput * scaledAngle);
+                f);
+        SmartDashboard.putNumber("Arbitrary Feedforward", f);
+        return f;
     }
+    
 
     public double getHeight() {
         return Constants.Vision.kLimelightToPivotPlaneInches * Math.cos(getAngle() * Math.PI / 180)
                 + Constants.Vision.kPivotToLLDeg * Math.sin(getAngle() * Math.PI / 180)
                 + Constants.Vision.kGroundToPivotInches;
     }
+
     public double getHorizontalDistance() {
         return (Constants.Vision.kGroundToTargetInches - getHeight())/ Math.tan((getAngle() + limelightWrapper.getTableY()) * Math.PI / 180);
     }
+
     public double getDiagonalDistance(){
         return Math.sqrt(Math.pow(getHorizontalDistance(), 2) + Math.pow(Constants.Vision.kGroundToTargetInches - getHeight(), 2));
     }
-    // return angle in degrees
+
     public double getAngle() {
         double currentAngle = (armLeft.getSelectedSensorPosition() * 360 * 4096) + Constants.Arm.kArmAngleOffset;
 
