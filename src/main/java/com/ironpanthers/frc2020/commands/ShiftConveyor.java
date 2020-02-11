@@ -2,7 +2,8 @@ package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
-import com.ironpanthers.frc2020.util.Util;
+import com.ironpanthers.util.Util;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ShiftConveyor extends CommandBase {
