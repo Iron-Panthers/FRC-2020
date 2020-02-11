@@ -30,7 +30,11 @@ public final class Constants {
      */
     public static final boolean kCompetitionMode = false;
 
-    public static final int kFalconEPR = 4096;
+	public static final int kFalconEPR = 4096;
+	
+	public static class Auto {
+		public static final int kAutoSelectorPort = 1;
+	}
 
     public static class Drive {
         public static final int kLeft1Id = 1;

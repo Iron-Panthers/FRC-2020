@@ -12,7 +12,6 @@ import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.arm.ZeroArm;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
-import com.ironpanthers.frc2020.commands.intake.Intake;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
@@ -25,6 +24,7 @@ import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
+import com.ironpanthers.util.AutoSelector;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,6 +43,7 @@ public class RobotContainer {
 	private final Shooter shooter = new Shooter();
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	private final Arm arm = new Arm();
+	private final AutoSelector autoSelector = new AutoSelector();
 	private final SteeringAdjuster steerer = new SteeringAdjuster(arm::getHorizontalDistance, arm::getDiagonalDistance);
 
 	private static final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
@@ -89,6 +90,10 @@ public class RobotContainer {
 		farShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFarShotHeightNativeUnits));
 		framePerimeterHeightPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits));
 		emergencyOuttake.whileHeld(new Outtake(shooter));
+	}
+
+	public int getAutoPotValue() {
+		return autoSelector.getAutoPotNumber();
 	}
 
 	/**

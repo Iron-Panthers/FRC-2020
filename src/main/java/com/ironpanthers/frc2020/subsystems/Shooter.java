@@ -89,8 +89,8 @@ public class Shooter extends SubsystemBase {
 
     public double getCurrent() {
         return shooter1.getStatorCurrent();
-    }
-
+	}
+	
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
