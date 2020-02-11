@@ -70,6 +70,7 @@ public final class Constants {
         public static final int kZeroArmButton = 7;
         public static final int kFarShotButton = 9;
         public static final int kFramePerimeterHeightButton = 8;
+        public static final int kEmergencyintakeButton = 5;
     }
 
     public static class Conveyor {
