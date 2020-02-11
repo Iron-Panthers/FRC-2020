@@ -20,16 +20,19 @@ public class AutoSelector {
 	}
 
 	public static class PotValues {
-		public static final double[] range1 = { 0.00, 0.1 };
-		public static final double[] range2 = { 0.335, 0.6 };
-		public static final double[] range3 = { 0.9, 1.1 };
-		public static final double[] range4 = { 1.4, 1.7 };
-		public static final double[] range5 = { 1.9, 2.2 };
-		public static final double[] range6 = { 2.4, 2.7 };
-		public static final double[] range7 = { 3.0, 3.3 };
-		public static final double[] range8 = { 3.5, 3.8 };
-		public static final double[] range9 = { 4.1, 4.4 };
-		public static final double[] range10 = { 4.7, 5 };
+		public static final double[] range1 = { 0.00, 0.92 };
+		public static final double[] range2 = { 0.95, 0.995 };
+		public static final double[] range3 = { 1.0, 1.1 };
+		public static final double[] range4 = { 1.15, 1.23 };
+		public static final double[] range5 = { 1.24, 1.29 };
+		public static final double[] range6 = { 1.3, 1.33 };
+		public static final double[] range7 = { 1.34, 1.37 };
+		public static final double[] range8 = { 1.375, 1.39 };
+		public static final double[] range9 = { 1.395, 1.42 };
+		public static final double[] range10 = { 1.425, 1.45 };
+		public static final double[] range11 = { 1.455, 1.47 };
+		public static final double[] range12 = { 1.475, 1.52 };
+
 	}
 
 	public static class AutoSelectorValue {
@@ -67,8 +70,9 @@ public class AutoSelector {
 	private AnalogInput rotary;
 
 	public AutoSelector() {
-		rotary = new AnalogInput(Constants.Auto.kAutoSelectorPort); // May need to change the offset value depending on pot
-																// shift
+		rotary = new AnalogInput(Constants.Auto.kAutoSelectorPort); // May need to change the offset value depending on
+																	// pot
+		// shift
 	}
 
 	// public String getAuto() {
@@ -104,6 +108,10 @@ public class AutoSelector {
 			return 9;
 		} else if (inRange(val, PotValues.range10[0], PotValues.range10[1])) {
 			return 10;
+		} else if (inRange(val, PotValues.range11[0], PotValues.range11[1])) {
+			return 11;
+		} else if (inRange(val, PotValues.range12[0], PotValues.range12[1])) {
+			return 12;
 		} else {
 			return 0;
 		}

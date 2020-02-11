@@ -27,6 +27,7 @@ import com.ironpanthers.frc2020.util.SteeringAdjuster;
 import com.ironpanthers.util.AutoSelector;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -92,8 +93,9 @@ public class RobotContainer {
 		emergencyOuttake.whileHeld(new Outtake(shooter));
 	}
 
-	public int getAutoPotValue() {
-		return autoSelector.getAutoPotNumber();
+	public void smartDashboard() {
+		SmartDashboard.putNumber("Auto Selector Value", autoSelector.getAutoPotNumber());
+		SmartDashboard.putNumber("Auto Selector Voltage", autoSelector.getPotVoltage());
 	}
 
 	/**
