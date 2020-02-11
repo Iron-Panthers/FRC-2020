@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.AnalogInput;
  * Courtesy of M-SET Fish, Team 649, who inspired us to use a physical switch to
  * select autonomous modes. See
  * https://github.com/SaratogaMSET/Nigiri2019/blob/master/src/main/java/frc/robot/subsystems/AutoSelector.java
- * for the code
+ * for the code. Here is the Chief Delphi post which we used for the sensor:
+ * https://www.chiefdelphi.com/t/autonomous-switch/154958/18, and this is the
+ * link to order the switch we used:
  */
 public class AutoSelector {
 	public static enum Side {
