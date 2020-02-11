@@ -100,12 +100,12 @@ public class Arm extends SubsystemBase {
     }
 
     public double getFeedForward() {
-        double scaledAngle = Math.cos(Math.toRadians(getAngle()));
-        double horizontalHoldOutput = Constants.Arm.kHorizontalHoldOutput;
-        SmartDashboard.putNumber("Horizontal Hold Output", horizontalHoldOutput);
-        double f = horizontalHoldOutput * scaledAngle;
-        armLeft.set(ControlMode.MotionMagic, target, DemandType.ArbitraryFeedForward,
-                f);
+		double scaledAngle = Math.cos(Math.toRadians(getAngle()));
+		SmartDashboard.putNumber("Horizontal Hold Output", Constants.Arm.kHorizontalHoldOutput);
+        double horizontalHoldOutput = SmartDashboard.getNumber("Horizontal Hold Output", Constants.Arm.kHorizontalHoldOutput);
+		double f = horizontalHoldOutput * scaledAngle;
+		// PercentOutput with feedforward to avoid oscillation which wears down the gears
+		setPower(f);
         SmartDashboard.putNumber("Arbitrary Feedforward", f);
         return f;
     }
