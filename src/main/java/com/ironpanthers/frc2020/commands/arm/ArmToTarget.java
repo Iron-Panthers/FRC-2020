@@ -10,6 +10,7 @@ package com.ironpanthers.frc2020.commands.arm;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmToTarget extends CommandBase {
@@ -30,6 +31,7 @@ public class ArmToTarget extends CommandBase {
 	@Override
 	public void initialize() {
 		arm.setPosition(target);
+		SmartDashboard.putNumber("Horizontal Hold Output", Constants.Arm.kHorizontalHoldOutput);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -40,6 +42,7 @@ public class ArmToTarget extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
+		arm.setPower(arm.getFeedForward());
 	}
 
 	// Returns true when the command should end.
