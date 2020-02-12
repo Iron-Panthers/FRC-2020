@@ -13,7 +13,6 @@ import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.arm.ZeroArm;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.EmergencyIntake;
-import com.ironpanthers.frc2020.commands.intake.Intake;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
