@@ -20,7 +20,7 @@ public class HorizontalDistance extends CommandBase {
    */
   LimelightWrapper lWrapper;
   Arm arm;
-  double go;
+  double HorizontalDistance;
   public HorizontalDistance(LimelightWrapper limelightWrapper,Arm arm) {
     lWrapper = limelightWrapper;
     this.arm = arm;
@@ -37,8 +37,8 @@ public class HorizontalDistance extends CommandBase {
   @Override
   public void execute() {
     lWrapper.periodic();
-    go = (Constants.Vision.kGroundToTargetInches - arm.getHeight()) / Math.tan((arm.getAngle() - lWrapper.getTableY()) * (Math.PI / 180));
-    SmartDashboard.putNumber("HorizontalDistance", go);
+    HorizontalDistance = (Constants.Vision.kGroundToTargetInches - arm.getHeight()) / Math.tan((arm.getAngle() + Constants.Vision.kMountToLLAngleDeg + lWrapper.getTableY()) * (Math.PI / 180));
+    SmartDashboard.putNumber("HorizontalDistance", HorizontalDistance);
     SmartDashboard.putNumber("limelit test", lWrapper.getTableY());
   }
 
