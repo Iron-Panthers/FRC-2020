@@ -21,10 +21,11 @@ public class HorizontalDistance extends CommandBase {
   LimelightWrapper lWrapper;
   Arm arm;
   double HorizontalDistance;
-  public HorizontalDistance(LimelightWrapper limelightWrapper,Arm arm) {
+
+  public HorizontalDistance(LimelightWrapper limelightWrapper, Arm arm) {
     lWrapper = limelightWrapper;
     this.arm = arm;
-    
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -37,9 +38,13 @@ public class HorizontalDistance extends CommandBase {
   @Override
   public void execute() {
     lWrapper.periodic();
-    HorizontalDistance = (Constants.Vision.kGroundToTargetInches - arm.getHeight()) / Math.tan((arm.getAngle() + Constants.Vision.kMountToLLAngleDeg + lWrapper.getTableY()) * (Math.PI / 180));
-    SmartDashboard.putNumber("HorizontalDistance", HorizontalDistance);
-    SmartDashboard.putNumber("limelit test", lWrapper.getTableY());
+    // HorizontalDistance = (Constants.Vision.kGroundToTargetInches - arm.getHeight()) / Math.tan((180 - (arm.getAngle() + Constants.Vision.kMountToLLAngleDeg + lWrapper.getTableY())) * (Math.PI / 180));
+    SmartDashboard.putNumber("current angle", arm.getAngle());
+    SmartDashboard.putNumber("a1 in degrees",
+        (Math.toDegrees(Math.atan(
+            (Constants.Vision.kGroundToTargetInches - arm.getHeight()) / (30 + Constants.Vision.kGroundToPivotInches))))
+            - lWrapper.getTableY());
+    // the 30 is a placeholder for distance
   }
 
   // Called once the command ends or is interrupted.

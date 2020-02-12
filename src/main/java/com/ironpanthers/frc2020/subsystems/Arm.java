@@ -101,22 +101,28 @@ public class Arm extends SubsystemBase {
 
     public double getFeedForward() {
         double scaledAngle = Math.cos(Math.toRadians(getAngle()));
-		double f = Constants.Arm.kHorizontalHoldOutput * scaledAngle;
-		// PercentOutput with feedforward to avoid oscillation which wears down the gears
+        double f = Constants.Arm.kHorizontalHoldOutput * scaledAngle;
+        // PercentOutput with feedforward to avoid oscillation which wears down the
+        // gears
         return f;
     }
-    
 
     public double getHeight() {
-        return Constants.Vision.kPivotToLL * Math.sin(getAngle() * Math.PI / 180) + Constants.Vision.kGroundToPivotInches;
+        return Constants.Vision.kPivotToLL * Math.sin(getAngle() * Math.PI / 180)
+                + Constants.Vision.kGroundToPivotInches;
     }
 
+    public double getPivotToLLHorizontleD() {
+        return (getHeight() - Constants.Vision.kGroundToPivotInches) / Math.tan(getAngle());
+    }
     // public double getDiagonalDistance(){
-    //     return Math.sqrt(Math.pow(getHorizontalDistance(), 2) + Math.pow(Constants.Vision.kGroundToTargetInches - getHeight(), 2));
+    // return Math.sqrt(Math.pow(getHorizontalDistance(), 2) +
+    // Math.pow(Constants.Vision.kGroundToTargetInches - getHeight(), 2));
     // }
 
     public double getAngle() {
-        double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.encoderToAngle) + Constants.Arm.kArmAngleOffset;
+        double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.encoderToAngle)
+                + Constants.Arm.kArmAngleOffset;
 
         return currentAngle;
     }
