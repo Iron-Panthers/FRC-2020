@@ -102,6 +102,9 @@ public final class Constants {
     }
 
     public static class Vision {
+
+        public static final String kLimelightName = "limelight-b";
+
         /**
          * Height from ground to pivot in inches
          */
@@ -111,19 +114,20 @@ public final class Constants {
         /**
          * Height from ground to target in inches
          */
-        public static final double kGroundToTargetInches = 98.0;
+        public static final double kGroundToTargetInches = 98.25;
         
         /**
          * Angle from mount to limelight in degrees
          */
         public static final double kMountToLLAngleDeg = 20.0;
 
-        public static final double kPivotToLLDeg = 23.5;
+        public static final double kPivotToLLPlane = 23.5;
+        public static final double kPivotToLL = 25.25;
 
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.1;
+        public static final double kP = 0.02;
         /**
          * I value in PID
          */
@@ -135,14 +139,16 @@ public final class Constants {
         /**
          * Minimum percent output required to break static friction
          */
-        public static final double kS = 0.03;
+        public static final double kS = 0.08;
 
         /** Conversion constant estimating magnitude of top line as it moves further away */
         public static final double kTopLineMagnitudeTimesDistance = 51 * 201.825; //TODO measure for practice field
 
         /** Conversion constant relating distance from outer goal to hole to the length of the line on the top of the outer goal target*/
         //This was taken from field measurements. The outer hole is 2 ft 5.25 inches in front of the inner hole, and the diameter of the hexagon is 2 ft 6 inches
-        public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30; 
+        public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
+
+		public static double kAutoAlignTolerance = 1; 
         
         //public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
     }

@@ -18,6 +18,7 @@ import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
+import com.ironpanthers.frc2020.commands.vision.HorizontalDistance;
 import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
@@ -39,12 +40,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
+	private final LimelightWrapper limelightWrapper = new LimelightWrapper();
 	private final Drive drive = new Drive();
 	private final Shooter shooter = new Shooter();
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	private final Arm arm = new Arm();
-	private final SteeringAdjuster steerer = new SteeringAdjuster(arm::getHorizontalDistance, arm::getDiagonalDistance);
-	private final LimelightWrapper limelightWrapper = new LimelightWrapper();
+	private final SteeringAdjuster steerer = new SteeringAdjuster(limelightWrapper);
+
 
 	private static final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
 	private static final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
@@ -67,6 +69,8 @@ public class RobotContainer {
 	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton);
 	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyintakeButton);
 	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton);
+	private final JoystickButton getDistance = new JoystickButton(joystickB, 4);
+
 	public RobotContainer() {
 		drive.setDefaultCommand(
 				new ManualDriveCommand(joystickA::getY, joystickA::getX, new JoystickButton(joystickA, 1), drive));
@@ -87,7 +91,7 @@ public class RobotContainer {
 		shootClose.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kCloseVelocity));
 		shootInitiation.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity));
 
-		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, LimelightWrapper.getLimelightWrapperFront()::targetVisible,limelightWrapper));
+		turnToTargetButton.whileHeld(new TurnToTarget(drive, steerer, limelightWrapper::targetVisible,limelightWrapper));
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
@@ -98,6 +102,7 @@ public class RobotContainer {
 		emergencyOuttake.whileHeld(new Outtake(shooter));
 		emergencyIntake.whileHeld(new EmergencyIntake(shooter, conveyorBelt, emergencyIntake::get));
 		autoShotHeight.whenPressed(new ArmToTarget(arm, Constants.Arm.kInitiationLineHeight));
+		getDistance.whenPressed(new HorizontalDistance(limelightWrapper, arm));
 	}
  
 	/**

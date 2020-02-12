@@ -110,22 +110,15 @@ public class Arm extends SubsystemBase {
     
 
     public double getHeight() {
-        return Constants.Vision.kLimelightToPivotPlaneInches * Math.cos(getAngle() * Math.PI / 180)
-                + Constants.Vision.kPivotToLLDeg * Math.sin(getAngle() * Math.PI / 180)
-                + Constants.Vision.kGroundToPivotInches;
+        return Constants.Vision.kPivotToLL * Math.sin(getAngle() * Math.PI / 180) + Constants.Vision.kGroundToPivotInches;
     }
 
-    public double getHorizontalDistance() {
-        return (Constants.Vision.kGroundToTargetInches - getHeight())/ Math.tan((getAngle() + limelightWrapper.getTableY()) * Math.PI / 180);
-    }
-
-    public double getDiagonalDistance(){
-        return Math.sqrt(Math.pow(getHorizontalDistance(), 2) + Math.pow(Constants.Vision.kGroundToTargetInches - getHeight(), 2));
-    }
+    // public double getDiagonalDistance(){
+    //     return Math.sqrt(Math.pow(getHorizontalDistance(), 2) + Math.pow(Constants.Vision.kGroundToTargetInches - getHeight(), 2));
+    // }
 
     public double getAngle() {
-        double currentAngle = (armLeft.getSelectedSensorPosition() * 360 * 4096) + Constants.Arm.kArmAngleOffset;
-
+        double currentAngle = (armLeft.getSelectedSensorPosition() * (90.0 / 79300.0)) + Constants.Arm.kArmAngleOffset;
         return currentAngle;
     }
 
@@ -167,6 +160,10 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putBoolean("High Limit", getHighLimitPressed());
         SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
         SmartDashboard.putNumber("Arm Position", getPosition());
+        SmartDashboard.putNumber("height", getHeight());
+        // SmartDashboard.putNumber("distance", getHorizontalDistance());
+
+
         // // If within the slow threshold, limit output to scaled regular output
         // if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() >
         // Constants.Arm.TOP_SLOW_LIMIT) {
