@@ -100,11 +100,9 @@ public class Arm extends SubsystemBase {
     }
 
     public double getFeedForward() {
-		double scaledAngle = Math.cos(Math.toRadians(getAngle()));
-        double horizontalHoldOutput = SmartDashboard.getNumber("Horizontal Hold Output", Constants.Arm.kHorizontalHoldOutput);
-		double f = horizontalHoldOutput * scaledAngle;
+        double scaledAngle = Math.cos(Math.toRadians(getAngle()));
+		double f = Constants.Arm.kHorizontalHoldOutput * scaledAngle;
 		// PercentOutput with feedforward to avoid oscillation which wears down the gears
-		setPower(f);
         return f;
     }
     
@@ -124,7 +122,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        double currentAngle = (armLeft.getSelectedSensorPosition() * 360 * 4096) + Constants.Arm.kArmAngleOffset;
+        double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.encoderToAngle) + Constants.Arm.kArmAngleOffset;
 
         return currentAngle;
     }
@@ -167,6 +165,8 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putBoolean("High Limit", getHighLimitPressed());
         SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
         SmartDashboard.putNumber("Arm Position", getPosition());
+        SmartDashboard.putNumber("Arm Output Voltage", getOutputVoltage());
+        SmartDashboard.putNumber("Arm Angle", getAngle());
         // // If within the slow threshold, limit output to scaled regular output
         // if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() >
         // Constants.Arm.TOP_SLOW_LIMIT) {
