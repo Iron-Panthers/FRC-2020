@@ -22,12 +22,15 @@ public class Shooter extends SubsystemBase {
     private final TalonFX shooter2;
     private final TalonFX shooter3;
     private final TalonFX intakeMotor;
+    // TODO: Tune
+    private final double[] distanceTable = { 0, 10.0, 20.0, 34.0 }; // Feet
+    private final int[] velocityTable = { 5000, 8000, 12000, 19000 }; // Units/100ms
 
     public Shooter() {
         shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
         shooter2 = new TalonFX(Constants.Shooter.kShooter2Id);
         shooter3 = new TalonFX(Constants.Shooter.kShooter3Id);
-		intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
+        intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
 
         // Config
         intakeMotor.setNeutralMode(NeutralMode.Coast);
@@ -89,6 +92,30 @@ public class Shooter extends SubsystemBase {
 
     public double getCurrent() {
         return shooter1.getStatorCurrent();
+    }
+
+    public int interpolateY(double currentX, double[] xValues, int[] yValues) {
+        int startIndex = 0;
+        int lowY;
+        int highY;
+        while (currentX > xValues[startIndex]) {
+            startIndex++;
+        }
+        int endIndex = startIndex + 1;
+        // Find the velocities directly surrounding the distance of the robot
+        if (endIndex < xValues.length) {
+            lowY = yValues[startIndex];
+            highY = yValues[endIndex];
+        } else {
+            // TODO: This probably shouldn't throw an exception and crash the code
+            throw new IndexOutOfBoundsException("Distance too far");
+        }
+        // Start with base velocity, then add the weighted average of the low and high
+        // velocities to calculate the interpolated velocity. See
+        // https://en.wikipedia.org/wiki/Linear_interpolation for more details
+        int interpolatedY = (int) (lowY
+                + (((highY - lowY) / (xValues[endIndex] - xValues[startIndex])) * (currentX - xValues[startIndex])));
+        return interpolatedY;
     }
 
     @Override
