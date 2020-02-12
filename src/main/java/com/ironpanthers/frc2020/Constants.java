@@ -55,6 +55,7 @@ public final class Constants {
         public static final double kP = 2.6;
 
         public static final double kCurrentLimit = 60; // amps
+        public static final double kRampRate = 0.5; // seconds to full power
     }
 
     public static class OI {
