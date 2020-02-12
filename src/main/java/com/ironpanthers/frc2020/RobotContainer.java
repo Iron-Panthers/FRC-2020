@@ -44,6 +44,7 @@ public class RobotContainer {
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	private final Arm arm = new Arm();
 	private final SteeringAdjuster steerer = new SteeringAdjuster(arm::getHorizontalDistance, arm::getDiagonalDistance);
+	private final LimelightWrapper limelightWrapper = new LimelightWrapper();
 
 	private static final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
 	private static final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
@@ -81,7 +82,7 @@ public class RobotContainer {
 		shooterButton.whileHeld(new ShooterSequence(shooter, conveyorBelt));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
 
-		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, LimelightWrapper.getLimelightWrapperFront()::targetVisible));
+		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, LimelightWrapper.getLimelightWrapperFront()::targetVisible,limelightWrapper));
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));

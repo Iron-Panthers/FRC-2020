@@ -38,6 +38,10 @@ public class LimelightWrapper {
         tvert = table.getEntry("tvert").getDouble(0.0);
         thor = table.getEntry("thor").getDouble(0.0);
         tcornxy = table.getEntry("tcornxy").getDoubleArray(new double[1]);
+        table.getEntry("ledMode").setNumber(3);
+    }
+    public void turnOffLight() {
+        table.getEntry("ledMode").setNumber(1);
     }
 
     public double getTableX() {

@@ -10,6 +10,7 @@ package com.ironpanthers.frc2020.commands.vision;
 import java.util.function.BooleanSupplier;
 
 import com.ironpanthers.frc2020.subsystems.Drive;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -21,10 +22,13 @@ public class TurnToTarget extends CommandBase {
 
     BooleanSupplier seeTarget;
     
-    public TurnToTarget(Drive drive, SteeringAdjuster steerer, BooleanSupplier seeTarget) {
+    LimelightWrapper lWrapper;
+
+    public TurnToTarget(Drive drive, SteeringAdjuster steerer, BooleanSupplier seeTarget,LimelightWrapper limelightWrapper) {
         this.drive = drive;
         this.steerer = steerer;
         this.seeTarget = seeTarget;
+        lWrapper = limelightWrapper;
     }
 
     // Called when the command is initially scheduled.
