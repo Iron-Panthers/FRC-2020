@@ -65,6 +65,7 @@ public final class Constants {
         public static final int kShootFar = 5;
         public static final int kAutoAlign = 6;
         public static final int kShootClose = 8;
+        public static final int kShootInitiation = 11;
 
         // Driver B
         public static final int kDriverBJoystickPort = 1;
@@ -75,6 +76,7 @@ public final class Constants {
         public static final int kCloseShotButton = 8;
         public static final int kFarShotButton = 9;
         public static final int kFramePerimeterHeightButton = 10;
+        public static final int kAutoShotHeightButton = 11;
         public static final int kEmergencyintakeButton = 5;
     }
 
@@ -184,8 +186,8 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
         // Setpoints
-        public static final int kPositionErrorTolerance = 500;
-        public static final int kInitiationLineHeight = 45000; // Tested 2/11/20
+        public static final int kPositionErrorTolerance = 250;
+        public static final int kInitiationLineHeight = 47000; // Tested 2/11/20 (45400)
         public static final int kCloseShotHeightNativeUnits = 16000; // 19 too high at 15k velocity, 15 almost too low
         public static final int kFarShotHeightNativeUnits = 60000; // Tested angle for shooting behind control panel at
                                                                    // 14k native

@@ -55,6 +55,7 @@ public class RobotContainer {
 	private final JoystickButton shootFar = new JoystickButton(joystickA, Constants.OI.kShootFar);
 	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign);
 	private final JoystickButton shootClose = new JoystickButton(joystickA, Constants.OI.kShootClose);
+	private final JoystickButton shootInitiation = new JoystickButton(joystickA, Constants.OI.kShootInitiation); // Make new constant for this at 11
 
 	// Driver B Buttons
 	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton);
@@ -65,6 +66,7 @@ public class RobotContainer {
 	private final JoystickButton closeShotPosition = new JoystickButton(joystickB, Constants.OI.kCloseShotButton);
 	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton);
 	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyintakeButton);
+	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton);
 	public RobotContainer() {
 		drive.setDefaultCommand(
 				new ManualDriveCommand(joystickA::getY, joystickA::getX, new JoystickButton(joystickA, 1), drive));
@@ -83,6 +85,7 @@ public class RobotContainer {
 		shootFar.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
 		shootClose.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kCloseVelocity));
+		shootInitiation.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity));
 
 		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, LimelightWrapper.getLimelightWrapperFront()::targetVisible,limelightWrapper));
 		// Driver B
@@ -94,6 +97,7 @@ public class RobotContainer {
 		framePerimeterHeightPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits));
 		emergencyOuttake.whileHeld(new Outtake(shooter));
 		emergencyIntake.whileHeld(new EmergencyIntake(shooter, conveyorBelt, emergencyIntake::get));
+		autoShotHeight.whenPressed(new ArmToTarget(arm, Constants.Arm.kInitiationLineHeight));
 	}
  
 	/**
