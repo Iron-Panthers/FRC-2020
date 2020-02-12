@@ -57,15 +57,18 @@ public final class Constants {
     }
 
     public static class OI {
+        public static final int kCloseShotButtonNumber = 12;
+        public static final int kInitiationLineShotButtonNumber = 10;
+        public static final int kFarShotButtonNumber = 8;
         // Driver A
         public static final int kStopShooterButton = 3;
         public static final int kDriverAJoystickPort = 0;
         public static final int kIntakeButton = 4;
         public static final int kResetConveyorButton = 3;
-        public static final int kShootFar = 5;
+        public static final int kShootFar = kFarShotButtonNumber;
         public static final int kAutoAlign = 6;
-        public static final int kShootClose = 8;
-        public static final int kShootInitiation = 11;
+        public static final int kShootClose = kCloseShotButtonNumber;
+        public static final int kShootInitiation = kInitiationLineShotButtonNumber;
 
         // Driver B
         public static final int kDriverBJoystickPort = 1;
@@ -73,10 +76,10 @@ public final class Constants {
 		public static final int kDriverBIntakeButton = 2;
 		public static final int kEmergencyOuttakeButton = 3;
         public static final int kZeroArmButton = 7;
-        public static final int kCloseShotButton = 8;
-        public static final int kFarShotButton = 9;
-        public static final int kFramePerimeterHeightButton = 10;
-        public static final int kAutoShotHeightButton = 11;
+        public static final int kCloseShotButton = kCloseShotButtonNumber;
+        public static final int kFarShotButton = kFarShotButtonNumber;
+        public static final int kFramePerimeterHeightButton = 9;
+        public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
         public static final int kEmergencyintakeButton = 5;
     }
 
