@@ -11,11 +11,12 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.util.Util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetShooterVelocity extends CommandBase {
 	private final Shooter shooter;
-	private final int velocity;
+	private int velocity;
 
 	/**
 	 * Creates a new ShootAtVelocity.
@@ -25,6 +26,7 @@ public class SetShooterVelocity extends CommandBase {
 		this.shooter = shooter;
 		this.velocity = velocity;
 		addRequirements(shooter);
+		SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}
 
 	// Called when the command is initially scheduled.
@@ -35,6 +37,7 @@ public class SetShooterVelocity extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		velocity = (int) SmartDashboard.getNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 		shooter.setVelocity(velocity);
 	}
 

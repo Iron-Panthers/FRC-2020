@@ -31,7 +31,6 @@ public class ArmToTarget extends CommandBase {
 	@Override
 	public void initialize() {
 		arm.setPosition(target);
-		SmartDashboard.putNumber("Horizontal Hold Output", Constants.Arm.kHorizontalHoldOutput);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.

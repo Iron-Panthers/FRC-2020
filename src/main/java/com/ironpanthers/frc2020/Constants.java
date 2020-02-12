@@ -58,9 +58,13 @@ public final class Constants {
 
     public static class OI {
         // Driver A
+        public static final int kStopShooterButton = 3;
         public static final int kDriverAJoystickPort = 0;
         public static final int kIntakeButton = 4;
         public static final int kResetConveyorButton = 3;
+        public static final int kShootFar = 5;
+        public static final int kAutoAlign = 6;
+        public static final int kShootClose = 8;
 
         // Driver B
         public static final int kDriverBJoystickPort = 1;
@@ -68,8 +72,9 @@ public final class Constants {
 		public static final int kDriverBIntakeButton = 2;
 		public static final int kEmergencyOuttakeButton = 3;
         public static final int kZeroArmButton = 7;
+        public static final int kCloseShotButton = 8;
         public static final int kFarShotButton = 9;
-        public static final int kFramePerimeterHeightButton = 8;
+        public static final int kFramePerimeterHeightButton = 10;
         public static final int kEmergencyintakeButton = 5;
     }
 
@@ -152,6 +157,8 @@ public final class Constants {
 
         public static final int kVelocityThreshold = 250;
         public static final int kTestVelocity = 18000;
+        public static final int kCloseVelocity = 15000; // Tested 2/11/20 by James
+        public static final int kFarVelocity = 19000;
 
         public static final double kCurrentLimit = 40; // amps
     }
@@ -176,7 +183,8 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
         // Setpoints
-        public static final int kPositionErrorTolerance = 1000;
+        public static final int kPositionErrorTolerance = 500;
+        public static final int kCloseShotHeightNativeUnits = 16000; // 19 too high at 15k velocity, 15 almost too low
         public static final int kFarShotHeightNativeUnits = 60000; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
