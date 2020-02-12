@@ -77,12 +77,14 @@ public final class Constants {
         public static final int kManualArmButton = 1;
 		public static final int kDriverBIntakeButton = 2;
 		public static final int kEmergencyOuttakeButton = 3;
-        public static final int kZeroArmButton = 7;
+		public static final int kLimelightTest = 4;
+		public static final int kEmergencyintakeButton = 5;
+		public static final int kZeroArmButton = 7;
+		public static final int kFramePerimeterHeightButton = 9;
         public static final int kCloseShotButton = kCloseShotButtonNumber;
         public static final int kFarShotButton = kFarShotButtonNumber;
-        public static final int kFramePerimeterHeightButton = 9;
         public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
-        public static final int kEmergencyintakeButton = 5;
+		
     }
 
     public static class Conveyor {
@@ -168,7 +170,8 @@ public final class Constants {
         public static final double kP = 0.2;
         public static final double kRampRate = 0.25; // seconds 0->full
 
-        public static final int kVelocityThreshold = 100; // Good for auto, too slow for tele
+		public static final int kVelocityThreshold = 100; // Good for auto, too slow for tele
+		public static final int kOuterGoalThreshold = 750; // When speed is more important than accuracy
         public static final int kTestVelocity = 18000;
         public static final int kCloseVelocity = 15000; // Tested 2/11/20 by James
         public static final int kFarVelocity = 19000;
