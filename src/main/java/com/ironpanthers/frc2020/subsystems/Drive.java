@@ -75,7 +75,8 @@ public class Drive extends SubsystemBase {
                 Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentLimit, 1);
         left1.configSupplyCurrentLimit(currentConfig);
         right1.configSupplyCurrentLimit(currentConfig);
-
+        left1.configOpenloopRamp(Constants.Drive.kRampRate);
+        right1.configOpenloopRamp(Constants.Drive.kRampRate);
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
     }

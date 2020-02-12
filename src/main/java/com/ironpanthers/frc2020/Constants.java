@@ -31,6 +31,7 @@ public final class Constants {
     public static final boolean kCompetitionMode = false;
 
     public static final int kFalconEPR = 4096;
+    public static final int kFalconCPR = 2048;
 
     public static class Drive {
         public static final int kLeft1Id = 1;
@@ -54,18 +55,22 @@ public final class Constants {
         public static final double kP = 2.6;
 
         public static final double kCurrentLimit = 60; // amps
+        public static final double kRampRate = 0.5; // seconds to full power
     }
 
     public static class OI {
+        public static final int kCloseShotButtonNumber = 12;
+        public static final int kInitiationLineShotButtonNumber = 10;
+        public static final int kFarShotButtonNumber = 8;
         // Driver A
         public static final int kStopShooterButton = 3;
         public static final int kDriverAJoystickPort = 0;
         public static final int kIntakeButton = 4;
         public static final int kResetConveyorButton = 3;
-        public static final int kShootFar = 5;
+        public static final int kShootFar = kFarShotButtonNumber;
         public static final int kAutoAlign = 6;
-        public static final int kShootClose = 8;
-        public static final int kShootInitiation = 11;
+        public static final int kShootClose = kCloseShotButtonNumber;
+        public static final int kShootInitiation = kInitiationLineShotButtonNumber;
 
         // Driver B
         public static final int kDriverBJoystickPort = 1;
@@ -73,10 +78,10 @@ public final class Constants {
 		public static final int kDriverBIntakeButton = 2;
 		public static final int kEmergencyOuttakeButton = 3;
         public static final int kZeroArmButton = 7;
-        public static final int kCloseShotButton = 8;
-        public static final int kFarShotButton = 9;
-        public static final int kFramePerimeterHeightButton = 10;
-        public static final int kAutoShotHeightButton = 11;
+        public static final int kCloseShotButton = kCloseShotButtonNumber;
+        public static final int kFarShotButton = kFarShotButtonNumber;
+        public static final int kFramePerimeterHeightButton = 9;
+        public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
         public static final int kEmergencyintakeButton = 5;
     }
 
@@ -181,7 +186,7 @@ public final class Constants {
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
-        public static final double kHorizontalHoldOutput = 0.07; // TODO find this value
+        public static final double kHorizontalHoldOutput = 0.08; // 0.125 tested 2/11/20
         public static final double kMaxManualSpeed = 0.5;
 
         public static final double kP = 0.03;
@@ -199,6 +204,10 @@ public final class Constants {
                                                                    // 14k native
         // units
         public static final int kFrameConstrainedHeightNativeUnits = 45000; // Height at which robot is 45 inches tall
+        public static final double encoderToAngle = 90.0 / 79300; // Empirically tested conversion
+        public static final double kDegreesPerOutputRotation = 360.0;
+        public static final double kArmReduction = 175.0; // Falcon rev to arm rev
+        // public static final double encoderToAngle = kDegreesPerOutputRotation / (kFalconCPR * kArmReduction); // Theoretical
 
         // Soft Limits
         public static final int kTopPositionNativeUnits = 88000; // Tested by James, 1/30/20
