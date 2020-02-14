@@ -134,7 +134,7 @@ public final class Constants {
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.02;
+        public static final double kP = 0.015;
         /**
          * I value in PID
          */
@@ -170,13 +170,13 @@ public final class Constants {
         public static final double kP = 0.2;
         public static final double kRampRate = 0.25; // seconds 0->full
 
-		public static final int kInnerGoalThreshold = 100; // Good for auto, too slow for tele
-		public static final int kOuterGoalThreshold = 750; // When speed is more important than accuracy
+		public static final int kInnerGoalThreshold = 150; // Good for auto, too slow for tele
+		public static final int kOuterGoalThreshold = 4000; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
 		public static final int kCloseVelocity = 15000; // Tested 2/11/20 by James
 		public static final int kInitiationVelocity = 16500; // Initiation Line, Tested 2/11/20
 		public static final int kTestVelocity = 18000;
-		public static final int kFarVelocity = 19000;
+		public static final int kFarVelocity = 18000;
 
         public static final double kCurrentLimit = 40; // amps
     }
@@ -190,7 +190,8 @@ public final class Constants {
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
-        public static final double kHorizontalHoldOutput = 0.08; // 0.125 tested 2/11/20
+        public static final double kHorizontalHoldOutput = 0.08; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
+        public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 13;
         public static final double kMaxManualSpeed = 0.5;
 
         public static final double kP = 0.03;
@@ -204,7 +205,7 @@ public final class Constants {
         public static final int kPositionErrorTolerance = 250;
         public static final int kInitiationLineHeight = 47000; // Tested 2/11/20 (45400)
         public static final int kCloseShotHeightNativeUnits = 16000; // 19 too high at 15k velocity, 15 almost too low
-        public static final int kFarShotHeightNativeUnits = 60000; // Tested angle for shooting behind control panel at
+        public static final int kFarShotHeightNativeUnits = 48000; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
         public static final int kFrameConstrainedHeightNativeUnits = 45000; // Height at which robot is 45 inches tall
