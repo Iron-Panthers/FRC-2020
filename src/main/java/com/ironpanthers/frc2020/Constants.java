@@ -7,6 +7,8 @@
 
 package com.ironpanthers.frc2020;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -108,31 +110,31 @@ public final class Constants {
 
     public static class Vision {
 
-        public static final String kLimelightName = "limelight-b";
+        public static final String kLimelightName = "limelight-b"; 
 
         /**
          * Height from ground to pivot in inches
          */
         public static final double kGroundToPivotInches = 10.3;
 
-        public static final double kLimelightToPivotPlaneInches = 8;
         /**
          * Height from ground to target in inches
          */
-        public static final double kGroundToTargetInches = 98.25;
+        public static final double kGroundToTargetInches = 98.25; //Ceneter of target to ground
         
         /**
          * Angle from mount to limelight in degrees
          */
-        public static final double kMountToLLAngleDeg = 20.0;
+        public static final double kMountToLLAngleDeg = 17; //got this through trial and error testing
 
-        public static final double kPivotToLLPlane = 23.5;
-        public static final double kPivotToLL = 25.25;
+        public static final double kPivotToLLPlane = 23.5; //Pivot point to limelight horizontle distance in inches
+        public static final double kPivotToLL = 24.5; //Pivot point to limelight hypotonuse 
+        public static double kPivotToLLAngle = 16.42; //inverse cos of kPivotToLLPlane / kPivotToLL
 
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.02;
+        public static final double kP = 0.005;
         /**
          * I value in PID
          */
@@ -153,7 +155,8 @@ public final class Constants {
         //This was taken from field measurements. The outer hole is 2 ft 5.25 inches in front of the inner hole, and the diameter of the hexagon is 2 ft 6 inches
         public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
 
-		public static double kAutoAlignTolerance = 1; 
+		public static double kAutoAlignTolerance = 1;
+
         
         //public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
     }

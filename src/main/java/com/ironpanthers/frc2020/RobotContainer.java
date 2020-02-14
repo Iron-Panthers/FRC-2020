@@ -46,30 +46,33 @@ public class RobotContainer {
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	private final Arm arm = new Arm();
 	private final SteeringAdjuster steerer = new SteeringAdjuster(limelightWrapper);
+	
 
 
 	private static final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
 	private static final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
 
 	// Driver A Buttons
-	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA, Constants.OI.kStopShooterButton);
-	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton);
-	private final JoystickButton shootFar = new JoystickButton(joystickA, Constants.OI.kShootFar);
-	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign);
-	private final JoystickButton shootClose = new JoystickButton(joystickA, Constants.OI.kShootClose);
-	private final JoystickButton shootInitiation = new JoystickButton(joystickA, Constants.OI.kShootInitiation); // Make new constant for this at 11
+	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA, Constants.OI.kStopShooterButton); //3
+	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); //4
+	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign); //6
+	private final JoystickButton shootFar = new JoystickButton(joystickA, Constants.OI.kShootFar); //8
+	private final JoystickButton shootInitiation = new JoystickButton(joystickA, Constants.OI.kShootInitiation); //10
+																												// Make new constant for this at 11
+	private final JoystickButton shootClose = new JoystickButton(joystickA, Constants.OI.kShootClose); //12
+																									
 
 	// Driver B Buttons
-	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton);
-	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton);
-	private final JoystickButton zeroArm = new JoystickButton(joystickB, Constants.OI.kZeroArmButton);
-	private final JoystickButton farShotPosition = new JoystickButton(joystickB, Constants.OI.kFarShotButton);
-	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(joystickB,Constants.OI.kFramePerimeterHeightButton);
-	private final JoystickButton closeShotPosition = new JoystickButton(joystickB, Constants.OI.kCloseShotButton);
-	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton);
-	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyintakeButton);
-	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton);
-	private final JoystickButton getDistance = new JoystickButton(joystickB, 4);
+	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton); //1
+	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton); //2
+	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton); //3
+	private final JoystickButton getDistance = new JoystickButton(joystickB, 4); //4
+	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyintakeButton); //5
+	private final JoystickButton zeroArm = new JoystickButton(joystickB, Constants.OI.kZeroArmButton); //7
+	private final JoystickButton farShotPosition = new JoystickButton(joystickB, Constants.OI.kFarShotButton); //8
+	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(joystickB,Constants.OI.kFramePerimeterHeightButton); //9
+	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton); //10
+	private final JoystickButton closeShotPosition = new JoystickButton(joystickB, Constants.OI.kCloseShotButton); //12
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -90,8 +93,7 @@ public class RobotContainer {
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
 		shootClose.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kCloseVelocity));
 		shootInitiation.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity));
-
-		turnToTargetButton.whileHeld(new TurnToTarget(drive, steerer, limelightWrapper::targetVisible,limelightWrapper));
+		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, limelightWrapper::targetVisible,limelightWrapper));
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));

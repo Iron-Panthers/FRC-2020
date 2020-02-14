@@ -108,12 +108,12 @@ public class Arm extends SubsystemBase {
     }
 
     public double getHeight() {
-        return Constants.Vision.kPivotToLL * Math.sin(getAngle() * Math.PI / 180)
+        return Constants.Vision.kPivotToLL * Math.sin((getAngle()  + Constants.Vision.kPivotToLLAngle) * Math.PI / 180)
                 + Constants.Vision.kGroundToPivotInches;
     }
 
-    public double getPivotToLLHorizontleD() {
-        return (getHeight() - Constants.Vision.kGroundToPivotInches) / Math.tan(getAngle());
+    public double getPivotToLLHorizontleD(double angle) {
+        return (getHeight() - Constants.Vision.kGroundToPivotInches) / Math.tan(angle * Math.PI / 180);
     }
     // public double getDiagonalDistance(){
     // return Math.sqrt(Math.pow(getHorizontalDistance(), 2) +
@@ -167,6 +167,8 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("Arm Position", getPosition());
         SmartDashboard.putNumber("Arm Output Voltage", getOutputVoltage());
         SmartDashboard.putNumber("Arm Angle", getAngle());
+        SmartDashboard.putNumber("Arm Height", getHeight());
+
         // // If within the slow threshold, limit output to scaled regular output
         // if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() >
         // Constants.Arm.TOP_SLOW_LIMIT) {
