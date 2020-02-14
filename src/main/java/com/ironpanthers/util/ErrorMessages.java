@@ -1,0 +1,31 @@
+package com.ironpanthers.util;
+
+import static java.util.Objects.requireNonNull;
+
+public final class ErrorMessages {
+    /**
+     * Utility class, so constructor is private.
+     */
+    private ErrorMessages() {
+        throw new UnsupportedOperationException("ErrorMessages is a utility class!");
+    }
+
+    /**
+     * Requires that a parameter of a method not be null; prints an error message
+     * with helpful debugging instructions if the parameter is null.
+     *
+     * @param obj        The parameter that must not be null.
+     * @param paramName  The name of the parameter.
+     * @param methodName The name of the method.
+     */
+    public static <T> T requireNonNullParam(T obj, String paramName, String methodName) {
+        return requireNonNull(obj,
+                "Parameter " + paramName + " in method " + methodName + " was null when it"
+                        + " should not have been!  Check the stacktrace to find the responsible line of code - "
+                        + "usually, it is the first line of user-written code indicated in the stacktrace.  "
+                        + "Make sure all objects passed to the method in question were properly initialized -"
+                        + " note that this may not be obvious if it is being called under "
+                        + "dynamically-changing conditions!  Please do not seek additional technical assistance"
+                        + " without doing this first!");
+    }
+}

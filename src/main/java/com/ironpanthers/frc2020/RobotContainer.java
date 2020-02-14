@@ -7,11 +7,31 @@
 
 package com.ironpanthers.frc2020;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import com.ironpanthers.frc2020.commands.ExampleCommand;
-import com.ironpanthers.frc2020.subsystems.ExampleSubsystem;
+import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
+import com.ironpanthers.frc2020.commands.arm.ArmAndSpinShooter;
+import com.ironpanthers.frc2020.commands.arm.ArmHold;
+import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
+import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
+import com.ironpanthers.frc2020.commands.arm.ZeroArm;
+import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
+import com.ironpanthers.frc2020.commands.intake.EmergencyIntake;
+import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
+import com.ironpanthers.frc2020.commands.intake.Outtake;
+import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
+import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
+import com.ironpanthers.frc2020.commands.shooter.StopShooter;
+import com.ironpanthers.frc2020.commands.vision.HorizontalDistance;
+import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
+import com.ironpanthers.frc2020.subsystems.Arm;
+import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
+import com.ironpanthers.frc2020.subsystems.Drive;
+import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
+import com.ironpanthers.frc2020.util.SteeringAdjuster;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -22,34 +42,79 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
 	// The robot's subsystems and commands are defined here...
-	private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+	private final LimelightWrapper limelightWrapper = new LimelightWrapper();
+	private final Drive drive = new Drive();
+	private final Shooter shooter = new Shooter();
+	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
+	private final Arm arm = new Arm();
+	private final SteeringAdjuster steerer = new SteeringAdjuster(limelightWrapper);
+	
 
-	private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-	/**
-	 * The container for the robot. Contains subsystems, OI devices, and commands.
-	 */
+	private static final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
+	private static final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
+
+	// Driver A Buttons
+	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA, Constants.OI.kStopShooterButton); //3
+	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); //4
+	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign); //6
+	private final JoystickButton shootFar = new JoystickButton(joystickA, Constants.OI.kShootFar); //8
+	private final JoystickButton shootInitiation = new JoystickButton(joystickA, Constants.OI.kShootInitiation); //10
+																												// Make new constant for this at 11
+	private final JoystickButton shootClose = new JoystickButton(joystickA, Constants.OI.kShootClose); //12
+																									
+
+	// Driver B Buttons
+	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton);
+	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton);
+	private final JoystickButton zeroArm = new JoystickButton(joystickB, Constants.OI.kZeroArmButton);
+	private final JoystickButton farShotPosition = new JoystickButton(joystickB, Constants.OI.kFarShotButton);
+	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(joystickB,Constants.OI.kFramePerimeterHeightButton);
+	private final JoystickButton closeShotPosition = new JoystickButton(joystickB, Constants.OI.kCloseShotButton);
+	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton);
+	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyintakeButton);
+	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton);
+	private final JoystickButton getDistance = new JoystickButton(joystickB, Constants.OI.kLimelightTest);
+
 	public RobotContainer() {
+		drive.setDefaultCommand(
+				new ManualDriveCommand(joystickA::getY, joystickA::getX, new JoystickButton(joystickA, 1), drive));
+		arm.setDefaultCommand(new ArmHold(arm));
 		// Configure the button bindings
 		configureButtonBindings();
 	}
 
 	/**
-	 * Use this method to define your button->command mappings. Buttons can be
-	 * created by instantiating a {@link GenericHID} or one of its subclasses
-	 * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-	 * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+	 * Applies all button->command mappings.
 	 */
 	private void configureButtonBindings() {
+		// Driver A
+		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
+		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
+		shootFar.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity, Constants.Shooter.kInnerGoalThreshold));
+		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
+		shootClose.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kCloseVelocity, Constants.Shooter.kOuterGoalThreshold));
+		shootInitiation.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kInnerGoalThreshold));
+		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, limelightWrapper::targetVisible,limelightWrapper));
+		// Driver B
+		zeroArm.whenPressed(new ZeroArm(arm));
+		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
+		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
+		closeShotPosition.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kCloseShotHeightNativeUnits, shooter, Constants.Shooter.kCloseVelocity, Constants.Shooter.kOuterGoalThreshold));
+		farShotPosition.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kFarShotHeightNativeUnits, shooter, Constants.Shooter.kFarVelocity, Constants.Shooter.kInnerGoalThreshold));
+		framePerimeterHeightPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits));
+		emergencyOuttake.whileHeld(new Outtake(shooter));
+		emergencyIntake.whileHeld(new EmergencyIntake(shooter, conveyorBelt, emergencyIntake::get));
+		autoShotHeight.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kInitiationLineHeight, shooter, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kOuterGoalThreshold));
+		getDistance.whenPressed(new HorizontalDistance(limelightWrapper, arm));
 	}
-
+ 
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
 	 *
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		// An ExampleCommand will run in autonomous
-		return m_autoCommand;
+		return new TestAutonomous(drive);
 	}
 }
