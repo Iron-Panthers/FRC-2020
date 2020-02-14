@@ -18,6 +18,7 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -68,6 +69,10 @@ public class Arm extends SubsystemBase {
         armLeft.set(TalonFXControlMode.PercentOutput, power);
     }
 
+    public void setVoltage(double voltage) {
+        armLeft.set(TalonFXControlMode.PercentOutput, voltage / RobotController.getBatteryVoltage());
+    }
+
     public void stop() {
         setPower(0);
     }
@@ -101,7 +106,7 @@ public class Arm extends SubsystemBase {
 
     public double getFeedForward() {
         double scaledAngle = Math.cos(Math.toRadians(getAngle()));
-        double f = Constants.Arm.kHorizontalHoldOutput * scaledAngle;
+        double f = Constants.Arm.kHorizontalHoldVoltage * scaledAngle; // Voltage based
         // PercentOutput with feedforward to avoid oscillation which wears down the
         // gears
         return f;

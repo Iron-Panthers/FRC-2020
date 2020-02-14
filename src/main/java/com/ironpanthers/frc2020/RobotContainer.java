@@ -8,6 +8,8 @@
 package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
+import com.ironpanthers.frc2020.commands.arm.ArmAndSpinShooter;
+import com.ironpanthers.frc2020.commands.arm.ArmHold;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.arm.ZeroArm;
@@ -63,21 +65,21 @@ public class RobotContainer {
 																									
 
 	// Driver B Buttons
-	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton); //1
-	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton); //2
-	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton); //3
-	private final JoystickButton getDistance = new JoystickButton(joystickB, 4); //4
-	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyintakeButton); //5
-	private final JoystickButton zeroArm = new JoystickButton(joystickB, Constants.OI.kZeroArmButton); //7
-	private final JoystickButton farShotPosition = new JoystickButton(joystickB, Constants.OI.kFarShotButton); //8
-	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(joystickB,Constants.OI.kFramePerimeterHeightButton); //9
-	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton); //10
-	private final JoystickButton closeShotPosition = new JoystickButton(joystickB, Constants.OI.kCloseShotButton); //12
+	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton);
+	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton);
+	private final JoystickButton zeroArm = new JoystickButton(joystickB, Constants.OI.kZeroArmButton);
+	private final JoystickButton farShotPosition = new JoystickButton(joystickB, Constants.OI.kFarShotButton);
+	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(joystickB,Constants.OI.kFramePerimeterHeightButton);
+	private final JoystickButton closeShotPosition = new JoystickButton(joystickB, Constants.OI.kCloseShotButton);
+	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton);
+	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyintakeButton);
+	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton);
+	private final JoystickButton getDistance = new JoystickButton(joystickB, Constants.OI.kLimelightTest);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
 				new ManualDriveCommand(joystickA::getY, joystickA::getX, new JoystickButton(joystickA, 1), drive));
-
+		arm.setDefaultCommand(new ArmHold(arm));
 		// Configure the button bindings
 		configureButtonBindings();
 	}
@@ -89,21 +91,21 @@ public class RobotContainer {
 		// Driver A
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
-		shootFar.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity));
+		shootFar.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity, Constants.Shooter.kInnerGoalThreshold));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
-		shootClose.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kCloseVelocity));
-		shootInitiation.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity));
+		shootClose.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kCloseVelocity, Constants.Shooter.kOuterGoalThreshold));
+		shootInitiation.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kInnerGoalThreshold));
 		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, limelightWrapper::targetVisible,limelightWrapper));
 		// Driver B
+		zeroArm.whenPressed(new ZeroArm(arm));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
-		zeroArm.whenPressed(new ZeroArm(arm));
-		closeShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kCloseShotHeightNativeUnits));
-		farShotPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFarShotHeightNativeUnits));
+		closeShotPosition.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kCloseShotHeightNativeUnits, shooter, Constants.Shooter.kCloseVelocity, Constants.Shooter.kOuterGoalThreshold));
+		farShotPosition.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kFarShotHeightNativeUnits, shooter, Constants.Shooter.kFarVelocity, Constants.Shooter.kInnerGoalThreshold));
 		framePerimeterHeightPosition.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits));
 		emergencyOuttake.whileHeld(new Outtake(shooter));
 		emergencyIntake.whileHeld(new EmergencyIntake(shooter, conveyorBelt, emergencyIntake::get));
-		autoShotHeight.whenPressed(new ArmToTarget(arm, Constants.Arm.kInitiationLineHeight));
+		autoShotHeight.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kInitiationLineHeight, shooter, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kOuterGoalThreshold));
 		getDistance.whenPressed(new HorizontalDistance(limelightWrapper, arm));
 	}
  

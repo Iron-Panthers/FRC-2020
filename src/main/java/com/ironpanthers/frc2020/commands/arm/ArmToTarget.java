@@ -41,7 +41,7 @@ public class ArmToTarget extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		arm.setPower(arm.getFeedForward());
+		arm.setVoltage(arm.getFeedForward());
 	}
 
 	// Returns true when the command should end.
