@@ -18,14 +18,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class ShooterSequence extends SequentialCommandGroup {
+public class ShootQuickly extends SequentialCommandGroup {
 	/**
 	 * Creates a new IntakeSequence.
 	 */
-	public ShooterSequence(Shooter shooter, ConveyorBelt conveyor, int velocity, int threshold) {
+	public ShootQuickly(Shooter shooter, ConveyorBelt conveyor, int velocity, int threshold) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new SetShooterVelocity(shooter, velocity, threshold), new ShiftConveyor(Direction.kOut, conveyor),
+	super(new SetShooterVelocity(shooter, Constants.Shooter.kFarVelocity, threshold), new ShiftConveyor(Direction.kOut, conveyor),new ShiftConveyor(Direction.kOut, conveyor),new ShiftConveyor(Direction.kOut, conveyor),new ShiftConveyor(Direction.kOut, conveyor),new ShiftConveyor(Direction.kOut, conveyor));
+	
 		//TODO:Need working banner sensor
 	}
 }
