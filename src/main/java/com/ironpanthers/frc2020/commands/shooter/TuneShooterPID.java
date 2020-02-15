@@ -5,10 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.commands;
+package com.ironpanthers.frc2020.commands.shooter;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.Robot;
+import com.ironpanthers.frc2020.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -17,34 +17,35 @@ public class TuneShooterPID extends CommandBase {
 	/**
 	 * Creates a new TuneShooterPID.
 	 */
+	private Shooter shooter;
 	double p, i, d, f, vel;
-	public TuneShooterPID() {
+	public TuneShooterPID(Shooter shooter) {
 		// Use addRequirements() here to declare subsystem dependencies.
-		addRequirements(Robot.shooter);
+		addRequirements(shooter);
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		SmartDashboard.putNumber("Shooter P", Constants.Shooter.SHOOTER_P);
+		SmartDashboard.putNumber("Shooter P", Constants.Shooter.kP);
 		SmartDashboard.putNumber("Shooter I", 0.0);
 		SmartDashboard.putNumber("Shooter D", 0.0);
-		SmartDashboard.putNumber("Shooter F", Constants.Shooter.SHOOTER_F);
+		SmartDashboard.putNumber("Shooter F", Constants.Shooter.kF);
 		SmartDashboard.putNumber("Target Velocity", 0.0);
-		p = SmartDashboard.getNumber("Shooter P", Constants.Shooter.SHOOTER_P);
+		p = SmartDashboard.getNumber("Shooter P", Constants.Shooter.kP);
 		i = SmartDashboard.getNumber("Shooter I", 0.0);
 		d = SmartDashboard.getNumber("Shooter D", 0.0);
-		f = SmartDashboard.getNumber("Shooter F", Constants.Shooter.SHOOTER_F);
+		f = SmartDashboard.getNumber("Shooter F", Constants.Shooter.kF);
 		vel = SmartDashboard.getNumber("Target Velocity", 0.0);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		double nP = SmartDashboard.getNumber("Shooter P", Constants.Shooter.SHOOTER_P);
+		double nP = SmartDashboard.getNumber("Shooter P", Constants.Shooter.kP);
 		double nI = SmartDashboard.getNumber("Shooter I", 0.0);
 		double nD = SmartDashboard.getNumber("Shooter D", 0.0);
-		double nF = SmartDashboard.getNumber("Shooter F", Constants.Shooter.SHOOTER_F);
+		double nF = SmartDashboard.getNumber("Shooter F", Constants.Shooter.kF);
 		double nVel = SmartDashboard.getNumber("Target Velocity", 0.0);
 		boolean isChanged = false;
 		if (p != nP) {
@@ -64,21 +65,21 @@ public class TuneShooterPID extends CommandBase {
 			isChanged = true;
 		}
 		if (isChanged) {
-			Robot.shooter.configPIDF(p, i, d, f, Constants.Shooter.SHOOTER_VELOCITY_IDX);
+			shooter.configPIDF(p, i, d, f, Constants.Shooter.kPIDIdx);
 		}
 		if (vel != nVel) {
 			vel = nVel;
 		}
-		Robot.shooter.setVelocity(vel);
-		SmartDashboard.putNumber("Actual Velocity", Robot.shooter.getVelocity());
-		SmartDashboard.putNumber("Motor Voltage", Robot.shooter.getVoltage());
-		SmartDashboard.putNumber("Motor Current", Robot.shooter.getCurrent());
+		shooter.setVelocity(vel);
+		SmartDashboard.putNumber("Actual Velocity", shooter.getVelocity());
+		SmartDashboard.putNumber("Motor Voltage", shooter.getVoltage());
+		SmartDashboard.putNumber("Motor Current", shooter.getCurrent());
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		Robot.shooter.stop();
+		shooter.stopShooter();
 	}
 
 	// Returns true when the command should end.
