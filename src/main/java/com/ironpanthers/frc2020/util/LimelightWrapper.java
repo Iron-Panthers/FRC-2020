@@ -1,6 +1,8 @@
 package com.ironpanthers.frc2020.util;
 
 
+import com.ironpanthers.frc2020.Constants;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,7 +15,7 @@ public class LimelightWrapper {
     private static LimelightWrapper frontLimelight = new LimelightWrapper();
 
     public LimelightWrapper() {
-        table = NetworkTableInstance.getDefault().getTable("limelight-b");
+        table = NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName);
         periodic();
     }
 
@@ -38,8 +40,19 @@ public class LimelightWrapper {
         tvert = table.getEntry("tvert").getDouble(0.0);
         thor = table.getEntry("thor").getDouble(0.0);
         tcornxy = table.getEntry("tcornxy").getDoubleArray(new double[1]);
+        if (table.getEntry("ledMode").getDouble(0.0) == 1) {
+            turnOnLight();
+        }
     }
-
+    public void turnOffLight() {
+        table.getEntry("ledMode").setNumber(1);
+    }
+    public void blinkLight() {
+        table.getEntry("ledMode").setNumber(2);
+    }
+    public void turnOnLight() {
+        table.getEntry("ledMode").setNumber(3);
+    }
     public double getTableX() {
         return tx;
     }

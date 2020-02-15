@@ -11,20 +11,24 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.util.Util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetShooterVelocity extends CommandBase {
 	private final Shooter shooter;
-	private final int velocity;
+	private int velocity;
+	private final int threshold;
 
 	/**
 	 * Creates a new ShootAtVelocity.
 	 */
-	public SetShooterVelocity(Shooter shooter, int velocity) {
+	public SetShooterVelocity(Shooter shooter, int velocity, int threshold) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		this.shooter = shooter;
 		this.velocity = velocity;
+		this.threshold = threshold;
 		addRequirements(shooter);
+		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}
 
 	// Called when the command is initially scheduled.
@@ -35,6 +39,7 @@ public class SetShooterVelocity extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		// velocity = (int) SmartDashboard.getNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 		shooter.setVelocity(velocity);
 	}
 
@@ -46,6 +51,6 @@ public class SetShooterVelocity extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(shooter.getVelocity(), velocity, Constants.Shooter.kVelocityThreshold);
+		return Util.epsilonEquals(shooter.getVelocity(), velocity, threshold);
 	}
 }

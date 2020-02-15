@@ -9,9 +9,13 @@ package com.ironpanthers.frc2020.commands.vision;
 
 import java.util.function.BooleanSupplier;
 
+import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Drive;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
+import com.ironpanthers.util.Util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
@@ -21,10 +25,13 @@ public class TurnToTarget extends CommandBase {
 
     BooleanSupplier seeTarget;
     
-    public TurnToTarget(Drive drive, SteeringAdjuster steerer, BooleanSupplier seeTarget) {
+    LimelightWrapper lWrapper;
+
+    public TurnToTarget(Drive drive, SteeringAdjuster steerer, BooleanSupplier seeTarget,LimelightWrapper limelightWrapper) {
         this.drive = drive;
         this.steerer = steerer;
         this.seeTarget = seeTarget;
+        lWrapper = limelightWrapper;
     }
 
     // Called when the command is initially scheduled.
@@ -35,12 +42,15 @@ public class TurnToTarget extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(seeTarget.getAsBoolean()) {
-            steerer.updateSteeringValues();
-            drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
-        } else {
-            drive.setOutputPercent(0.0, 0.0);
-        }
+    //     if(seeTarget.getAsBoolean()) {
+    //         steerer.updateSteeringValues();
+    //         drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
+    //     } else {
+    //         drive.setOutputPercent(0.0, 0.0);
+    //     }
+    // }
+    steerer.updateSteeringValues();
+    drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
     }
 
     // Called once the command ends or is interrupted.
@@ -52,6 +62,6 @@ public class TurnToTarget extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance);
     }
 }

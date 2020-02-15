@@ -7,6 +7,7 @@
 
 package com.ironpanthers.frc2020;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -59,6 +60,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
+        NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode").setNumber(1);
     }
 
     @Override
@@ -71,6 +73,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
+        NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode").setNumber(0);
+
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
         if (m_autonomousCommand != null)
@@ -86,6 +90,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode").setNumber(0);
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove

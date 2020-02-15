@@ -5,9 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.commands.shooter;
+package com.ironpanthers.frc2020.commands.intake;
 
-import com.ironpanthers.frc2020.Constants;
+import java.util.function.BooleanSupplier;
+
 import com.ironpanthers.frc2020.commands.ShiftConveyor;
 import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
@@ -18,14 +19,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class ShooterSequence extends SequentialCommandGroup {
+public class EmergencyIntakeSequence extends SequentialCommandGroup {
 	/**
 	 * Creates a new IntakeSequence.
 	 */
-	public ShooterSequence(Shooter shooter, ConveyorBelt conveyor, int velocity, int threshold) {
+	public EmergencyIntakeSequence(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new SetShooterVelocity(shooter, velocity, threshold), new ShiftConveyor(Direction.kOut, conveyor));
-		//TODO:Need working banner sensor
+		super(new ShiftConveyor(Direction.kIn, conveyor), new EmergencyIntake(shooter, conveyor, button));
 	}
 }
