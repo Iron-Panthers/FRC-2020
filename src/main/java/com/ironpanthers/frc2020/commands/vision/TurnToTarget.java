@@ -19,49 +19,45 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
-    private final Drive drive;
-   
-    SteeringAdjuster steerer;
+	private final Drive drive;
 
-    BooleanSupplier seeTarget;
-    
-    LimelightWrapper lWrapper;
+	SteeringAdjuster steerer;
 
-    public TurnToTarget(Drive drive, SteeringAdjuster steerer, BooleanSupplier seeTarget,LimelightWrapper limelightWrapper) {
-        this.drive = drive;
-        this.steerer = steerer;
-        this.seeTarget = seeTarget;
-        lWrapper = limelightWrapper;
-    }
+	BooleanSupplier seeTarget;
 
-    // Called when the command is initially scheduled.
-    @Override
-    public void initialize() {
-    }
+	LimelightWrapper lWrapper;
 
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() {
-    //     if(seeTarget.getAsBoolean()) {
-    //         steerer.updateSteeringValues();
-    //         drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
-    //     } else {
-    //         drive.setOutputPercent(0.0, 0.0);
-    //     }
-    // }
-    steerer.updateSteeringValues();
-    drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
-    }
+	public TurnToTarget(Drive drive, SteeringAdjuster steerer, BooleanSupplier seeTarget,
+			LimelightWrapper limelightWrapper) {
+		this.drive = drive;
+		this.steerer = steerer;
+		this.seeTarget = seeTarget;
+		lWrapper = limelightWrapper;
+	}
 
-    // Called once the command ends or is interrupted.
-    @Override
-    public void end(boolean interrupted) {
-        drive.setOutputPercent(0.0, 0.0);
-    }
+	// Called when the command is initially scheduled.
+	@Override
+	public void initialize() {
+		lWrapper.turnOnLight();
+	}
 
-    // Returns true when the command should end.
-    @Override
-    public boolean isFinished() {
-        return Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance);
-    }
+	// Called every time the scheduler runs while the command is scheduled.
+	@Override
+	public void execute() {
+		steerer.updateSteeringValues();
+		drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
+	}
+
+	// Called once the command ends or is interrupted.
+	@Override
+	public void end(boolean interrupted) {
+		drive.setOutputPercent(0.0, 0.0);
+		lWrapper.turnOffLight();
+	}
+
+	// Returns true when the command should end.
+	@Override
+	public boolean isFinished() {
+		return Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance);
+	}
 }
