@@ -7,15 +7,12 @@
 
 package com.ironpanthers.frc2020.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotController;
@@ -27,8 +24,6 @@ public class Arm extends SubsystemBase {
     public static TalonFX armRight;
     private DigitalInput forwardLimitSwitch;
     private DigitalInput reverseLimitSwitch;
-    private int target;
-    private LimelightWrapper limelightWrapper = LimelightWrapper.getLimelightWrapperFront();
 
     /**
      * Creates a new Arm. For limits, forward refers to the front, in which the arm
@@ -94,7 +89,6 @@ public class Arm extends SubsystemBase {
 
     public void setPosition(int target) {
         armLeft.set(TalonFXControlMode.Position, target);
-        this.target = target;
     }
 
     /**

@@ -28,8 +28,10 @@ import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
+import com.ironpanthers.util.AutoSelector;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -49,6 +51,7 @@ public class RobotContainer {
 	private final Arm arm = new Arm();
 	private final SteeringAdjuster steerer = new SteeringAdjuster(limelightWrapper);
 	
+	private final AutoSelector autoSelector = new AutoSelector();
 
 
 	private static final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
@@ -109,6 +112,12 @@ public class RobotContainer {
 		getDistance.whenPressed(new HorizontalDistance(limelightWrapper, arm));
 	}
  
+
+	public void smartDashboard() {
+		SmartDashboard.putNumber("Auto Selector Value", autoSelector.getAutoPotNumber());
+		SmartDashboard.putNumber("Auto Selector Voltage", autoSelector.getPotVoltage());
+	}
+
 	/**
 	 * Use this to pass the autonomous command to the main {@link Robot} class.
 	 *
