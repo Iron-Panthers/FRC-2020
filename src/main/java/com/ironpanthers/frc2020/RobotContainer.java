@@ -7,6 +7,7 @@
 
 package com.ironpanthers.frc2020;
 
+import com.ironpanthers.frc2020.auto.commands.Shoot3Baseline;
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
 import com.ironpanthers.frc2020.commands.arm.ArmAndSpinShooter;
 import com.ironpanthers.frc2020.commands.arm.ArmHold;
@@ -124,6 +125,6 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		return new TestAutonomous(drive);
+		return new Shoot3Baseline(arm, Constants.Arm.kInitiationLineHeight, shooter, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kInnerGoalThreshold, conveyorBelt, drive);
 	}
 }
