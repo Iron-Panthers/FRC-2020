@@ -7,11 +7,9 @@
 
 package com.ironpanthers.frc2020.commands.shooter;
 
-import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.util.Util;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetShooterVelocity extends CommandBase {

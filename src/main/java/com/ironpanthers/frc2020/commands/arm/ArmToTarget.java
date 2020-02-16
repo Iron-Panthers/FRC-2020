@@ -10,7 +10,6 @@ package com.ironpanthers.frc2020.commands.arm;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmToTarget extends CommandBase {
