@@ -125,7 +125,16 @@ public class Arm extends SubsystemBase {
 
         return currentAngle;
     }
+    public double getLlOffset() {
+        return getPivotToLLHorizontleD(getAngle()) - getPivotToLLHorizontleD(getAngle() + limelightWrapper.getTableY());
+    }
+    public double getHAnlge() {
+        return 90 - Constants.Vision.kMountToLLAngleDeg - getAngle() + limelightWrapper.getTableY();
+    }
+    public double getHorizontalDistance() {
+        return (Constants.Vision.kGroundToTargetInches - getHeight())/(Math.tan(Math.toRadians(getHAnlge()))) - getLlOffset();
 
+    }
     public int getPosition() {
         return armLeft.getSelectedSensorPosition();
     }

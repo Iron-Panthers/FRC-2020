@@ -20,8 +20,8 @@ import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
-import com.ironpanthers.frc2020.commands.vision.HorizontalDistance;
 import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
+import com.ironpanthers.frc2020.commands.vision.VisionTesting;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -109,7 +109,7 @@ public class RobotContainer {
 		emergencyOuttake.whileHeld(new Outtake(shooter));
 		emergencyIntake.whileHeld(new EmergencyIntake(shooter, conveyorBelt, emergencyIntake::get));
 		autoShotHeight.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kInitiationLineHeight, shooter, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kOuterGoalThreshold));
-		getDistance.whenPressed(new HorizontalDistance(limelightWrapper, arm));
+		getDistance.whenPressed(new VisionTesting(limelightWrapper, arm));
 	}
  
 
