@@ -34,17 +34,15 @@ public class Shooter extends SubsystemBase {
 
         // Config
         intakeMotor.setNeutralMode(NeutralMode.Coast);
-        intakeMotor.setInverted(false);
-
-        shooter1.setNeutralMode(NeutralMode.Coast);
-        shooter1.setInverted(false);
-
+        intakeMotor.setInverted(Constants.Conveyor.kIntakeInverted);
+		
 		// Follow
 		shooter2.follow(shooter1);
 		shooter3.follow(shooter1);
 		shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
 		shooter2.setInverted(InvertType.OpposeMaster);
 		shooter3.setInverted(InvertType.OpposeMaster);
+		shooter1.setNeutralMode(NeutralMode.Coast);
 		shooter2.setNeutralMode(NeutralMode.Coast);
         shooter3.setNeutralMode(NeutralMode.Coast);
 

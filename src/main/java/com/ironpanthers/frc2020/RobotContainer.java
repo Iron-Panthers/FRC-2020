@@ -83,7 +83,7 @@ public class RobotContainer {
 			Constants.OI.kFramePerimeterHeightButton);
 	private final JoystickButton closeShotPosition = new JoystickButton(joystickB, Constants.OI.kCloseShotButton);
 	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton);
-	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyintakeButton);
+	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyIntakeButton);
 	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton);
 	private final JoystickButton getDistance = new JoystickButton(joystickB, Constants.OI.kLimelightTest);
 
