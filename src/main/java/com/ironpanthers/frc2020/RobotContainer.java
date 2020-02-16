@@ -48,7 +48,7 @@ public class RobotContainer {
 	private final Drive drive = new Drive();
 	private final Shooter shooter = new Shooter();
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
-	private final Arm arm = new Arm();
+	private final Arm arm = new Arm(limelightWrapper);
 	private final SteeringAdjuster steerer = new SteeringAdjuster(limelightWrapper);
 	
 	private final AutoSelector autoSelector = new AutoSelector();

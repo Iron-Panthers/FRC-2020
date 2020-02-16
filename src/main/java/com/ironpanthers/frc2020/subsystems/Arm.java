@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotController;
@@ -20,17 +21,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
-    public static TalonFX armLeft;
-    public static TalonFX armRight;
-    private DigitalInput forwardLimitSwitch;
-    private DigitalInput reverseLimitSwitch;
+    public final TalonFX armLeft;
+    public final TalonFX armRight;
+    private final DigitalInput forwardLimitSwitch;
+    private final DigitalInput reverseLimitSwitch;
+    private final LimelightWrapper limelight;
 
     /**
      * Creates a new Arm. For limits, forward refers to the front, in which the arm
      * is all the way down and ready for intaking. Reverse refers to the back, in
      * which the arm is all the way up at the maximum angle for shooting
      */
-    public Arm() {
+    public Arm(LimelightWrapper limelight) {
+        this.limelight = limelight;
         armLeft = new TalonFX(Constants.Arm.kLeftMotorId);
         armRight = new TalonFX(Constants.Arm.kRightMotorId);
         armLeft.setSensorPhase(false); // Up is positive
@@ -126,10 +129,10 @@ public class Arm extends SubsystemBase {
         return currentAngle;
     }
     public double getLlOffset() {
-        return getPivotToLLHorizontleD(getAngle()) - getPivotToLLHorizontleD(getAngle() + limelightWrapper.getTableY());
+        return getPivotToLLHorizontleD(getAngle()) - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
     }
     public double getHAnlge() {
-        return 90 - Constants.Vision.kMountToLLAngleDeg - getAngle() + limelightWrapper.getTableY();
+        return 90 - Constants.Vision.kMountToLLAngleDeg - getAngle() + limelight.getTableY();
     }
     public double getHorizontalDistance() {
         return (Constants.Vision.kGroundToTargetInches - getHeight())/(Math.tan(Math.toRadians(getHAnlge()))) - getLlOffset();
