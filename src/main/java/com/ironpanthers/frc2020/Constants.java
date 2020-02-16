@@ -167,7 +167,9 @@ public final class Constants {
     public static class Shooter {
         public static final int kShooter1Id = 5;
         public static final int kShooter2Id = 6;
-        public static final int kShooter3Id = 7;
+		public static final int kShooter3Id = 7;
+		
+		public static final boolean IS_SHOOTER_INVERTED = false;
 
         public static final int kPIDIdx = 0;
         public static final double kF = 0.051;
@@ -175,7 +177,7 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
 		public static final int kInnerGoalThreshold = 150; // Good for auto, too slow for tele
-		public static final int kOuterGoalThreshold = 4000; // When speed is more important than accuracy, 750 ok, 2000 ok close
+		public static final int kOuterGoalThreshold = 2000; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
 		public static final int kCloseVelocity = 15000; // Tested 2/11/20 by James
 		public static final int kInitiationVelocity = 16500; // Initiation Line, Tested 2/11/20

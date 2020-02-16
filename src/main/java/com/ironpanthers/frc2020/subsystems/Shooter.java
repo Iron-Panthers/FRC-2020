@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
     private final TalonFX shooter3;
     private final TalonFX intakeMotor;
     // TODO: Tune
-    private final double[] distanceTable = { 0, 10.0, 20.0, 34.0 }; // Feet
+    private final double[] distanceTable = { 0, 120.0, 240.0, 408.0 }; // Inches
     private final int[] velocityTable = { 5000, 8000, 12000, 19000 }; // Units/100ms
 
     public Shooter() {
@@ -39,11 +39,14 @@ public class Shooter extends SubsystemBase {
         shooter1.setNeutralMode(NeutralMode.Coast);
         shooter1.setInverted(false);
 
-        shooter2.setNeutralMode(NeutralMode.Coast);
-        shooter2.setInverted(InvertType.OpposeMaster);
-
+		// Follow
+		shooter2.follow(shooter1);
+		shooter3.follow(shooter1);
+		shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
+		shooter2.setInverted(InvertType.OpposeMaster);
+		shooter3.setInverted(InvertType.OpposeMaster);
+		shooter2.setNeutralMode(NeutralMode.Coast);
         shooter3.setNeutralMode(NeutralMode.Coast);
-        shooter3.setInverted(InvertType.OpposeMaster);
 
         SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
                 Constants.Shooter.kCurrentLimit, Constants.Shooter.kCurrentLimit, 1);
