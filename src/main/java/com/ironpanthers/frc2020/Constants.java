@@ -94,7 +94,7 @@ public final class Constants {
         // Ports
         public static final int kConveyorMotorId = 4;
         public static final int kIntakeMotorId = 3;
-		public static final int kBannerSensorPort = 3;
+		public static final int kBannerSensorPort = 2;
 		
 		public static final boolean kIntakeInverted = true;
 
@@ -199,7 +199,7 @@ public final class Constants {
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
         public static final double kHorizontalHoldOutput = 0.08; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
-        public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 13;
+        public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 12;
         public static final double kMaxManualSpeed = 0.5;
 
         public static final double kP = 0.03;

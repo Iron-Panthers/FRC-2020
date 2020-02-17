@@ -43,6 +43,7 @@ public class TurnToTarget extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		lWrapper.turnOnLight();
 		steerer.updateSteeringValues();
 		drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
 	}
@@ -57,6 +58,9 @@ public class TurnToTarget extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance);
+		if (lWrapper.getTableX() != 0) {
+			return Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance);
+		}
+		return false;
 	}
 }
