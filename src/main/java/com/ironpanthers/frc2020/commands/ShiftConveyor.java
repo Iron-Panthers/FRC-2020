@@ -61,9 +61,12 @@ public class ShiftConveyor extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        if (direction == Direction.kIn)
+        if (direction == Direction.kIn) {
             if (conveyor.conveyorFull())
                 cancel();
+        }
+            
+        
 
         final var encoderStartTicks = conveyor.getPosition();
         targetEncoderPosition = direction == Direction.kIn ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
@@ -74,12 +77,6 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public void execute() {
         conveyor.setPosition(targetEncoderPosition);
-        if (direction == Direction.kIn) {
-            if (conveyor.conveyorFull()) {
-                cancel();
-            }
-        }
-        
     }
 
     // Called once the command ends or is interrupted.
@@ -87,9 +84,10 @@ public class ShiftConveyor extends CommandBase {
     public void end(boolean interrupted) {
         conveyor.stop();
         if (isShoot) {
-            if (direction == Direction.kOut && conveyor.ballsHeld >= 0) {
+            if (direction == Direction.kOut && conveyor.ballsHeld >= 1) {
+                conveyor.ballsHeld--;
                 CommandScheduler.getInstance().schedule(new ShooterSequence2(shooter, conveyor, velocity, threshold, lWrapper));
-            } else if(direction == Direction.kOut && !(conveyor.ballsHeld >= 0)) {
+            } else if(direction == Direction.kOut && conveyor.ballsHeld == 0) {
                 lWrapper.turnOffLight();
             }
         }

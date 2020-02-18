@@ -65,7 +65,6 @@ public class SetShooterVelocity extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		 if (Util.epsilonEquals(shooter.getVelocity(), velocity, threshold)) {
-			conveyorBelt.ballsHeld--;
 			return true;
 		} else {
 			return false;

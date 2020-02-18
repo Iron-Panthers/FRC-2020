@@ -141,7 +141,7 @@ public class Arm extends SubsystemBase {
 
     public double getHorizontalDistance() {
         limelight.periodic();
-        double llAngleDeg = SmartDashboard.getNumber("Limelight mounting angle", Constants.Vision.kMountToLLAngleDeg);
+        double llAngleDeg = Constants.Vision.kMountToLLAngleDeg;
         double offset = getPivotToLLHorizontleD(getAngle())
                 - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
         double hAngle = 90 - llAngleDeg - getAngle() + limelight.getTableY();
