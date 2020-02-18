@@ -24,7 +24,8 @@ public class Shooter extends SubsystemBase {
     private final TalonFX intakeMotor;
     // TODO: Tune
     private final double[] distanceTable = { 0, 120.0, 240.0, 408.0 }; // Inches
-    private final int[] velocityTable = { 5000, 8000, 12000, 19000 }; // Units/100ms
+	public final int[] velocityTable = {Constants.Shooter.kCloseVelocity, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kFarVelocity}; // Units/100ms
+	public final int[] armPosTable = {Constants.Arm.kCloseShotHeightNativeUnits, Constants.Arm.kInitiationLineHeight, Constants.Arm.kFarShotHeightNativeUnits};
 
     public Shooter() {
         shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
@@ -95,7 +96,8 @@ public class Shooter extends SubsystemBase {
         return shooter1.getStatorCurrent();
     }
 
-    public int interpolateY(double currentX, double[] xValues, int[] yValues) {
+    public int interpolateY(double currentX, int[] yValues) {
+		double[] xValues = distanceTable;
         int startIndex = 0;
         int lowY;
         int highY;

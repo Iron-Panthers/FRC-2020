@@ -37,7 +37,7 @@ public class FullShooterSequence extends SequentialCommandGroup {
         // Add your commands in the super() call, e.g.
         // super(new FooCommand(), new BarCommand());super();
         super(new ArmToTarget(arm, target, lWrapper), new TurnToTarget(drive, steerer, lWrapper),
-                new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper),
+                new AutoArmShooter(shooter, threshold, conveyor, lWrapper, arm),
                 new ShiftConveyor(Direction.kOut, conveyor, shooter, velocity, threshold, lWrapper));
     }
 }

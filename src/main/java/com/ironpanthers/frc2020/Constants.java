@@ -161,9 +161,11 @@ public final class Constants {
         public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
 
 		public static double kAutoAlignTolerance = 1;
-
         
-        //public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
+		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
+		public static final double kCloseDistance = 20.0; // Inches
+		public static final double kInitiationDistance = 156.0; // Inches
+		public static final double kFarDistance = 200.0; // Not tested, placeholder
     }
 
     public static class Shooter {
