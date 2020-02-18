@@ -8,6 +8,7 @@
 package com.ironpanthers.frc2020.commands.arm;
 
 import com.ironpanthers.frc2020.subsystems.Arm;
+import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -31,7 +32,7 @@ public class ArmHold extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.setVoltage(arm.getFeedForward());
+    arm.setPower(arm.getFeedForward());
   }
 
   // Called once the command ends or is interrupted.

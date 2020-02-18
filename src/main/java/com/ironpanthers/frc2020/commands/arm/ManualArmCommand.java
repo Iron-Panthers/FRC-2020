@@ -43,7 +43,6 @@ public class ManualArmCommand extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		arm.setVoltage(arm.getFeedForward());
 	}
 
 	// Returns true when the command should end.
