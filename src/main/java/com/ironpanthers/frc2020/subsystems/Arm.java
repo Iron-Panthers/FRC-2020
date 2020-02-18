@@ -103,7 +103,8 @@ public class Arm extends SubsystemBase {
 
     public double getFeedForward() {
         double scaledAngle = Math.cos(Math.toRadians(getAngle()));
-        // double f = Constants.Arm.kHorizontalHoldVoltage * scaledAngle; // Voltage based
+        // double f = Constants.Arm.kHorizontalHoldVoltage * scaledAngle; // Voltage
+        // based
         double f = Constants.Arm.kHorizontalHoldOutput * scaledAngle;
         // PercentOutput with feedforward to avoid oscillation which wears down the
         // gears
@@ -111,7 +112,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getHeight() {
-        return Constants.Vision.kPivotToLL * Math.sin((getAngle()  + Constants.Vision.kPivotToLLAngle) * Math.PI / 180)
+        return Constants.Vision.kPivotToLL * Math.sin((getAngle() + Constants.Vision.kPivotToLLAngle) * Math.PI / 180)
                 + Constants.Vision.kGroundToPivotInches;
     }
 
@@ -129,16 +130,26 @@ public class Arm extends SubsystemBase {
 
         return currentAngle;
     }
+
     public double getLlOffset() {
         return getPivotToLLHorizontleD(getAngle()) - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
     }
+
     public double getHAnlge() {
         return 90 - Constants.Vision.kMountToLLAngleDeg - getAngle() + limelight.getTableY();
     }
-    public double getHorizontalDistance() {
-        return (Constants.Vision.kGroundToTargetInches - getHeight())/(Math.tan(Math.toRadians(getHAnlge()))) - getLlOffset();
 
-    }
+    public double getHorizontalDistance() {
+        limelight.periodic();
+        double llAngleDeg = SmartDashboard.getNumber("Limelight mounting angle", Constants.Vision.kMountToLLAngleDeg);
+        double offset = getPivotToLLHorizontleD(getAngle())
+                - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
+        double hAngle = 90 - llAngleDeg - getAngle() + limelight.getTableY();
+        double HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight())
+                / (Math.tan(Math.toRadians(hAngle))) - offset;
+        return HorizontalDistance;
+    }//inches
+
     public int getPosition() {
         return armLeft.getSelectedSensorPosition();
     }

@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.commands;
+package com.ironpanthers.frc2020.commands.shooter;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
@@ -17,26 +17,23 @@ import com.ironpanthers.util.Util;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class AutoArmShooter extends CommandBase {
+public class ShooterInterpolation extends CommandBase {
 	private final Shooter shooter;
 	private int velocity;
 	private final int threshold;
-	private int height;
-	private ConveyorBelt conveyorBelt;
-	private LimelightWrapper lWrapper;
-	private Arm arm;
+    private LimelightWrapper lWrapper;
+    private ConveyorBelt conveyorBelt;
+    private Arm arm;
 
 	/**
 	 * Creates a new ShootAtVelocity.
 	 */
-	public AutoArmShooter(Shooter shooter, int threshold, ConveyorBelt conveyorBelt, LimelightWrapper lWrapper, Arm arm) {
+	public ShooterInterpolation(Arm arm, Shooter shooter, int threshold, ConveyorBelt conveyorBelt, LimelightWrapper lWrapper) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		this.shooter = shooter;
 		this.threshold = threshold;
-		this.conveyorBelt = conveyorBelt;
 		this.lWrapper = lWrapper;
-		this.arm = arm;
-		addRequirements(shooter, arm);
+		addRequirements(shooter);
 		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}
 
@@ -46,9 +43,12 @@ public class AutoArmShooter extends CommandBase {
 		if (conveyorBelt.ballsHeld <= 0) { // we have no balls or mis-indexed TODO reconsider
 			lWrapper.turnOffLight();
 			cancel();
-		} else { // we have balls
-			lWrapper.turnOnLight();
-			arm.setPosition(Constants.Arm.kFrameConstrainedHeightNativeUnits);
+        }
+        
+		if (lWrapper.getTableY() != 0) {
+            // velocity = (int) SmartDashboard.getNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
+            shooter.velocity = shooter.interpolateY(arm.getHorizontalDistance(), shooter.velocityTable);
+			shooter.setVelocity(shooter.velocity);
 		}
 	}
 
@@ -56,13 +56,6 @@ public class AutoArmShooter extends CommandBase {
 	@Override
 	public void execute() {
 		SmartDashboard.putNumber("Horizontal Distance", arm.getHorizontalDistance());
-		if (lWrapper.getTableY() != 0) {
-			velocity = shooter.interpolateY(arm.getHorizontalDistance(), shooter.velocityTable);
-			height = shooter.interpolateY(arm.getHorizontalDistance(), shooter.armPosTable);
-			// velocity = (int) SmartDashboard.getNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
-			shooter.setVelocity(velocity);
-			arm.setPosition(height);
-		}
 	}
 
 	// Called once the command ends or is interrupted.
@@ -77,9 +70,9 @@ public class AutoArmShooter extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		 if (Util.epsilonEquals(shooter.getVelocity(), velocity, threshold) && Util.epsilonEquals(arm.getPosition(), height, Constants.Arm.kPositionErrorTolerance)) {
+		 if (Util.epsilonEquals(shooter.getVelocity(), velocity, threshold)) {
 			conveyorBelt.ballsHeld--; // This might be a problem when spamming a button
-			return true;
+			return true;              // Don't spam the button then
 		} else {
 			return false;
 		}

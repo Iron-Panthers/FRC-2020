@@ -180,7 +180,7 @@ public final class Constants {
         public static final double kP = 0.2;
         public static final double kRampRate = 0.25; // seconds 0->full
 
-		public static final int kInnerGoalThreshold = 250; // Good for auto, too slow for tele
+		public static final int kInnerGoalThreshold = 750; // Good for auto, too slow for tele
 		public static final int kOuterGoalThreshold = 2000; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
 		public static final int kCloseVelocity = 15000; // Tested 2/11/20 by James
@@ -212,7 +212,7 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
         // Setpoints
-        public static final int kPositionErrorTolerance = 250;
+        public static final int kPositionErrorTolerance = 2000;
         public static final int kInitiationLineHeight = 47000; // Tested 2/11/20 (45400)
         public static final int kCloseShotHeightNativeUnits = 16000; // 19 too high at 15k velocity, 15 almost too low
         public static final int kFarShotHeightNativeUnits = 48000; // Tested angle for shooting behind control panel at

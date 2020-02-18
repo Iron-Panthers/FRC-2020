@@ -7,7 +7,6 @@
 
 package com.ironpanthers.frc2020.auto.commands;
 
-import com.ironpanthers.frc2020.commands.arm.ArmAndSpinShooter;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.Arm;

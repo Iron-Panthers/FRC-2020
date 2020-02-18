@@ -8,7 +8,6 @@
 package com.ironpanthers.frc2020.commands.arm;
 
 import com.ironpanthers.frc2020.subsystems.Arm;
-import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 

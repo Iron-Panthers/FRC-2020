@@ -22,6 +22,7 @@ public class Shooter extends SubsystemBase {
     private final TalonFX shooter2;
     private final TalonFX shooter3;
     private final TalonFX intakeMotor;
+    public int velocity;
     // TODO: Tune
     private final double[] distanceTable = { 0, 120.0, 240.0, 408.0 }; // Inches
 	public final int[] velocityTable = {Constants.Shooter.kCloseVelocity, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kFarVelocity}; // Units/100ms

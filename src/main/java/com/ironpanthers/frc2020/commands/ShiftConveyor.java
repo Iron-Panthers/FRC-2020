@@ -1,7 +1,6 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence2;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
@@ -90,6 +89,8 @@ public class ShiftConveyor extends CommandBase {
         if (isShoot) {
             if (direction == Direction.kOut && conveyor.ballsHeld >= 0) {
                 CommandScheduler.getInstance().schedule(new ShooterSequence2(shooter, conveyor, velocity, threshold, lWrapper));
+            } else if(direction == Direction.kOut && !(conveyor.ballsHeld >= 0)) {
+                lWrapper.turnOffLight();
             }
         }
         
