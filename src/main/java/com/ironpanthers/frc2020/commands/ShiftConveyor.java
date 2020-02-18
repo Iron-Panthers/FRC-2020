@@ -75,6 +75,12 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public void execute() {
         conveyor.setPosition(targetEncoderPosition);
+        if (direction == Direction.kIn) {
+            if (conveyor.conveyorFull()) {
+                cancel();
+            }
+        }
+        
     }
 
     // Called once the command ends or is interrupted.
@@ -86,6 +92,7 @@ public class ShiftConveyor extends CommandBase {
                 CommandScheduler.getInstance().schedule(new ShooterSequence2(shooter, conveyor, velocity, threshold, lWrapper));
             }
         }
+        
     }
 
     // Returns true when the command should end.

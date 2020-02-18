@@ -139,7 +139,7 @@ public final class Constants {
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.015;
+        public static final double kP = 0.011;
         /**
          * I value in PID
          */
@@ -202,7 +202,7 @@ public final class Constants {
         public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 12;
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 0.03;
+        public static final double kP = 0.045;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
@@ -210,7 +210,7 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
         // Setpoints
-        public static final int kPositionErrorTolerance = 3000;
+        public static final int kPositionErrorTolerance = 250;
         public static final int kInitiationLineHeight = 47000; // Tested 2/11/20 (45400)
         public static final int kCloseShotHeightNativeUnits = 16000; // 19 too high at 15k velocity, 15 almost too low
         public static final int kFarShotHeightNativeUnits = 48000; // Tested angle for shooting behind control panel at

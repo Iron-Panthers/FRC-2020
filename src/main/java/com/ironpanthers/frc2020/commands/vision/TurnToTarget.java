@@ -54,9 +54,6 @@ public class TurnToTarget extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (lWrapper.getTableX() != 0) {
-			return Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance);
-		}
-		return false;
+		return Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance);
 	}
 }
