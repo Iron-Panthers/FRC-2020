@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ConveyorBelt extends SubsystemBase {
@@ -55,6 +56,7 @@ public class ConveyorBelt extends SubsystemBase {
 
 	@Override
 	public void periodic() {
+		SmartDashboard.putNumber("ballsHeld", ballsHeld);
 		// This method will be called once per scheduler run
 	}
 }

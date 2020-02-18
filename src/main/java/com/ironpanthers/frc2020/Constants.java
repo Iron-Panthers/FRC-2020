@@ -139,7 +139,7 @@ public final class Constants {
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.015;
+        public static final double kP = 0.011;
         /**
          * I value in PID
          */
