@@ -25,7 +25,7 @@ public class ConveyorBelt extends SubsystemBase {
 		conveyorMotor.setInverted(false);
 		conveyorMotor.config_kP(Constants.Conveyor.kPIDIdx, Constants.Conveyor.kConveyorKp);
 		conveyorMotor.configClosedloopRamp(Constants.Conveyor.kConveyorClosedLoopRamp);
-		ballsHeld = 0;
+		ballsHeld = 3;
 		conveyorMotor.setSelectedSensorPosition(0);
 	}
 
@@ -52,14 +52,6 @@ public class ConveyorBelt extends SubsystemBase {
 	public boolean conveyorFull() {
 		return ballsHeld >= 5;
 	}
-
-	// public static void moveOneBall() {
-	// while (encoder.getDistance() < Constants.POWER_CELL_DIAMETER) {
-	// motor.set(ControlMode.PercentOutput, Constants.CONVEYOR_BELT_MOTOR_POWER);
-	// }
-	// motor.set(ControlMode.PercentOutput, 0);
-	// encoder.reset();
-	// }
 
 	@Override
 	public void periodic() {

@@ -11,6 +11,7 @@ import com.ironpanthers.frc2020.commands.ShiftConveyor;
 import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -21,10 +22,10 @@ public class ShooterSequence extends SequentialCommandGroup {
 	/**
 	 * Creates a new IntakeSequence.
 	 */
-	public ShooterSequence(Shooter shooter, ConveyorBelt conveyor, int velocity, int threshold) {
+	public ShooterSequence(Shooter shooter, ConveyorBelt conveyor, int velocity, int threshold,LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new SetShooterVelocity(shooter, velocity, threshold), new ShiftConveyor(Direction.kOut, conveyor));
+		super(new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper), new ShiftConveyor(Direction.kOut, conveyor));
 		//TODO:Need working banner sensor
 	}
 }

@@ -26,24 +26,21 @@ public class TurnToTarget extends CommandBase {
 
 	LimelightWrapper lWrapper;
 
-	public TurnToTarget(Drive drive, SteeringAdjuster steerer, BooleanSupplier seeTarget,
+	public TurnToTarget(Drive drive, SteeringAdjuster steerer,
 			LimelightWrapper limelightWrapper) {
 		this.drive = drive;
 		this.steerer = steerer;
-		this.seeTarget = seeTarget;
 		lWrapper = limelightWrapper;
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		lWrapper.turnOnLight();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		lWrapper.turnOnLight();
 		steerer.updateSteeringValues();
 		drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
 	}
@@ -52,7 +49,6 @@ public class TurnToTarget extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		drive.setOutputPercent(0.0, 0.0);
-		lWrapper.turnOffLight();
 	}
 
 	// Returns true when the command should end.

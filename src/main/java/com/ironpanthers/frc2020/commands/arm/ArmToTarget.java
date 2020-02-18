@@ -9,19 +9,22 @@ package com.ironpanthers.frc2020.commands.arm;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmToTarget extends CommandBase {
 	private Arm arm;
 	private int target;
+	private LimelightWrapper lWrapper;
 
 	/**
 	 * Creates a new ArmToTarget.
 	 */
-	public ArmToTarget(Arm arm, int target) {
+	public ArmToTarget(Arm arm, int target, LimelightWrapper lWrapper) {
 		this.arm = arm;
 		this.target = target;
+		this.lWrapper = lWrapper;
 		addRequirements(arm);
 		// Use addRequirements() here to declare subsystem dependencies.
 	}
@@ -41,6 +44,7 @@ public class ArmToTarget extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		arm.setVoltage(arm.getFeedForward());
+		lWrapper.turnOnLight();
 	}
 
 	// Returns true when the command should end.

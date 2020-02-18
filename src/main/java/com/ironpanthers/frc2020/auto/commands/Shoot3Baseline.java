@@ -11,6 +11,7 @@ import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -21,9 +22,9 @@ public class Shoot3Baseline extends SequentialCommandGroup {
 	/**
 	 * Creates a new Shoot3Baseline.
 	 */
-	public Shoot3Baseline(Arm arm, int target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, Drive drive) {
+	public Shoot3Baseline(Arm arm, int target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, Drive drive, LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new ShootPreLoaded(arm, target, shooter, velocity, threshold, conveyor), new TestAutonomous(drive));
+		super(new ShootPreLoaded(arm, target, shooter, velocity, threshold, conveyor, lWrapper), new TestAutonomous(drive));
 	}
 }

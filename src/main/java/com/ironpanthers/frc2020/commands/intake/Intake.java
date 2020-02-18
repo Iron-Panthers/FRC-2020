@@ -35,6 +35,7 @@ public class Intake extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		conveyor.ballsHeld++;
 		if (conveyor.conveyorFull()) 
 			cancel();
 	}
@@ -56,7 +57,6 @@ public class Intake extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		if (conveyor.getBannerSensor()) {
-			conveyor.ballsHeld++;
 			return true;
 		}
 		return !button.getAsBoolean();

@@ -1,10 +1,15 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
+import com.ironpanthers.frc2020.commands.shooter.ShooterSequence2;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
+import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class ShiftConveyor extends CommandBase {
 
@@ -15,6 +20,11 @@ public class ShiftConveyor extends CommandBase {
     private final Direction direction;
     private final ConveyorBelt conveyor;
     private int targetEncoderPosition;
+    private boolean isShoot;
+    private Shooter shooter;
+    private LimelightWrapper lWrapper;
+    private int velocity;
+    private int threshold;
 
     /**
      * Create a new ShiftConveyor command to shift the conveyor stack by one
@@ -31,7 +41,20 @@ public class ShiftConveyor extends CommandBase {
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor) {
         this.direction = direction;
         this.conveyor = conveyor;
+        isShoot = false;
 
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(conveyor);
+    }
+
+    public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter, int velocity, int threshold, LimelightWrapper lWrapper) {
+        this.direction = direction;
+        this.conveyor = conveyor;
+        isShoot = true;
+        this.shooter = shooter;
+        this.velocity = velocity;
+        this.threshold = threshold;
+        this.lWrapper = lWrapper;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
     }
@@ -58,6 +81,11 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         conveyor.stop();
+        if (isShoot) {
+            if (direction == Direction.kOut && conveyor.ballsHeld >= 0) {
+                CommandScheduler.getInstance().schedule(new ShooterSequence2(shooter, conveyor, velocity, threshold, lWrapper));
+            }
+        }
     }
 
     // Returns true when the command should end.
