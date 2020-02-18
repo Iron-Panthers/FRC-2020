@@ -103,7 +103,8 @@ public class Arm extends SubsystemBase {
 
     public double getFeedForward() {
         double scaledAngle = Math.cos(Math.toRadians(getAngle()));
-        double f = Constants.Arm.kHorizontalHoldVoltage * scaledAngle; // Voltage based
+        // double f = Constants.Arm.kHorizontalHoldVoltage * scaledAngle; // Voltage based
+        double f = Constants.Arm.kHorizontalHoldOutput * scaledAngle;
         // PercentOutput with feedforward to avoid oscillation which wears down the
         // gears
         return f;

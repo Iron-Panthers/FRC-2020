@@ -200,11 +200,11 @@ public final class Constants {
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
-        public static final double kHorizontalHoldOutput = 0.08; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
+        public static final double kHorizontalHoldOutput = 0.075; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
         public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 12;
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 0.045;
+        public static final double kP = 0.11;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
