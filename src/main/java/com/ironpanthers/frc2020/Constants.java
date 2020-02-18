@@ -202,7 +202,7 @@ public final class Constants {
         public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 12;
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 0.045;
+        public static final double kP = 0.11;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
