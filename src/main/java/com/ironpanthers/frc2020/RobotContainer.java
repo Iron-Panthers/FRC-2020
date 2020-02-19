@@ -119,7 +119,7 @@ public class RobotContainer {
 		emergencyOuttake.whileHeld(new Outtake(shooter));
 		emergencyIntake.whileHeld(new EmergencyIntake(shooter, conveyorBelt, emergencyIntake::get));
 		autoShotHeight.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kInitiationLineHeight, shooter, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
-		fullShooterSequence.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kCloseShotHeightNativeUnits, shooter, Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
+		fullShooterSequence.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineHeight, shooter, Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
 		// getDistance.whileHeld(new VisionTesting(limelightWrapper, arm));
 	}
  

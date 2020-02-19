@@ -25,7 +25,7 @@ public class ShooterSequence2 extends SequentialCommandGroup {
 	public ShooterSequence2(Shooter shooter, ConveyorBelt conveyor, int velocity, int threshold,LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper), new ShiftConveyor(Direction.kOut, conveyor, shooter, velocity, threshold, lWrapper));
+		super(new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper), new ShiftConveyor(Direction.kOut, conveyor, shooter, threshold, lWrapper));
 		//TODO:Need working banner sensor
 	}
 }

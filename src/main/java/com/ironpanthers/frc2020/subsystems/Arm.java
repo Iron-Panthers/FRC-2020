@@ -191,13 +191,13 @@ public class Arm extends SubsystemBase {
             setZero();
         } else if (getHighLimitPressed()) {
             armLeft.setSelectedSensorPosition(Constants.Arm.kTopPositionNativeUnits);
-        }
+        } 
         SmartDashboard.putBoolean("High Limit", getHighLimitPressed());
         SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
         SmartDashboard.putNumber("Arm Position", getPosition());
         SmartDashboard.putNumber("Arm Output Voltage", getOutputVoltage());
         SmartDashboard.putNumber("Arm Angle", getAngle());
-        SmartDashboard.putNumber("Arm Height", getHeight());
+        SmartDashboard.putNumber("HORE", getHorizontalDistance());
 
         // // If within the slow threshold, limit output to scaled regular output
         // if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() >

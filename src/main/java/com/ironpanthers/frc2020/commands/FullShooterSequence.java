@@ -38,6 +38,6 @@ public class FullShooterSequence extends SequentialCommandGroup {
         super(new ArmToTarget(arm, target, lWrapper), new TurnToTarget(drive, steerer, lWrapper),
                 new ArmInterpolation(shooter, conveyor, lWrapper, arm),
                 new ShooterInterpolation(arm, shooter, threshold, conveyor, lWrapper),
-                new ShiftConveyor(Direction.kOut, conveyor, shooter, shooter.velocity, threshold, lWrapper));
+                new ShiftConveyor(Direction.kOut, conveyor, shooter, threshold, lWrapper));
     }
 }

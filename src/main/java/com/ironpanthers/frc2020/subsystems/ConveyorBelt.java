@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ConveyorBelt extends SubsystemBase {
 	public TalonFX conveyorMotor;
 	public DigitalInput input;
-	public int ballsHeld;
+	public int ballsHeld = 3;
 
 	public ConveyorBelt() {
 		input = new DigitalInput(Constants.Conveyor.kBannerSensorPort);
@@ -26,7 +26,6 @@ public class ConveyorBelt extends SubsystemBase {
 		conveyorMotor.setInverted(false);
 		conveyorMotor.config_kP(Constants.Conveyor.kPIDIdx, Constants.Conveyor.kConveyorKp);
 		conveyorMotor.configClosedloopRamp(Constants.Conveyor.kConveyorClosedLoopRamp);
-		ballsHeld = 3;
 		conveyorMotor.setSelectedSensorPosition(0);
 	}
 

@@ -12,6 +12,7 @@ import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.util.Util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetShooterVelocity extends CommandBase {
@@ -38,11 +39,8 @@ public class SetShooterVelocity extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (conveyorBelt.ballsHeld <= 0) { // we have no balls or mis-indexed TODO reconsider
-			lWrapper.turnOffLight();
+		if (shooter.fullShotDone == true) {
 			cancel();
-		} else { // we have balls
-			lWrapper.turnOnLight();
 		}
 	}
 
@@ -50,6 +48,10 @@ public class SetShooterVelocity extends CommandBase {
 	@Override
 	public void execute() {
 		// velocity = (int) SmartDashboard.getNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
+		if (shooter.fullShotDone == true) {
+			cancel();
+		}
+		SmartDashboard.putBoolean("fullShotDone", shooter.fullShotDone);
 		shooter.setVelocity(velocity);
 	}
 
@@ -64,7 +66,7 @@ public class SetShooterVelocity extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		 if (Util.epsilonEquals(shooter.getVelocity(), velocity, threshold)) {
+		if (Util.epsilonEquals(shooter.getVelocity(), velocity, threshold)) {
 			return true;
 		} else {
 			return false;

@@ -23,6 +23,7 @@ public class ShooterInterpolation extends CommandBase {
     private LimelightWrapper lWrapper;
     private ConveyorBelt conveyorBelt;
     private Arm arm;
+    private double horizontalDistance;
 
     /**
      * Creates a new ShootAtVelocity.
@@ -33,7 +34,9 @@ public class ShooterInterpolation extends CommandBase {
         this.shooter = shooter;
         this.threshold = threshold;
         this.lWrapper = lWrapper;
-        addRequirements(shooter);
+        this.arm = arm;
+        this.conveyorBelt = conveyorBelt;
+        addRequirements(shooter, conveyorBelt);
     }
 
     // Called when the command is initially scheduled.
@@ -43,15 +46,15 @@ public class ShooterInterpolation extends CommandBase {
             lWrapper.turnOffLight();
             cancel();
         }
-
-        shooter.velocity = shooter.interpolateY(arm.getHorizontalDistance(), shooter.velocityTable);
-        shooter.setVelocity(shooter.velocity);
+        horizontalDistance = arm.getHorizontalDistance();
+        shooter.velocity = shooter.interpolateY(horizontalDistance, shooter.velocityTable);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Horizontal Distance", arm.getHorizontalDistance());
+        shooter.setVelocity(shooter.velocity);
+        SmartDashboard.putNumber("SV", shooter.velocity);
     }
 
     // Called once the command ends or is interrupted.
@@ -66,10 +69,10 @@ public class ShooterInterpolation extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (Util.epsilonEquals(shooter.getVelocity(), velocity, threshold)) {
-            return true;
-        } else {
-            return false;
-        }
+        if (Util.epsilonEquals(shooter.getVelocity(), shooter.velocity, threshold)) {
+			return true;
+		} else {
+			return false;
+		}
     }
 }

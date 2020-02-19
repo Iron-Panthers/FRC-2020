@@ -180,7 +180,7 @@ public final class Constants {
         public static final double kP = 0.2;
         public static final double kRampRate = 0.25; // seconds 0->full
 
-		public static final int kInnerGoalThreshold = 750; // Good for auto, too slow for tele
+		public static final int kInnerGoalThreshold = 200; // Good for auto, too slow for tele
 		public static final int kOuterGoalThreshold = 2000; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
 		public static final int kCloseVelocity = 15000; // Tested 2/11/20 by James
@@ -204,7 +204,7 @@ public final class Constants {
         public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 12;
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 0.11;
+        public static final double kP = 0.15;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
