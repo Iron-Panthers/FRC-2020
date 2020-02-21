@@ -110,7 +110,8 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 16000;
+        public static final int kShiftEncoderDistance = 18500;//was 16000 
+
     }
 
     public static class Vision {
@@ -212,7 +213,7 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
         // Setpoints
-        public static final int kPositionErrorTolerance = 2000;
+        public static final int kPositionErrorTolerance = 200;
         public static final int kInitiationLineHeight = 47000; // Tested 2/11/20 (45400)
         public static final int kCloseShotHeightNativeUnits = 16000; // 19 too high at 15k velocity, 15 almost too low
         public static final int kFarShotHeightNativeUnits = 48000; // Tested angle for shooting behind control panel at

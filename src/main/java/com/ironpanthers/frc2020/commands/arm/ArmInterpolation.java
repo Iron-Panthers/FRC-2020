@@ -45,13 +45,14 @@ public class ArmInterpolation extends CommandBase {
     }
 
     height = shooter.interpolateY(arm.getHorizontalDistance(), shooter.armPosTable);
+    arm.targetHeight = height;
+    SmartDashboard.putNumber("T height", arm.targetHeight);
     arm.setPosition(height);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Horizontal Distance", arm.getHorizontalDistance());
   }
 
   // Called once the command ends or is interrupted.

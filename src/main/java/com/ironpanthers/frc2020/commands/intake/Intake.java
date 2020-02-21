@@ -35,10 +35,9 @@ public class Intake extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		conveyor.ballsHeld++;	
-		if (conveyor.ballsHeld > 5) cancel();
+		if (conveyor.ballsHeld >= 5) cancel();
+	
 	}
-
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
@@ -49,6 +48,11 @@ public class Intake extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		shooter.setIntakeMotors(0, 0);	
+
+		if (!interrupted) {
+			conveyor.ballsHeld++;	
+		}
+		
 	}
 
 	// Returns true when the command should end.

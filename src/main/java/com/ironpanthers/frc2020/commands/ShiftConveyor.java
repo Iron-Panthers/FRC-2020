@@ -1,8 +1,10 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence2;
+import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
@@ -25,6 +27,7 @@ public class ShiftConveyor extends CommandBase {
     private Shooter shooter;
     private LimelightWrapper lWrapper;
     private int threshold;
+    private Arm arm;
 
     /**
      * Create a new ShiftConveyor command to shift the conveyor stack by one
@@ -41,15 +44,16 @@ public class ShiftConveyor extends CommandBase {
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor) {
         this.direction = direction;
         this.conveyor = conveyor;
-        this.isShoot = isShoot;
+        isShoot = false;
 
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
     }
 
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter, int threshold,
-            LimelightWrapper lWrapper) {
+            LimelightWrapper lWrapper, Arm arm) {
         this.direction = direction;
+        this.arm = arm;
         this.conveyor = conveyor;
         isShoot = true;
         this.shooter = shooter;
@@ -63,8 +67,9 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public void initialize() {
         if (direction == Direction.kIn) {
-            if (conveyor.conveyorFull())
+            if (conveyor.ballsHeld >= 5) {
                 cancel();
+            }
         }
 
         final var encoderStartTicks = conveyor.getPosition();
@@ -76,7 +81,6 @@ public class ShiftConveyor extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putBoolean("fullShotDone2", shooter.fullShotDone);
         conveyor.setPosition(targetEncoderPosition);
     }
 
@@ -85,24 +89,20 @@ public class ShiftConveyor extends CommandBase {
     public void end(boolean interrupted) {
         conveyor.stop();
         if (isShoot) {
-            if (conveyor.ballsHeld == -1) {
-                conveyor.ballsHeld++;
-                shooter.fullShotDone = true;
+            conveyor.ballsHeld--;
+            if (conveyor.ballsHeld > 0) {
+                CommandScheduler.getInstance().schedule(new ShooterSequence2(arm, shooter, conveyor, shooter.velocity, threshold, lWrapper));
+            } else {
                 shooter.stopShooter();
-            } else if (direction == Direction.kOut && conveyor.ballsHeld >= 0 && !shooter.fullShotDone) {
-                conveyor.ballsHeld--;
-                CommandScheduler.getInstance()
-                        .schedule(new ShooterSequence2(shooter, conveyor, shooter.velocity, threshold, lWrapper));
-            }
-
-        }
+                CommandScheduler.getInstance().schedule(new ArmToTarget(arm, 0, lWrapper)); 
+            } 
+        }    
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition,
-                Constants.Conveyor.kPositionErrorTolerance) && direction == Direction.kOut;
-
+                Constants.Conveyor.kPositionErrorTolerance);
     }
 }

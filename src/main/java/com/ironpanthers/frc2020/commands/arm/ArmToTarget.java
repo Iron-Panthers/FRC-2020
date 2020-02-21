@@ -44,7 +44,11 @@ public class ArmToTarget extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		arm.stop();
-		lWrapper.turnOnLight();
+		if (target > 0) {
+			lWrapper.turnOnLight();
+		} else {
+			lWrapper.turnOffLight();
+		}
 	}
 
 	// Returns true when the command should end.

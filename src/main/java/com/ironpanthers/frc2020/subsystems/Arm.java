@@ -26,6 +26,7 @@ public class Arm extends SubsystemBase {
     private final DigitalInput forwardLimitSwitch;
     private final DigitalInput reverseLimitSwitch;
     private final LimelightWrapper limelight;
+	public int targetHeight;
 
     /**
      * Creates a new Arm. For limits, forward refers to the front, in which the arm
