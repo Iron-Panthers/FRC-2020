@@ -81,6 +81,11 @@ public class ShiftConveyor extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        if (direction == Direction.kIn) {
+            if (conveyor.ballsHeld >= 5) {
+                cancel();
+            }
+        }
         conveyor.setPosition(targetEncoderPosition);
     }
 
@@ -91,18 +96,22 @@ public class ShiftConveyor extends CommandBase {
         if (isShoot) {
             conveyor.ballsHeld--;
             if (conveyor.ballsHeld > 0) {
-                CommandScheduler.getInstance().schedule(new ShooterSequence2(arm, shooter, conveyor, shooter.velocity, threshold, lWrapper));
+                CommandScheduler.getInstance()
+                        .schedule(new ShooterSequence2(arm, shooter, conveyor, shooter.velocity, threshold, lWrapper));
             } else {
                 shooter.stopShooter();
-                CommandScheduler.getInstance().schedule(new ArmToTarget(arm, 0, lWrapper)); 
-            } 
-        }    
+                CommandScheduler.getInstance().schedule(new ArmToTarget(arm, 0, lWrapper));
+            }
+        }
+        if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {
+            conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
+        }
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition,
-                Constants.Conveyor.kPositionErrorTolerance);
+                Constants.Conveyor.kPositionErrorTolerance) || (conveyor.conveyorFull() && direction == Direction.kIn);
     }
 }

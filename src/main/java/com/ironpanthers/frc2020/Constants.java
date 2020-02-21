@@ -131,7 +131,7 @@ public final class Constants {
         /**
          * Angle from mount to limelight in degrees
          */
-        public static final double kMountToLLAngleDeg = 17; //got this through trial and error testing
+        public static final double kMountToLLAngleDeg = 18; //17
 
         public static final double kPivotToLLPlane = 23.5; //Pivot point to limelight horizontle distance in inches
         public static final double kPivotToLL = 24.5; //Pivot point to limelight hypotonuse 
