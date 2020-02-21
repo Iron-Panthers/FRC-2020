@@ -26,7 +26,7 @@ public class Arm extends SubsystemBase {
     private final DigitalInput forwardLimitSwitch;
     private final DigitalInput reverseLimitSwitch;
     private final LimelightWrapper limelight;
-	public int targetHeight;
+    public int targetHeight;
 
     /**
      * Creates a new Arm. For limits, forward refers to the front, in which the arm
@@ -117,8 +117,13 @@ public class Arm extends SubsystemBase {
                 + Constants.Vision.kGroundToPivotInches;
     }
 
+    public double getHeight2() {
+        return Math.sqrt(Math.pow(Constants.Vision.kPivotToLL, 2) - Math.pow(getPivotToLLHorizontleD(getAngle()), 2))
+                + Constants.Vision.kGroundToPivotInches;
+    }
+
     public double getPivotToLLHorizontleD(double angle) {
-        return (getHeight() - Constants.Vision.kGroundToPivotInches) / Math.tan((angle + Constants.Vision.kPivotToLLAngle) * Math.PI / 180);
+        return Constants.Vision.kPivotToLL * Math.cos((angle + Constants.Vision.kPivotToLLAngle) * Math.PI / 180);
     }
     // public double getDiagonalDistance(){
     // return Math.sqrt(Math.pow(getHorizontalDistance(), 2) +
@@ -149,14 +154,26 @@ public class Arm extends SubsystemBase {
         double hAngle = 90 - llAngleDeg - getAngle() + limelight.getTableY();
         if (limelight.getTableY() >= 0) {
             HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight())
-                / (Math.tan(Math.toRadians(hAngle))) - offset;
+                    / (Math.tan(Math.toRadians(hAngle))) - offset;
         } else {
             HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight())
-                / (Math.tan(Math.toRadians(hAngle)));
+                    / (Math.tan(Math.toRadians(hAngle)));
         }
-        
+
         return HorizontalDistance;
-    }//inches
+    }// inches
+
+    public double getHorizontalDistance2() {
+        limelight.periodic();
+        double HorizontalDistance = 0;
+        double llAngleDeg = Constants.Vision.kMountToLLAngleDeg;
+        double offset = getPivotToLLHorizontleD(getAngle())
+                - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
+        double hAngle = 90 - llAngleDeg - getAngle() + limelight.getTableY();
+        HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight2())
+                / (Math.tan(Math.toRadians(hAngle))) - offset;
+        return HorizontalDistance;
+    }
 
     public int getPosition() {
         return armLeft.getSelectedSensorPosition();
@@ -192,24 +209,13 @@ public class Arm extends SubsystemBase {
             setZero();
         } else if (getHighLimitPressed()) {
             armLeft.setSelectedSensorPosition(Constants.Arm.kTopPositionNativeUnits);
-        } 
+        }
         SmartDashboard.putBoolean("High Limit", getHighLimitPressed());
         SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
         SmartDashboard.putNumber("Arm Position", getPosition());
-        SmartDashboard.putNumber("Arm Output Voltage", getOutputVoltage());
         SmartDashboard.putNumber("Arm Angle", getAngle());
-        SmartDashboard.putNumber("HORE", getHorizontalDistance());
+        SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance());
+        SmartDashboard.putNumber("getHorizontalDistance2", getHorizontalDistance2());
 
-        // // If within the slow threshold, limit output to scaled regular output
-        // if (getPosition() < Constants.Arm.BOTTOM_SLOW_LIMIT || getPosition() >
-        // Constants.Arm.TOP_SLOW_LIMIT) {
-        // armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT,
-        // Constants.Arm.SLOW_ARM_PID_OUTPUT);
-        // }
-        // // If out of the slow threshold, reset output to correct value
-        // else {
-        // armLeft.configClosedLoopPeakOutput(Constants.Arm.ARM_POSITION_PID_SLOT,
-        // Constants.Arm.MAX_ARM_PID_OUTPUT);
-        // }
     }
 }

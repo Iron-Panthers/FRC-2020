@@ -19,8 +19,6 @@ public class SetShooterVelocity extends CommandBase {
 	private final Shooter shooter;
 	private int velocity;
 	private final int threshold;
-	private ConveyorBelt conveyorBelt;
-	private LimelightWrapper lWrapper;
 
 	/**
 	 * Creates a new ShootAtVelocity.
@@ -30,8 +28,6 @@ public class SetShooterVelocity extends CommandBase {
 		this.shooter = shooter;
 		this.velocity = velocity;
 		this.threshold = threshold;
-		this.conveyorBelt = conveyorBelt;
-		this.lWrapper = lWrapper;
 		addRequirements(shooter);
 		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}
@@ -66,10 +62,6 @@ public class SetShooterVelocity extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (Util.epsilonEquals(shooter.getVelocity(), velocity, threshold)) {
-			return true;
-		} else {
-			return false;
-		}
+		return Util.epsilonEquals(shooter.getVelocity(), velocity, threshold);
 	}
 }

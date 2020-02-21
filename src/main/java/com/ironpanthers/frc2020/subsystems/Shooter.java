@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase {
     public int velocity;
     public boolean fullShotDone = false;
     // TODO: Tune
-    private final double[] distanceTable = { 0, 120.0, 240.0, 408.0 }; // Inches
+    private final double[] distanceTable = { 0, 120.0, 240.0, 408.0}; // Inches
 	public final int[] velocityTable = {Constants.Shooter.kCloseVelocity, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kFarVelocity}; // Units/100ms
 	public final int[] armPosTable = {Constants.Arm.kCloseShotHeightNativeUnits, Constants.Arm.kInitiationLineHeight, Constants.Arm.kFarShotHeightNativeUnits};
 

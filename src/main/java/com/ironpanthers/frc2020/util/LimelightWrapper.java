@@ -23,13 +23,6 @@ public class LimelightWrapper {
         return frontLimelight;
     }
 
-    /**
-     * This method must be run periodically to refresh the values read by the
-     * Limelight.
-     * <p>
-     * TODO This structure implies that subsystems may actually be the desired
-     * "model" to use for the LimelightWrapper class. This task is open
-     */
     public void periodic() {
         tx = table.getEntry("tx").getDouble(0.0);
         ty = table.getEntry("ty").getDouble(0.0);

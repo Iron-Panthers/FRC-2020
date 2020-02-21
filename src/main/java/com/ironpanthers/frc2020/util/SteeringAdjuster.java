@@ -22,8 +22,6 @@ public class SteeringAdjuster {
     private double deltaError;
 
     private double adjustedSteeringValue;
-    private double leftSteeringAngle;// power adjustment for left steering
-    private double rightSteeringAngle; // power adjustment for right steering
     LimelightWrapper limelight;
 
     DoubleSupplier horizontalDistance, diagonalDistance;
@@ -35,11 +33,8 @@ public class SteeringAdjuster {
         deltaError = 0.0;
 
         adjustedSteeringValue = 0.0;
-        leftSteeringAngle = 0.0;
-        rightSteeringAngle = 0.0;
         this.limelight = limelight;
-        this.horizontalDistance = horizontalDistance;
-        this.diagonalDistance = diagonalDistance;
+
     }
 
     public void updateSteeringValues() {

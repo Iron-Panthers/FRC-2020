@@ -2,7 +2,6 @@ package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
 import com.ironpanthers.frc2020.commands.arm.ArmInterpolation;
-import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.arm.ArmToTargetLL;
 
 /*----------------------------------------------------------------------------*/
@@ -14,7 +13,6 @@ import com.ironpanthers.frc2020.commands.arm.ArmToTargetLL;
 /*----------------------------------------------------------------------------*/
 
 import com.ironpanthers.frc2020.commands.shooter.ShooterInterpolation;
-import com.ironpanthers.frc2020.commands.shooter.StopShooter;
 import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
