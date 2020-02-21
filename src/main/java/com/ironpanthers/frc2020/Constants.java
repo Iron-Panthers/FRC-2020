@@ -7,8 +7,6 @@
 
 package com.ironpanthers.frc2020;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -66,7 +64,7 @@ public final class Constants {
     public static class OI {
         public static final int kCloseShotButtonNumber = 12;
         public static final int kInitiationLineShotButtonNumber = 10;
-        public static final int kFarShotButtonNumber = 8;
+        public static final int kFarShotButtonNumber = 11;
         // Driver A
         public static final int kStopShooterButton = 3;
         public static final int kDriverAJoystickPort = 0;
@@ -83,7 +81,7 @@ public final class Constants {
 		public static final int kDriverBIntakeButton = 2;
 		public static final int kEmergencyOuttakeButton = 3;
 		public static final int kLimelightTest = 4;
-		public static final int kEmergencyintakeButton = 5;
+		public static final int kEmergencyIntakeButton = 5;
 		public static final int kZeroArmButton = 7;
 		public static final int kFramePerimeterHeightButton = 9;
         public static final int kCloseShotButton = kCloseShotButtonNumber;
@@ -96,7 +94,9 @@ public final class Constants {
         // Ports
         public static final int kConveyorMotorId = 4;
         public static final int kIntakeMotorId = 3;
-        public static final int kBannerSensorPort = 3;
+		public static final int kBannerSensorPort = 2;
+		
+		public static final boolean kIntakeInverted = true;
 
         // PID
         public static final int kPIDIdx = 0;
@@ -110,7 +110,8 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 16000;
+        public static final int kShiftEncoderDistance = 18500;//was 16000 
+
     }
 
     public static class Vision {
@@ -130,7 +131,7 @@ public final class Constants {
         /**
          * Angle from mount to limelight in degrees
          */
-        public static final double kMountToLLAngleDeg = 17; //got this through trial and error testing
+        public static final double kMountToLLAngleDeg = 18; //17
 
         public static final double kPivotToLLPlane = 23.5; //Pivot point to limelight horizontle distance in inches
         public static final double kPivotToLL = 24.5; //Pivot point to limelight hypotonuse 
@@ -139,7 +140,7 @@ public final class Constants {
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.015;
+        public static final double kP = 0.011;
         /**
          * I value in PID
          */
@@ -161,23 +162,27 @@ public final class Constants {
         public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
 
 		public static double kAutoAlignTolerance = 1;
-
         
-        //public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
+		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
+		public static final double kCloseDistance = 20.0; // Inches
+		public static final double kInitiationDistance = 156.0; // Inches
+		public static final double kFarDistance = 200.0; // Not tested, placeholder
     }
 
     public static class Shooter {
         public static final int kShooter1Id = 5;
         public static final int kShooter2Id = 6;
-        public static final int kShooter3Id = 7;
+		public static final int kShooter3Id = 7;
+		
+		public static final boolean IS_SHOOTER_INVERTED = false;
 
         public static final int kPIDIdx = 0;
         public static final double kF = 0.051;
         public static final double kP = 0.2;
         public static final double kRampRate = 0.25; // seconds 0->full
 
-		public static final int kInnerGoalThreshold = 150; // Good for auto, too slow for tele
-		public static final int kOuterGoalThreshold = 4000; // When speed is more important than accuracy, 750 ok, 2000 ok close
+		public static final int kInnerGoalThreshold = 200; // Good for auto, too slow for tele
+		public static final int kOuterGoalThreshold = 2000; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
 		public static final int kCloseVelocity = 15000; // Tested 2/11/20 by James
 		public static final int kInitiationVelocity = 16500; // Initiation Line, Tested 2/11/20
@@ -196,11 +201,11 @@ public final class Constants {
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
-        public static final double kHorizontalHoldOutput = 0.08; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
-        public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 13;
+        public static final double kHorizontalHoldOutput = 0.075; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
+        public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 12;
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 0.03;
+        public static final double kP = 0.15;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
@@ -208,7 +213,7 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
         // Setpoints
-        public static final int kPositionErrorTolerance = 250;
+        public static final int kPositionErrorTolerance = 200;
         public static final int kInitiationLineHeight = 47000; // Tested 2/11/20 (45400)
         public static final int kCloseShotHeightNativeUnits = 16000; // 19 too high at 15k velocity, 15 almost too low
         public static final int kFarShotHeightNativeUnits = 48000; // Tested angle for shooting behind control panel at

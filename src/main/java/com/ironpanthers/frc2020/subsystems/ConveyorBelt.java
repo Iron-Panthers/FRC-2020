@@ -12,12 +12,13 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ConveyorBelt extends SubsystemBase {
 	public TalonFX conveyorMotor;
 	public DigitalInput input;
-	public int ballsHeld;
+	public int ballsHeld = 3;
 
 	public ConveyorBelt() {
 		input = new DigitalInput(Constants.Conveyor.kBannerSensorPort);
@@ -25,7 +26,6 @@ public class ConveyorBelt extends SubsystemBase {
 		conveyorMotor.setInverted(false);
 		conveyorMotor.config_kP(Constants.Conveyor.kPIDIdx, Constants.Conveyor.kConveyorKp);
 		conveyorMotor.configClosedloopRamp(Constants.Conveyor.kConveyorClosedLoopRamp);
-		ballsHeld = 0;
 		conveyorMotor.setSelectedSensorPosition(0);
 	}
 
@@ -53,16 +53,9 @@ public class ConveyorBelt extends SubsystemBase {
 		return ballsHeld >= 5;
 	}
 
-	// public static void moveOneBall() {
-	// while (encoder.getDistance() < Constants.POWER_CELL_DIAMETER) {
-	// motor.set(ControlMode.PercentOutput, Constants.CONVEYOR_BELT_MOTOR_POWER);
-	// }
-	// motor.set(ControlMode.PercentOutput, 0);
-	// encoder.reset();
-	// }
-
 	@Override
 	public void periodic() {
+		SmartDashboard.putNumber("ballsHeld", ballsHeld);
 		// This method will be called once per scheduler run
 	}
 }

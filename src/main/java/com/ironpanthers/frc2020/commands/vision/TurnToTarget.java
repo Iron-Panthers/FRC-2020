@@ -15,7 +15,6 @@ import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
 import com.ironpanthers.util.Util;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
@@ -27,18 +26,16 @@ public class TurnToTarget extends CommandBase {
 
 	LimelightWrapper lWrapper;
 
-	public TurnToTarget(Drive drive, SteeringAdjuster steerer, BooleanSupplier seeTarget,
+	public TurnToTarget(Drive drive, SteeringAdjuster steerer,
 			LimelightWrapper limelightWrapper) {
 		this.drive = drive;
 		this.steerer = steerer;
-		this.seeTarget = seeTarget;
 		lWrapper = limelightWrapper;
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		lWrapper.turnOnLight();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -52,7 +49,6 @@ public class TurnToTarget extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		drive.setOutputPercent(0.0, 0.0);
-		lWrapper.turnOffLight();
 	}
 
 	// Returns true when the command should end.

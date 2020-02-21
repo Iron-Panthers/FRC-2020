@@ -22,9 +22,12 @@ public class Shooter extends SubsystemBase {
     private final TalonFX shooter2;
     private final TalonFX shooter3;
     private final TalonFX intakeMotor;
+    public int velocity;
+    public boolean fullShotDone = false;
     // TODO: Tune
-    private final double[] distanceTable = { 0, 10.0, 20.0, 34.0 }; // Feet
-    private final int[] velocityTable = { 5000, 8000, 12000, 19000 }; // Units/100ms
+    private final double[] distanceTable = { 0, 120.0, 240.0, 408.0 }; // Inches
+	public final int[] velocityTable = {Constants.Shooter.kCloseVelocity, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kFarVelocity}; // Units/100ms
+	public final int[] armPosTable = {Constants.Arm.kCloseShotHeightNativeUnits, Constants.Arm.kInitiationLineHeight, Constants.Arm.kFarShotHeightNativeUnits};
 
     public Shooter() {
         shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
@@ -34,16 +37,17 @@ public class Shooter extends SubsystemBase {
 
         // Config
         intakeMotor.setNeutralMode(NeutralMode.Coast);
-        intakeMotor.setInverted(false);
-
-        shooter1.setNeutralMode(NeutralMode.Coast);
-        shooter1.setInverted(false);
-
-        shooter2.setNeutralMode(NeutralMode.Coast);
-        shooter2.setInverted(InvertType.OpposeMaster);
-
+        intakeMotor.setInverted(Constants.Conveyor.kIntakeInverted);
+		
+		// Follow
+		shooter2.follow(shooter1);
+		shooter3.follow(shooter1);
+		shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
+		shooter2.setInverted(InvertType.OpposeMaster);
+		shooter3.setInverted(InvertType.OpposeMaster);
+		shooter1.setNeutralMode(NeutralMode.Coast);
+		shooter2.setNeutralMode(NeutralMode.Coast);
         shooter3.setNeutralMode(NeutralMode.Coast);
-        shooter3.setInverted(InvertType.OpposeMaster);
 
         SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
                 Constants.Shooter.kCurrentLimit, Constants.Shooter.kCurrentLimit, 1);
@@ -94,16 +98,17 @@ public class Shooter extends SubsystemBase {
         return shooter1.getStatorCurrent();
     }
 
-    public int interpolateY(double currentX, double[] xValues, int[] yValues) {
-        int startIndex = 0;
+    public int interpolateY(double currentX, int[] yValues) {
+		double[] xValues = distanceTable;
+        int endIndex = 0;
         int lowY;
         int highY;
-        while (currentX > xValues[startIndex]) {
-            startIndex++;
+        while (currentX > xValues[endIndex]) {
+            endIndex++;
         }
-        int endIndex = startIndex + 1;
+        int startIndex = endIndex - 1;
         // Find the velocities directly surrounding the distance of the robot
-        if (endIndex < xValues.length) {
+        if (endIndex < xValues.length-1) {
             lowY = yValues[startIndex];
             highY = yValues[endIndex];
         } else {

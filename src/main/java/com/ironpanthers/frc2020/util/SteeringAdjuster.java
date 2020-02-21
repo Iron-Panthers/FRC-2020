@@ -7,12 +7,9 @@
 
 package com.ironpanthers.frc2020.util;
 
-import java.util.ArrayList;
 import java.util.function.DoubleSupplier;
 
 import com.ironpanthers.frc2020.Constants;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.

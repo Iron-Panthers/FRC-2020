@@ -26,10 +26,8 @@ public class ResetConveyor extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (conveyor.conveyorFull())
-			cancel();
-		bannerSensor = conveyor.getBannerSensor();
-		targetEncoderPosition = conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance;
+
+		
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +40,6 @@ public class ResetConveyor extends CommandBase {
 		// conveyor
 		// backwards to the state prior to intaking.
 		if (!bannerSensor) {
-			conveyor.setPosition(targetEncoderPosition);
 		}
 
 	}

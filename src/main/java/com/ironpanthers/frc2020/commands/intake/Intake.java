@@ -29,37 +29,41 @@ public class Intake extends CommandBase {
 		this.shooter = shooter;
 
 		// Use addRequirements() here to declare subsystem dependencies.
-		addRequirements(shooter);
-		addRequirements(conveyor);
+		addRequirements(shooter, conveyor);
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (conveyor.conveyorFull()) 
-			cancel();
+		if (conveyor.ballsHeld >= 5) cancel();
+	
 	}
-
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
 		shooter.setIntakeMotors(Constants.Conveyor.kIntakeRollerSpeed, Constants.Conveyor.kIntakeFlywheelSpeed);
-		System.out.println(conveyor.getBannerSensor());
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		shooter.setIntakeMotors(0, 0);
+		shooter.setIntakeMotors(0, 0);	
+
+		if (!interrupted && conveyor.ballsHeld < 5) {
+			conveyor.ballsHeld++;	
+		} else if (interrupted && !conveyor.getBannerSensor()) {
+            conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
+        }
+		
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
 		if (conveyor.getBannerSensor()) {
-			conveyor.ballsHeld++;
 			return true;
+		} else {
+			return false;
 		}
-		return !button.getAsBoolean();
 	}
 }
