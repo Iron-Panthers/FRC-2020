@@ -140,7 +140,7 @@ public final class Constants {
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.011;
+        public static final double kP = 0.0175;
         /**
          * I value in PID
          */
@@ -161,7 +161,7 @@ public final class Constants {
         //This was taken from field measurements. The outer hole is 2 ft 5.25 inches in front of the inner hole, and the diameter of the hexagon is 2 ft 6 inches
         public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
 
-		public static double kAutoAlignTolerance = 1;
+		public static double kAutoAlignTolerance = .15;
         
 		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
 		public static final double kCloseDistance = 20.0; // Inches
@@ -201,7 +201,7 @@ public final class Constants {
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
-        public static final double kHorizontalHoldOutput = 0.075; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
+        public static final double kHorizontalHoldOutput = 0.08; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
         public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 12;
         public static final double kMaxManualSpeed = 0.5;
 

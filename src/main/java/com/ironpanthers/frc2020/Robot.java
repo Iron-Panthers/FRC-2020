@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-        NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode").setNumber(1);
+        m_robotContainer.turnOffLL();
     }
 
     @Override

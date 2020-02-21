@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTarget extends CommandBase {
 	private final Drive drive;
-
+	private int counter;
 	SteeringAdjuster steerer;
 
 	BooleanSupplier seeTarget;
@@ -54,6 +54,14 @@ public class TurnToTarget extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance);
+
+		if (Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance)) {
+			counter++;
+		}
+		if (counter >= 10) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

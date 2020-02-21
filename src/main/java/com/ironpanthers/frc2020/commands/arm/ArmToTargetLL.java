@@ -13,7 +13,7 @@ import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ArmToTarget extends CommandBase {
+public class ArmToTargetLL extends CommandBase {
 	private Arm arm;
 	private int target;
 	private LimelightWrapper lWrapper;
@@ -21,7 +21,7 @@ public class ArmToTarget extends CommandBase {
 	/**
 	 * Creates a new ArmToTarget.
 	 */
-	public ArmToTarget(Arm arm, int target, LimelightWrapper lWrapper) {
+	public ArmToTargetLL(Arm arm, int target, LimelightWrapper lWrapper) {
 		this.arm = arm;
 		this.target = target;
 		this.lWrapper = lWrapper;
@@ -32,7 +32,8 @@ public class ArmToTarget extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		arm.setPosition(target);
+        lWrapper.turnOnLight();
+        arm.setPosition(target);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.

@@ -94,7 +94,9 @@ public class RobotContainer {
 		// Configure the button bindings
 		configureButtonBindings();
 	}
-
+	public void turnOffLL() {
+		limelightWrapper.turnOffLight();
+	}
 	/**
 	 * Applies all button->command mappings.
 	 */
