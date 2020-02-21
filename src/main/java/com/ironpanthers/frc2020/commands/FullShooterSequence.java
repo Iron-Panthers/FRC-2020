@@ -3,6 +3,7 @@ package com.ironpanthers.frc2020.commands;
 import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
 import com.ironpanthers.frc2020.commands.arm.ArmInterpolation;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
+import com.ironpanthers.frc2020.commands.arm.ArmToTargetLL;
 
 /*----------------------------------------------------------------------------*/
 
@@ -36,7 +37,7 @@ public class FullShooterSequence extends SequentialCommandGroup {
             int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
         // Add your commands in the super() call, e.g.
         // super(new FooCommand(), new BarCommand());super();
-        super(new ArmToTarget(arm, target, lWrapper), new TurnToTarget(drive, steerer, lWrapper),
+        super(new ArmToTargetLL(arm, target, lWrapper), new TurnToTarget(drive, steerer, lWrapper),
                 new ArmInterpolation(shooter, conveyor, lWrapper, arm),
                 new ShooterInterpolation(arm, shooter, threshold, conveyor, lWrapper),
                 new ShiftConveyor(Direction.kOut, conveyor, shooter, threshold, lWrapper, arm));

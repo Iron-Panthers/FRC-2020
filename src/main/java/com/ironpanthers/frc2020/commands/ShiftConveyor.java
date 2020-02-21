@@ -101,6 +101,7 @@ public class ShiftConveyor extends CommandBase {
             } else {
                 shooter.stopShooter();
                 CommandScheduler.getInstance().schedule(new ArmToTarget(arm, 0, lWrapper));
+                lWrapper.turnOffLight();
             }
         }
         if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {

@@ -44,6 +44,9 @@ public class LimelightWrapper {
             turnOnLight();
         }
     }
+    public void pipelineLight() {
+        table.getEntry("ledMode").setNumber(0);
+    }
     public void turnOffLight() {
         table.getEntry("ledMode").setNumber(1);
     }
