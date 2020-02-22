@@ -172,7 +172,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getDiagonalDistance() {
-        return (Constants.Vision.kGroundToTargetInches - getHeight()) / Math.sin(getHAnlge());
+        return Math.sqrt(Math.pow(Constants.Vision.kGroundToTargetInches - getHeight(), 2) + Math.pow(getHorizontalDistance2(), 2));
     }
 
     public int getPosition() {

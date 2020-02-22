@@ -44,8 +44,8 @@ public class TurnToTargetW extends CommandBase {
 	@Override
 	public void execute() {
         steerer.updateSteeringValuesW();
-        drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
-        SmartDashboard.putNumber("doneNum", startX - steerer.getInnerHoleAdjust());
+        drive.setOutputPercent(steerer.getLeftSteeringAdjustI(), steerer.getRightSteeringAdjustI());
+        SmartDashboard.putNumber("fuko", steerer.adjustedSteeringValue);
 	}
 
 	// Called once the command ends or is interrupted.
@@ -57,8 +57,7 @@ public class TurnToTargetW extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-
-		if (Util.epsilonEquals(lWrapper.getTableX(), startX - steerer.getInnerHoleAdjust(), Constants.Vision.kAutoAlignTolerance)) {
+		if (Util.epsilonEquals(lWrapper.getTableX(), steerer.getInnerHoleAdjust(), Constants.Vision.kAutoAlignTolerance)) {
 			counter++;
 		}
 		if (counter >= 10 || steerer.adjustedSteeringValue == 0) {
