@@ -43,13 +43,13 @@ public class SteeringAdjuster {
 
     /**
      * updates the steering adjustment value which can then be added to left motor power and subtracted from right. 
-     * @param aimX the degrees off of the center of the screen which the limelight should aim at.
+     * @param aimDeg the degrees off of the center of the screen which the limelight should aim at.
      */
-    public void updateSteeringValues(double aimX) {
+    public void updateSteeringValues(double aimDeg) {
         limelight.periodic();
 
         //positive error should indicate that the part of the image we are aiming at is to the right of the crosshair
-        double horizontalError = limelight.getTableX() + aimX;
+        double horizontalError = limelight.getTableX() + aimDeg;
 
         //shift recorded error values over and set zeroth slot to the measured error
         for (int i = 98; i >= 0; i--) {

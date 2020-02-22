@@ -49,6 +49,11 @@ public class LimelightWrapper {
     public void turnOnLight() {
         table.getEntry("ledMode").setNumber(3);
     }
+    /**
+     * it should be noted that this does not return in terms of pixels. Docs say: 
+     * "Horizontal Offset From Crosshair To Target (LL1: -27 degrees to 27 degrees | LL2: -29.8 to 29.8 degrees)"
+     * @return
+     */
     public double getTableX() {
         return tx;
     }
