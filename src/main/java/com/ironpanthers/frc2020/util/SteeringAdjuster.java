@@ -29,7 +29,7 @@ public class SteeringAdjuster {
 
     DoubleSupplier horizontalDistance, diagonalDistance;
     // readd DoubleSupplier horizontalDistance, DoubleSupplier diagonalDistance, eventually
-    public SteeringAdjuster(LimelightWrapper limelight) {
+    public SteeringAdjuster(LimelightWrapper limelight, DoubleSupplier horizontalDistance, DoubleSupplier diagonalDistance) {
         totalErrors = new double[100];
         sumOfErrors = 0.0;
         lastError = 0.0;
@@ -37,14 +37,19 @@ public class SteeringAdjuster {
 
         adjustedSteeringValue = 0.0;
         this.limelight = limelight;
-
+        this.horizontalDistance = horizontalDistance;
+        this.diagonalDistance = diagonalDistance;
     }
 
-    public void updateSteeringValues() {
+    /**
+     * updates the steering adjustment value which can then be added to left motor power and subtracted from right. 
+     * @param aimX the degrees off of the center of the screen which the limelight should aim at.
+     */
+    public void updateSteeringValues(double aimX) {
         limelight.periodic();
 
-        //positive error should indicate the target is on the right of the screen 
-        double horizontalError = limelight.getTableX();
+        //positive error should indicate that the part of the image we are aiming at is to the right of the crosshair
+        double horizontalError = limelight.getTableX() + aimX;
 
         //shift recorded error values over and set zeroth slot to the measured error
         for (int i = 98; i >= 0; i--) {
@@ -82,40 +87,11 @@ public class SteeringAdjuster {
     public double getRightSteeringAdjust() {
         return -adjustedSteeringValue;
     }
-    public void updateSteeringValuesW() {
-        limelight.periodic();
 
-        //positive error should indicate the target is on the right of the screen 
-        double horizontalError = getInnerHolePixelAdjust();
-
-        //shift recorded error values over and set zeroth slot to the measured error
-        for (int i = 98; i >= 0; i--) {
-            totalErrors[i + 1] = totalErrors[i];
-        }
-        totalErrors[0] = horizontalError;
-
-        //sum errors
-        for (int i = 0; i < totalErrors.length; i++) {
-            sumOfErrors += totalErrors[i];
-        }
-
-        //calculate error delta since last recording
-        deltaError = horizontalError - lastError;
- 
-        //calculate steering adjustment with pidf
-        if (horizontalError > 0.0) {
-            adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
-                    + Constants.Vision.kD * deltaError + Constants.Vision.kS;
-        } else if (horizontalError < 0.0) {
-            adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
-                    + Constants.Vision.kD * deltaError - Constants.Vision.kS;
-        }
-
-        //reset last recorded error to error just recorded
-        lastError = horizontalError;
-    }
-
-    public double getInnerHolePixelAdjust() {
+    /**
+     * @return the angle off the center of the vision target which we need to aim in order to hit the inner hole. Positive if the inner hole will appear to the right of the target's center. 
+     */
+    public double getInnerHoleAdjust() {
 
         double[] tcornxy = limelight.getTCornXY();
         double[] tcornx = {tcornxy[0], tcornxy[2], tcornxy[4], tcornxy[6]};
@@ -164,14 +140,14 @@ public class SteeringAdjuster {
         brighty = orderedy.get(2);
 
         //for testing:
-        SmartDashboard.putNumber("top left x: ", tleftx);
-        SmartDashboard.putNumber("top left y: ", tlefty);
-        SmartDashboard.putNumber("top right x: ", trightx);
-        SmartDashboard.putNumber("top right y: ", trighty);
-        SmartDashboard.putNumber("bottom left x: ", bleftx);
-        SmartDashboard.putNumber("bottom left y: ", blefty);
-        SmartDashboard.putNumber("bottom right x: ", brightx);
-        SmartDashboard.putNumber("bottom right y: ", brighty);
+        // SmartDashboard.putNumber("top left x: ", tleftx);
+        // SmartDashboard.putNumber("top left y: ", tlefty);
+        // SmartDashboard.putNumber("top right x: ", trightx);
+        // SmartDashboard.putNumber("top right y: ", trighty);
+        // SmartDashboard.putNumber("bottom left x: ", bleftx);
+        // SmartDashboard.putNumber("bottom left y: ", blefty);
+        // SmartDashboard.putNumber("bottom right x: ", brightx);
+        // SmartDashboard.putNumber("bottom right y: ", brighty);
         SmartDashboard.putNumber("diagonal distance from target: ", diagonalDistance.getAsDouble());
         SmartDashboard.putNumber("horizontal distance from target: ", horizontalDistance.getAsDouble());
 
@@ -183,8 +159,8 @@ public class SteeringAdjuster {
         
         SmartDashboard.putNumber("hole offset angle: ", offsetAngle);
 
-        double leftHeight = tlefty - blefty;
-        double rightHeight = trighty - brighty;
+        double leftHeight = Math.abs(tlefty - blefty);
+        double rightHeight = Math.abs(trighty - brighty);
 
         //copysign() to determine whether the adjust is going to be left or right
         return Math.copySign(offsetAngle, rightHeight - leftHeight);

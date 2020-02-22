@@ -148,16 +148,14 @@ public class Arm extends SubsystemBase {
     public double getHorizontalDistance() {
         limelight.periodic();
         double HorizontalDistance = 0;
-        double llAngleDeg = Constants.Vision.kMountToLLAngleDeg;
         double offset = getPivotToLLHorizontleD(getAngle())
                 - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
-        double hAngle = 90 - llAngleDeg - getAngle() + limelight.getTableY();
         if (limelight.getTableY() >= 0) {
             HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight())
-                    / (Math.tan(Math.toRadians(hAngle))) - offset;
+                    / (Math.tan(Math.toRadians(getHAnlge()))) - offset;
         } else {
             HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight())
-                    / (Math.tan(Math.toRadians(hAngle)));
+                    / (Math.tan(Math.toRadians(getHAnlge())));
         }
 
         return HorizontalDistance;
@@ -166,13 +164,15 @@ public class Arm extends SubsystemBase {
     public double getHorizontalDistance2() {
         limelight.periodic();
         double HorizontalDistance = 0;
-        double llAngleDeg = Constants.Vision.kMountToLLAngleDeg;
         double offset = getPivotToLLHorizontleD(getAngle())
                 - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
-        double hAngle = 90 - llAngleDeg - getAngle() + limelight.getTableY();
         HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight2())
-                / (Math.tan(Math.toRadians(hAngle))) - offset;
+                / (Math.tan(Math.toRadians(getHAnlge()))) - offset;
         return HorizontalDistance;
+    }
+
+    public double getDiagonalDistance() {
+        return (Constants.Vision.kGroundToTargetInches - getHeight()) / Math.sin(getHAnlge());
     }
 
     public int getPosition() {

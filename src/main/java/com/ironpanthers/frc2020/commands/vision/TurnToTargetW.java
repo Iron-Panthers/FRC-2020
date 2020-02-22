@@ -20,15 +20,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class TurnToTargetW extends CommandBase {
 	private final Drive drive;
     private int counter;
-    private double startingX;
 	SteeringAdjuster steerer;
 
 	BooleanSupplier seeTarget;
 
 	LimelightWrapper lWrapper;
 
-	public TurnToTargetW(Drive drive, SteeringAdjuster steerer,
-			LimelightWrapper limelightWrapper) {
+	public TurnToTargetW(Drive drive, SteeringAdjuster steerer, LimelightWrapper limelightWrapper) {
 		this.drive = drive;
 		this.steerer = steerer;
 		lWrapper = limelightWrapper;
@@ -37,13 +35,12 @@ public class TurnToTargetW extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-        startingX = lWrapper.getTableX();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		steerer.updateSteeringValuesW();
+		steerer.updateSteeringValues(steerer.getInnerHoleAdjust());
 		drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
 	}
 
@@ -57,7 +54,7 @@ public class TurnToTargetW extends CommandBase {
 	@Override
 	public boolean isFinished() {
 
-		if (Util.epsilonEquals(startingX, lWrapper.getTableX() + steerer.getInnerHolePixelAdjust(),Constants.Vision.kAutoAlignTolerance)) {
+		if (Util.epsilonEquals(lWrapper.getTableX(), steerer.getInnerHoleAdjust(), Constants.Vision.kAutoAlignTolerance)) {
 			counter++;
 		}
 		if (counter >= 10) {
