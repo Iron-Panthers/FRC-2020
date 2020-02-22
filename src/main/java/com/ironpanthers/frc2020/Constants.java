@@ -161,7 +161,8 @@ public final class Constants {
         //This was taken from field measurements. The outer hole is 2 ft 5.25 inches in front of the inner hole, and the diameter of the hexagon is 2 ft 6 inches
         public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
 
-		public static double kAutoAlignTolerance = .15;
+        public static double kAutoAlignTolerance = .15;
+        
         
 		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
 		public static final double kCloseDistance = 20.0; // Inches

@@ -22,7 +22,7 @@ import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShootQuickly;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
-import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
+import com.ironpanthers.frc2020.commands.vision.TurnToTargetW;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -110,7 +110,7 @@ public class RobotContainer {
 		shootClose.whileHeld(new ShootQuickly(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
 				Constants.Shooter.kOuterGoalThreshold,limelightWrapper));
 		shootInitiation.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kInnerGoalThreshold,limelightWrapper));
-		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer,limelightWrapper));
+		turnToTargetButton.whenPressed(new TurnToTargetW(drive, steerer,limelightWrapper));
 		// Driver B
 		zeroArm.whenPressed(new ZeroArm(arm));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
