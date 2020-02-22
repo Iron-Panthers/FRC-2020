@@ -15,11 +15,13 @@ import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
 import com.ironpanthers.util.Util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TurnToTargetW extends CommandBase {
 	private final Drive drive;
     private int counter;
+    private double startX;
 	SteeringAdjuster steerer;
 
 	BooleanSupplier seeTarget;
@@ -35,13 +37,15 @@ public class TurnToTargetW extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+        startX = lWrapper.getTableX();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		steerer.updateSteeringValues(steerer.getInnerHoleAdjust());
-		drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
+        steerer.updateSteeringValuesW();
+        drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
+        SmartDashboard.putNumber("doneNum", startX - steerer.getInnerHoleAdjust());
 	}
 
 	// Called once the command ends or is interrupted.
@@ -54,10 +58,10 @@ public class TurnToTargetW extends CommandBase {
 	@Override
 	public boolean isFinished() {
 
-		if (Util.epsilonEquals(lWrapper.getTableX(), steerer.getInnerHoleAdjust(), Constants.Vision.kAutoAlignTolerance)) {
+		if (Util.epsilonEquals(lWrapper.getTableX(), startX - steerer.getInnerHoleAdjust(), Constants.Vision.kAutoAlignTolerance)) {
 			counter++;
 		}
-		if (counter >= 10) {
+		if (counter >= 10 || steerer.adjustedSteeringValue == 0) {
 			return true;
 		} else {
 			return false;

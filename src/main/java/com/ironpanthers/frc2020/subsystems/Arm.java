@@ -210,12 +210,9 @@ public class Arm extends SubsystemBase {
         } else if (getHighLimitPressed()) {
             armLeft.setSelectedSensorPosition(Constants.Arm.kTopPositionNativeUnits);
         }
-        SmartDashboard.putBoolean("High Limit", getHighLimitPressed());
         SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
-        SmartDashboard.putNumber("Arm Position", getPosition());
         SmartDashboard.putNumber("Arm Angle", getAngle());
-        SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance());
-        SmartDashboard.putNumber("getHorizontalDistance2", getHorizontalDistance2());
+        SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance2());
 
     }
 }
