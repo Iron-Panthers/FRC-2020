@@ -44,8 +44,7 @@ public class Drive extends SubsystemBase {
 
     private Pose2d currentPose = new Pose2d();
 
-    private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconEPR * 5.1)) * 2
-            * Constants.Drive.kWheelRadiusMeters * Math.PI;
+    private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconCPR * 5.1)) * Constants.Drive.kWheelDiameterMeters * Math.PI;
 
     /**
      * Create a new Drive subsystem.
