@@ -47,7 +47,7 @@ public class Drive extends SubsystemBase {
     private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconCPR * 5.1)) * Constants.Drive.kWheelDiameterMeters * Math.PI;
 
     /**
-     * Create a new Drive subsystem.
+     * Create a new Drive subsystem. As usual, only one of these should ever be constructed.
      */
     public Drive() {
         left1.configFactoryDefault();

@@ -31,7 +31,9 @@ public class Arm extends SubsystemBase {
     /**
      * Creates a new Arm. For limits, forward refers to the front, in which the arm
      * is all the way down and ready for intaking. Reverse refers to the back, in
-     * which the arm is all the way up at the maximum angle for shooting
+     * which the arm is all the way up at the maximum angle for shooting.
+     * <p>
+     * As usual, only one of these should ever be constructed.
      */
     public Arm(LimelightWrapper limelight) {
         this.limelight = limelight;

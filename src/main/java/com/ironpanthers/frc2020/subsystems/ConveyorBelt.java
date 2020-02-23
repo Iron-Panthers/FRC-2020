@@ -18,8 +18,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ConveyorBelt extends SubsystemBase {
 	public TalonFX conveyorMotor;
 	public DigitalInput input;
+	// TODO only conditionally initialize with 3?
 	public int ballsHeld = 3;
 
+	/**
+	 * Create a new ConveyorBelt subsystem. As usual, only one of these should ever be constructed.
+	 */
 	public ConveyorBelt() {
 		input = new DigitalInput(Constants.Conveyor.kBannerSensorPort);
 		conveyorMotor = new TalonFX(Constants.Conveyor.kConveyorMotorId);
