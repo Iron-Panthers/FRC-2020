@@ -7,6 +7,8 @@
 
 package com.ironpanthers.frc2020;
 
+import java.io.IOException;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -50,8 +52,8 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods. This must be called from the
         // robot's periodic
         // block in order for anything in the Command-based framework to work.
-		CommandScheduler.getInstance().run();
-		m_robotContainer.smartDashboard();
+        CommandScheduler.getInstance().run();
+        m_robotContainer.smartDashboard();
     }
 
     /**
@@ -72,12 +74,18 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode").setNumber(0);
+        try {
+            NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode")
+                    .setNumber(0);
 
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+            m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-        if (m_autonomousCommand != null)
-            m_autonomousCommand.schedule();
+            if (m_autonomousCommand != null)
+                m_autonomousCommand.schedule();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -90,10 +98,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode").setNumber(0);
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
+
+        // Cancel autonomous upon teleop
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
