@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.util.PhoenixUtil;
-import com.ironpanthers.util.PoseLoggingTable;
+import com.ironpanthers.util.Dashboard;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotController;
@@ -188,6 +188,6 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putString("drive/currentPose", currentPose.toString());
 
         currentPose = odometry.update(heading, leftDistanceMeters, rightDistanceMeters);
-        PoseLoggingTable.getInstance().publishRobotPose(currentPose);
+        Dashboard.getInstance().publishRobotPose(currentPose);
     }
 }
