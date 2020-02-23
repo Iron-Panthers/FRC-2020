@@ -16,7 +16,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class TestAutonomous extends SequentialCommandGroup {
     /**
-     * Create a new TestAutonomous, which drives along a trajectory defined by PathWeaver-like JSON.
+     * Create a new TestAutonomous, which drives along a trajectory defined by
+     * PathWeaver-like JSON.
      * 
      * @param drive The instance of the Drive subsystem for the autonomous sequence
      *              to use.
@@ -27,9 +28,9 @@ public class TestAutonomous extends SequentialCommandGroup {
                     .fromPathweaverJson(Paths.get(Filesystem.getDeployDirectory().toString(), "paths", "test1.json"));
 
             // Alias of trajectory-tracking command for readability
-            var trajectoryTrackingCommand = new ReportingRAMSETECommand(trajectory, drive::currentPose,
-                    new RamseteController(2, 0.7), drive.ff(), drive.kinematics(), drive::speeds,
-                    drive.leftPIDController(), drive.rightPIDController(), drive::setOutputVolts, drive);
+            var trajectoryTrackingCommand = new ReportingRAMSETECommand(trajectory, drive::getCurrentPose,
+                    new RamseteController(2, 0.7), drive.getFeedforward(), drive.getKinematics(), drive::getWheelSpeeds,
+                    drive.getLeftPIDController(), drive.getRightPIDController(), drive::setOutputVolts, drive);
 
             // Add commands to the group via `addCommands` to handle scheduling
             addCommands(new InstantCommand(() -> drive.resetToPosition(trajectory.sample(0).poseMeters), drive),

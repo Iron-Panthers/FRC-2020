@@ -84,7 +84,7 @@ public class Drive extends SubsystemBase {
         return Rotation2d.fromDegrees(gyro.getAngle());
     }
 
-    public DifferentialDriveWheelSpeeds speeds() {
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(// CONVERSION FROM ENCODER TO LEFT AND RIGHT SPEEDS (METERS PER SECOND):
                 left1.getSelectedSensorVelocity() * kEncoderToDistanceFactor * 10,
                 right1.getSelectedSensorVelocity() * kEncoderToDistanceFactor * 10);
@@ -106,23 +106,23 @@ public class Drive extends SubsystemBase {
         return right1.getSelectedSensorPosition() * kEncoderToDistanceFactor;
     }
 
-    public DifferentialDriveKinematics kinematics() {
+    public DifferentialDriveKinematics getKinematics() {
         return kinematics;
     }
 
-    public Pose2d currentPose() {
+    public Pose2d getCurrentPose() {
         return currentPose;
     }
 
-    public SimpleMotorFeedforward ff() {
+    public SimpleMotorFeedforward getFeedforward() {
         return characterizedFeedforward;
     }
 
-    public PIDController leftPIDController() {
+    public PIDController getLeftPIDController() {
         return left;
     }
 
-    public PIDController rightPIDController() {
+    public PIDController getRightPIDController() {
         return right;
     }
 
@@ -180,7 +180,7 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
         SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
         SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
-        SmartDashboard.putString("drive/wheelSpeeds", speeds().toString());
+        SmartDashboard.putString("drive/wheelSpeeds", getWheelSpeeds().toString());
         SmartDashboard.putString("drive/heading", heading().toString());
         SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
         SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
