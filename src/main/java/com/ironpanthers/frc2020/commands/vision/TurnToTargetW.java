@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class TurnToTargetW extends CommandBase {
 	private final Drive drive;
     private int counter;
-    private double startX;
 	SteeringAdjuster steerer;
 
 	BooleanSupplier seeTarget;
@@ -37,15 +36,13 @@ public class TurnToTargetW extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-        startX = lWrapper.getTableX();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-        steerer.updateSteeringValuesW();
-        drive.setOutputPercent(steerer.getLeftSteeringAdjustI(), steerer.getRightSteeringAdjustI());
-        SmartDashboard.putNumber("fuko", steerer.adjustedSteeringValue);
+        drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
+        SmartDashboard.putNumber("fuko", steerer.getLeftSteeringAdjust());
 	}
 
 	// Called once the command ends or is interrupted.

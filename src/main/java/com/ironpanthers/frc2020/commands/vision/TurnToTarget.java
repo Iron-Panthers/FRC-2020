@@ -42,7 +42,7 @@ public class TurnToTarget extends CommandBase {
 	@Override
 	public void execute() {
 		//calls with 0.0 as param because we are aiming at the center of the target
-		steerer.updateSteeringValues();
+		steerer.updateSteeringValues(0.0);
 		drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
 	}
 

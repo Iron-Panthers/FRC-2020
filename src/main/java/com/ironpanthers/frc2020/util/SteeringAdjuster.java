@@ -55,12 +55,12 @@ public class SteeringAdjuster {
      * @param aimDeg the degrees off of the center of the screen which the limelight
      *               should aim at.
      */
-    public void updateSteeringValues() {
+    public double updateSteeringValues(double aimDeg) {
         limelight.periodic();
 
         // positive error should indicate that the part of the image we are aiming at is
         // to the right of the crosshair
-        double horizontalError = limelight.getTableX();
+        double horizontalError = limelight.getTableX() + aimDeg;
         SmartDashboard.putNumber("Alignment Adjust Angle", horizontalError);
 
         // shift recorded error values over and set zeroth slot to the measured error
@@ -77,85 +77,44 @@ public class SteeringAdjuster {
         // calculate error delta since last recording
         deltaError = horizontalError - lastError;
 
+        lastError = horizontalError;
         // calculate steering adjustment with pidf
         if (horizontalError > 0.0) {
-            adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
+            return Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
                     + Constants.Vision.kD * deltaError + Constants.Vision.kS;
         } else if (horizontalError < 0.0) {
-            adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
+            return Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
                     + Constants.Vision.kD * deltaError - Constants.Vision.kS;
+        } else {
+            return 0.0;
         }
+        
         // reset last recorded error to error just recorded
-        lastError = horizontalError;
+        
     }
-    public double updateSteeringValuesI() {
-        limelight.periodic();
-         return getInnerHoleAdjust() * Constants.Vision.kP;
-    }
-    public void updateSteeringValuesW() {
-        limelight.periodic();
-
-        // positive error should indicate that the part of the image we are aiming at is
-        // to the right of the crosshair
-        double horizontalError = getInnerHoleAdjust();
-        SmartDashboard.putNumber("Alignment Adjust Angle", horizontalError);
-
-        // shift recorded error values over and set zeroth slot to the measured error
-        for (int i = 98; i >= 0; i--) {
-            totalErrors[i + 1] = totalErrors[i];
-        }
-        totalErrors[0] = horizontalError;
-
-        // sum errors
-        for (int i = 0; i < totalErrors.length; i++) {
-            sumOfErrors += totalErrors[i];
-        }
-
-        // calculate error delta since last recording
-        deltaError = horizontalError - lastError;
-
-        // calculate steering adjustment with pidf
-        if (horizontalError > 0.0) {
-            adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
-                    + Constants.Vision.kD * deltaError + Constants.Vision.kS;
-        } else if (horizontalError < 0.0) {
-            adjustedSteeringValue = Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
-                    + Constants.Vision.kD * deltaError - Constants.Vision.kS;
-        }
-        // reset last recorded error to error just recorded
-        lastError = horizontalError;
-    }
-
+    
     // If the target is on the right of the screen, the steering value will be
     // positive.
     // Therefore, we add to left side and subtract from right
     public double getLeftSteeringAdjust() {
-        return adjustedSteeringValue;
+        return updateSteeringValues(getInnerHoleAdjust());
     }
 
     public double getRightSteeringAdjust() {
-        return -adjustedSteeringValue;
-    }
-    public double getLeftSteeringAdjustI() {
-        return updateSteeringValuesI();
-    }
-    public double getRightSteeringAdjustI() {
-        return -updateSteeringValuesI();
-    }
-
+        return -updateSteeringValues(getInnerHoleAdjust());    
+    } 
     /**
      * @return the angle off the center of the vision target which we need to aim in
      *         order to hit the inner hole. Positive if the inner hole will appear
      *         to the right of the target's center.
      */
     public double getInnerHoleAdjust() {
-        double[] tcornxy = limelight.getTCornXY();
 
-        // Kill self if cannot find 4 x,y pairs (math breaks down when not 4 corners are present)
-        if (tcornxy.length != 8) {
-            System.out.println("Could not find 8 corners! \nInstead, there were only " + tcornxy.length + " corners.\nReturning last computed value...\n\n\n");
+        if(!limelight.targetVisible()) {
             return lastComputedAngle;
         }
+
+        double[] tcornxy = limelight.getTCornXY();
 
         double[] tcornx = { tcornxy[0], tcornxy[2], tcornxy[4], tcornxy[6] }; // this breaks everything when arm isn't
                                                                               // fully stable
@@ -213,7 +172,8 @@ public class SteeringAdjuster {
         // SmartDashboard.putNumber("bottom left y: ", blefty);
         // SmartDashboard.putNumber("bottom right x: ", brightx);
         // SmartDashboard.putNumber("bottom right y: ", brighty);
-        SmartDashboard.putNumber("horizontal distance from target: ", horizontalDistance.getAsDouble());
+        SmartDashboard.putNumber("horizontal distance from target: ", arm.getHorizontalDistance2());
+        SmartDashboard.putNumber("diagonal distance from target: ", arm.getDiagonalDistance());
 
         ThreeDimensionalSegment topLine = new ThreeDimensionalSegment(tleftx, tlefty, trightx, trighty,
                 Constants.Vision.kTopLineMagnitudeTimesDistance / arm.getDiagonalDistance());
