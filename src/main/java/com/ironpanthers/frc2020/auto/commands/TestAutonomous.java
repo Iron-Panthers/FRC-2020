@@ -2,7 +2,6 @@ package com.ironpanthers.frc2020.auto.commands;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.List;
 
 import com.ironpanthers.frc2020.commands.drive.ReportingRAMSETECommand;
 import com.ironpanthers.frc2020.subsystems.Drive;
