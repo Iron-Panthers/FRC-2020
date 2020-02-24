@@ -7,6 +7,8 @@
 
 package com.ironpanthers.frc2020;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -131,7 +133,7 @@ public final class Constants {
         /**
          * Angle from mount to limelight in degrees
          */
-        public static final double kMountToLLAngleDeg = 18; //17
+        public static final double kMountToLLAngleDeg = 16.6;
 
         public static final double kPivotToLLPlane = 23.5; //Pivot point to limelight horizontle distance in inches
         public static final double kPivotToLL = 24.5; //Pivot point to limelight hypotonuse 
@@ -141,6 +143,8 @@ public final class Constants {
          * Proportional control constant
          */
         public static final double kP = 0.0175;
+        public static final double kPw = 0.005;
+
         /**
          * I value in PID
          */
@@ -161,7 +165,8 @@ public final class Constants {
         //This was taken from field measurements. The outer hole is 2 ft 5.25 inches in front of the inner hole, and the diameter of the hexagon is 2 ft 6 inches
         public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
 
-		public static double kAutoAlignTolerance = .15;
+        public static double kAutoAlignTolerance = 1;
+        
         
 		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
 		public static final double kCloseDistance = 20.0; // Inches

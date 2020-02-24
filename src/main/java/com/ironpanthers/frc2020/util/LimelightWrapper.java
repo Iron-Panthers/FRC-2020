@@ -23,13 +23,6 @@ public class LimelightWrapper {
         return frontLimelight;
     }
 
-    /**
-     * This method must be run periodically to refresh the values read by the
-     * Limelight.
-     * <p>
-     * TODO This structure implies that subsystems may actually be the desired
-     * "model" to use for the LimelightWrapper class. This task is open
-     */
     public void periodic() {
         tx = table.getEntry("tx").getDouble(0.0);
         ty = table.getEntry("ty").getDouble(0.0);
@@ -56,6 +49,11 @@ public class LimelightWrapper {
     public void turnOnLight() {
         table.getEntry("ledMode").setNumber(3);
     }
+    /**
+     * it should be noted that this does not return in terms of pixels. Docs say: 
+     * "Horizontal Offset From Crosshair To Target (LL1: -27 degrees to 27 degrees | LL2: -29.8 to 29.8 degrees)"
+     * @return
+     */
     public double getTableX() {
         return tx;
     }
