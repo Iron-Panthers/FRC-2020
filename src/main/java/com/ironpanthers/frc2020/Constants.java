@@ -23,6 +23,7 @@ public final class Constants {
     public static final int ENCODER_TICKS_PER_INCH = 1000; //need to test
     /** Number of rotations between colors in rotation control */
     public static final int POSITION_CONTROL_ROTATIONS = 25; //tbd
+    public static int ROTATIONS = 0;
 
     private Constants() {
         /* disallow construction of this class */

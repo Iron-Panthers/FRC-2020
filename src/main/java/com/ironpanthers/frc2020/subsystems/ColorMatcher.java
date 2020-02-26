@@ -9,6 +9,7 @@ package com.ironpanthers.frc2020.subsystems;
 
 import java.util.List;
 
+import com.ironpanthers.frc2020.Constants;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 
@@ -70,6 +71,7 @@ public class ColorMatcher extends SubsystemBase {
 
         if (matchResult.color == kBlueTarget) {
             colorAsString = "Blue";
+            System.out.println(Constants.ROTATIONS + .5);
         } else if (matchResult.color == kRedTarget) {
             colorAsString = "Red";
         } else if (matchResult.color == kGreenTarget) {

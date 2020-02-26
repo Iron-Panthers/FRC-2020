@@ -66,4 +66,7 @@ public class ControlPanel extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+public static void ColorMatcher(String string) {
+}
 }
