@@ -15,19 +15,19 @@ import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
 import com.ironpanthers.util.Util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class TurnToTarget extends CommandBase {
+public class TurnToTargetW extends CommandBase {
 	private final Drive drive;
-	private int counter;
+    private int counter;
 	SteeringAdjuster steerer;
 
 	BooleanSupplier seeTarget;
 
 	LimelightWrapper lWrapper;
 
-	public TurnToTarget(Drive drive, SteeringAdjuster steerer,
-			LimelightWrapper limelightWrapper) {
+	public TurnToTargetW(Drive drive, SteeringAdjuster steerer, LimelightWrapper limelightWrapper) {
 		this.drive = drive;
 		this.steerer = steerer;
 		lWrapper = limelightWrapper;
@@ -41,9 +41,8 @@ public class TurnToTarget extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		//calls with 0.0 as param because we are aiming at the center of the target
-		steerer.updateSteeringValues(0.0);
-		drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
+        drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
+        SmartDashboard.putNumber("fuko", steerer.getLeftSteeringAdjust());
 	}
 
 	// Called once the command ends or is interrupted.
@@ -55,11 +54,10 @@ public class TurnToTarget extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-
-		if (Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance)) {
+		if (Util.epsilonEquals(lWrapper.getTableX(), steerer.getInnerHoleAdjust(), Constants.Vision.kAutoAlignTolerance)) {
 			counter++;
 		}
-		if (counter >= 10) {
+		if (counter >= 10 || steerer.adjustedSteeringValue == 0) {
 			return true;
 		} else {
 			return false;

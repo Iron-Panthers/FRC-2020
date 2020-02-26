@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ShooterInterpolation extends CommandBase {
     private final Shooter shooter;
-    private int velocity;
     private final int threshold;
     private LimelightWrapper lWrapper;
     private ConveyorBelt conveyorBelt;
@@ -42,7 +41,7 @@ public class ShooterInterpolation extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        if (conveyorBelt.ballsHeld <= 0) { // we have no balls or mis-indexed TODO reconsider
+        if (conveyorBelt.ballsHeld == 0) { 
             lWrapper.turnOffLight();
             cancel();
         }

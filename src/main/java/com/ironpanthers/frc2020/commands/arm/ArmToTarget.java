@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ArmToTarget extends CommandBase {
 	private Arm arm;
 	private int target;
-	private LimelightWrapper lWrapper;
 
 	/**
 	 * Creates a new ArmToTarget.
@@ -24,7 +23,6 @@ public class ArmToTarget extends CommandBase {
 	public ArmToTarget(Arm arm, int target, LimelightWrapper lWrapper) {
 		this.arm = arm;
 		this.target = target;
-		this.lWrapper = lWrapper;
 		addRequirements(arm);
 		// Use addRequirements() here to declare subsystem dependencies.
 	}
