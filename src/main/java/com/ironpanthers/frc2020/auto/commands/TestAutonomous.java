@@ -24,7 +24,7 @@ public class TestAutonomous extends SequentialCommandGroup {
     public TestAutonomous(Drive drive) throws IOException {
         try {
             var trajectory = TrajectoryUtil
-                    .fromPathweaverJson(Paths.get(Filesystem.getDeployDirectory().toString(), "paths", "test1.json"));
+                    .fromPathweaverJson(Paths.get(Filesystem.getDeployDirectory().toString(), "paths", "facingPortIntoTrench.json"));
 
             // Alias of trajectory-tracking command for readability
             var trajectoryTrackingCommand = new ReportingRAMSETECommand(trajectory, drive::getCurrentPose,
