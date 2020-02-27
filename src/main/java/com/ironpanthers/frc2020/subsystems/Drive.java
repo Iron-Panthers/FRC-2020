@@ -1,14 +1,16 @@
 package com.ironpanthers.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.util.PhoenixUtil;
 import com.ironpanthers.util.Dashboard;
+import com.ironpanthers.util.PhoenixUtil;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -29,7 +31,8 @@ public class Drive extends SubsystemBase {
     private final WPI_TalonFX right1 = new WPI_TalonFX(Constants.Drive.kRight1Id);
     private final WPI_TalonFX right2 = new WPI_TalonFX(Constants.Drive.kRight2Id);
 
-    private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	private final PigeonIMU gyro = new PigeonIMU(new TalonSRX(31));
+	private double[] ypr = new double[3];
 
     private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
             Constants.Drive.kTrackWidthMeters);
@@ -44,7 +47,7 @@ public class Drive extends SubsystemBase {
 
     private Pose2d currentPose = new Pose2d();
 
-    private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconCPR * 5.1)) * Constants.Drive.kWheelDiameterMeters * Math.PI;
+    private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconEPR * 5.1)) * Constants.Drive.kWheelDiameterMeters * Math.PI;
 
     /**
      * Create a new Drive subsystem. As usual, only one of these should ever be constructed.
@@ -68,7 +71,12 @@ public class Drive extends SubsystemBase {
         right1.setInverted(false);
         right1.setSensorPhase(false);
 
-        right2.setInverted(InvertType.FollowMaster);
+		right2.setInverted(InvertType.FollowMaster);
+		
+		left1.setNeutralMode(NeutralMode.Coast);
+		left2.setNeutralMode(NeutralMode.Coast);
+		right1.setNeutralMode(NeutralMode.Coast);
+		right2.setNeutralMode(NeutralMode.Coast);
 
         SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
                 Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentLimit, 1);
@@ -81,7 +89,8 @@ public class Drive extends SubsystemBase {
     }
 
     public Rotation2d heading() {
-        return Rotation2d.fromDegrees(gyro.getAngle());
+		gyro.getYawPitchRoll(ypr);
+        return Rotation2d.fromDegrees(ypr[0]);
     }
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
