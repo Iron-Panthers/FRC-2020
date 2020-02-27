@@ -133,11 +133,10 @@ public final class Constants {
         /**
          * Angle from mount to limelight in degrees
          */
-        public static final double kMountToLLAngleDeg = 16.6;
+        public static final double kMountToLLAngleDeg = 30;
 
-        public static final double kPivotToLLPlane = 23.5; //Pivot point to limelight horizontle distance in inches
-        public static final double kPivotToLL = 24.5; //Pivot point to limelight hypotonuse 
-        public static double kPivotToLLAngle = 16.42; //inverse cos of kPivotToLLPlane / kPivotToLL
+        public static final double kPivotToLL = 25.49; //Pivot point to limelight hypotonuse 
+        public static double kPivotToLLAngle = 30.9267s; //inverse cos of kPivotToLLPlane / kPivotToLL
 
         /**
          * Proportional control constant
