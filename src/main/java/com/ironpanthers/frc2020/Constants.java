@@ -42,7 +42,9 @@ public final class Constants {
         public static final int kLeft1Id = 1;
         public static final int kLeft2Id = 21;
         public static final int kRight1Id = 2;
-        public static final int kRight2Id = 22;
+		public static final int kRight2Id = 22;
+		
+		public static final int kShiftPort = 5;
 
         public static final double kGearRatio = 5.10;
         public static final double kTrackWidthMeters = 0.7204688778663988; // empirical from characterization data
@@ -205,7 +207,9 @@ public final class Constants {
         public static final int kCANCoderId = 0;
         public static final int kRemoteSensorSlot = 0; // RemoteSensor0 for CANCoder
 
-        public static final int kBrakePort = 0; // TBD
+		public static final int kBrakePort = 4; // TBD
+		
+		public static final boolean kSensorPhase = true;
 
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
@@ -219,6 +223,8 @@ public final class Constants {
 
         public static final double kRampRate = 0.25; // seconds 0->full
 
+        // units
+		public static final double kCanCoderCoefficient = 360.0 / 4096.0; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
         // Setpoints
         public static final double kPositionErrorTolerance = 0.5;
         public static final double kInitiationLineDegrees = 45.0; // TBD
@@ -227,7 +233,6 @@ public final class Constants {
                                                                    // 14k native
         // units
         public static final double kFrameHeightDegrees = 80.0; // Height at which robot is 45 inches tall
-        public static final double kCanCoderCoefficient = 360 / 4096; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
 
         // Soft Limits
         public static final double kTopPositionDegrees = 90.0; // 90 degrees, should be close to top position

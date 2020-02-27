@@ -49,15 +49,16 @@ public class Arm extends SubsystemBase {
         armRight = new TalonFX(Constants.Arm.kRightMotorId);
         canCoder = new CANCoder(Constants.Arm.kCANCoderId);
         diskBrake = new Solenoid(Constants.Arm.kBrakePort);
-        canCoder.configFactoryDefault();
-        canCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
-        calibrateCANCoder();
+		canCoder.configFactoryDefault();
+		canCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
+		canCoder.configSensorDirection(Constants.Arm.kSensorPhase);
+		calibrateCANCoder();
         canCoder.configFeedbackCoefficient(Constants.Arm.kCanCoderCoefficient, "deg", SensorTimeBase.PerSecond); // Degrees per second, output in degrees
         canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
         armLeft.configRemoteFeedbackFilter(canCoder, Constants.Arm.kRemoteSensorSlot);
         armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0); // Should be the same number as Constants.Arm.kRemoteSensorSlot
-        armLeft.setSensorPhase(false); // Up is positive
-        armLeft.setInverted(true);
+        armLeft.setSensorPhase(Constants.Arm.kSensorPhase); // Up is positive
+        armLeft.setInverted(true); // I think this has to be the same as the sensor phase. @Ingi?
 
         armRight.setInverted(InvertType.OpposeMaster);
         armLeft.setNeutralMode(NeutralMode.Brake);
@@ -111,9 +112,13 @@ public class Arm extends SubsystemBase {
         armLeft.set(TalonFXControlMode.Velocity, degreesPerSecond);
     }
 
-    public void setPosition(double target) {
-        armLeft.set(TalonFXControlMode.Position, target);
-    }
+	/**
+	 * Set position using degrees
+	 * @param degrees in degrees
+	 */
+	public void setPosition(double degrees) {
+		armLeft.set(TalonFXControlMode.Position, degrees / Constants.Arm.kCanCoderCoefficient);
+	}
 
     public double getHeight() {
         return Constants.Vision.kPivotToLL * Math.sin((getAngle() + Constants.Vision.kPivotToLLAngle) * Math.PI / 180)

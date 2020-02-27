@@ -19,10 +19,11 @@ public class ArmToTarget extends CommandBase {
 
 	/**
 	 * Creates a new ArmToTarget.
+	 * @param double target in degrees
 	 */
-	public ArmToTarget(Arm arm, double target, LimelightWrapper lWrapper) {
+	public ArmToTarget(Arm arm, double angle, LimelightWrapper lWrapper) {
 		this.arm = arm;
-		this.target = target;
+		this.target = angle;
 		addRequirements(arm);
 		// Use addRequirements() here to declare subsystem dependencies.
 	}
