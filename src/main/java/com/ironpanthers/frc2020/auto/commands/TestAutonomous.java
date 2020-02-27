@@ -23,8 +23,8 @@ public class TestAutonomous extends SequentialCommandGroup {
      */
     public TestAutonomous(Drive drive) throws IOException {
         try {
-            var trajectory = TrajectoryUtil
-                    .fromPathweaverJson(Paths.get(Filesystem.getDeployDirectory().toString(), "paths", "facingPortIntoTrench.json"));
+            var trajectory = TrajectoryUtil.fromPathweaverJson(
+                    Paths.get(Filesystem.getDeployDirectory().toString(), "paths", "facingPortIntoTrench.json"));
 
             // Alias of trajectory-tracking command for readability
             var trajectoryTrackingCommand = new ReportingRAMSETECommand(trajectory, drive::getCurrentPose,
@@ -32,7 +32,8 @@ public class TestAutonomous extends SequentialCommandGroup {
                     drive.getLeftPIDController(), drive.getRightPIDController(), drive::setOutputVolts, drive);
 
             // Add commands to the group via `addCommands` to handle scheduling
-            addCommands(new InstantCommand(() -> drive.resetToPosition(trajectory.sample(0).poseMeters), drive),
+            addCommands(new InstantCommand(drive::shiftLow, drive),
+                    new InstantCommand(() -> drive.resetToPosition(trajectory.sample(0).poseMeters), drive),
                     trajectoryTrackingCommand, new RunCommand(() -> drive.setOutputVolts(0, 0)));
         } catch (IOException e) {
             throw e;
