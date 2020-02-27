@@ -136,7 +136,7 @@ public final class Constants {
         public static final double kMountToLLAngleDeg = 30;
 
         public static final double kPivotToLL = 25.49; //Pivot point to limelight hypotonuse 
-        public static double kPivotToLLAngle = 30.9267s; //inverse cos of kPivotToLLPlane / kPivotToLL
+        public static double kPivotToLLAngle = 30.9267; //inverse cos of kPivotToLLPlane / kPivotToLL
 
         /**
          * Proportional control constant
