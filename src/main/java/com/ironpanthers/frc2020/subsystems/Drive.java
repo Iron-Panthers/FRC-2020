@@ -10,6 +10,7 @@ import com.ironpanthers.util.Dashboard;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -31,6 +32,8 @@ public class Drive extends SubsystemBase {
 
     private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
+    private final Solenoid shifter = new Solenoid(Constants.Drive.kShifterPCMId);
+
     private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
             Constants.Drive.kTrackWidthMeters);
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(heading());
@@ -44,10 +47,13 @@ public class Drive extends SubsystemBase {
 
     private Pose2d currentPose = new Pose2d();
 
-    private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconCPR * 5.1)) * Constants.Drive.kWheelDiameterMeters * Math.PI;
+    // Gear variant
+    private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconCPR * 5.1))
+            * Constants.Drive.kWheelDiameterMeters * Math.PI;
 
     /**
-     * Create a new Drive subsystem. As usual, only one of these should ever be constructed.
+     * Create a new Drive subsystem. As usual, only one of these should ever be
+     * constructed.
      */
     public Drive() {
         left1.configFactoryDefault();
@@ -78,6 +84,9 @@ public class Drive extends SubsystemBase {
         right1.configOpenloopRamp(Constants.Drive.kRampRate);
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
+
+        // Start by shifting low
+        shiftLow();
     }
 
     public Rotation2d heading() {
@@ -124,6 +133,16 @@ public class Drive extends SubsystemBase {
 
     public PIDController getRightPIDController() {
         return right;
+    }
+
+    // TODO verify shifter behaves as expected
+
+    public void shiftHigh() {
+        shifter.set(true);
+    }
+
+    public void shiftLow() {
+        shifter.set(false);
     }
 
     // OUTPUT-WRITING METHODS
