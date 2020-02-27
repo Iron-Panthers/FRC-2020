@@ -31,7 +31,7 @@ public class FullShooterSequence extends SequentialCommandGroup {
      * Creates a new FullShooterSequence.
      */
 
-    public FullShooterSequence(SteeringAdjuster steerer, Drive drive, Arm arm, int target, Shooter shooter,
+    public FullShooterSequence(SteeringAdjuster steerer, Drive drive, Arm arm, double target, Shooter shooter,
             int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
         // Add your commands in the super() call, e.g.
         // super(new FooCommand(), new BarCommand());super();

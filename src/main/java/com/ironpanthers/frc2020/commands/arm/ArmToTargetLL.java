@@ -15,13 +15,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmToTargetLL extends CommandBase {
 	private Arm arm;
-	private int target;
+	private double target;
 	private LimelightWrapper lWrapper;
 
 	/**
 	 * Creates a new ArmToTarget.
 	 */
-	public ArmToTargetLL(Arm arm, int target, LimelightWrapper lWrapper) {
+	public ArmToTargetLL(Arm arm, double target, LimelightWrapper lWrapper) {
 		this.arm = arm;
 		this.target = target;
 		this.lWrapper = lWrapper;

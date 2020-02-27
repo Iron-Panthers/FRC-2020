@@ -203,14 +203,17 @@ public final class Constants {
         public static final int kHighLimitSwitchPort = 1;
         public static final int kGroundLimitSwitchPort = 0;
 
+        public static final int kCANCoderId = 0;
+        public static final int kRemoteSensorSlot = 0; // RemoteSensor0 for CANCoder
+
+        public static final int kBrakePort = 0; // TBD
+
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
-        public static final double kHorizontalHoldOutput = 0.08; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
-        public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 12;
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 0.15;
+        public static final double kP = 0.011; // TBD, started with 90 max error being 1.0 power, P = 1/90
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
@@ -218,28 +221,25 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
         // Setpoints
-        public static final int kPositionErrorTolerance = 200;
-        public static final int kInitiationLineHeight = 47000; // Tested 2/11/20 (45400)
-        public static final int kCloseShotHeightNativeUnits = 16000; // 19 too high at 15k velocity, 15 almost too low
-        public static final int kFarShotHeightNativeUnits = 48000; // Tested angle for shooting behind control panel at
+        public static final double kPositionErrorTolerance = 0.5;
+        public static final double kInitiationLineDegrees = 45.0; // TBD
+        public static final double kCloseShotDegrees = 15.0; // TBD
+        public static final double kFarShotDegrees = 70.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
-        public static final int kFrameConstrainedHeightNativeUnits = 45000; // Height at which robot is 45 inches tall
-        public static final double encoderToAngle = 90.0 / 79300; // Empirically tested conversion
-        public static final double kDegreesPerOutputRotation = 360.0;
-        public static final double kArmReduction = 175.0; // Falcon rev to arm rev
-        // public static final double encoderToAngle = kDegreesPerOutputRotation / (kFalconCPR * kArmReduction); // Theoretical
+        public static final double kFrameHeightDegrees = 80.0; // Height at which robot is 45 inches tall
+        public static final double kCanCoderCoefficient = 360 / 4096; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
 
         // Soft Limits
-        public static final int kTopPositionNativeUnits = 88000; // Tested by James, 1/30/20
-        public static final int kBottomSoftLimit = 0;
-        public static final int kTopSoftLimit = kTopPositionNativeUnits + 500;
+        public static final double kTopPositionDegrees = 90.0; // 90 degrees, should be close to top position
+        public static final int kBottomSoftLimit = (int) (0 / kCanCoderCoefficient); // Convert into native units
+        public static final int kTopSoftLimit = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
 
         // TODO(james)
-        public static final int kSlowdownThreshold = 10000; // Threshold to soft limit in which the output of the arm
+        public static final double kSlowdownThreshold = 1; // Threshold to soft limit in which the output of the arm
         // motors are scaled down
-        public static final int kBottomSlowdownZone = kBottomSoftLimit + kSlowdownThreshold;
-        public static final int kTopSlowdownZone = kTopSoftLimit - kSlowdownThreshold;
+        public static final double kBottomSlowdownZone = kBottomSoftLimit + kSlowdownThreshold;
+        public static final double kTopSlowdownZone = kTopSoftLimit - kSlowdownThreshold;
         public static final double kSlowClosedLoopPeakOutput = 0.25; // for when in a slow zone
         public static final double kClosedLoopPeakOutput = 0.5; // Used for both positive and negative direction
 

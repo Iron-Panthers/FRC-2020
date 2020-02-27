@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class TuneArmPositionPID extends CommandBase {
 	private Arm arm;
 	private double p, i, d, f;
-	private int pos;
+	private double pos;
 	/**
 	 * Creates a new TuneArmPositionPID.
 	 */
@@ -38,7 +38,7 @@ public class TuneArmPositionPID extends CommandBase {
 		i = SmartDashboard.getNumber("Arm I", Constants.Arm.kI);
 		d = SmartDashboard.getNumber("Arm D", Constants.Arm.kD);
 		f = SmartDashboard.getNumber("Arm F", Constants.Arm.kF);
-		pos = (int) SmartDashboard.getNumber("Target Position", 0);
+		pos = SmartDashboard.getNumber("Target Angle", 0);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -48,7 +48,7 @@ public class TuneArmPositionPID extends CommandBase {
 		double nI = SmartDashboard.getNumber("Arm I", Constants.Arm.kI);
 		double nD = SmartDashboard.getNumber("Arm D", Constants.Arm.kD);
 		double nF = SmartDashboard.getNumber("Arm F", Constants.Arm.kF);
-		int nPos = (int) SmartDashboard.getNumber("Target Position", 0);
+		double nPos = SmartDashboard.getNumber("Target Position", 0);
 		boolean update = false;
 		// Only reconfigure PIDF if it gets changed
 		if (nP != p) {
@@ -74,7 +74,6 @@ public class TuneArmPositionPID extends CommandBase {
 			pos = nPos;
 		}
 		arm.setPosition(pos);
-		SmartDashboard.putNumber("Actual Position", arm.getPosition());
 		SmartDashboard.putNumber("Arm Voltage", arm.getOutputVoltage());
 		SmartDashboard.putNumber("Arm Current", arm.getOutputCurrent());
 

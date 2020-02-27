@@ -29,10 +29,10 @@ public class Shooter extends SubsystemBase {
 
     // TODO these values must be tuned
     private final double[] distanceTable = { 0, 120.0, 240.0, 408.0 }; // Inches
-    public final int[] velocityTable = { Constants.Shooter.kCloseVelocity, Constants.Shooter.kInitiationVelocity,
+    public final double[] velocityTable = { Constants.Shooter.kCloseVelocity, Constants.Shooter.kInitiationVelocity,
             Constants.Shooter.kFarVelocity }; // Units/100ms
-    public final int[] armPosTable = { Constants.Arm.kCloseShotHeightNativeUnits, Constants.Arm.kInitiationLineHeight,
-            Constants.Arm.kFarShotHeightNativeUnits };
+    public final double[] armPosTable = { Constants.Arm.kCloseShotDegrees, Constants.Arm.kInitiationLineDegrees,
+            Constants.Arm.kFarShotDegrees };
 
     /**
      * Create a new Shooter subsystem. As usual, only one of these should ever be
@@ -144,11 +144,11 @@ public class Shooter extends SubsystemBase {
     // TODO move this out of here
     // TODO figure out what should be provided as parameters, what should use
     // members, etc.
-    public int interpolateY(double currentX, int[] yValues) {
+    public int interpolateY(double currentX, double[] yValues) {
         double[] xValues = distanceTable;
         int endIndex = 0;
-        int lowY;
-        int highY;
+        double lowY;
+        double highY;
         while (currentX > xValues[endIndex]) {
             endIndex++;
         }

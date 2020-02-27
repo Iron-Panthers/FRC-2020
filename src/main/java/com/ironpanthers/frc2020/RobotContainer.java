@@ -124,20 +124,21 @@ public class RobotContainer {
 		zeroArm.whenPressed(new ZeroArm(arm));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
-		closeShotPosition.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kCloseShotHeightNativeUnits, shooter,
+		closeShotPosition.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kCloseShotDegrees, shooter,
 				Constants.Shooter.kCloseVelocity, Constants.Shooter.kOuterGoalThreshold, conveyorBelt,
 				limelightWrapper));
-		farShotPosition.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kFarShotHeightNativeUnits, shooter,
+		farShotPosition.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kFarShotDegrees, shooter,
 				Constants.Shooter.kFarVelocity, Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
 		framePerimeterHeightPosition
-				.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameConstrainedHeightNativeUnits, limelightWrapper));
+				.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameHeightDegrees, limelightWrapper));
 		emergencyOuttake.whileHeld(new Outtake(shooter));
 		emergencyIntake.whileHeld(new EmergencyIntake(shooter, conveyorBelt, emergencyIntake::get));
-		autoShotHeight.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kInitiationLineHeight, shooter,
+		autoShotHeight.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kInitiationLineDegrees, shooter,
 				Constants.Shooter.kInitiationVelocity, Constants.Shooter.kOuterGoalThreshold, conveyorBelt,
 				limelightWrapper));
 		fullShooterSequence
-				.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineHeight, shooter,
+				.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees,
+						shooter,
 						Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
 		// getDistance.whileHeld(new VisionTesting(limelightWrapper, arm));
 	}

@@ -22,7 +22,7 @@ public class ArmAndSpinShooter extends ParallelCommandGroup {
 	/**
 	 * Creates a new ArmAndSpinShooter.
 	 */
-	public ArmAndSpinShooter(Arm arm, int target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
+	public ArmAndSpinShooter(Arm arm, double target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());super();
 		super(new ArmToTarget(arm, target, lWrapper), new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper));

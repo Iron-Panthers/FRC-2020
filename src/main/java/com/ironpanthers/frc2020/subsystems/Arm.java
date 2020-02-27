@@ -9,23 +9,31 @@ package com.ironpanthers.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
+import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
-    public final TalonFX armLeft;
-    public final TalonFX armRight;
+    private final TalonFX armLeft;
+    private final TalonFX armRight;
+    private final CANCoder canCoder;
     private final DigitalInput forwardLimitSwitch;
     private final DigitalInput reverseLimitSwitch;
     private final LimelightWrapper limelight;
+    private final Solenoid diskBrake;
     public int targetHeight;
 
     /**
@@ -39,8 +47,18 @@ public class Arm extends SubsystemBase {
         this.limelight = limelight;
         armLeft = new TalonFX(Constants.Arm.kLeftMotorId);
         armRight = new TalonFX(Constants.Arm.kRightMotorId);
+        canCoder = new CANCoder(Constants.Arm.kCANCoderId);
+        diskBrake = new Solenoid(Constants.Arm.kBrakePort);
+        canCoder.configFactoryDefault();
+        canCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
+        calibrateCANCoder();
+        canCoder.configFeedbackCoefficient(Constants.Arm.kCanCoderCoefficient, "deg", SensorTimeBase.PerSecond); // Degrees per second, output in degrees
+        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+        armLeft.configRemoteFeedbackFilter(canCoder, Constants.Arm.kRemoteSensorSlot);
+        armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0); // Should be the same number as Constants.Arm.kRemoteSensorSlot
         armLeft.setSensorPhase(false); // Up is positive
         armLeft.setInverted(true);
+
         armRight.setInverted(InvertType.OpposeMaster);
         armLeft.setNeutralMode(NeutralMode.Brake);
         armRight.setNeutralMode(NeutralMode.Brake);
@@ -89,29 +107,12 @@ public class Arm extends SubsystemBase {
      * Set velocity of the arm, will be used in tuning PID for velocity to get
      * values for MotionMagic
      */
-    public void setVelocity(double nativeUnits) {
-        armLeft.set(TalonFXControlMode.Velocity, nativeUnits);
+    public void setVelocity(double degreesPerSecond) {
+        armLeft.set(TalonFXControlMode.Velocity, degreesPerSecond);
     }
 
-    public void setPosition(int target) {
+    public void setPosition(double target) {
         armLeft.set(TalonFXControlMode.Position, target);
-    }
-
-    /**
-     * Motion Magic may not be needed, position is probably good enough
-     */
-    public void setMotionMagicPosition(int target) {
-        armLeft.set(TalonFXControlMode.MotionMagic, target);
-    }
-
-    public double getFeedForward() {
-        double scaledAngle = Math.cos(Math.toRadians(getAngle()));
-        // double f = Constants.Arm.kHorizontalHoldVoltage * scaledAngle; // Voltage
-        // based
-        double f = Constants.Arm.kHorizontalHoldOutput * scaledAngle;
-        // PercentOutput with feedforward to avoid oscillation which wears down the
-        // gears
-        return f;
     }
 
     public double getHeight() {
@@ -133,9 +134,7 @@ public class Arm extends SubsystemBase {
     // }
 
     public double getAngle() {
-        double currentAngle = (armLeft.getSelectedSensorPosition() * Constants.Arm.encoderToAngle)
-                + Constants.Arm.kArmAngleOffset;
-
+        double currentAngle = canCoder.getAbsolutePosition();
         return currentAngle;
     }
 
@@ -193,10 +192,6 @@ public class Arm extends SubsystemBase {
         return armLeft.getStatorCurrent();
     }
 
-    public void setZero() {
-        armLeft.setSelectedSensorPosition(0);
-    }
-
     public boolean getGroundLimitPressed() {
         return !reverseLimitSwitch.get();
     }
@@ -205,16 +200,39 @@ public class Arm extends SubsystemBase {
         return !forwardLimitSwitch.get();
     }
 
+    public void calibrateCANCoder() {
+        // Set CANCoder position so it aligns with the absolute position
+        canCoder.setPositionToAbsolute();
+    }
+
+    public void engageBrake() { // Needs testing
+        diskBrake.set(true);
+    }
+
+    public void releaseBrake() { // Needs testing
+        diskBrake.set(false);
+    }
+
+    public void setZero() {
+        canCoder.setPosition(0);
+    }
+
+    public void setSensorPosition(double degrees) {
+        canCoder.setPosition(degrees);
+    }
+
     @Override
     public void periodic() {
         if (getGroundLimitPressed()) {
             setZero();
         } else if (getHighLimitPressed()) {
-            armLeft.setSelectedSensorPosition(Constants.Arm.kTopPositionNativeUnits);
+            setSensorPosition(Constants.Arm.kTopPositionDegrees);
         }
         SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
         SmartDashboard.putNumber("Arm Angle", getAngle());
+        SmartDashboard.putNumber("Arm Position", getPosition());
+        SmartDashboard.putNumber("CANCoder Raw Position", canCoder.getPosition());
+        SmartDashboard.putNumber("CANCoder Abs Position", canCoder.getAbsolutePosition());
         SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance2());
-
     }
 }
