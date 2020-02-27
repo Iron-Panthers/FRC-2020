@@ -7,8 +7,6 @@
 
 package com.ironpanthers.frc2020;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -45,6 +43,8 @@ public final class Constants {
 		public static final int kRight2Id = 22;
 		
 		public static final int kShiftPort = 5;
+
+        public static final int kShifterPCMId = 5;
 
         public static final double kGearRatio = 5.10;
         public static final double kTrackWidthMeters = 0.7204688778663988; // empirical from characterization data
@@ -114,7 +114,7 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 18500;//was 16000 
+        public static final int kShiftEncoderDistance = 16000;
 
     }
 
