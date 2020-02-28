@@ -105,7 +105,7 @@ public final class Constants {
         // PID
         public static final int kPIDIdx = 0;
         public static final double kConveyorClosedLoopRamp = 0.6;
-        public static final double kConveyorKp = 0.13;
+        public static final double kConveyorKp = 0.216;
 
         // Powers
         public static final double kIntakeRollerSpeed = 1.0;
@@ -114,18 +114,18 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 16000;
+        public static final int kShiftEncoderDistance = 26666;
 
     }
 
     public static class Vision {
 
-        public static final String kLimelightName = "limelight-b"; 
+        public static final String kLimelightName = "limelight-a"; 
 
         /**
          * Height from ground to pivot in inches
          */
-        public static final double kGroundToPivotInches = 10.3;
+        public static final double kGroundToPivotInches = 10;
 
         /**
          * Height from ground to target in inches
@@ -144,7 +144,6 @@ public final class Constants {
          * Proportional control constant
          */
         public static final double kP = 0.0175;
-        public static final double kPw = 0.005;
 
         /**
          * I value in PID
@@ -206,6 +205,7 @@ public final class Constants {
 
         public static final int kCANCoderId = 0;
         public static final int kRemoteSensorSlot = 0; // RemoteSensor0 for CANCoder
+        public static final double kCANCoderOffset = 359.571;
 
 		public static final int kBrakePort = 4; // TBD
 		
@@ -232,12 +232,13 @@ public final class Constants {
         public static final double kFarShotDegrees = 70.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
-        public static final double kFrameHeightDegrees = 80.0; // Height at which robot is 45 inches tall
+        public static final double kFrameHeightDegrees = 65.0; // Height at which robot is 45 inches tall
 
         // Soft Limits
-        public static final double kTopPositionDegrees = 90.0; // 90 degrees, should be close to top position
+        public static final double kTopPositionDegrees = 79.0; // 90 degrees, should be close to top position
         public static final int kBottomSoftLimit = (int) (0 / kCanCoderCoefficient); // Convert into native units
         public static final int kTopSoftLimit = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
+        public static final double kUseTopLimitRange = 40.0;
 
         // TODO(james)
         public static final double kSlowdownThreshold = 1; // Threshold to soft limit in which the output of the arm
