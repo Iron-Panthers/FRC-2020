@@ -187,12 +187,12 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
 		public static final int kInnerGoalThreshold = 200; // Good for auto, too slow for tele
-		public static final int kOuterGoalThreshold = 2000; // When speed is more important than accuracy, 750 ok, 2000 ok close
+		public static final int kOuterGoalThreshold = 1600; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
-		public static final int kCloseVelocity = 15000; // Tested 2/11/20 by James
-		public static final int kInitiationVelocity = 16500; // Initiation Line, Tested 2/11/20
+		public static final int kCloseVelocity = 10000; // Needs Testing
+		public static final int kInitiationVelocity = 11000; // Needs Testing
 		public static final int kTestVelocity = 18000;
-		public static final int kFarVelocity = 18000;
+		public static final int kFarVelocity = 19000;
 
         public static final double kCurrentLimit = 40; // amps
     }
@@ -228,14 +228,14 @@ public final class Constants {
         // Setpoints
         public static final double kPositionErrorTolerance = 0.5;
         public static final double kInitiationLineDegrees = 45.0; // TBD
-        public static final double kCloseShotDegrees = 15.0; // TBD
-        public static final double kFarShotDegrees = 70.0; // Tested angle for shooting behind control panel at
+        public static final double kCloseShotDegrees = 14.0; // Tested 2/27/20 on comp robot
+        public static final double kFarShotDegrees = 50.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
         public static final double kFrameHeightDegrees = 65.0; // Height at which robot is 45 inches tall
 
         // Soft Limits
-        public static final double kTopPositionDegrees = 79.0; // 90 degrees, should be close to top position
+        public static final double kTopPositionDegrees = 78.0; // 90 degrees, should be close to top position
         public static final int kBottomSoftLimit = (int) (0 / kCanCoderCoefficient); // Convert into native units
         public static final int kTopSoftLimit = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
         public static final double kUseTopLimitRange = 40.0;
