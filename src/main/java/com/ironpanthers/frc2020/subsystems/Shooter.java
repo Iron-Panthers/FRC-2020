@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Shooter extends SubsystemBase {
     private final TalonFX shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
     private final TalonFX shooter2 = new TalonFX(Constants.Shooter.kShooter2Id);
-    private final TalonFX shooter3 = new TalonFX(Constants.Shooter.kShooter2Id);
+    private final TalonFX shooter3 = new TalonFX(Constants.Shooter.kShooter3Id);
     private final TalonFX intakeMotor = new TalonFX(Constants.Shooter.kShooter2Id);;
 
     // TODO clean up access to these values
@@ -42,8 +42,8 @@ public class Shooter extends SubsystemBase {
         shooter2.follow(shooter1);
         shooter3.follow(shooter1);
         shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
-        shooter2.setInverted(InvertType.FollowMaster);
-        shooter3.setInverted(InvertType.FollowMaster);
+        shooter2.setInverted(InvertType.OpposeMaster);
+        shooter3.setInverted(InvertType.OpposeMaster);
         shooter1.setNeutralMode(NeutralMode.Coast);
         shooter2.setNeutralMode(NeutralMode.Coast);
         shooter3.setNeutralMode(NeutralMode.Coast);
