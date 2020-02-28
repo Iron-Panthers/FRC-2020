@@ -42,8 +42,8 @@ public class Shooter extends SubsystemBase {
         shooter2.follow(shooter1);
         shooter3.follow(shooter1);
         shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
-        shooter2.setInverted(InvertType.OpposeMaster);
-        shooter3.setInverted(InvertType.OpposeMaster);
+        shooter2.setInverted(InvertType.FollowMaster);
+        shooter3.setInverted(InvertType.FollowMaster);
         shooter1.setNeutralMode(NeutralMode.Coast);
         shooter2.setNeutralMode(NeutralMode.Coast);
         shooter3.setNeutralMode(NeutralMode.Coast);
