@@ -78,8 +78,9 @@ public class Robot extends TimedRobot {
             NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode")
                     .setNumber(0);
 
-            m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+			m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+			m_robotContainer.initialize();
+						
             if (m_autonomousCommand != null)
                 m_autonomousCommand.schedule();
 
@@ -97,12 +98,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+		m_robotContainer.initialize();
         NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode").setNumber(0);
 
         // Cancel autonomous upon teleop
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
-        }
+		}
     }
 
     /**

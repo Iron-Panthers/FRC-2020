@@ -102,6 +102,10 @@ public class RobotContainer {
 		configureButtonBindings();
 	}
 
+	public void initialize() {
+		arm.calibrateCANCoder();
+	}
+
 	public void turnOffLL() {
 		limelightWrapper.turnOffLight();
 	}

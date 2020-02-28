@@ -211,11 +211,11 @@ public class Arm extends SubsystemBase {
     }
 
     public void engageBrake() { // Needs testing
-        diskBrake.set(true);
+        diskBrake.set(false);
     }
 
     public void releaseBrake() { // Needs testing
-        diskBrake.set(false);
+        diskBrake.set(true);
     }
 
     public void setZero() {
