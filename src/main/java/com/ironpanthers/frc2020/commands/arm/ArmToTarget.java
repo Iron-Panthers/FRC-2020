@@ -48,6 +48,6 @@ public class ArmToTarget extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Math.abs(arm.getPosition() - target) < Constants.Arm.kPositionErrorTolerance;
+		return Math.abs(arm.getAngle() - target) < Constants.Arm.kPositionErrorTolerance;
 	}
 }
