@@ -114,7 +114,7 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 30000;
+        public static final int kShiftEncoderDistance = 28000;
 
     }
 
@@ -191,8 +191,8 @@ public final class Constants {
         
 		public static final int kCloseVelocity = 10000; // Needs Testing
 		public static final int kInitiationVelocity = 11000; // Needs Testing
-		public static final int kTestVelocity = 18000;
-		public static final int kFarVelocity = 19000;
+		public static final int kTestVelocity = 15000;
+		public static final int kFarVelocity = 15500;
 
         public static final double kCurrentLimit = 40; // amps
     }
@@ -216,7 +216,7 @@ public final class Constants {
         public static final double kArmInitialHeight = 0; // TODO find this value
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 0.011; // TBD, started with 90 max error being 1.0 power, P = 1/90
+        public static final double kP = 2.0; // TBD, started with 90 max error being 1.0 power, P = 1/90
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
@@ -232,7 +232,7 @@ public final class Constants {
         public static final double kFarShotDegrees = 50.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
-        public static final double kFrameHeightDegrees = 65.0; // Height at which robot is 45 inches tall
+        public static final double kFrameHeightDegrees = 52.00; // Height at which robot is 45 inches tall
 
         // Soft Limits
         public static final double kTopPositionDegrees = 78.0; // 90 degrees, should be close to top position
