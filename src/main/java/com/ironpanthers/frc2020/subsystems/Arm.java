@@ -30,7 +30,7 @@ public class Arm extends SubsystemBase {
     private final TalonFX armLeft;
     private final TalonFX armRight;
     private final CANCoder canCoder;
-    private final DigitalInput forwardLimitSwitch;
+    // private final DigitalInput forwardLimitSwitch;
     private final DigitalInput reverseLimitSwitch;
     private final LimelightWrapper limelight;
     private final Solenoid diskBrake;
@@ -51,7 +51,8 @@ public class Arm extends SubsystemBase {
         diskBrake = new Solenoid(Constants.Arm.kBrakePort);
 		canCoder.configFactoryDefault();
 		canCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
-		canCoder.configSensorDirection(Constants.Arm.kSensorPhase);
+        canCoder.configSensorDirection(Constants.Arm.kSensorPhase);
+        canCoder.configMagnetOffset(Constants.Arm.kCANCoderOffset);
 		calibrateCANCoder();
         canCoder.configFeedbackCoefficient(Constants.Arm.kCanCoderCoefficient, "deg", SensorTimeBase.PerSecond); // Degrees per second, output in degrees
         canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
@@ -75,7 +76,7 @@ public class Arm extends SubsystemBase {
         // Limit switches
         // Forward needs to be the highest positive value, so the high position
         // Reverse needs to be the lowest value, so the ground position
-        forwardLimitSwitch = new DigitalInput(Constants.Arm.kHighLimitSwitchPort);
+        // forwardLimitSwitch = new DigitalInput(Constants.Arm.kHighLimitSwitchPort);
         reverseLimitSwitch = new DigitalInput(Constants.Arm.kGroundLimitSwitchPort);
         armLeft.configForwardSoftLimitEnable(true);
         armLeft.configReverseSoftLimitEnable(true);
@@ -202,7 +203,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean getHighLimitPressed() {
-        return !forwardLimitSwitch.get();
+        return !reverseLimitSwitch.get() && canCoder.getAbsolutePosition() > Constants.Arm.kUseTopLimitRange;
     }
 
     public void calibrateCANCoder() {
@@ -230,9 +231,9 @@ public class Arm extends SubsystemBase {
     public void periodic() {
         if (getGroundLimitPressed()) {
             setZero();
-        } else if (getHighLimitPressed()) {
+        } /*else if (getHighLimitPressed()) {
             setSensorPosition(Constants.Arm.kTopPositionDegrees);
-        }
+        }*/
         SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
         SmartDashboard.putNumber("Arm Angle", getAngle());
         SmartDashboard.putNumber("Arm Position", getPosition());
