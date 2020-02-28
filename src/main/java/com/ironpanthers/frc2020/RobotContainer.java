@@ -9,6 +9,7 @@ package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.commands.FullShooterSequence;
 import com.ironpanthers.frc2020.commands.arm.ArmAndSpinShooter;
+import com.ironpanthers.frc2020.commands.arm.ArmHold;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.arm.ZeroArm;
@@ -96,7 +97,7 @@ public class RobotContainer {
 	public RobotContainer() {
 		drive.setDefaultCommand(
 				new ManualDriveCommand(joystickA::getY, joystickA::getX, new JoystickButton(joystickA, 1), drive));
-
+		arm.setDefaultCommand(new ArmHold(arm));
 		compressor.setClosedLoopControl(true);
 		// Configure the button bindings
 		configureButtonBindings();

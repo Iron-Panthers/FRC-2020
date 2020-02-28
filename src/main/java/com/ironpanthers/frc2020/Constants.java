@@ -180,7 +180,7 @@ public final class Constants {
         public static final int kShooter2Id = 6;
 		public static final int kShooter3Id = 7;
 		
-		public static final boolean IS_SHOOTER_INVERTED = false;
+		public static final boolean IS_SHOOTER_INVERTED = true;
 
         public static final int kPIDIdx = 0;
         public static final double kF = 0.051;
