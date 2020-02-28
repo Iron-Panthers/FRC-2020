@@ -21,7 +21,7 @@ public class Shooter extends SubsystemBase {
     private final TalonFX shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
     private final TalonFX shooter2 = new TalonFX(Constants.Shooter.kShooter2Id);
     private final TalonFX shooter3 = new TalonFX(Constants.Shooter.kShooter3Id);
-    private final TalonFX intakeMotor = new TalonFX(Constants.Shooter.kShooter2Id);;
+    private final TalonFX intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
 
     // TODO clean up access to these values
     public int velocity;
@@ -39,9 +39,12 @@ public class Shooter extends SubsystemBase {
      * constructed.
      */
     public Shooter() {
+        shooter1.configFactoryDefault();
+        shooter2.configFactoryDefault();
+        shooter3.configFactoryDefault();
+        shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
         shooter2.follow(shooter1);
         shooter3.follow(shooter1);
-        shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
         shooter2.setInverted(InvertType.OpposeMaster);
         shooter3.setInverted(InvertType.OpposeMaster);
         shooter1.setNeutralMode(NeutralMode.Coast);
@@ -56,8 +59,6 @@ public class Shooter extends SubsystemBase {
         shooter1.configSupplyCurrentLimit(currentConfig);
         shooter1.configClosedloopRamp(Constants.Shooter.kRampRate); // Ramp rate for Velocity PID
         shooter1.configOpenloopRamp(Constants.Shooter.kRampRate); // Ramp rate for open loop control
-        shooter2.follow(shooter1);
-        shooter3.follow(shooter1);
 
         configPIDF(Constants.Shooter.kP, 0, 0, Constants.Shooter.kF, Constants.Shooter.kPIDIdx);
     }
