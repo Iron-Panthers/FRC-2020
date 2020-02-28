@@ -84,6 +84,8 @@ public class ShiftConveyor extends CommandBase {
                 cancel();
             }
         }
+        SmartDashboard.putNumber("Conveyor Position", conveyor.getPosition());
+        SmartDashboard.putNumber("Conveyor Target Position", targetEncoderPosition);
         conveyor.setPosition(targetEncoderPosition);
     }
 

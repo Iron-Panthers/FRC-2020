@@ -74,7 +74,7 @@ public class Shooter extends SubsystemBase {
      */
     public void setIntakeMotors(double intakeMotorSpeed, double shooterMotorSpeed) {
         intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
-        shooter1.set(ControlMode.PercentOutput, shooterMotorSpeed);
+        shooter3.set(ControlMode.PercentOutput, shooterMotorSpeed);
     }
 
     /**

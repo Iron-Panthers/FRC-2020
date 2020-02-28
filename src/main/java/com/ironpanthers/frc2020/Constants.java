@@ -109,12 +109,12 @@ public final class Constants {
 
         // Powers
         public static final double kIntakeRollerSpeed = 1.0;
-		public static final double kIntakeFlywheelSpeed = -.5; // tbd
+		public static final double kIntakeFlywheelSpeed = -.8; // tbd
 		public static final double kOuttakeRollerSpeed = -1.0;
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 26666;
+        public static final int kShiftEncoderDistance = 30000;
 
     }
 
