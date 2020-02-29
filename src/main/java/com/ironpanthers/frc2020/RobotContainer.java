@@ -121,8 +121,8 @@ public class RobotContainer {
 		shootFar.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
 				Constants.Shooter.kInnerGoalThreshold, limelightWrapper));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
-		shootClose.whileHeld(new ShootQuickly(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
-				Constants.Shooter.kOuterGoalThreshold,limelightWrapper));
+		shootClose.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
+				Constants.Shooter.kOuterGoalThreshold, limelightWrapper));
 		shootInitiation.whileHeld(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kInnerGoalThreshold,limelightWrapper));
 		turnToTargetButton.whenPressed(new TurnToTargetW(drive, steerer,limelightWrapper));
 		// Driver B

@@ -114,7 +114,7 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 27000;
+        public static final int kShiftEncoderDistance = 30000;
         public static final int kShiftEncoderDistanceLast = 12000;
 
 
@@ -189,12 +189,13 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
 		public static final int kInnerGoalThreshold = 200; // Good for auto, too slow for tele
-		public static final int kOuterGoalThreshold = 1600; // When speed is more important than accuracy, 750 ok, 2000 ok close
+		public static final int kOuterGoalThreshold = 500; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
-		public static final int kCloseVelocity = 10000; // Needs Testing
-		public static final int kInitiationVelocity = 11000; // Needs Testing
+		public static final int kCloseVelocity = 10000; // Tested 2/29/20
+        public static final int kInitiationVelocity = 11000; // Needs Testing
+        public static final int kCloseTrenchVelocity = 14000; // Needs Testing
 		public static final int kTestVelocity = 15000;
-		public static final int kFarVelocity = 15500;
+		public static final int kFarVelocity = 18000;
 
         public static final double kCurrentLimit = 40; // amps
     }

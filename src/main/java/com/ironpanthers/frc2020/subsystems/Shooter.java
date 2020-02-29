@@ -101,6 +101,8 @@ public class Shooter extends SubsystemBase {
      *                    position change / 100ms.
      */
     public void setVelocity(double nativeUnits) {
+        // This is to override the percent output call to shooter3, needs to follow again
+        shooter3.set(TalonFXControlMode.Follower, Constants.Shooter.kShooter1Id);
         shooter1.set(TalonFXControlMode.Velocity, nativeUnits);
     }
 

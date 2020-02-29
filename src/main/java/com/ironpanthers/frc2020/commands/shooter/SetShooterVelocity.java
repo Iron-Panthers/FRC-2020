@@ -7,6 +7,7 @@
 
 package com.ironpanthers.frc2020.commands.shooter;
 
+import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetShooterVelocity extends CommandBase {
 	private final Shooter shooter;
-	private int velocity;
+	private int velocity, tempVelocity;
 	private final int threshold;
 
 	/**
@@ -38,13 +39,14 @@ public class SetShooterVelocity extends CommandBase {
 		if (shooter.fullShotDone == true) {
 			cancel();
 		}
-		SmartDashboard.putNumber("Shooter Velocity Monkey", velocity);
+		SmartDashboard.putNumber("Shooter Velocity Monkey", Constants.Shooter.kInitiationVelocity);
+		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kInitiationVelocity);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		int tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", velocity);
+		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kInitiationVelocity);
 		if (tempVelocity != velocity) {
 			velocity = tempVelocity;
 		}
