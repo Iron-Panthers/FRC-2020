@@ -11,6 +11,7 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmToTarget extends CommandBase {
@@ -31,7 +32,12 @@ public class ArmToTarget extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		SmartDashboard.putNumber("Arm Target Position Monkey", target);
+		double tempAngle = SmartDashboard.getNumber("Arm Target Position Monkey", target);
 		arm.releaseBrake();
+		if (tempAngle != target) {
+			target = tempAngle;
+		}
 		arm.setPosition(target);
 	}
 
