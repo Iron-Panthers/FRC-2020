@@ -53,7 +53,7 @@ public class ThreeDimensionalSegment {
 
     public double getDistanceToHole(double outerGoalToHole, double distanceToOuterGoal) {
 
-        double refAngle = Math.atan( xcomp / calcHorizontalZ() );
+        double refAngle = Math.atan( xcomp / calcHorizontalZ() ); //TODO: what is this
         double goalToHoleXComp = Math.cos(refAngle) * outerGoalToHole;
         double goalToHoleZComp = Math.sin(refAngle) * outerGoalToHole;
 

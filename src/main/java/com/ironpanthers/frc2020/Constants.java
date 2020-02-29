@@ -40,7 +40,11 @@ public final class Constants {
         public static final int kLeft1Id = 1;
         public static final int kLeft2Id = 21;
         public static final int kRight1Id = 2;
-        public static final int kRight2Id = 22;
+		public static final int kRight2Id = 22;
+		
+		public static final int kShiftPort = 5;
+
+        public static final int kShifterPCMId = 5;
 
         public static final double kGearRatio = 5.10;
         public static final double kTrackWidthMeters = 0.7204688778663988; // empirical from characterization data
@@ -101,27 +105,29 @@ public final class Constants {
         // PID
         public static final int kPIDIdx = 0;
         public static final double kConveyorClosedLoopRamp = 0.6;
-        public static final double kConveyorKp = 0.13;
+        public static final double kConveyorKp = 0.216;
 
         // Powers
         public static final double kIntakeRollerSpeed = 1.0;
-		public static final double kIntakeFlywheelSpeed = -.5; // tbd
+		public static final double kIntakeFlywheelSpeed = -1.0; // tbd
 		public static final double kOuttakeRollerSpeed = -1.0;
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 18500;//was 16000 
+        public static final int kShiftEncoderDistance = 28000;
+        public static final int kShiftEncoderDistanceLast = 11000;
+
 
     }
 
     public static class Vision {
 
-        public static final String kLimelightName = "limelight-b"; 
+        public static final String kLimelightName = "limelight-a"; 
 
         /**
          * Height from ground to pivot in inches
          */
-        public static final double kGroundToPivotInches = 10.3;
+        public static final double kGroundToPivotInches = 10;
 
         /**
          * Height from ground to target in inches
@@ -131,16 +137,16 @@ public final class Constants {
         /**
          * Angle from mount to limelight in degrees
          */
-        public static final double kMountToLLAngleDeg = 18; //17
+        public static final double kMountToLLAngleDeg = 30;
 
-        public static final double kPivotToLLPlane = 23.5; //Pivot point to limelight horizontle distance in inches
-        public static final double kPivotToLL = 24.5; //Pivot point to limelight hypotonuse 
-        public static double kPivotToLLAngle = 16.42; //inverse cos of kPivotToLLPlane / kPivotToLL
+        public static final double kPivotToLL = 26.06; //Pivot point to limelight hypotonuse 
+        public static double kPivotToLLAngle = 30.9267; //inverse cos of kPivotToLLPlane / kPivotToLL
 
         /**
          * Proportional control constant
          */
         public static final double kP = 0.0175;
+
         /**
          * I value in PID
          */
@@ -161,7 +167,8 @@ public final class Constants {
         //This was taken from field measurements. The outer hole is 2 ft 5.25 inches in front of the inner hole, and the diameter of the hexagon is 2 ft 6 inches
         public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
 
-		public static double kAutoAlignTolerance = .15;
+        public static double kAutoAlignTolerance = 1;
+        
         
 		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
 		public static final double kCloseDistance = 20.0; // Inches
@@ -174,7 +181,7 @@ public final class Constants {
         public static final int kShooter2Id = 6;
 		public static final int kShooter3Id = 7;
 		
-		public static final boolean IS_SHOOTER_INVERTED = false;
+		public static final boolean IS_SHOOTER_INVERTED = true;
 
         public static final int kPIDIdx = 0;
         public static final double kF = 0.051;
@@ -182,11 +189,12 @@ public final class Constants {
         public static final double kRampRate = 0.25; // seconds 0->full
 
 		public static final int kInnerGoalThreshold = 200; // Good for auto, too slow for tele
-		public static final int kOuterGoalThreshold = 2000; // When speed is more important than accuracy, 750 ok, 2000 ok close
+		public static final int kOuterGoalThreshold = 500; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
-		public static final int kCloseVelocity = 15000; // Tested 2/11/20 by James
-		public static final int kInitiationVelocity = 16500; // Initiation Line, Tested 2/11/20
-		public static final int kTestVelocity = 18000;
+		public static final int kCloseVelocity = 10000; // Tested 2/29/20
+        public static final int kInitiationVelocity = 11000; // Needs Testing
+        public static final int kCloseTrenchVelocity = 14000; // Needs Testing
+		public static final int kTestVelocity = 15000;
 		public static final int kFarVelocity = 18000;
 
         public static final double kCurrentLimit = 40; // amps
@@ -198,43 +206,48 @@ public final class Constants {
         public static final int kHighLimitSwitchPort = 1;
         public static final int kGroundLimitSwitchPort = 0;
 
+        public static final int kCANCoderId = 0;
+        public static final int kRemoteSensorSlot = 0; // RemoteSensor0 for CANCoder
+        public static final double kCANCoderOffset = 0.0;
+
+		public static final int kBrakePort = 4; // TBD
+		
+		public static final boolean kSensorPhase = true;
+
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
-        public static final double kHorizontalHoldOutput = 0.08; // 0.08 tested 2/13/20, 12.5 volts when holding (no other subsystems running)
-        public static final double kHorizontalHoldVoltage = kHorizontalHoldOutput * 12;
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 0.15;
+        public static final double kP = 2.0; // TBD, started with 90 max error being 1.0 power, P = 1/90
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
 
         public static final double kRampRate = 0.25; // seconds 0->full
 
+        // units
+		public static final double kCanCoderCoefficient = 360.0 / 4096.0; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
         // Setpoints
-        public static final int kPositionErrorTolerance = 200;
-        public static final int kInitiationLineHeight = 47000; // Tested 2/11/20 (45400)
-        public static final int kCloseShotHeightNativeUnits = 16000; // 19 too high at 15k velocity, 15 almost too low
-        public static final int kFarShotHeightNativeUnits = 48000; // Tested angle for shooting behind control panel at
+        public static final double kPositionErrorTolerance = 0.5;
+        public static final double kInitiationLineDegrees = 45.0; // TBD
+        public static final double kCloseShotDegrees = 14.0; // Tested 2/27/20 on comp robot
+        public static final double kFarShotDegrees = 50.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
-        public static final int kFrameConstrainedHeightNativeUnits = 45000; // Height at which robot is 45 inches tall
-        public static final double encoderToAngle = 90.0 / 79300; // Empirically tested conversion
-        public static final double kDegreesPerOutputRotation = 360.0;
-        public static final double kArmReduction = 175.0; // Falcon rev to arm rev
-        // public static final double encoderToAngle = kDegreesPerOutputRotation / (kFalconCPR * kArmReduction); // Theoretical
+        public static final double kFrameHeightDegrees = 52.00; // Height at which robot is 45 inches tall
 
         // Soft Limits
-        public static final int kTopPositionNativeUnits = 88000; // Tested by James, 1/30/20
-        public static final int kBottomSoftLimit = 0;
-        public static final int kTopSoftLimit = kTopPositionNativeUnits + 500;
+        public static final double kTopPositionDegrees = 78.0; // 90 degrees, should be close to top position
+        public static final int kBottomSoftLimit = (int) (0 / kCanCoderCoefficient); // Convert into native units
+        public static final int kTopSoftLimit = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
+        public static final double kUseTopLimitRange = 40.0;
 
         // TODO(james)
-        public static final int kSlowdownThreshold = 10000; // Threshold to soft limit in which the output of the arm
+        public static final double kSlowdownThreshold = 1; // Threshold to soft limit in which the output of the arm
         // motors are scaled down
-        public static final int kBottomSlowdownZone = kBottomSoftLimit + kSlowdownThreshold;
-        public static final int kTopSlowdownZone = kTopSoftLimit - kSlowdownThreshold;
+        public static final double kBottomSlowdownZone = kBottomSoftLimit + kSlowdownThreshold;
+        public static final double kTopSlowdownZone = kTopSoftLimit - kSlowdownThreshold;
         public static final double kSlowClosedLoopPeakOutput = 0.25; // for when in a slow zone
         public static final double kClosedLoopPeakOutput = 0.5; // Used for both positive and negative direction
 

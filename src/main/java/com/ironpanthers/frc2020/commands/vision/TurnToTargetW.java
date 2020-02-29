@@ -5,61 +5,59 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.commands.intake;
+package com.ironpanthers.frc2020.commands.vision;
 
 import java.util.function.BooleanSupplier;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
-import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.subsystems.Drive;
+import com.ironpanthers.frc2020.util.LimelightWrapper;
+import com.ironpanthers.frc2020.util.SteeringAdjuster;
+import com.ironpanthers.util.Util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Intake extends CommandBase {
-	/**
-	 * Creates a new Intake.
-	 */
-	Shooter shooter;
-	ConveyorBelt conveyor;
-	BooleanSupplier button;
+public class TurnToTargetW extends CommandBase {
+	private final Drive drive;
+    private int counter;
+	SteeringAdjuster steerer;
 
-	public Intake(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button) {
-		this.button = button;
-		this.conveyor = conveyor;
-		this.shooter = shooter;
+	BooleanSupplier seeTarget;
 
-		// Use addRequirements() here to declare subsystem dependencies.
-		addRequirements(shooter, conveyor);
+	LimelightWrapper lWrapper;
+
+	public TurnToTargetW(Drive drive, SteeringAdjuster steerer, LimelightWrapper limelightWrapper) {
+		this.drive = drive;
+		this.steerer = steerer;
+		lWrapper = limelightWrapper;
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (conveyor.ballsHeld >= 5) cancel();
-	
 	}
+
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		shooter.setIntakeMotors(Constants.Conveyor.kIntakeRollerSpeed, Constants.Conveyor.kIntakeFlywheelSpeed);
+        drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
+        SmartDashboard.putNumber("fuko", steerer.getLeftSteeringAdjust());
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		shooter.setIntakeMotors(0, 0);	
-		if (!interrupted && conveyor.ballsHeld < 5) {
-			conveyor.ballsHeld++;	
-		} else if (interrupted && !conveyor.getBannerSensor()) {
-            conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
-        }
-		
+		drive.setOutputPercent(0.0, 0.0);
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (conveyor.getBannerSensor()) {
+		if (Util.epsilonEquals(lWrapper.getTableX(), steerer.getInnerHoleAdjust(), Constants.Vision.kAutoAlignTolerance)) {
+			counter++;
+		}
+		if (counter >= 10 || steerer.adjustedSteeringValue == 0) {
 			return true;
 		} else {
 			return false;

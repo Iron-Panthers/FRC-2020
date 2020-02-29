@@ -7,6 +7,7 @@
 
 package com.ironpanthers.frc2020.commands.shooter;
 
+import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
@@ -17,10 +18,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetShooterVelocity extends CommandBase {
 	private final Shooter shooter;
-	private int velocity;
+	private int velocity, tempVelocity;
 	private final int threshold;
-	private ConveyorBelt conveyorBelt;
-	private LimelightWrapper lWrapper;
 
 	/**
 	 * Creates a new ShootAtVelocity.
@@ -30,8 +29,6 @@ public class SetShooterVelocity extends CommandBase {
 		this.shooter = shooter;
 		this.velocity = velocity;
 		this.threshold = threshold;
-		this.conveyorBelt = conveyorBelt;
-		this.lWrapper = lWrapper;
 		addRequirements(shooter);
 		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}
@@ -42,11 +39,17 @@ public class SetShooterVelocity extends CommandBase {
 		if (shooter.fullShotDone == true) {
 			cancel();
 		}
+		SmartDashboard.putNumber("Shooter Velocity Monkey", Constants.Shooter.kInitiationVelocity);
+		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kInitiationVelocity);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kInitiationVelocity);
+		if (tempVelocity != velocity) {
+			velocity = tempVelocity;
+		}
 		// velocity = (int) SmartDashboard.getNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 		if (shooter.fullShotDone == true) {
 			cancel();
@@ -66,10 +69,6 @@ public class SetShooterVelocity extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (Util.epsilonEquals(shooter.getVelocity(), velocity, threshold)) {
-			return true;
-		} else {
-			return false;
-		}
+		return Util.epsilonEquals(shooter.getVelocity(), velocity, threshold);
 	}
 }

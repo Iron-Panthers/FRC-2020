@@ -41,7 +41,8 @@ public class TurnToTarget extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		steerer.updateSteeringValues();
+		//calls with 0.0 as param because we are aiming at the center of the target
+		steerer.updateSteeringValues(0.0);
 		drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
 	}
 

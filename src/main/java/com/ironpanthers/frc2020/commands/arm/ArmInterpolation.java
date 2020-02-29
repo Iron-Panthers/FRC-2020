@@ -39,7 +39,7 @@ public class ArmInterpolation extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (conveyorBelt.ballsHeld <= 0) { // we have no balls or mis-indexed TODO reconsider
+    if (conveyorBelt.ballsHeld == 0) { 
       lWrapper.turnOffLight();
       cancel();
     }

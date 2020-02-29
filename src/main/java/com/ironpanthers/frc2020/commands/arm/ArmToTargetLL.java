@@ -15,13 +15,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmToTargetLL extends CommandBase {
 	private Arm arm;
-	private int target;
+	private double target;
 	private LimelightWrapper lWrapper;
 
 	/**
 	 * Creates a new ArmToTarget.
 	 */
-	public ArmToTargetLL(Arm arm, int target, LimelightWrapper lWrapper) {
+	public ArmToTargetLL(Arm arm, double target, LimelightWrapper lWrapper) {
 		this.arm = arm;
 		this.target = target;
 		this.lWrapper = lWrapper;
@@ -50,6 +50,6 @@ public class ArmToTargetLL extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Math.abs(arm.getPosition() - target) < Constants.Arm.kPositionErrorTolerance;
+		return Math.abs(arm.getAngle() - target) < Constants.Arm.kPositionErrorTolerance;
 	}
 }

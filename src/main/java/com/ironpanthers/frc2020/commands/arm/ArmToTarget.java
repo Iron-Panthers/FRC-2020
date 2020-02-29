@@ -11,20 +11,20 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmToTarget extends CommandBase {
 	private Arm arm;
-	private int target;
-	private LimelightWrapper lWrapper;
+	private double target;
 
 	/**
 	 * Creates a new ArmToTarget.
+	 * @param double target in degrees
 	 */
-	public ArmToTarget(Arm arm, int target, LimelightWrapper lWrapper) {
+	public ArmToTarget(Arm arm, double angle, LimelightWrapper lWrapper) {
 		this.arm = arm;
-		this.target = target;
-		this.lWrapper = lWrapper;
+		this.target = angle;
 		addRequirements(arm);
 		// Use addRequirements() here to declare subsystem dependencies.
 	}
@@ -32,6 +32,12 @@ public class ArmToTarget extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		SmartDashboard.putNumber("Arm Target Position Monkey", target);
+		double tempAngle = SmartDashboard.getNumber("Arm Target Position Monkey", target);
+		arm.releaseBrake();
+		if (tempAngle != target) {
+			target = tempAngle;
+		}
 		arm.setPosition(target);
 	}
 
@@ -49,6 +55,6 @@ public class ArmToTarget extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Math.abs(arm.getPosition() - target) < Constants.Arm.kPositionErrorTolerance;
+		return Math.abs(arm.getAngle() - target) < Constants.Arm.kPositionErrorTolerance;
 	}
 }

@@ -3,7 +3,7 @@ package com.ironpanthers.frc2020.commands.drive;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import com.ironpanthers.util.PoseLoggingTable;
+import com.ironpanthers.util.Dashboard;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -165,7 +165,7 @@ public class ReportingRAMSETECommand extends CommandBase {
         m_prevTime = curTime;
         m_prevSpeeds = targetWheelSpeeds;
 
-        PoseLoggingTable.getInstance().publishPathSample(trajectorySample.poseMeters);
+        Dashboard.getInstance().publishPathSample(trajectorySample.poseMeters);
     }
 
     @Override

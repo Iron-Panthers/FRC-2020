@@ -3,14 +3,16 @@ package com.ironpanthers.util;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.util.Units;
 
-public class PoseLoggingTable {
+// read in metric, publish in feet
+public class Dashboard {
 
-    private static PoseLoggingTable instance = null;
+    private static Dashboard instance = null;
 
-    public static PoseLoggingTable getInstance() {
+    public static Dashboard getInstance() {
         if (instance == null) {
-            instance = new PoseLoggingTable();
+            instance = new Dashboard();
         }
         return instance;
     }
@@ -25,7 +27,7 @@ public class PoseLoggingTable {
 
     private final NetworkTableEntry followingPath;
 
-    private PoseLoggingTable() {
+    private Dashboard() {
         var table = NetworkTableInstance.getDefault().getTable("Live_Dashboard");
         robotX = table.getEntry("robotX");
         robotY = table.getEntry("robotY");
@@ -40,14 +42,22 @@ public class PoseLoggingTable {
     }
 
     public void publishRobotPose(Pose2d pose) {
-        this.robotX.setDouble(pose.getTranslation().getX());
-        this.robotY.setDouble(pose.getTranslation().getY());
+        this.robotX.setDouble(Units.metersToFeet(
+            pose.getTranslation().getX()
+        ));
+        this.robotY.setDouble(Units.metersToFeet(
+            pose.getTranslation().getY()
+        ));
         this.robotHeading.setDouble(pose.getRotation().getRadians());
     }
 
     public void publishPathSample(Pose2d pose) {
-        this.pathX.setDouble(pose.getTranslation().getX());
-        this.pathY.setDouble(pose.getTranslation().getY());
+        this.pathX.setDouble(Units.metersToFeet(
+            pose.getTranslation().getX()
+        ));
+        this.pathY.setDouble(Units.metersToFeet(
+            pose.getTranslation().getY()
+        ));
         this.pathHeading.setDouble(pose.getRotation().getRadians());
         publishPathFollowing(true);
     }

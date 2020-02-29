@@ -28,6 +28,5 @@ public class ShootQuickly extends SequentialCommandGroup {
 		// super(new FooCommand(), new BarCommand());
 	super(new SetShooterVelocity(shooter, Constants.Shooter.kFarVelocity, threshold, conveyor, lWrapper), new ShiftConveyor(Direction.kOut, conveyor),new ShiftConveyor(Direction.kOut, conveyor),new ShiftConveyor(Direction.kOut, conveyor),new ShiftConveyor(Direction.kOut, conveyor),new ShiftConveyor(Direction.kOut, conveyor));
 	
-		//TODO:Need working banner sensor
 	}
 }

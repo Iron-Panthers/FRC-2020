@@ -26,18 +26,19 @@ public class ArmHold extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		arm.stop();
+		arm.engageBrake();
 	}
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    arm.setPower(arm.getFeedForward());
-  }
+	// Called every time the scheduler runs while the command is scheduled.
+	@Override
+	public void execute() {
+	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		arm.stop();
+		arm.releaseBrake();
 	}
 
 	// Returns true when the command should end.

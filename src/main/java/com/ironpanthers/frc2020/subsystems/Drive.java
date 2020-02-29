@@ -1,15 +1,17 @@
 package com.ironpanthers.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.util.PhoenixUtil;
-import com.ironpanthers.util.PoseLoggingTable;
+import com.ironpanthers.util.Dashboard;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -31,6 +33,8 @@ public class Drive extends SubsystemBase {
 
     private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
+    private final Solenoid shifter = new Solenoid(Constants.Drive.kShifterPCMId);
+
     private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
             Constants.Drive.kTrackWidthMeters);
     private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(heading());
@@ -44,11 +48,13 @@ public class Drive extends SubsystemBase {
 
     private Pose2d currentPose = new Pose2d();
 
-    private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconEPR * 5.1)) * 2
-            * Constants.Drive.kWheelRadiusMeters * Math.PI;
+    // Gear variant
+    private final double kEncoderToDistanceFactor = (1 / (Constants.kFalconCPR * 5.1))
+            * Constants.Drive.kWheelDiameterMeters * Math.PI;
 
     /**
-     * Create a new Drive subsystem.
+     * Create a new Drive subsystem. As usual, only one of these should ever be
+     * constructed.
      */
     public Drive() {
         left1.configFactoryDefault();
@@ -66,10 +72,16 @@ public class Drive extends SubsystemBase {
 
         left2.setInverted(InvertType.FollowMaster);
 
+        left1.setNeutralMode(NeutralMode.Coast);
+        left2.setNeutralMode(NeutralMode.Coast);
+
         right1.setInverted(false);
         right1.setSensorPhase(false);
 
         right2.setInverted(InvertType.FollowMaster);
+
+        right1.setNeutralMode(NeutralMode.Coast);
+        right2.setNeutralMode(NeutralMode.Coast);
 
         SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
                 Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentLimit, 1);
@@ -79,13 +91,16 @@ public class Drive extends SubsystemBase {
         right1.configOpenloopRamp(Constants.Drive.kRampRate);
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
+
+        // Start by shifting low
+        shiftLow();
     }
 
     public Rotation2d heading() {
         return Rotation2d.fromDegrees(gyro.getAngle());
     }
 
-    public DifferentialDriveWheelSpeeds speeds() {
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(// CONVERSION FROM ENCODER TO LEFT AND RIGHT SPEEDS (METERS PER SECOND):
                 left1.getSelectedSensorVelocity() * kEncoderToDistanceFactor * 10,
                 right1.getSelectedSensorVelocity() * kEncoderToDistanceFactor * 10);
@@ -107,24 +122,34 @@ public class Drive extends SubsystemBase {
         return right1.getSelectedSensorPosition() * kEncoderToDistanceFactor;
     }
 
-    public DifferentialDriveKinematics kinematics() {
+    public DifferentialDriveKinematics getKinematics() {
         return kinematics;
     }
 
-    public Pose2d currentPose() {
+    public Pose2d getCurrentPose() {
         return currentPose;
     }
 
-    public SimpleMotorFeedforward ff() {
+    public SimpleMotorFeedforward getFeedforward() {
         return characterizedFeedforward;
     }
 
-    public PIDController leftPIDController() {
+    public PIDController getLeftPIDController() {
         return left;
     }
 
-    public PIDController rightPIDController() {
+    public PIDController getRightPIDController() {
         return right;
+    }
+
+    // TODO verify shifter behaves as expected
+
+    public void shiftHigh() {
+        shifter.set(true);
+    }
+
+    public void shiftLow() {
+        shifter.set(false);
     }
 
     // OUTPUT-WRITING METHODS
@@ -181,13 +206,13 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
         SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
         SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
-        SmartDashboard.putString("drive/wheelSpeeds", speeds().toString());
+        SmartDashboard.putString("drive/wheelSpeeds", getWheelSpeeds().toString());
         SmartDashboard.putString("drive/heading", heading().toString());
         SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
         SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
         SmartDashboard.putString("drive/currentPose", currentPose.toString());
 
         currentPose = odometry.update(heading, leftDistanceMeters, rightDistanceMeters);
-        PoseLoggingTable.getInstance().publishRobotPose(currentPose);
+        Dashboard.getInstance().publishRobotPose(currentPose);
     }
 }
