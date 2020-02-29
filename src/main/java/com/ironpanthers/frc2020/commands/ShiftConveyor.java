@@ -2,7 +2,6 @@ package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
-import com.ironpanthers.frc2020.commands.intake.LastBall;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence2;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
