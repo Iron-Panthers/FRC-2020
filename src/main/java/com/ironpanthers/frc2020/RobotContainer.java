@@ -54,7 +54,7 @@ public class RobotContainer {
 	private final Shooter shooter = new Shooter();
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	private final Arm arm = new Arm(limelightWrapper);
-	private final SteeringAdjuster steerer = new SteeringAdjuster(limelightWrapper, arm::getHorizontalDistance2, arm);
+	private final SteeringAdjuster steerer = new SteeringAdjuster(limelightWrapper, arm::getHorizontalDistance, arm);
 	
 	private final AutoSelector autoSelector = new AutoSelector();
 

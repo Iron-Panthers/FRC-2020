@@ -172,7 +172,7 @@ public class SteeringAdjuster {
         // SmartDashboard.putNumber("bottom left y: ", blefty);
         // SmartDashboard.putNumber("bottom right x: ", brightx);
         // SmartDashboard.putNumber("bottom right y: ", brighty);
-        SmartDashboard.putNumber("horizontal distance from target: ", arm.getHorizontalDistance2());
+        SmartDashboard.putNumber("horizontal distance from target: ", arm.getHorizontalDistance());
         SmartDashboard.putNumber("diagonal distance from target: ", arm.getDiagonalDistance());
 
         ThreeDimensionalSegment topLine = new ThreeDimensionalSegment(tleftx, tlefty, trightx, trighty,
@@ -183,7 +183,7 @@ public class SteeringAdjuster {
 
         // average of the estimated angles using the top and bottom lines
         double offsetAngle = topLine.getOffsetAngle(
-                topLine.magnitude * Constants.Vision.kOuterToHoleDistancePerTlLength, arm.getHorizontalDistance2());
+                topLine.magnitude * Constants.Vision.kOuterToHoleDistancePerTlLength, arm.getHorizontalDistance());
 
         // For debugging purposes, put the computed offset angle (SANS SGN! not reflective of the true target)
         SmartDashboard.putNumber("hole offset angle: ", offsetAngle);

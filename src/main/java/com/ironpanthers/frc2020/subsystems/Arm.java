@@ -130,6 +130,9 @@ public class Arm extends SubsystemBase {
         return Math.sqrt(Math.pow(Constants.Vision.kPivotToLL, 2) - Math.pow(getPivotToLLHorizontleD(getAngle()), 2))
                 + Constants.Vision.kGroundToPivotInches;
     }
+    public double getAngleTrig() {
+        return Math.toDegrees(Math.asin((getHeight2()-10)/Constants.Vision.kPivotToLL)) - 30;
+    }
 
     public double getPivotToLLHorizontleD(double angle) {
         return Constants.Vision.kPivotToLL * Math.cos((angle + Constants.Vision.kPivotToLLAngle) * Math.PI / 180);
@@ -152,34 +155,19 @@ public class Arm extends SubsystemBase {
         return 90 - Constants.Vision.kMountToLLAngleDeg - getAngle() + limelight.getTableY();
     }
 
+    
     public double getHorizontalDistance() {
         limelight.periodic();
         double HorizontalDistance = 0;
         double offset = getPivotToLLHorizontleD(getAngle())
                 - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
-        if (limelight.getTableY() >= 0) {
-            HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight())
-                    / (Math.tan(Math.toRadians(getHAnlge()))) - offset;
-        } else {
-            HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight())
-                    / (Math.tan(Math.toRadians(getHAnlge())));
-        }
-
-        return HorizontalDistance;
-    }// inches
-
-    public double getHorizontalDistance2() {
-        limelight.periodic();
-        double HorizontalDistance = 0;
-        double offset = getPivotToLLHorizontleD(getAngle())
-                - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
         HorizontalDistance = (Constants.Vision.kGroundToTargetInches - getHeight2())
-                / (Math.tan(Math.toRadians(getHAnlge()))) - offset;
+                / (Math.tan(Math.toRadians(getHAnlge()))) + offset;
         return HorizontalDistance;
     }
 
     public double getDiagonalDistance() {
-        return Math.sqrt(Math.pow(Constants.Vision.kGroundToTargetInches - getHeight(), 2) + Math.pow(getHorizontalDistance2(), 2));
+        return Math.sqrt(Math.pow(Constants.Vision.kGroundToTargetInches - getHeight(), 2) + Math.pow(getHorizontalDistance(), 2));
     }
 
     public int getPosition() {
@@ -230,15 +218,19 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         if (getGroundLimitPressed()) {
-            setZero();
+            // setZero();
         } /*else if (getHighLimitPressed()) {
             setSensorPosition(Constants.Arm.kTopPositionDegrees);
         }*/
         SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
         SmartDashboard.putNumber("Arm Angle", getAngle());
-        SmartDashboard.putNumber("Arm Position", getPosition());
-        SmartDashboard.putNumber("CANCoder Raw Position", canCoder.getPosition());
-        SmartDashboard.putNumber("CANCoder Abs Position", canCoder.getAbsolutePosition());
-        SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance2());
+        SmartDashboard.putNumber("Arm Height", getHeight2());
+        SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance());
+        SmartDashboard.putNumber("offset", getLlOffset());
+        SmartDashboard.putNumber("hAngle", getHAnlge());
+        SmartDashboard.putNumber("GetAngleTrig", getAngleTrig());
+        SmartDashboard.putNumber("Height Difference", Constants.Vision.kGroundToTargetInches - getHeight());
+
+
     }
 }
