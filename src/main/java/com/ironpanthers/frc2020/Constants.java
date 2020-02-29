@@ -114,8 +114,8 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 30000;
-        public static final int kShiftEncoderDistanceLast = 12000;
+        public static final int kShiftEncoderDistance = 28000;
+        public static final int kShiftEncoderDistanceLast = 11000;
 
 
     }
