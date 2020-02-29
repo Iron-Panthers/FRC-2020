@@ -48,7 +48,6 @@ public class Intake extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		shooter.setIntakeMotors(0, 0);	
-
 		if (!interrupted && conveyor.ballsHeld < 5) {
 			conveyor.ballsHeld++;	
 		} else if (interrupted && !conveyor.getBannerSensor()) {

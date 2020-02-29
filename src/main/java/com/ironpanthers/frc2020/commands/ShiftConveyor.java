@@ -2,6 +2,7 @@ package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
+import com.ironpanthers.frc2020.commands.intake.LastBall;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence2;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
@@ -93,8 +94,10 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         conveyor.stop();
+        
         if (isShoot) {
             conveyor.ballsHeld--;
+            conveyor.lastBallRan = false;
             if (conveyor.ballsHeld > 0) {
                 CommandScheduler.getInstance()
                         .schedule(new ShooterSequence2(arm, shooter, conveyor, shooter.velocity, threshold, lWrapper));
@@ -107,6 +110,11 @@ public class ShiftConveyor extends CommandBase {
         if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {
             conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
         }
+        if (conveyor.ballsHeld == 5 && !conveyor.lastBallRan && (direction == Direction.kIn)) {
+            CommandScheduler.getInstance().schedule(new LastBall(conveyor));
+            conveyor.lastBallRan = true;
+        }
+        
     }
 
     // Returns true when the command should end.

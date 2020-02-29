@@ -18,8 +18,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ConveyorBelt extends SubsystemBase {
 	public TalonFX conveyorMotor;
 	public DigitalInput input;
+	public boolean lastBallRan;
+
 	// TODO only conditionally initialize with 3?
-	public int ballsHeld = 3;
+	public int ballsHeld = 0;
 
 	/**
 	 * Create a new ConveyorBelt subsystem. As usual, only one of these should ever be constructed.
@@ -60,6 +62,8 @@ public class ConveyorBelt extends SubsystemBase {
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("ballsHeld", ballsHeld);
+		SmartDashboard.putBoolean("lastBallRan", lastBallRan);
+
 		// This method will be called once per scheduler run
 	}
 }
