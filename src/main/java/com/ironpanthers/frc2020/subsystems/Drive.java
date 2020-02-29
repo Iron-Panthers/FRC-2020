@@ -1,6 +1,7 @@
 package com.ironpanthers.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -71,10 +72,16 @@ public class Drive extends SubsystemBase {
 
         left2.setInverted(InvertType.FollowMaster);
 
+        left1.setNeutralMode(NeutralMode.Coast);
+        left2.setNeutralMode(NeutralMode.Coast);
+
         right1.setInverted(false);
         right1.setSensorPhase(false);
 
         right2.setInverted(InvertType.FollowMaster);
+
+        right1.setNeutralMode(NeutralMode.Coast);
+        right2.setNeutralMode(NeutralMode.Coast);
 
         SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
                 Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentLimit, 1);

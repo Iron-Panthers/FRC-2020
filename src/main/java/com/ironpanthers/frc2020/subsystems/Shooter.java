@@ -101,6 +101,8 @@ public class Shooter extends SubsystemBase {
      *                    position change / 100ms.
      */
     public void setVelocity(double nativeUnits) {
+        // This is to override the percent output call to shooter3, needs to follow again
+        shooter3.set(TalonFXControlMode.Follower, Constants.Shooter.kShooter1Id);
         shooter1.set(TalonFXControlMode.Velocity, nativeUnits);
     }
 
@@ -175,7 +177,7 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Shooter Velocity", getVelocity());
         // This method will be called once per scheduler run
-        SmartDashboard.putNumber("Shooter Velocity", shooter3.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Pre Accel Velocity", shooter3.getSelectedSensorVelocity());
 
         
     }
