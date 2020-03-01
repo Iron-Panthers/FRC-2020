@@ -83,12 +83,18 @@ public class Drive extends SubsystemBase {
         right1.setNeutralMode(NeutralMode.Brake);
         right2.setNeutralMode(NeutralMode.Brake);
 
-        SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-                Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentLimit, 1);
-        left1.configSupplyCurrentLimit(currentConfig);
-        left2.configSupplyCurrentLimit(currentConfig);
-        right1.configSupplyCurrentLimit(currentConfig);
-        right2.configSupplyCurrentLimit(currentConfig);
+        // SupplyCurrentLimitConfiguration currentConfig1 = new SupplyCurrentLimitConfiguration(true,
+        //         Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentTrigger, Constants.Drive.kCurrentLimitSeconds);
+        // SupplyCurrentLimitConfiguration currentConfig2 = new SupplyCurrentLimitConfiguration(true,
+        // Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentTrigger, Constants.Drive.kCurrentLimitSeconds);
+        // SupplyCurrentLimitConfiguration currentConfig3 = new SupplyCurrentLimitConfiguration(true,
+        // Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentTrigger, Constants.Drive.kCurrentLimitSeconds);
+        // SupplyCurrentLimitConfiguration currentConfig4 = new SupplyCurrentLimitConfiguration(true,
+        // Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentTrigger, Constants.Drive.kCurrentLimitSeconds);
+        // left1.configSupplyCurrentLimit(currentConfig1);
+        // left2.configSupplyCurrentLimit(currentConfig2);
+        // right1.configSupplyCurrentLimit(currentConfig3);
+        // right2.configSupplyCurrentLimit(currentConfig4);
         left1.configOpenloopRamp(Constants.Drive.kRampRate);
         left2.configOpenloopRamp(Constants.Drive.kRampRate);
         right1.configOpenloopRamp(Constants.Drive.kRampRate);
