@@ -45,8 +45,8 @@ public class SetShooterVelocity extends CommandBase {
 		if (shooter.fullShotDone == true) {
 			cancel();
 		}
-		SmartDashboard.putNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
-		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
+		// SmartDashboard.putNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
+		// tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
 		timer.reset();
 		timer.start();
 	}
@@ -54,11 +54,10 @@ public class SetShooterVelocity extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
-		if (tempVelocity != velocity) {
-			velocity = tempVelocity;
-		}
-		// velocity = (int) SmartDashboard.getNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
+		// tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
+		// if (tempVelocity != velocity) {
+		// 	velocity = tempVelocity;
+		// }
 		if (shooter.fullShotDone == true) {
 			cancel();
 		}
