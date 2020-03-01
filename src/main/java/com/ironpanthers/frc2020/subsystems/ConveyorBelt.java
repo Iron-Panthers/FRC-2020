@@ -22,17 +22,31 @@ public class ConveyorBelt extends SubsystemBase {
 
 	// TODO only conditionally initialize with 3?
 	public int ballsHeld = 0;
+	
+	private boolean usingPositionGains;
 
 	/**
-	 * Create a new ConveyorBelt subsystem. As usual, only one of these should ever be constructed.
+	 * Create a new ConveyorBelt subsystem. As usual, only one of these should ever
+	 * be constructed.
 	 */
 	public ConveyorBelt() {
 		input = new DigitalInput(Constants.Conveyor.kBannerSensorPort);
 		conveyorMotor = new TalonFX(Constants.Conveyor.kConveyorMotorId);
 		conveyorMotor.setInverted(false);
-		conveyorMotor.config_kP(Constants.Conveyor.kPIDIdx, Constants.Conveyor.kConveyorKp);
+
+		conveyorMotor.config_kP(Constants.Conveyor.kPIDIdx, Constants.Conveyor.kConveyorPositionKp);
+		usingPositionGains = true;
+
 		conveyorMotor.configClosedloopRamp(Constants.Conveyor.kConveyorClosedLoopRamp);
 		conveyorMotor.setSelectedSensorPosition(0);
+	}
+
+	private void config_kP(boolean positionControl) {
+		if (positionControl)
+			conveyorMotor.config_kP(Constants.Conveyor.kPIDIdx, Constants.Conveyor.kConveyorPositionKp);
+		else
+			conveyorMotor.config_kP(Constants.Conveyor.kPIDIdx, Constants.Conveyor.kConveyorVelocityKp);
+
 	}
 
 	public int getPosition() {
@@ -43,7 +57,17 @@ public class ConveyorBelt extends SubsystemBase {
 		return input.get();
 	}
 
+	public void setVelocity(double velocitySTU) {
+		if (usingPositionGains)
+			config_kP(false);
+
+		conveyorMotor.set(TalonFXControlMode.Velocity, velocitySTU);
+	}
+
 	public void setPosition(double ticks) {
+		if (!usingPositionGains)
+			config_kP(true);
+
 		conveyorMotor.set(TalonFXControlMode.Position, ticks);
 	}
 

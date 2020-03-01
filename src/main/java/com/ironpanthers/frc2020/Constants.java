@@ -107,7 +107,8 @@ public final class Constants {
         // PID
         public static final int kPIDIdx = 0;
         public static final double kConveyorClosedLoopRamp = 0.6;
-        public static final double kConveyorKp = 0.216;
+        public static final double kConveyorPositionKp = 0.216;
+        public static final double kConveyorVelocityKp = 0.0; // TODO pick
 
         // Powers
         public static final double kIntakeRollerSpeed = 1.0;
@@ -118,7 +119,6 @@ public final class Constants {
         public static final int kPositionErrorTolerance = 350;
         public static final int kShiftEncoderDistance = 25000;
         public static final int kShiftEncoderDistanceLast = 11000;
-
 
     }
 
