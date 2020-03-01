@@ -11,6 +11,7 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
+import com.ironpanthers.util.CircularBuffer;
 import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,6 +21,7 @@ public class SetShooterVelocity extends CommandBase {
 	private final Shooter shooter;
 	private int velocity, tempVelocity;
 	private final int threshold;
+	private final CircularBuffer buffer;
 
 	/**
 	 * Creates a new ShootAtVelocity.
@@ -30,6 +32,7 @@ public class SetShooterVelocity extends CommandBase {
 		this.velocity = velocity;
 		this.threshold = threshold;
 		addRequirements(shooter);
+		buffer = new CircularBuffer(100);
 		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}
 
@@ -39,14 +42,14 @@ public class SetShooterVelocity extends CommandBase {
 		if (shooter.fullShotDone == true) {
 			cancel();
 		}
-		SmartDashboard.putNumber("Shooter Velocity Monkey", Constants.Shooter.kInitiationVelocity);
-		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kInitiationVelocity);
+		SmartDashboard.putNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
+		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kInitiationVelocity);
+		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
 		if (tempVelocity != velocity) {
 			velocity = tempVelocity;
 		}
@@ -56,6 +59,8 @@ public class SetShooterVelocity extends CommandBase {
 		}
 		SmartDashboard.putBoolean("fullShotDone", shooter.fullShotDone);
 		shooter.setVelocity(velocity);
+		buffer.addValue(shooter.getVelocity());
+		SmartDashboard.putNumber("Buffer Velocity", buffer.getAverage());
 	}
 
 	// Called once the command ends or is interrupted.
@@ -69,6 +74,6 @@ public class SetShooterVelocity extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(shooter.getVelocity(), velocity, threshold);
+		return Util.epsilonEquals(buffer.getAverage(), velocity, threshold);
 	}
 }

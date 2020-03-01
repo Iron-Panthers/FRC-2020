@@ -61,8 +61,8 @@ public class ConveyorBelt extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("ballsHeld", ballsHeld);
-		SmartDashboard.putBoolean("lastBallRan", lastBallRan);
+		// SmartDashboard.putNumber("ballsHeld", ballsHeld);
+		// SmartDashboard.putBoolean("lastBallRan", lastBallRan);
 
 		// This method will be called once per scheduler run
 	}

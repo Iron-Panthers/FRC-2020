@@ -222,14 +222,14 @@ public class Arm extends SubsystemBase {
         } /*else if (getHighLimitPressed()) {
             setSensorPosition(Constants.Arm.kTopPositionDegrees);
         }*/
-        SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
-        SmartDashboard.putNumber("Arm Angle", getAngle());
-        SmartDashboard.putNumber("Arm Height", getHeight2());
+        // SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
+        // SmartDashboard.putNumber("Arm Angle", getAngle());
+        // SmartDashboard.putNumber("Arm Height", getHeight2());
         SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance());
-        SmartDashboard.putNumber("offset", getLlOffset());
-        SmartDashboard.putNumber("hAngle", getHAnlge());
-        SmartDashboard.putNumber("GetAngleTrig", getAngleTrig());
-        SmartDashboard.putNumber("Height Difference", Constants.Vision.kGroundToTargetInches - getHeight());
+        // SmartDashboard.putNumber("offset", getLlOffset());
+        // SmartDashboard.putNumber("hAngle", getHAnlge());
+        // SmartDashboard.putNumber("GetAngleTrig", getAngleTrig());
+        // SmartDashboard.putNumber("Height Difference", Constants.Vision.kGroundToTargetInches - getHeight());
 
 
     }
