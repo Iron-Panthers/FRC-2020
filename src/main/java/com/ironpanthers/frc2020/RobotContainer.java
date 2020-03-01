@@ -18,6 +18,7 @@ import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.ManualConveyor;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
+import com.ironpanthers.frc2020.commands.intake.ResetBallsHeld;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
@@ -92,6 +93,7 @@ public class RobotContainer {
 	// Constants.OI.kLimelightTest);
 	// private final JoystickButton fullShooterSequence = new JoystickButton(joystickB, 4);
 	private final JoystickButton manualConveyor = new JoystickButton(joystickB, Constants.OI.kMoveConveyorButton);
+	private final JoystickButton resetBallsHeld = new JoystickButton(joystickB, Constants.OI.kResetBallsHeld);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -147,7 +149,7 @@ public class RobotContainer {
 		// 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
 		manualConveyor.whileHeld(new ManualConveyor(conveyorBelt));
 		// getDistance.whileHeld(new VisionTesting(limelightWrapper, arm));
-
+		resetBallsHeld.whenPressed(new ResetBallsHeld(conveyorBelt));
 	}
 
 	public void smartDashboard() {

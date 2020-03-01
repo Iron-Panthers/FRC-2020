@@ -92,6 +92,7 @@ public final class Constants {
 		// public static final int kZeroArmButton = 7;
 		// public static final int kFramePerimeterHeightButton = 9;
 		public static final int kMoveConveyorButton = 4;
+		public static final int kResetBallsHeld = 5;
         public static final int kCloseShotButton = kCloseShotButtonNumber;
         public static final int kFarShotButton = kFarShotButtonNumber;
         public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
