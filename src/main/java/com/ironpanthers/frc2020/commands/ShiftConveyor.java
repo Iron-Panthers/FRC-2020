@@ -26,7 +26,6 @@ public class ShiftConveyor extends CommandBase {
     private Shooter shooter;
     private LimelightWrapper lWrapper;
     private int threshold;
-    private Arm arm;
 
     /**
      * Create a new ShiftConveyor command to shift the conveyor stack by one
@@ -50,9 +49,8 @@ public class ShiftConveyor extends CommandBase {
     }
 
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter, int threshold,
-            LimelightWrapper lWrapper, Arm arm) {
+            LimelightWrapper lWrapper) {
         this.direction = direction;
-        this.arm = arm;
         this.conveyor = conveyor;
         isShoot = true;
         this.shooter = shooter;
@@ -105,10 +103,9 @@ public class ShiftConveyor extends CommandBase {
             conveyor.lastBallRan = false;
             if (conveyor.ballsHeld > 0) {
                 CommandScheduler.getInstance()
-                        .schedule(new ShooterSequence2(arm, shooter, conveyor, shooter.velocity, threshold, lWrapper));
+                        .schedule(new ShooterSequence2(shooter, conveyor, shooter.velocity, threshold, lWrapper));
             } else {
                 shooter.stopShooter();
-                CommandScheduler.getInstance().schedule(new ArmToTarget(arm, 0, lWrapper));
                 lWrapper.turnOffLight();
             }
         }
