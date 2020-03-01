@@ -62,8 +62,8 @@ public final class Constants {
         public static final double kP = 2.6;
 
         public static final double kCurrentLimit = 20.0; // amps
-        public static final double kCurrentTrigger = 60.0;
-        public static final double kCurrentLimitSeconds = 1;
+        public static final double kCurrentTrigger = 40.0;
+        public static final double kCurrentLimitSeconds = 0.5;
         public static final double kRampRate = 0.5; // seconds to full power
     }
 
@@ -71,7 +71,8 @@ public final class Constants {
         public static final int kCloseShotButtonNumber = 12;
         public static final int kInitiationLineShotButtonNumber = 10;
         public static final int kFarShotButtonNumber = 11;
-        // Driver A
+		// Driver A
+		public static final int kDriveShiftButton = 2;
         public static final int kStopShooterButton = 3;
         public static final int kDriverAJoystickPort = 0;
         public static final int kIntakeButton = 4;
@@ -90,6 +91,7 @@ public final class Constants {
 		// public static final int kEmergencyIntakeButton = 5;
 		// public static final int kZeroArmButton = 7;
 		// public static final int kFramePerimeterHeightButton = 9;
+		public static final int kMoveConveyorButton = 4;
         public static final int kCloseShotButton = kCloseShotButtonNumber;
         public static final int kFarShotButton = kFarShotButtonNumber;
         public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
@@ -114,6 +116,7 @@ public final class Constants {
         public static final double kIntakeRollerSpeed = 1.0;
 		public static final double kIntakeFlywheelSpeed = -1.0; // tbd
 		public static final double kOuttakeRollerSpeed = -1.0;
+		public static final double kManualConveyorSpeed = 0.25;
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
