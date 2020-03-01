@@ -73,7 +73,6 @@ public final class Constants {
         public static final int kFarShotButtonNumber = 11;
 		// Driver A
 		public static final int kDriveShiftButton = 2;
-        public static final int kStopShooterButton = 3;
         public static final int kDriverAJoystickPort = 0;
         public static final int kIntakeButton = 4;
         // public static final int kResetConveyorButton = 3;
@@ -87,6 +86,7 @@ public final class Constants {
         public static final int kManualArmButton = 1;
 		public static final int kDriverBIntakeButton = 2;
 		public static final int kEmergencyOuttakeButton = 3;
+		public static final int kStopShooterButton = 6;
 		// public static final int kLimelightTest = 4;
 		// public static final int kEmergencyIntakeButton = 5;
 		// public static final int kZeroArmButton = 7;

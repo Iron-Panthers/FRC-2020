@@ -63,7 +63,7 @@ public class RobotContainer {
 
 	// Driver A Buttons
 	private final JoystickButton driveShift = new JoystickButton(joystickA, Constants.OI.kDriveShiftButton);
-	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA,
+	private final JoystickButton driverBStopShooterButton = new JoystickButton(joystickB,
 			Constants.OI.kStopShooterButton); // 3
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
 	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign); // 6
@@ -122,13 +122,13 @@ public class RobotContainer {
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
 		shootFar.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
 				Constants.Shooter.kInnerGoalThreshold, limelightWrapper));
-		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
 		shootClose.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
 				Constants.Shooter.kOuterGoalThreshold, limelightWrapper));
 		shootInitiation.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity, Constants.Shooter.kInnerGoalThreshold,limelightWrapper));
 		turnToTargetButton.whenPressed(new TurnToTargetW(drive, steerer,limelightWrapper));
 		// Driver B
 		// zeroArm.whenPressed(new ZeroArm(arm));
+		driverBStopShooterButton.whenPressed(new StopShooter(shooter));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		closeShotPosition.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kCloseShotDegrees, shooter,
