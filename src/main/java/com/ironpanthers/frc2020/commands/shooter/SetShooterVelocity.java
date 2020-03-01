@@ -34,7 +34,7 @@ public class SetShooterVelocity extends CommandBase {
 		this.velocity = velocity;
 		this.threshold = threshold;
 		addRequirements(shooter);
-		buffer = new CircularBuffer(100);
+		buffer = new CircularBuffer(10);
 		timer = new Timer();
 		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}

@@ -9,6 +9,7 @@ package com.ironpanthers.frc2020;
 
 import java.io.IOException;
 
+import com.ironpanthers.frc2020.auto.commands.Shoot3Baseline;
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
 import com.ironpanthers.frc2020.commands.arm.ArmAndSpinShooter;
 import com.ironpanthers.frc2020.commands.arm.ArmHold;
@@ -164,7 +165,8 @@ public class RobotContainer {
 	 */
 	public Command getAutonomousCommand() throws IOException {
 		try {
-			return new TestAutonomous(drive);
+			// return new TestAutonomous(drive);
+			return new Shoot3Baseline(arm, target, shooter, velocity, threshold, conveyor, drive, lWrapper);
 		} catch (IOException e) {
 			throw e;
 		}
