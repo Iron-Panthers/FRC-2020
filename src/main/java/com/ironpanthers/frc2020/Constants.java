@@ -40,7 +40,7 @@ public final class Constants {
         public static final int kLeft1Id = 1;
         public static final int kLeft2Id = 21;
         public static final int kRight1Id = 2;
-		public static final int kRight2Id = 22;
+        public static final int kRight2Id = 22;
 		
 		public static final int kShiftPort = 5;
 
@@ -114,7 +114,7 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 28000;
+        public static final int kShiftEncoderDistance = 25000;
         public static final int kShiftEncoderDistanceLast = 11000;
 
 
@@ -200,7 +200,7 @@ public final class Constants {
         public static final int kCloseTrenchVelocity = 14000; // Needs Testing
         public static final double kCloseTrenchDistance = 170.0; // Needs Testing
 
-        public static final int kFarVelocity = 16000; // Needs Testing
+        public static final int kFarVelocity = 13500; // Needs Testing
         public static final double kFarDistance = 310.0; // 2/29/20
 
         public static final double kCurrentLimit = 40; // amps
@@ -240,7 +240,7 @@ public final class Constants {
         public static final double kCloseShotDegrees = 14.0; // Tested 2/27/20 on comp robot
         public static final double kInitiationLineDegrees = 45.0; // TBD
         public static final double kCloseTrenchDegrees = 45.0; // TBD
-        public static final double kFarShotDegrees = 53.0; // Tested angle for shooting behind control panel at
+        public static final double kFarShotDegrees = 54.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
         public static final double kFrameHeightDegrees = 53.00; // Height at which robot is 45 inches tall

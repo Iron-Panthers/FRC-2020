@@ -14,6 +14,7 @@ import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.util.CircularBuffer;
 import com.ironpanthers.util.Util;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -22,6 +23,7 @@ public class SetShooterVelocity extends CommandBase {
 	private int velocity, tempVelocity;
 	private final int threshold;
 	private final CircularBuffer buffer;
+	private final Timer timer;
 
 	/**
 	 * Creates a new ShootAtVelocity.
@@ -33,6 +35,7 @@ public class SetShooterVelocity extends CommandBase {
 		this.threshold = threshold;
 		addRequirements(shooter);
 		buffer = new CircularBuffer(100);
+		timer = new Timer();
 		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}
 
@@ -44,6 +47,8 @@ public class SetShooterVelocity extends CommandBase {
 		}
 		SmartDashboard.putNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
 		tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
+		timer.reset();
+		timer.start();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -61,6 +66,7 @@ public class SetShooterVelocity extends CommandBase {
 		shooter.setVelocity(velocity);
 		buffer.addValue(shooter.getVelocity());
 		SmartDashboard.putNumber("Buffer Velocity", buffer.getAverage());
+		shooter.setIntake(1.0);
 	}
 
 	// Called once the command ends or is interrupted.
@@ -68,12 +74,14 @@ public class SetShooterVelocity extends CommandBase {
 	public void end(boolean interrupted) {
 		if (interrupted) {
 			shooter.stopShooter();
+			shooter.setIntake(0);
 		}
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(buffer.getAverage(), velocity, threshold);
+		// return Util.epsilonEquals(buffer.getAverage(), velocity, threshold);
+		return timer.hasPeriodPassed(2);
 	}
 }

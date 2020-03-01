@@ -67,21 +67,21 @@ public class Drive extends SubsystemBase {
         right2.follow(right1);
 
         // Configuration
-        left1.setInverted(true);
-        left1.setSensorPhase(true);
+        left1.setInverted(false);
+        left1.setSensorPhase(false);
 
         left2.setInverted(InvertType.FollowMaster);
 
-        left1.setNeutralMode(NeutralMode.Coast);
-        left2.setNeutralMode(NeutralMode.Coast);
+        left1.setNeutralMode(NeutralMode.Brake);
+        left2.setNeutralMode(NeutralMode.Brake);
 
-        right1.setInverted(false);
-        right1.setSensorPhase(false);
+        right1.setInverted(true);
+        right1.setSensorPhase(true);
 
         right2.setInverted(InvertType.FollowMaster);
 
-        right1.setNeutralMode(NeutralMode.Coast);
-        right2.setNeutralMode(NeutralMode.Coast);
+        right1.setNeutralMode(NeutralMode.Brake);
+        right2.setNeutralMode(NeutralMode.Brake);
 
         SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
                 Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentLimit, 1);
