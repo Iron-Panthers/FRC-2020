@@ -10,12 +10,13 @@ package com.ironpanthers.frc2020;
 import java.io.IOException;
 
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
-import com.ironpanthers.frc2020.commands.FullShooterSequence;
 import com.ironpanthers.frc2020.commands.arm.ArmAndSpinShooter;
 import com.ironpanthers.frc2020.commands.arm.ArmHold;
 import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
+import com.ironpanthers.frc2020.commands.drive.GearShift;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
+import com.ironpanthers.frc2020.commands.intake.ManualConveyor;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
@@ -60,6 +61,7 @@ public class RobotContainer {
 	private final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
 
 	// Driver A Buttons
+	private final JoystickButton driveShift = new JoystickButton(joystickA, Constants.OI.kDriveShiftButton);
 	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA,
 			Constants.OI.kStopShooterButton); // 3
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
@@ -88,7 +90,8 @@ public class RobotContainer {
 	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton);
 	// private final JoystickButton getDistance = new JoystickButton(joystickB,
 	// Constants.OI.kLimelightTest);
-	private final JoystickButton fullShooterSequence = new JoystickButton(joystickB, 4);
+	// private final JoystickButton fullShooterSequence = new JoystickButton(joystickB, 4);
+	private final JoystickButton manualConveyor = new JoystickButton(joystickB, Constants.OI.kMoveConveyorButton);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -112,6 +115,7 @@ public class RobotContainer {
 	 */
 	private void configureButtonBindings() {
 		// Driver A
+		driveShift.whileHeld(new GearShift(drive));
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
 		shootFar.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
@@ -137,11 +141,13 @@ public class RobotContainer {
 		autoShotHeight.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kInitiationLineDegrees, shooter,
 				Constants.Shooter.kInitiationVelocity, Constants.Shooter.kOuterGoalThreshold, conveyorBelt,
 				limelightWrapper));
-		fullShooterSequence
-				.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees,
-						shooter,
-						Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
+		// fullShooterSequence
+		// 		.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees,
+		// 				shooter,
+		// 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
+		manualConveyor.whileHeld(new ManualConveyor(conveyorBelt));
 		// getDistance.whileHeld(new VisionTesting(limelightWrapper, arm));
+
 	}
 
 	public void smartDashboard() {
