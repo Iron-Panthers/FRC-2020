@@ -81,7 +81,7 @@ public class SetShooterVelocity extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		// return Util.epsilonEquals(buffer.getAverage(), velocity, threshold);
-		return timer.hasPeriodPassed(2);
+		return Util.epsilonEquals(buffer.getAverage(), velocity, threshold);
+		// return timer.hasPeriodPassed(2);
 	}
 }
