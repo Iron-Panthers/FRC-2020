@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        try {
+        // try {
             NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode")
                     .setNumber(0);
 
@@ -84,9 +84,9 @@ public class Robot extends TimedRobot {
             if (m_autonomousCommand != null)
                 m_autonomousCommand.schedule();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     /**

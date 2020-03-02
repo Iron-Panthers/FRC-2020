@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -29,11 +30,12 @@ public class Shooter extends SubsystemBase {
     public boolean fullShotDone = false;
 
     // TODO these values must be tuned
-    private final double[] distanceTable = { 0, 120.0, 240.0, 408.0 }; // Inches
+    private final double[] distanceTable = { Constants.Shooter.kCloseDistance, Constants.Shooter.kInitiationDistance,
+            Constants.Shooter.kCloseTrenchDistance, Constants.Shooter.kFarDistance, 408.0 }; // Inches
     public final double[] velocityTable = { Constants.Shooter.kCloseVelocity, Constants.Shooter.kInitiationVelocity,
-            Constants.Shooter.kFarVelocity }; // Units/100ms
+            Constants.Shooter.kCloseTrenchVelocity, Constants.Shooter.kFarVelocity }; // Units/100ms
     public final double[] armPosTable = { Constants.Arm.kCloseShotDegrees, Constants.Arm.kInitiationLineDegrees,
-            Constants.Arm.kFarShotDegrees };
+            Constants.Arm.kCloseTrenchDegrees, Constants.Arm.kFarShotDegrees }; // Degrees
 
     /**
      * Create a new Shooter subsystem. As usual, only one of these should ever be
@@ -77,6 +79,10 @@ public class Shooter extends SubsystemBase {
         shooter3.set(ControlMode.PercentOutput, shooterMotorSpeed);
     }
 
+    public void setIntake(double speed) {
+        intakeMotor.set(ControlMode.PercentOutput, speed);
+    }
+
     /**
      * Equivalent to calling {@link #setPercent(double)} with a value of 0.
      */
@@ -101,7 +107,8 @@ public class Shooter extends SubsystemBase {
      *                    position change / 100ms.
      */
     public void setVelocity(double nativeUnits) {
-        // This is to override the percent output call to shooter3, needs to follow again
+        // This is to override the percent output call to shooter3, needs to follow
+        // again
         shooter3.set(TalonFXControlMode.Follower, Constants.Shooter.kShooter1Id);
         shooter1.set(TalonFXControlMode.Velocity, nativeUnits);
     }
@@ -177,8 +184,10 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Shooter Velocity", getVelocity());
         // This method will be called once per scheduler run
-        SmartDashboard.putNumber("Pre Accel Velocity", shooter3.getSelectedSensorVelocity());
+        // SmartDashboard.putNumber("Pre Accel Velocity", shooter3.getSelectedSensorVelocity());
+        // if (Util.epsilonEquals(shooter1.getClosedLoopError(), 0, 200)) {
+        //     SmartDashboard.putNumber("Shooter Velocity Error", shooter1.getClosedLoopError());
+        // }
 
-        
     }
 }
