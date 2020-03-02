@@ -67,28 +67,34 @@ public class Drive extends SubsystemBase {
         right2.follow(right1);
 
         // Configuration
-        left1.setInverted(true);
-        left1.setSensorPhase(true);
+        left1.setInverted(false);
+        left1.setSensorPhase(false);
 
         left2.setInverted(InvertType.FollowMaster);
 
-        left1.setNeutralMode(NeutralMode.Coast);
-        left2.setNeutralMode(NeutralMode.Coast);
+        left1.setNeutralMode(NeutralMode.Brake);
+        left2.setNeutralMode(NeutralMode.Brake);
 
-        right1.setInverted(false);
-        right1.setSensorPhase(false);
+        right1.setInverted(true);
+        right1.setSensorPhase(true);
 
         right2.setInverted(InvertType.FollowMaster);
 
-        right1.setNeutralMode(NeutralMode.Coast);
-        right2.setNeutralMode(NeutralMode.Coast);
+        right1.setNeutralMode(NeutralMode.Brake);
+        right2.setNeutralMode(NeutralMode.Brake);
 
-        SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-                Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentLimit, 1);
-        left1.configSupplyCurrentLimit(currentConfig);
-        right1.configSupplyCurrentLimit(currentConfig);
+        left1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,
+		Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentTrigger, Constants.Drive.kCurrentLimitSeconds));
+        left2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,
+		Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentTrigger, Constants.Drive.kCurrentLimitSeconds));
+        right1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,
+		Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentTrigger, Constants.Drive.kCurrentLimitSeconds));
+        right2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,
+		Constants.Drive.kCurrentLimit, Constants.Drive.kCurrentTrigger, Constants.Drive.kCurrentLimitSeconds));
         left1.configOpenloopRamp(Constants.Drive.kRampRate);
+        left2.configOpenloopRamp(Constants.Drive.kRampRate);
         right1.configOpenloopRamp(Constants.Drive.kRampRate);
+        right2.configOpenloopRamp(Constants.Drive.kRampRate);
         PhoenixUtil.checkError(left1.setSelectedSensorPosition(0), "drive: failed to zero left encoder");
         PhoenixUtil.checkError(right1.setSelectedSensorPosition(0), "drive: failed to zero right encoder");
 
@@ -145,11 +151,11 @@ public class Drive extends SubsystemBase {
     // TODO verify shifter behaves as expected
 
     public void shiftHigh() {
-        shifter.set(true);
+        shifter.set(false);
     }
 
     public void shiftLow() {
-        shifter.set(false);
+        shifter.set(true);
     }
 
     // OUTPUT-WRITING METHODS
@@ -201,16 +207,16 @@ public class Drive extends SubsystemBase {
         var rightDistanceMeters = rightDistanceMeters();
 
         // DEBUG VALUES
-        SmartDashboard.putNumber("drive/heading", heading.getDegrees());
-        SmartDashboard.putNumber("drive/leftVoltage (v)", leftVoltage());
-        SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
-        SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
-        SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
-        SmartDashboard.putString("drive/wheelSpeeds", getWheelSpeeds().toString());
-        SmartDashboard.putString("drive/heading", heading().toString());
-        SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
-        SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
-        SmartDashboard.putString("drive/currentPose", currentPose.toString());
+        // SmartDashboard.putNumber("drive/heading", heading.getDegrees());
+        // SmartDashboard.putNumber("drive/leftVoltage (v)", leftVoltage());
+        // SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
+        // SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
+        // SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
+        // SmartDashboard.putString("drive/wheelSpeeds", getWheelSpeeds().toString());
+        // SmartDashboard.putString("drive/heading", heading().toString());
+        // SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
+        // SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
+        // SmartDashboard.putString("drive/currentPose", currentPose.toString());
 
         currentPose = odometry.update(heading, leftDistanceMeters, rightDistanceMeters);
         Dashboard.getInstance().publishRobotPose(currentPose);

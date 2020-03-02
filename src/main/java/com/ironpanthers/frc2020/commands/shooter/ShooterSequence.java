@@ -25,6 +25,6 @@ public class ShooterSequence extends SequentialCommandGroup {
 	public ShooterSequence(Shooter shooter, ConveyorBelt conveyor, int velocity, int threshold,LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper), new ShiftConveyor(Direction.kOut, conveyor));
+		super(new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper), new ShiftConveyor(Direction.kOut, conveyor, shooter, threshold, lWrapper));
 	}
 }

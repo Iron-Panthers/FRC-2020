@@ -22,7 +22,7 @@ public class Shoot3Baseline extends SequentialCommandGroup {
 	/**
 	 * Creates a new Shoot3Baseline.
 	 */
-	public Shoot3Baseline(Arm arm, int target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, Drive drive, LimelightWrapper lWrapper) {
+	public Shoot3Baseline(Arm arm, double target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, Drive drive, LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
 		super(new ShootPreLoaded(arm, target, shooter, velocity, threshold, conveyor, lWrapper));
