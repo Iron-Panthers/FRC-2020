@@ -223,7 +223,7 @@ public class Arm extends SubsystemBase {
             setSensorPosition(Constants.Arm.kTopPositionDegrees);
         }*/
         // SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
-        // SmartDashboard.putNumber("Arm Angle", getAngle());
+        SmartDashboard.putNumber("Arm Angle", getAngle());
         // SmartDashboard.putNumber("Arm Height", getHeight2());
         SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance());
         // SmartDashboard.putNumber("offset", getLlOffset());

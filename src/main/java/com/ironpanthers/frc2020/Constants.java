@@ -198,12 +198,12 @@ public final class Constants {
 		public static final int kOuterGoalThreshold = 500; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
         public static final int kCloseVelocity = 10000; // Tested 2/29/20, horizontal distance: 
-        public static final double kCloseDistance = 60.0; // Update
+        public static final double kCloseDistance = 40.0; // Tested 3/1/20
 
-        public static final int kInitiationVelocity = 11000; // Needs Testing
+        public static final int kInitiationVelocity = 11000; // Tested 2/29/20
         public static final double kInitiationDistance = 135.0; // Tested 2/29/20
 
-        public static final int kCloseTrenchVelocity = 14000; // Needs Testing
+        public static final int kCloseTrenchVelocity = 11000; // Tested 2/29/20
         public static final double kCloseTrenchDistance = 170.0; // Needs Testing
 
         public static final int kFarVelocity = 13500; // Needs Testing
@@ -244,8 +244,8 @@ public final class Constants {
         public static final double kPositionErrorTolerance = 0.5;
 
         public static final double kCloseShotDegrees = 14.0; // Tested 2/27/20 on comp robot
-        public static final double kInitiationLineDegrees = 45.0; // TBD
-        public static final double kCloseTrenchDegrees = 45.0; // TBD
+        public static final double kInitiationLineDegrees = 45.0; // Tested 2/29/20
+        public static final double kCloseTrenchDegrees = 52.0; // Tested 3/1/20
         public static final double kFarShotDegrees = 54.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
