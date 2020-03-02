@@ -40,7 +40,7 @@ public final class Constants {
         public static final int kLeft1Id = 1;
         public static final int kLeft2Id = 21;
         public static final int kRight1Id = 2;
-		public static final int kRight2Id = 22;
+        public static final int kRight2Id = 22;
 		
 		public static final int kShiftPort = 5;
 
@@ -61,10 +61,11 @@ public final class Constants {
 
         public static final double kP = 2.6;
 
-        public static final double kCurrentLimit = 60; // amps
+        public static final double kCurrentLimit = 20.0; // amps
+        public static final double kCurrentTrigger = 40.0;
+        public static final double kCurrentLimitSeconds = 0.5;
         public static final double kRampRate = 0.5; // seconds to full power
     }
-
     public static class OI {
         public static final int kCloseShotButtonNumber = 12;
         public static final int kInitiationLineShotButtonNumber = 10;
