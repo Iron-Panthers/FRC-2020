@@ -151,11 +151,11 @@ public class Drive extends SubsystemBase {
     // TODO verify shifter behaves as expected
 
     public void shiftHigh() {
-        shifter.set(true);
+        shifter.set(false);
     }
 
     public void shiftLow() {
-        shifter.set(false);
+        shifter.set(true);
     }
 
     // OUTPUT-WRITING METHODS
