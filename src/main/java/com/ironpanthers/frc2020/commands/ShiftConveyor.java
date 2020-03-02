@@ -65,15 +65,15 @@ public class ShiftConveyor extends CommandBase {
         targetEncoderPosition = direction == Direction.kIn
                 ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
                 : encoderStartTicks + Constants.Conveyor.kShiftEncoderDistance;
-        
+
         if (direction == Direction.kIn) {
             if (conveyor.ballsHeld >= 5 && conveyor.lastBallRan) {
                 cancel();
-            }  else if (conveyor.ballsHeld >= 5 && !conveyor.lastBallRan) {
+            } else if (conveyor.ballsHeld >= 5 && !conveyor.lastBallRan) {
                 targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
             }
         }
-      
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -84,8 +84,6 @@ public class ShiftConveyor extends CommandBase {
                 cancel();
             }
         }
-        SmartDashboard.putNumber("Conveyor Position", conveyor.getPosition());
-        SmartDashboard.putNumber("Conveyor Target Position", targetEncoderPosition);
         conveyor.setPosition(targetEncoderPosition);
     }
 
@@ -116,6 +114,7 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public boolean isFinished() {
         return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition,
-                Constants.Conveyor.kPositionErrorTolerance) || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn);
+                Constants.Conveyor.kPositionErrorTolerance)
+                || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn);
     }
 }
