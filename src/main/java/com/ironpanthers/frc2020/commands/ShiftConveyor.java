@@ -1,6 +1,8 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
+import com.ironpanthers.frc2020.commands.intake.OuttakeSequence;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
@@ -106,7 +108,7 @@ public class ShiftConveyor extends CommandBase {
             }
         }
         if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {
-            conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
+            CommandScheduler.getInstance().schedule(new OuttakeSequence(shooter, conveyor));
         }
     }
 
