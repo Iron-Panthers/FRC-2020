@@ -91,6 +91,7 @@ public final class Constants {
         public static final int kCloseShotButton = kCloseShotButtonNumber;
         public static final int kFarShotButton = kFarShotButtonNumber;
         public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
+		public static int kFullShooterSequenceButton = 4;
 		
     }
 
@@ -198,6 +199,7 @@ public final class Constants {
 		public static final int kFarVelocity = 18000;
 
         public static final double kCurrentLimit = 40; // amps
+		public static double kIntakeMotorSpeed = -.5; //PercentOutput
     }
 
     public static class Arm {

@@ -56,6 +56,7 @@ public class SetShooterVelocity extends CommandBase {
 		}
 		SmartDashboard.putBoolean("fullShotDone", shooter.fullShotDone);
 		shooter.setVelocity(velocity);
+		shooter.setIntakeMotor(Constants.Shooter.kIntakeMotorSpeed); //TODO: ELOON TEST
 	}
 
 	// Called once the command ends or is interrupted.

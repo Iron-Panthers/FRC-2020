@@ -7,6 +7,7 @@
 
 package com.ironpanthers.frc2020.commands.shooter;
 
+import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
@@ -35,7 +36,7 @@ public class ShooterInterpolation extends CommandBase {
         this.lWrapper = lWrapper;
         this.arm = arm;
         this.conveyorBelt = conveyorBelt;
-        addRequirements(shooter, conveyorBelt);
+        addRequirements(shooter);
     }
 
     // Called when the command is initially scheduled.
@@ -53,6 +54,7 @@ public class ShooterInterpolation extends CommandBase {
     @Override
     public void execute() {
         shooter.setVelocity(shooter.velocity);
+        shooter.setIntakeMotor(Constants.Shooter.kIntakeMotorSpeed); //TODO: ELOON TEST
         SmartDashboard.putNumber("SV", shooter.velocity);
     }
 

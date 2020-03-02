@@ -76,6 +76,9 @@ public class Shooter extends SubsystemBase {
         intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
         shooter3.set(ControlMode.PercentOutput, shooterMotorSpeed);
     }
+    public void setIntakeMotor(double intakeMotorSpeed) {
+        intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
+    }
 
     /**
      * Equivalent to calling {@link #setPercent(double)} with a value of 0.
