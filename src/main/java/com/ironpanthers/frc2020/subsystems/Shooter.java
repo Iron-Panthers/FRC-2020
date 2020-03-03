@@ -19,169 +19,171 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
-    private final TalonFX shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
-    private final TalonFX shooter2 = new TalonFX(Constants.Shooter.kShooter2Id);
-    private final TalonFX shooter3 = new TalonFX(Constants.Shooter.kShooter3Id);
-    private final TalonFX intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
+	private final TalonFX shooter1 = new TalonFX(Constants.Shooter.kShooter1Id);
+	private final TalonFX shooter2 = new TalonFX(Constants.Shooter.kShooter2Id);
+	private final TalonFX shooter3 = new TalonFX(Constants.Shooter.kShooter3Id);
+	private final TalonFX intakeMotor = new TalonFX(Constants.Conveyor.kIntakeMotorId);
 
-    // TODO clean up access to these values
-    public int velocity;
-    public boolean fullShotDone = false;
+	// TODO clean up access to these values
+	public int velocity;
+	public boolean fullShotDone = false;
 
-    // TODO these values must be tuned
-    private final double[] distanceTable = { 0, 120.0, 240.0, 408.0 }; // Inches
-    public final double[] velocityTable = { Constants.Shooter.kCloseVelocity, Constants.Shooter.kInitiationVelocity,
-            Constants.Shooter.kFarVelocity }; // Units/100ms
-    public final double[] armPosTable = { Constants.Arm.kCloseShotDegrees, Constants.Arm.kInitiationLineDegrees,
-            Constants.Arm.kFarShotDegrees };
+	// TODO these values must be tuned
+	private final double[] distanceTable = { Constants.Shooter.kCloseDistance, Constants.Shooter.kInitiationDistance,
+			Constants.Shooter.kCloseTrenchDistance, Constants.Shooter.kFarDistance, 408.0 }; // Inches
+	public final double[] velocityTable = { Constants.Shooter.kCloseVelocity, Constants.Shooter.kInitiationVelocity,
+			Constants.Shooter.kCloseTrenchVelocity, Constants.Shooter.kFarVelocity }; // Units/100ms
+	public final double[] armPosTable = { Constants.Arm.kCloseShotDegrees, Constants.Arm.kInitiationLineDegrees,
+			Constants.Arm.kCloseTrenchDegrees, Constants.Arm.kFarShotDegrees }; // Degrees
 
-    /**
-     * Create a new Shooter subsystem. As usual, only one of these should ever be
-     * constructed.
-     */
-    public Shooter() {
-        shooter1.configFactoryDefault();
-        shooter2.configFactoryDefault();
-        shooter3.configFactoryDefault();
-        shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
-        shooter2.follow(shooter1);
-        shooter3.follow(shooter1);
-        shooter2.setInverted(InvertType.OpposeMaster);
-        shooter3.setInverted(InvertType.OpposeMaster);
-        shooter1.setNeutralMode(NeutralMode.Coast);
-        shooter2.setNeutralMode(NeutralMode.Coast);
-        shooter3.setNeutralMode(NeutralMode.Coast);
+	/**
+	 * Create a new Shooter subsystem. As usual, only one of these should ever be
+	 * constructed.
+	 */
+	public Shooter() {
+		shooter1.configFactoryDefault();
+		shooter2.configFactoryDefault();
+		shooter3.configFactoryDefault();
+		shooter1.setInverted(Constants.Shooter.IS_SHOOTER_INVERTED);
+		shooter2.follow(shooter1);
+		shooter3.follow(shooter1);
+		shooter2.setInverted(InvertType.OpposeMaster);
+		shooter3.setInverted(InvertType.OpposeMaster);
+		shooter1.setNeutralMode(NeutralMode.Coast);
+		shooter2.setNeutralMode(NeutralMode.Coast);
+		shooter3.setNeutralMode(NeutralMode.Coast);
 
-        intakeMotor.setNeutralMode(NeutralMode.Coast);
-        intakeMotor.setInverted(Constants.Conveyor.kIntakeInverted);
+		intakeMotor.setNeutralMode(NeutralMode.Coast);
+		intakeMotor.setInverted(Constants.Conveyor.kIntakeInverted);
 
-        SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
-                Constants.Shooter.kCurrentLimit, Constants.Shooter.kCurrentLimit, 1);
-        shooter1.configSupplyCurrentLimit(currentConfig);
-        shooter1.configClosedloopRamp(Constants.Shooter.kRampRate); // Ramp rate for Velocity PID
-        shooter1.configOpenloopRamp(Constants.Shooter.kRampRate); // Ramp rate for open loop control
+		SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
+				Constants.Shooter.kCurrentLimit, Constants.Shooter.kCurrentLimit, 1);
+		shooter1.configSupplyCurrentLimit(currentConfig);
+		shooter1.configClosedloopRamp(Constants.Shooter.kRampRate); // Ramp rate for Velocity PID
+		shooter1.configOpenloopRamp(Constants.Shooter.kRampRate); // Ramp rate for open loop control
 
-        configPIDF(Constants.Shooter.kP, 0, 0, Constants.Shooter.kF, Constants.Shooter.kPIDIdx);
-    }
+		configPIDF(Constants.Shooter.kP, 0, 0, Constants.Shooter.kF, Constants.Shooter.kPIDIdx);
+	}
 
-    /**
-     * Sets a pair of percent outputs for the intake and flywheel (respectively).
-     * 
-     * @param intakeMotorSpeed  The target output, which should be between -1.0 and
-     *                          1.0, with 0.0 indicating the intake being stopped.
-     * @param shooterMotorSpeed The target output, which should be between -1.0 and
-     *                          1.0, with 0.0 indicating the flywheel being stopped.
-     */
-    public void setIntakeMotors(double intakeMotorSpeed, double shooterMotorSpeed) {
-        intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
-        shooter3.set(ControlMode.PercentOutput, shooterMotorSpeed);
-    }
-    public void setIntakeMotor(double intakeMotorSpeed) {
-        intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
-    }
+	/**
+	 * Sets a pair of percent outputs for the intake and flywheel (respectively).
+	 * 
+	 * @param intakeMotorSpeed  The target output, which should be between -1.0 and
+	 *                          1.0, with 0.0 indicating the intake being stopped.
+	 * @param shooterMotorSpeed The target output, which should be between -1.0 and
+	 *                          1.0, with 0.0 indicating the flywheel being stopped.
+	 */
+	public void setIntakeMotors(double intakeMotorSpeed, double shooterMotorSpeed) {
+		intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
+		shooter3.set(ControlMode.PercentOutput, shooterMotorSpeed);
+	}
 
-    /**
-     * Equivalent to calling {@link #setPercent(double)} with a value of 0.
-     */
-    public void stopShooter() {
-        shooter1.set(ControlMode.PercentOutput, 0);
-    }
+	public void setIntakeMotor(double intakeMotorSpeed) {
+		intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
+	}
 
-    /**
-     * Set a percent output for the flywheel.
-     * 
-     * @param percentOutput The target output, which should be between -1.0 and 1.0,
-     *                      with 0.0 indicating the flywheel being stopped.
-     */
-    public void setPercent(double percentOutput) {
-        shooter1.set(TalonFXControlMode.PercentOutput, percentOutput);
-    }
+	/**
+	 * Equivalent to calling {@link #setPercent(double)} with a value of 0.
+	 */
+	public void stopShooter() {
+		shooter1.set(ControlMode.PercentOutput, 0);
+	}
 
-    /**
-     * Set a velocity setpoint for the flywheel.
-     * 
-     * @param nativeUnits The target velocity for the motor, in native units of
-     *                    position change / 100ms.
-     */
-    public void setVelocity(double nativeUnits) {
-        // This is to override the percent output call to shooter3, needs to follow again
-        shooter3.set(TalonFXControlMode.Follower, Constants.Shooter.kShooter1Id);
-        shooter1.set(TalonFXControlMode.Velocity, nativeUnits);
-    }
+	/**
+	 * Set a percent output for the flywheel.
+	 * 
+	 * @param percentOutput The target output, which should be between -1.0 and 1.0,
+	 *                      with 0.0 indicating the flywheel being stopped.
+	 */
+	public void setPercent(double percentOutput) {
+		shooter1.set(TalonFXControlMode.PercentOutput, percentOutput);
+	}
 
-    /**
-     * Do an in-place PIDF reconfiguration for the flywheel master motor.
-     * <p>
-     * For a more thorough explanation of how PID works, look elsewhere.
-     */
-    public void configPIDF(double p, double i, double d, double f, int idx) {
-        shooter1.config_kP(idx, p);
-        shooter1.config_kI(idx, i);
-        shooter1.config_kD(idx, d);
-        shooter1.config_kF(idx, f);
-    }
+	/**
+	 * Set a velocity setpoint for the flywheel.
+	 * 
+	 * @param nativeUnits The target velocity for the motor, in native units of
+	 *                    position change / 100ms.
+	 */
+	public void setVelocity(double nativeUnits) {
+		// This is to override the percent output call to shooter3, needs to follow
+		// again
+		shooter3.set(TalonFXControlMode.Follower, Constants.Shooter.kShooter1Id);
+		shooter1.set(TalonFXControlMode.Velocity, nativeUnits);
+	}
 
-    /**
-     * Returns the actual velocity of the motor.
-     * 
-     * @return Velocity in native units / 100ms.
-     */
-    public double getVelocity() {
-        return shooter1.getSelectedSensorVelocity();
-    }
+	/**
+	 * Do an in-place PIDF reconfiguration for the flywheel master motor.
+	 * <p>
+	 * For a more thorough explanation of how PID works, look elsewhere.
+	 */
+	public void configPIDF(double p, double i, double d, double f, int idx) {
+		shooter1.config_kP(idx, p);
+		shooter1.config_kI(idx, i);
+		shooter1.config_kD(idx, d);
+		shooter1.config_kF(idx, f);
+	}
 
-    /**
-     * Returns the output voltage.
-     * 
-     * @return The applied voltage of the motor (in volts).
-     */
-    public double getVoltage() {
-        return shooter1.getMotorOutputVoltage();
-    }
+	/**
+	 * Returns the actual velocity of the motor.
+	 * 
+	 * @return Velocity in native units / 100ms.
+	 */
+	public double getVelocity() {
+		return shooter1.getSelectedSensorVelocity();
+	}
 
-    /**
-     * Returns the output current.
-     * 
-     * @return The stator current of the motor (in amps).
-     */
-    public double getCurrent() {
-        return shooter1.getStatorCurrent();
-    }
+	/**
+	 * Returns the output voltage.
+	 * 
+	 * @return The applied voltage of the motor (in volts).
+	 */
+	public double getVoltage() {
+		return shooter1.getMotorOutputVoltage();
+	}
 
-    // TODO move this out of here
-    // TODO figure out what should be provided as parameters, what should use
-    // members, etc.
-    public int interpolateY(double currentX, double[] yValues) {
-        double[] xValues = distanceTable;
-        int endIndex = 0;
-        double lowY;
-        double highY;
-        while (currentX > xValues[endIndex]) {
-            endIndex++;
-        }
-        int startIndex = endIndex - 1;
-        // Find the velocities directly surrounding the distance of the robot
-        if (endIndex < xValues.length - 1) {
-            lowY = yValues[startIndex];
-            highY = yValues[endIndex];
-        } else {
-            // TODO: This probably shouldn't throw an exception and crash the code
-            throw new IndexOutOfBoundsException("Distance too far");
-        }
-        // Start with base velocity, then add the weighted average of the low and high
-        // velocities to calculate the interpolated velocity. See
-        // https://en.wikipedia.org/wiki/Linear_interpolation for more details
-        int interpolatedY = (int) (lowY
-                + (((highY - lowY) / (xValues[endIndex] - xValues[startIndex])) * (currentX - xValues[startIndex])));
-        return interpolatedY;
-    }
+	/**
+	 * Returns the output current.
+	 * 
+	 * @return The stator current of the motor (in amps).
+	 */
+	public double getCurrent() {
+		return shooter1.getStatorCurrent();
+	}
 
-    @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Shooter Velocity", getVelocity());
-        // This method will be called once per scheduler run
-        SmartDashboard.putNumber("Pre Accel Velocity", shooter3.getSelectedSensorVelocity());
+	// TODO move this out of here
+	// TODO figure out what should be provided as parameters, what should use
+	// members, etc.
+	public int interpolateY(double currentX, double[] yValues) {
+		double[] xValues = distanceTable;
+		int endIndex = 0;
+		double lowY;
+		double highY;
+		while (currentX > xValues[endIndex]) {
+			endIndex++;
+		}
+		int startIndex = endIndex - 1;
+		// Find the velocities directly surrounding the distance of the robot
+		if (endIndex < xValues.length - 1) {
+			lowY = yValues[startIndex];
+			highY = yValues[endIndex];
+		} else {
+			// TODO: This probably shouldn't throw an exception and crash the code
+			throw new IndexOutOfBoundsException("Distance too far");
+		}
+		// Start with base velocity, then add the weighted average of the low and high
+		// velocities to calculate the interpolated velocity. See
+		// https://en.wikipedia.org/wiki/Linear_interpolation for more details
+		int interpolatedY = (int) (lowY
+				+ (((highY - lowY) / (xValues[endIndex] - xValues[startIndex])) * (currentX - xValues[startIndex])));
+		return interpolatedY;
+	}
 
-        
-    }
+	@Override
+	public void periodic() {
+		SmartDashboard.putNumber("Shooter Velocity", getVelocity());
+		// This method will be called once per scheduler run
+		SmartDashboard.putNumber("Pre Accel Velocity", shooter3.getSelectedSensorVelocity());
+
+	}
 }
