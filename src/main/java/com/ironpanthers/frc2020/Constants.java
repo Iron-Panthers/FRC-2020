@@ -66,13 +66,14 @@ public final class Constants {
         public static final double kCurrentLimitSeconds = 0.5;
         public static final double kRampRate = 0.5; // seconds to full power
     }
+
     public static class OI {
         public static final int kCloseShotButtonNumber = 12;
         public static final int kInitiationLineShotButtonNumber = 10;
         public static final int kFarShotButtonNumber = 11;
-        // Driver A
-        public static final int kStopShooterButton = 3;
-        public static final int kDriverAJoystickPort = 0;
+		// Driver A
+		public static final int kDriverAJoystickPort = 0;
+		public static final int kDriveShiftButton = 2;
         public static final int kIntakeButton = 4;
         public static final int kResetConveyorButton = 3;
         public static final int kShootFar = kFarShotButtonNumber;
@@ -85,14 +86,12 @@ public final class Constants {
         public static final int kManualArmButton = 1;
 		public static final int kDriverBIntakeButton = 2;
 		public static final int kEmergencyOuttakeButton = 3;
-		public static final int kLimelightTest = 4;
-		public static final int kEmergencyIntakeButton = 5;
-		public static final int kZeroArmButton = 7;
-		public static final int kFramePerimeterHeightButton = 9;
+		public static final int kFullShooterSequenceButton = 4;
+		public static final int kMoveConveyorButton = 5;
+		public static final int kStopShooterButton = 6;
         public static final int kCloseShotButton = kCloseShotButtonNumber;
         public static final int kFarShotButton = kFarShotButtonNumber;
         public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
-		public static int kFullShooterSequenceButton = 4;
 		
     }
 
@@ -107,18 +106,18 @@ public final class Constants {
         // PID
         public static final int kPIDIdx = 0;
         public static final double kConveyorClosedLoopRamp = 0.6;
-        public static final double kConveyorKp = 0.216;
+        public static final double kConveyorPositionKp = 0.216;
 
         // Powers
         public static final double kIntakeRollerSpeed = 1.0;
 		public static final double kIntakeFlywheelSpeed = -1.0; // tbd
 		public static final double kOuttakeRollerSpeed = -1.0;
+		public static final double kManualConveyorSpeed = 0.5;
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 28000;
+        public static final int kShiftEncoderDistance = 26000;
         public static final int kShiftEncoderDistanceLast = 11000;
-
 
     }
 
@@ -190,17 +189,24 @@ public final class Constants {
         public static final double kP = 0.2;
         public static final double kRampRate = 0.25; // seconds 0->full
 
-		public static final int kInnerGoalThreshold = 200; // Good for auto, too slow for tele
+		public static final int kInnerGoalThreshold = 100; // Good for auto, too slow for tele
 		public static final int kOuterGoalThreshold = 500; // When speed is more important than accuracy, 750 ok, 2000 ok close
         
-		public static final int kCloseVelocity = 10000; // Tested 2/29/20
-        public static final int kInitiationVelocity = 11000; // Needs Testing
-        public static final int kCloseTrenchVelocity = 14000; // Needs Testing
-		public static final int kTestVelocity = 15000;
-		public static final int kFarVelocity = 18000;
+        public static final int kCloseVelocity = 10000; // Tested 2/29/20, horizontal distance: 
+        public static final double kCloseDistance = 40.0; // Tested 3/1/20
 
-        public static final double kCurrentLimit = 40; // amps
-		public static double kIntakeMotorSpeed = -.5; //PercentOutput
+        public static final int kInitiationVelocity = 11000; // Tested 2/29/20
+        public static final double kInitiationDistance = 135.0; // Tested 2/29/20
+
+        public static final int kCloseTrenchVelocity = 11000; // Tested 2/29/20
+        public static final double kCloseTrenchDistance = 170.0; // Needs Testing
+
+        public static final int kFarVelocity = 13500; // Needs Testing
+        public static final double kFarDistance = 310.0; // 2/29/20
+
+		public static final double kCurrentLimit = 40; // amps
+		
+		public static final double kIntakeMotorSpeed = -.5;
     }
 
     public static class Arm {
@@ -233,12 +239,14 @@ public final class Constants {
 		public static final double kCanCoderCoefficient = 360.0 / 4096.0; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
         // Setpoints
         public static final double kPositionErrorTolerance = 0.5;
-        public static final double kInitiationLineDegrees = 45.0; // TBD
+
         public static final double kCloseShotDegrees = 14.0; // Tested 2/27/20 on comp robot
-        public static final double kFarShotDegrees = 50.0; // Tested angle for shooting behind control panel at
+        public static final double kInitiationLineDegrees = 45.0; // Tested 2/29/20
+        public static final double kCloseTrenchDegrees = 52.0; // Tested 3/1/20
+        public static final double kFarShotDegrees = 54.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
-        public static final double kFrameHeightDegrees = 52.00; // Height at which robot is 45 inches tall
+        public static final double kFrameHeightDegrees = 53.00; // Height at which robot is 45 inches tall
 
         // Soft Limits
         public static final double kTopPositionDegrees = 78.0; // 90 degrees, should be close to top position

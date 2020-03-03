@@ -68,11 +68,7 @@ public class RobotContainer {
 	// Driver B Buttons
 	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton);
 	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton);
-	private final JoystickButton zeroArm = new JoystickButton(joystickB, Constants.OI.kZeroArmButton);
-	private final JoystickButton framePerimeterHeightPosition = new JoystickButton(joystickB,
-			Constants.OI.kFramePerimeterHeightButton);
 	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton);
-	private final JoystickButton emergencyIntake = new JoystickButton(joystickB, Constants.OI.kEmergencyIntakeButton);
 	private final JoystickButton fullShooterSequence = new JoystickButton(joystickB,
 			Constants.OI.kFullShooterSequenceButton);
 
@@ -87,6 +83,7 @@ public class RobotContainer {
 
 	public void initialize() {
 		arm.calibrateCANCoder();
+		resetBallsHeld();
 	}
 
 	public void turnOffLL() {
@@ -103,16 +100,16 @@ public class RobotContainer {
 		turnToTargetButton.whenPressed(new TurnToTargetW(drive, steerer, limelightWrapper)); // Test New Turn To Target
 
 		// Driver B
-		zeroArm.whenPressed(new ZeroArm(arm));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
-		framePerimeterHeightPosition
-				.whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameHeightDegrees, limelightWrapper));
 		emergencyOuttake.whileHeld(new Outtake(shooter));
-		emergencyIntake.whileHeld(new EmergencyIntake(shooter, conveyorBelt, emergencyIntake::get));
 		fullShooterSequence
 				.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees, shooter,
 						Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
+	}
+
+	public void resetBallsHeld() {
+		conveyorBelt.ballsHeld = 3;
 	}
 
 	public void smartDashboard() {
