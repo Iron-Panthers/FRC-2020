@@ -1,8 +1,8 @@
 package com.ironpanthers.frc2020.commands;
 
-import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
 import com.ironpanthers.frc2020.commands.arm.ArmInterpolation;
 import com.ironpanthers.frc2020.commands.arm.ArmToTargetLL;
+import com.ironpanthers.frc2020.commands.intake.ConveyorOuttake;
 
 /*----------------------------------------------------------------------------*/
 
@@ -38,6 +38,6 @@ public class FullShooterSequence extends SequentialCommandGroup {
         super(new ArmToTargetLL(arm, target, lWrapper), new TurnToTarget(drive, steerer, lWrapper),
                 new ArmInterpolation(shooter, conveyor, lWrapper, arm),
                 new ShooterInterpolation(arm, shooter, threshold, conveyor, lWrapper),
-                new ShiftConveyor(Direction.kOut, conveyor, shooter, threshold, lWrapper));
+                new ConveyorOuttake(conveyor));
     }
 }
