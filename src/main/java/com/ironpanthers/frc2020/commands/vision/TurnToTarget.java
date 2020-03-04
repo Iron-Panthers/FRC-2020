@@ -40,6 +40,7 @@ public class TurnToTarget extends CommandBase {
 	@Override
 	public void initialize() {
 		buffer.clear();
+		drive.shiftLow();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -54,6 +55,7 @@ public class TurnToTarget extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
+		drive.shiftHigh();
 		drive.setOutputPercent(0.0, 0.0);
 	}
 
