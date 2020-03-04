@@ -84,13 +84,10 @@ public final class Constants {
         // Driver B
         public static final int kDriverBJoystickPort = 1;
         public static final int kManualArmButton = 1;
-		public static final int kDriverBIntakeButton = 2;
+        public static final int kDriverBIntakeButton = 2;
+        
 		public static final int kEmergencyOuttakeButton = 3;
 		public static final int kStopShooterButton = 6;
-		// public static final int kLimelightTest = 4;
-		// public static final int kEmergencyIntakeButton = 5;
-		// public static final int kZeroArmButton = 7;
-		// public static final int kFramePerimeterHeightButton = 9;
 		public static final int kMoveConveyorButton = 4;
 		public static final int kResetBallsHeld = 5;
         public static final int kCloseShotButton = kCloseShotButtonNumber;
@@ -177,9 +174,6 @@ public final class Constants {
         
         
 		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
-		public static final double kCloseDistance = 20.0; // Inches
-		public static final double kInitiationDistance = 156.0; // Inches
-		public static final double kFarDistance = 200.0; // Not tested, placeholder
     }
 
     public static class Shooter {
