@@ -7,10 +7,7 @@
 
 package com.ironpanthers.frc2020;
 
-import java.io.IOException;
-
 import com.ironpanthers.frc2020.auto.commands.Shoot3Baseline;
-import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
 import com.ironpanthers.frc2020.commands.FullShooterSequence;
 import com.ironpanthers.frc2020.commands.arm.ArmAndSpinShooter;
 import com.ironpanthers.frc2020.commands.arm.ArmHold;
@@ -18,13 +15,12 @@ import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.drive.GearShift;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
-import com.ironpanthers.frc2020.commands.intake.ManualConveyor;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.ResetBallsHeld;
 import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
-import com.ironpanthers.frc2020.commands.vision.TurnToTargetW;
+import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -130,7 +126,7 @@ public class RobotContainer {
 				Constants.Shooter.kOuterGoalThreshold, limelightWrapper));
 		shootInitiation.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity,
 				Constants.Shooter.kInnerGoalThreshold, limelightWrapper));
-		turnToTargetButton.whenPressed(new TurnToTargetW(drive, steerer, limelightWrapper));
+		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, limelightWrapper));
 		// Driver B
 		// zeroArm.whenPressed(new ZeroArm(arm));
 		driverBStopShooterButton.whenPressed(new StopShooter(shooter));

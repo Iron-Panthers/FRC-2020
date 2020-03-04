@@ -25,7 +25,11 @@ public class CircularBuffer {
         if (mSamples.size() < mWindowSize)
             return 0.0;
         return mSum / mSamples.size();
-    }
+	}
+	
+	public double getAveragePartiallyFilled() {
+		return mSum / mSamples.size();
+	}
 
     public void recomputeAverage() {
         // Reset any accumulation drift.
