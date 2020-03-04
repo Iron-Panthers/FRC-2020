@@ -59,12 +59,12 @@ public class Arm extends SubsystemBase {
         armLeft.configRemoteFeedbackFilter(canCoder, Constants.Arm.kRemoteSensorSlot);
         armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0); // Should be the same number as Constants.Arm.kRemoteSensorSlot
         armLeft.setSensorPhase(Constants.Arm.kSensorPhase); // Up is positive
-        armLeft.setInverted(true); // I think this has to be the same as the sensor phase. @Ingi?
-
-        armRight.setInverted(InvertType.OpposeMaster);
+        armLeft.setInverted(false);
+        
         armLeft.setNeutralMode(NeutralMode.Brake);
         armRight.setNeutralMode(NeutralMode.Brake);
         armRight.follow(armLeft);
+        armRight.setInverted(InvertType.OpposeMaster);
 
         // Current Limits and Power Limits
         armLeft.configClosedLoopPeakOutput(Constants.Arm.kPIDIdx, Constants.Arm.kClosedLoopPeakOutput);
