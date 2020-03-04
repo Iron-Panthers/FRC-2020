@@ -9,6 +9,7 @@ package com.ironpanthers.frc2020.commands.arm;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -32,7 +33,7 @@ public class ArmToTargetLL extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-        lWrapper.turnOnLight();
+		lWrapper.setLightMode(LightMode.OFF);
         arm.setPosition(target);
 	}
 

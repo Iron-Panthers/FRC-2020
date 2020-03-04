@@ -10,6 +10,7 @@ package com.ironpanthers.frc2020;
 import java.io.IOException;
 
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
+import com.ironpanthers.frc2020.util.LightMode;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -63,7 +64,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-        m_robotContainer.turnOffLL();
+        m_robotContainer.setLightMode(LightMode.OFF);
     }
 
     @Override
@@ -77,8 +78,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         try {
-            NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode")
-                    .setNumber(0);
+            m_robotContainer.setLightMode(LightMode.PIPELINE);
 
 			m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 			m_robotContainer.initialize();
@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode").setNumber(0);
+        m_robotContainer.setLightMode(LightMode.PIPELINE);
 
         // Cancel autonomous upon teleop
         if (m_autonomousCommand != null) {

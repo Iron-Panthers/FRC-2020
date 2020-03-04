@@ -146,7 +146,7 @@ public final class Constants {
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.0175;
+        public static final double kP = 0.013;
 
         /**
          * I value in PID
@@ -162,13 +162,15 @@ public final class Constants {
         public static final double kS = 0.08;
 
         /** Conversion constant estimating magnitude of top line as it moves further away */
-        public static final double kTopLineMagnitudeTimesDistance = 51 * 201.825; //TODO measure for practice field
+        public static final double kTopLineMagnitudeTimesDistance = 100 * 118.7; //TODO measure for practice field
+
+        public static final double kTargetWidthInches = 30; //TODO measure for practice field
 
         /** Conversion constant relating distance from outer goal to hole to the length of the line on the top of the outer goal target*/
         //This was taken from field measurements. The outer hole is 2 ft 5.25 inches in front of the inner hole, and the diameter of the hexagon is 2 ft 6 inches
         public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
 
-        public static double kAutoAlignTolerance = 1;
+        public static double kAutoAlignTolerance = .5;
         
         
 		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)

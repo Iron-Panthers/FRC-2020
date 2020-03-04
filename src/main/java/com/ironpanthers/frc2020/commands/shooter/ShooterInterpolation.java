@@ -11,6 +11,7 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.util.Util;
 
@@ -43,7 +44,7 @@ public class ShooterInterpolation extends CommandBase {
     @Override
     public void initialize() {
         if (conveyorBelt.ballsHeld == 0) { 
-            lWrapper.turnOffLight();
+            lWrapper.setLightMode(LightMode.OFF);
             cancel();
         }
         horizontalDistance = arm.getHorizontalDistance();

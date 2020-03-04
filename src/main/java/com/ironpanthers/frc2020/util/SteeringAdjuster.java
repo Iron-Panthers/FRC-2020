@@ -26,8 +26,6 @@ public class SteeringAdjuster {
     private Arm arm;
     private double deltaError;
 
-    public double adjustedSteeringValue;
-    public double adjustValue;
     LimelightWrapper limelight;
 
     private double lastComputedAngle = 0.0;
@@ -42,7 +40,6 @@ public class SteeringAdjuster {
         lastError = 0.0;
         deltaError = 0.0;
 
-        adjustedSteeringValue = 0.0;
         this.limelight = limelight;
         this.arm = arm;
         this.horizontalDistance = horizontalDistance;
@@ -61,33 +58,44 @@ public class SteeringAdjuster {
         // positive error should indicate that the part of the image we are aiming at is
         // to the right of the crosshair
         double horizontalError = limelight.getTableX() + aimDeg;
+        SmartDashboard.putNumber("Tx", limelight.getTableX());
         SmartDashboard.putNumber("Alignment Adjust Angle", horizontalError);
 
-        // shift recorded error values over and set zeroth slot to the measured error
-        for (int i = 98; i >= 0; i--) {
-            totalErrors[i + 1] = totalErrors[i];
-        }
-        totalErrors[0] = horizontalError;
-
-        // sum errors
-        for (int i = 0; i < totalErrors.length; i++) {
-            sumOfErrors += totalErrors[i];
-        }
-
-        // calculate error delta since last recording
-        deltaError = horizontalError - lastError;
-
-        lastError = horizontalError;
-        // calculate steering adjustment with pidf
         if (horizontalError > 0.0) {
-            return Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
-                    + Constants.Vision.kD * deltaError + Constants.Vision.kS;
+            return Constants.Vision.kP * horizontalError + Constants.Vision.kS;
         } else if (horizontalError < 0.0) {
-            return Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
-                    + Constants.Vision.kD * deltaError - Constants.Vision.kS;
+            return Constants.Vision.kP * horizontalError - Constants.Vision.kS;
         } else {
             return 0.0;
         }
+
+        //for if we want I and D
+
+        // // shift recorded error values over and set zeroth slot to the measured error
+        // for (int i = 98; i >= 0; i--) {
+        //     totalErrors[i + 1] = totalErrors[i];
+        // }
+        // totalErrors[0] = horizontalError;
+
+        // // sum errors
+        // for (int i = 0; i < totalErrors.length; i++) {
+        //     sumOfErrors += totalErrors[i];
+        // }
+
+        // // calculate error delta since last recording
+        // deltaError = horizontalError - lastError;
+
+        // lastError = horizontalError;
+        // // calculate steering adjustment with pidf
+        // if (horizontalError > 0.0) {
+        //     return Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
+        //             + Constants.Vision.kD * deltaError + Constants.Vision.kS;
+        // } else if (horizontalError < 0.0) {
+        //     return Constants.Vision.kP * horizontalError + Constants.Vision.kI * sumOfErrors
+        //             + Constants.Vision.kD * deltaError - Constants.Vision.kS;
+        // } else {
+        //     return 0.0;
+        // }
         
         // reset last recorded error to error just recorded
         
@@ -97,11 +105,13 @@ public class SteeringAdjuster {
     // positive.
     // Therefore, we add to left side and subtract from right
     public double getLeftSteeringAdjust() {
-        return updateSteeringValues(getInnerHoleAdjust());
+        return -updateSteeringValues(getInnerHoleAdjust());
+        // return -updateSteeringValues(0);
     }
 
     public double getRightSteeringAdjust() {
-        return -updateSteeringValues(getInnerHoleAdjust());    
+        return updateSteeringValues(getInnerHoleAdjust()); 
+        // return updateSteeringValues(0);   
     } 
     /**
      * @return the angle off the center of the vision target which we need to aim in
@@ -109,6 +119,7 @@ public class SteeringAdjuster {
      *         to the right of the target's center.
      */
     public double getInnerHoleAdjust() {
+        limelight.periodic();
 
         if(!limelight.targetVisible()) {
             return lastComputedAngle;
@@ -163,15 +174,15 @@ public class SteeringAdjuster {
         brightx = orderedx.get(2);
         brighty = orderedy.get(2);
 
-        // // for testing:
-        // SmartDashboard.putNumber("top left x: ", tleftx);
-        // SmartDashboard.putNumber("top left y: ", tlefty);
-        // SmartDashboard.putNumber("top right x: ", trightx);
-        // SmartDashboard.putNumber("top right y: ", trighty);
-        // SmartDashboard.putNumber("bottom left x: ", bleftx);
-        // SmartDashboard.putNumber("bottom left y: ", blefty);
-        // SmartDashboard.putNumber("bottom right x: ", brightx);
-        // SmartDashboard.putNumber("bottom right y: ", brighty);
+        // for testing:
+        SmartDashboard.putNumber("top left x: ", tleftx);
+        SmartDashboard.putNumber("top left y: ", tlefty);
+        SmartDashboard.putNumber("top right x: ", trightx);
+        SmartDashboard.putNumber("top right y: ", trighty);
+        SmartDashboard.putNumber("bottom left x: ", bleftx);
+        SmartDashboard.putNumber("bottom left y: ", blefty);
+        SmartDashboard.putNumber("bottom right x: ", brightx);
+        SmartDashboard.putNumber("bottom right y: ", brighty);
         SmartDashboard.putNumber("horizontal distance from target: ", arm.getHorizontalDistance());
         SmartDashboard.putNumber("diagonal distance from target: ", arm.getDiagonalDistance());
 
@@ -181,12 +192,9 @@ public class SteeringAdjuster {
         // brightx, brighty, Constants.Vision.BOTTOM_LINE_MAGNITUDE_AT_DISTANCE /
         // calculateDiagonalDistance());
 
-        // average of the estimated angles using the top and bottom lines
+        //estimated angle using the top line
         double offsetAngle = topLine.getOffsetAngle(
-                topLine.magnitude * Constants.Vision.kOuterToHoleDistancePerTlLength, arm.getHorizontalDistance());
-
-        // For debugging purposes, put the computed offset angle (SANS SGN! not reflective of the true target)
-        SmartDashboard.putNumber("hole offset angle: ", offsetAngle);
+                topLine.magnitude * Constants.Vision.kOuterToHoleDistancePerTlLength, ((Constants.Vision.kTopLineMagnitudeTimesDistance / arm.getDiagonalDistance()) / Constants.Vision.kTargetWidthInches) * arm.getHorizontalDistance());
 
         // Compute vertical delta between bottom, top corner on each side of the detection
         double leftHeight = Math.abs(tlefty - blefty);
@@ -195,6 +203,9 @@ public class SteeringAdjuster {
         // Update internal value
         lastComputedAngle = Math.copySign(offsetAngle, rightHeight - leftHeight);
 
+        // For debugging purposes, put the computed offset angle (SANS SGN! not reflective of the true target)
+
+        SmartDashboard.putNumber("hole offset angle: ", lastComputedAngle);
         // Return stored value
         return lastComputedAngle;
     }

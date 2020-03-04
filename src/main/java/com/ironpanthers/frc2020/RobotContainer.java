@@ -17,11 +17,13 @@ import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
+import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
 import com.ironpanthers.frc2020.commands.vision.TurnToTargetW;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
 import com.ironpanthers.util.AutoSelector;
@@ -83,8 +85,8 @@ public class RobotContainer {
 		resetBallsHeld();
 	}
 
-	public void turnOffLL() {
-		limelightWrapper.turnOffLight();
+	public void setLightMode(LightMode mode) {
+		limelightWrapper.setLightMode(mode);
 	}
 
 	/**

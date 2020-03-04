@@ -7,6 +7,7 @@ import com.ironpanthers.frc2020.commands.shooter.ShooterSequence2;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.util.Util;
 
@@ -110,7 +111,7 @@ public class ShiftConveyor extends CommandBase {
             } else {
                 shooter.stopShooter();
                 CommandScheduler.getInstance().schedule(new ArmToTarget(arm, 0, lWrapper));
-                lWrapper.turnOffLight();
+                lWrapper.setLightMode(LightMode.OFF);
             }
         }
         if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {
