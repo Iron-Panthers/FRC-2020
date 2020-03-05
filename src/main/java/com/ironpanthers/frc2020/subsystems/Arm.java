@@ -78,8 +78,8 @@ public class Arm extends SubsystemBase {
         // Reverse needs to be the lowest value, so the ground position
         // forwardLimitSwitch = new DigitalInput(Constants.Arm.kHighLimitSwitchPort);
         reverseLimitSwitch = new DigitalInput(Constants.Arm.kGroundLimitSwitchPort);
-        armLeft.configForwardSoftLimitEnable(true);
-        armLeft.configReverseSoftLimitEnable(true);
+        armLeft.configForwardSoftLimitEnable(false);
+        armLeft.configReverseSoftLimitEnable(false);
         armLeft.configForwardSoftLimitThreshold(Constants.Arm.kTopSoftLimit);
         armLeft.configReverseSoftLimitThreshold(Constants.Arm.kBottomSoftLimit);
 
