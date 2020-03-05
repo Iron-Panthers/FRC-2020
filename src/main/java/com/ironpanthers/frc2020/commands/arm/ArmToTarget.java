@@ -35,6 +35,7 @@ public class ArmToTarget extends CommandBase {
 		SmartDashboard.putNumber("Arm Target Position Monkey", target);
 		double tempAngle = SmartDashboard.getNumber("Arm Target Position Monkey", target);
 		arm.releaseBrake();
+		arm.calibrateCANCoder();
 		if (tempAngle != target) {
 			target = tempAngle;
 		}
