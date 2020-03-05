@@ -11,6 +11,7 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
+import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -33,7 +34,7 @@ public class ArmToTargetLL extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		lWrapper.setLightMode(LightMode.OFF);
+		lWrapper.setLightMode(LightMode.ON);
         arm.setPosition(target);
 	}
 
@@ -51,6 +52,6 @@ public class ArmToTargetLL extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Math.abs(arm.getAngle() - target) < Constants.Arm.kPositionErrorTolerance;
+		return Util.epsilonEquals(arm.getAngle(), target, Constants.Arm.kPositionErrorTolerance);
 	}
 }

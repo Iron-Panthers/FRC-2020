@@ -14,6 +14,7 @@ import com.ironpanthers.frc2020.commands.arm.ArmToTargetLL;
 
 import com.ironpanthers.frc2020.commands.shooter.ShooterInterpolation;
 import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
+import com.ironpanthers.frc2020.commands.vision.TurnToTargetW;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -35,7 +36,7 @@ public class FullShooterSequence extends SequentialCommandGroup {
             int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
         // Add your commands in the super() call, e.g.
         // super(new FooCommand(), new BarCommand());super();
-        super(new ArmToTargetLL(arm, target, lWrapper), new TurnToTarget(drive, steerer, lWrapper),
+        super(new ArmToTargetLL(arm, target, lWrapper), new TurnToTargetW(drive, steerer, lWrapper),
                 new ArmInterpolation(shooter, conveyor, lWrapper, arm),
                 new ShooterInterpolation(arm, shooter, threshold, conveyor, lWrapper),
                 new ShiftConveyor(Direction.kOut, conveyor, shooter, threshold, lWrapper, arm));
