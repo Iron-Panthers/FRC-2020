@@ -17,6 +17,7 @@ public class ConveyorOuttake extends CommandBase {
 
 	private ConveyorBelt conveyor;
 	private Timer timer;
+	private double speed;
 	/**
 	 * Creates a new ConveyorOuttake.
 	 */
@@ -25,6 +26,15 @@ public class ConveyorOuttake extends CommandBase {
 		addRequirements(conveyor);
 		this.conveyor = conveyor;
 		this.timer = new Timer();
+		speed = Constants.Conveyor.kManualConveyorSpeed;
+	}
+
+	public ConveyorOuttake(ConveyorBelt conveyor, double conveyorSpeed) {
+		// Use addRequirements() here to declare subsystem dependencies.
+		addRequirements(conveyor);
+		this.conveyor = conveyor;
+		this.timer = new Timer();
+		speed = conveyorSpeed;
 	}
 
 	// Called when the command is initially scheduled.
@@ -37,7 +47,7 @@ public class ConveyorOuttake extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		conveyor.setPower(Constants.Conveyor.kManualConveyorSpeed);
+		conveyor.setPower(speed);
 	}
 
 	// Called once the command ends or is interrupted.
@@ -50,6 +60,12 @@ public class ConveyorOuttake extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return timer.hasElapsed(Constants.Conveyor.kConveyorTime);
+		if (speed > 0.5) {
+			return timer.hasElapsed(Constants.Conveyor.kConveyorTime);
+		}
+		else {
+			return timer.hasElapsed(Constants.Conveyor.kConveyorTime * 2);
+		}
+		
 	}
 }

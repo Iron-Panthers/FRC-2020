@@ -126,7 +126,7 @@ public class RobotContainer {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
 		shootFar.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
-				Constants.Shooter.kInnerGoalThreshold, limelightWrapper));
+				Constants.Shooter.kInnerGoalThreshold, limelightWrapper, Constants.Conveyor.kConveyorSpeedFar));
 		shootClose.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
 				Constants.Shooter.kOuterGoalThreshold, limelightWrapper));
 		shootInitiation.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kInitiationVelocity,
