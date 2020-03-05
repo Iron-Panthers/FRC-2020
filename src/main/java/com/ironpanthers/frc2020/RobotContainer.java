@@ -80,9 +80,12 @@ public class RobotContainer {
 		configureButtonBindings();
 	}
 
-	public void initialize() {
+	public void initializeAuto() {
 		arm.calibrateCANCoder();
 		resetBallsHeld();
+	}
+	public void initializeTeleop() {
+		arm.calibrateCANCoder();
 	}
 
 	public void setLightMode(LightMode mode) {

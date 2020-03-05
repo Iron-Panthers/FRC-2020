@@ -78,14 +78,14 @@ public class Arm extends SubsystemBase {
                 Constants.Arm.kCurrentLimit, Constants.Arm.kCurrentLimit, 0);
         armLeft.configSupplyCurrentLimit(currentConfig);
         armLeft.configClosedloopRamp(Constants.Arm.kRampRate);
-
+      
         // Limit switches
         // Forward needs to be the highest positive value, so the high position
         // Reverse needs to be the lowest value, so the ground position
         // forwardLimitSwitch = new DigitalInput(Constants.Arm.kHighLimitSwitchPort);
         reverseLimitSwitch = new DigitalInput(Constants.Arm.kGroundLimitSwitchPort);
-        armLeft.configForwardSoftLimitEnable(true);
-        armLeft.configReverseSoftLimitEnable(true);
+        armLeft.configForwardSoftLimitEnable(false);
+        armLeft.configReverseSoftLimitEnable(false);
         armLeft.configForwardSoftLimitThreshold(Constants.Arm.kTopSoftLimit);
         armLeft.configReverseSoftLimitThreshold(Constants.Arm.kBottomSoftLimit);
 

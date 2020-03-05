@@ -3,7 +3,6 @@ package com.ironpanthers.frc2020.commands;
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
-import com.ironpanthers.frc2020.commands.intake.OuttakeSequence;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence2;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
@@ -121,14 +120,6 @@ public class ShiftConveyor extends CommandBase {
                 CommandScheduler.getInstance().schedule(new ArmToTarget(arm, 0, lWrapper));
                 lWrapper.setLightMode(LightMode.OFF);
             }
-        }
-        if ((interrupted && direction == Direction.kIn) || conveyor.ballsHeld == 5) {
-            CommandScheduler.getInstance().schedule(new Outtake(shooter));
-        }else if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {
-            //CommandScheduler.getInstance().schedule(new OuttakeSequence(shooter, conveyor));
-            CommandScheduler.getInstance().schedule(new Outtake(shooter));
-            conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
-            // CommandScheduler.getInstance().schedule(new OuttakeSequence(shooter, conveyor));
         }
     }
 

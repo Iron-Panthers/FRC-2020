@@ -14,6 +14,7 @@ import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Intake extends CommandBase {
 	/**
@@ -35,9 +36,11 @@ public class Intake extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (conveyor.ballsHeld >= 5) cancel();
-	
+		if (conveyor.ballsHeld >= 5)
+			cancel();
+
 	}
+
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
@@ -47,22 +50,19 @@ public class Intake extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		shooter.setIntakeMotors(0, 0);	
+		if (interrupted || conveyor.ballsHeld == 5) {
+			shooter.setIntakeMotors(0, 0);
+		}
 		if (!interrupted && conveyor.ballsHeld < 5) {
-			conveyor.ballsHeld++;	
+			conveyor.ballsHeld++;
 		} else if (interrupted && !conveyor.getBannerSensor()) {
-            conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
-        }
-		
+			CommandScheduler.getInstance().schedule(new OuttakeSequence(shooter, conveyor));
+		}
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (conveyor.getBannerSensor()) {
-			return true;
-		} else {
-			return false;
-		}
+		return conveyor.getBannerSensor();
 	}
 }

@@ -81,7 +81,7 @@ public class Robot extends TimedRobot {
             m_robotContainer.setLightMode(LightMode.PIPELINE);
 
 			m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-			m_robotContainer.initialize();
+			m_robotContainer.initializeAuto();
 						
             if (m_autonomousCommand != null)
                 m_autonomousCommand.schedule();
@@ -100,6 +100,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        m_robotContainer.initializeTeleop();
         m_robotContainer.setLightMode(LightMode.PIPELINE);
 
         // Cancel autonomous upon teleop

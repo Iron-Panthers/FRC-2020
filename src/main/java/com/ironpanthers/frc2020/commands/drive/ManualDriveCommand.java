@@ -31,9 +31,9 @@ public class ManualDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        final var y = Deadband.apply(forward.getAsDouble(), 0.1);
+        final var y = 0-Deadband.apply(forward.getAsDouble(), 0.1);
         final var direction = reverseTrigger.get();
-        final var x = direction ? Deadband.apply(turn.getAsDouble(), 0.1) : Deadband.apply(turn.getAsDouble(), 0.1);
+        final var x = direction ? 0-Deadband.apply(turn.getAsDouble(), 0.1) : Deadband.apply(turn.getAsDouble(), 0.1);
 
         final var xPowd = Math.copySign(Math.pow(Math.abs(x), 2.75), x);
 
