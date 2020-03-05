@@ -106,6 +106,7 @@ public class RobotContainer {
 
 	public void initialize() {
 		arm.calibrateCANCoder();
+		conveyorBelt.ballsHeld = 3;
 	}
 
 	public void turnOffLL() {

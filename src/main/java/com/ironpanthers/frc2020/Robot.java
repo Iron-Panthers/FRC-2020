@@ -35,7 +35,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         m_robotContainer = new RobotContainer();
-        conveyor = new ConveyorBelt();
     }
 
     /**
@@ -80,7 +79,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         // try {
-            conveyor.ballsHeld = 3;
             NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode")
                     .setNumber(1);
 
@@ -104,7 +102,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-		m_robotContainer.initialize();
         NetworkTableInstance.getDefault().getTable(Constants.Vision.kLimelightName).getEntry("ledMode").setNumber(1);
 
         // Cancel autonomous upon teleop
