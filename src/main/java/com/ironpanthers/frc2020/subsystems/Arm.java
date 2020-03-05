@@ -55,11 +55,11 @@ public class Arm extends SubsystemBase {
         canCoder.configMagnetOffset(Constants.Arm.kCANCoderOffset);
 		calibrateCANCoder();
         canCoder.configFeedbackCoefficient(Constants.Arm.kCanCoderCoefficient, "deg", SensorTimeBase.PerSecond); // Degrees per second, output in degrees
-        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
         armLeft.configRemoteFeedbackFilter(canCoder, Constants.Arm.kRemoteSensorSlot);
         armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0); // Should be the same number as Constants.Arm.kRemoteSensorSlot
         armLeft.setSensorPhase(Constants.Arm.kSensorPhase); // Up is positive
-        armLeft.setInverted(false);
+        armLeft.setInverted(Constants.Arm.kSensorPhase); // Should be the same
         
         armLeft.setNeutralMode(NeutralMode.Brake);
         armRight.setNeutralMode(NeutralMode.Brake);
@@ -223,7 +223,9 @@ public class Arm extends SubsystemBase {
             setSensorPosition(Constants.Arm.kTopPositionDegrees);
         }*/
         // SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
-        SmartDashboard.putNumber("Arm Angle", getAngle());
+		SmartDashboard.putNumber("Arm Angle", getAngle());
+		SmartDashboard.putNumber("Arm Position", getPosition());
+		SmartDashboard.putNumber("Arm Voltage", getOutputVoltage());
         // SmartDashboard.putNumber("Arm Height", getHeight2());
         SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance());
         // SmartDashboard.putNumber("offset", getLlOffset());

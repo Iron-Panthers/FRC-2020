@@ -217,7 +217,7 @@ public final class Constants {
 
         public static final int kCANCoderId = 0;
         public static final int kRemoteSensorSlot = 0; // RemoteSensor0 for CANCoder
-        public static final double kCANCoderOffset = 0.0;
+        public static final double kCANCoderOffset = 2.0;
 
 		public static final int kBrakePort = 4; // TBD
 		
