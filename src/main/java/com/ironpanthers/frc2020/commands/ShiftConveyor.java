@@ -2,6 +2,7 @@ package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
+import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.OuttakeSequence;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence2;
 import com.ironpanthers.frc2020.subsystems.Arm;
@@ -50,6 +51,15 @@ public class ShiftConveyor extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
     }
+    public ShiftConveyor(Direction direction, ConveyorBelt conveyor,Shooter shooter) {
+        this.direction = direction;
+        this.conveyor = conveyor;
+        this.shooter = shooter;
+        isShoot = false;
+
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(conveyor);
+    }
 
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter, int threshold,
             LimelightWrapper lWrapper, Arm arm) {
@@ -90,8 +100,6 @@ public class ShiftConveyor extends CommandBase {
                 cancel();
             }
         }
-        SmartDashboard.putNumber("Conveyor Position", conveyor.getPosition());
-        SmartDashboard.putNumber("Conveyor Target Position", targetEncoderPosition);
         conveyor.setPosition(targetEncoderPosition);
     }
 
@@ -114,8 +122,13 @@ public class ShiftConveyor extends CommandBase {
                 lWrapper.setLightMode(LightMode.OFF);
             }
         }
-        if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {
-            CommandScheduler.getInstance().schedule(new OuttakeSequence(shooter, conveyor));
+        if ((interrupted && direction == Direction.kIn) || conveyor.ballsHeld == 5) {
+            CommandScheduler.getInstance().schedule(new Outtake(shooter));
+        }else if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {
+            //CommandScheduler.getInstance().schedule(new OuttakeSequence(shooter, conveyor));
+            CommandScheduler.getInstance().schedule(new Outtake(shooter));
+            conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
+            // CommandScheduler.getInstance().schedule(new OuttakeSequence(shooter, conveyor));
         }
     }
 
