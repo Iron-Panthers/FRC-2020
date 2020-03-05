@@ -62,7 +62,7 @@ public class RobotContainer {
 	// Driver A Buttons
 	private final JoystickButton driveShift = new JoystickButton(joystickA, Constants.OI.kDriveShiftButton);
 	private final JoystickButton driverBStopShooterButton = new JoystickButton(joystickB,
-			Constants.OI.kStopShooterButton); // 3
+			Constants.OI.kStopShooterButton); // 6
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
 	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign); // 6
 	private final JoystickButton shootFar = new JoystickButton(joystickA, Constants.OI.kShootFar); // 8
@@ -92,7 +92,7 @@ public class RobotContainer {
 	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton);
 	// private final JoystickButton getDistance = new JoystickButton(joystickB,
 	// Constants.OI.kLimelightTest);
-	private final JoystickButton fullShooterSequence = new JoystickButton(joystickB, 4);
+	// private final JoystickButton fullShooterSequence = new JoystickButton(joystickB, 4);
 	private final JoystickButton resetBallsHeld = new JoystickButton(joystickB, Constants.OI.kResetBallsHeld);
 
 	public RobotContainer() {
@@ -151,9 +151,9 @@ public class RobotContainer {
 		autoShotHeight.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kInitiationLineDegrees, shooter,
 				Constants.Shooter.kInitiationVelocity, Constants.Shooter.kOuterGoalThreshold, conveyorBelt,
 				limelightWrapper));
-		fullShooterSequence
-				.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees, shooter,
-						Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
+		// fullShooterSequence
+		// 		.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees, shooter,
+		// 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
 		// getDistance.whileHeld(new VisionTesting(limelightWrapper, arm));
 		resetBallsHeld.whenPressed(new ResetBallsHeld(conveyorBelt));
 	}
