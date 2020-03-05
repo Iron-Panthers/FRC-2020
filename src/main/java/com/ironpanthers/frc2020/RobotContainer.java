@@ -104,9 +104,13 @@ public class RobotContainer {
 		configureButtonBindings();
 	}
 
-	public void initialize() {
+	public void initializeAuto() {
 		arm.calibrateCANCoder();
 		conveyorBelt.ballsHeld = 3;
+	}
+
+	public void initializeTeleop() {
+		arm.calibrateCANCoder();
 	}
 
 	public void turnOffLL() {

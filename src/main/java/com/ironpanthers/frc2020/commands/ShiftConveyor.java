@@ -2,6 +2,7 @@ package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
+import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.OuttakeSequence;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
@@ -23,6 +24,7 @@ public class ShiftConveyor extends CommandBase {
     private final ConveyorBelt conveyor;
     private int targetEncoderPosition;
     private boolean isShoot;
+    private boolean isOuttake;
     private Shooter shooter;
     private LimelightWrapper lWrapper;
     private int threshold;
@@ -46,6 +48,14 @@ public class ShiftConveyor extends CommandBase {
 
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
+    }
+
+    public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter) {
+        this.direction = direction;
+        this.conveyor = conveyor;
+        this.shooter = shooter;
+        isOuttake = true;
+        addRequirements(conveyor, shooter);
     }
 
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter, int threshold,
@@ -107,8 +117,8 @@ public class ShiftConveyor extends CommandBase {
                 lWrapper.turnOffLight();
             }
         }
-        if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {
-            CommandScheduler.getInstance().schedule(new OuttakeSequence(shooter, conveyor));
+        else if (isOuttake) {
+           CommandScheduler.getInstance().schedule(new Outtake(shooter)); 
         }
     }
 
