@@ -9,10 +9,12 @@ package com.ironpanthers.frc2020;
 
 import java.io.IOException;
 
+import com.ironpanthers.frc2020.auto.commands.Shoot3Baseline;
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
 import com.ironpanthers.frc2020.commands.FullShooterSequence;
 import com.ironpanthers.frc2020.commands.arm.ArmHold;
 import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
+import com.ironpanthers.frc2020.commands.drive.GearShift;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
@@ -62,15 +64,14 @@ public class RobotContainer {
 	private final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
 
 	// Hubert
-			Constants.OI.kStopShooterButton); // 3
 	// Driver A Buttons
 	private final JoystickButton driveShift = new JoystickButton(joystickA, Constants.OI.kDriveShiftButton);
-	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA,
+	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA, Constants.OI.kStopShooterButton);
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
 	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign); // 6
 	private final JoystickButton emergencyShootA = new JoystickButton(joystickA, Constants.OI.kEmergencyShootButton); // 8
 
-	// Cherolin
+	// Cherilyn
 	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton); //2
 	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton); //2
 	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton); //3

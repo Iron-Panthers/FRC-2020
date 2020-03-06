@@ -72,7 +72,7 @@ public class SetShooterVelocity extends CommandBase {
 	public void end(boolean interrupted) {
 		if (interrupted) {
 			shooter.stopShooter();
-			shooter.setIntake(0);
+			shooter.setIntakeMotor(0);
 		}
 	}
 

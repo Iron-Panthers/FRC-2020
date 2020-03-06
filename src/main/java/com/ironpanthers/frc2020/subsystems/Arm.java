@@ -155,7 +155,7 @@ public class Arm extends SubsystemBase {
         return getPivotToLLHorizontleD(getAngle()) - getPivotToLLHorizontleD(getAngle() + limelight.getTableY());
     }
 
-    public double getHAnlgeRadians() {
+    public double getHAngleRadians() {
         return Math.toRadians(90 - Constants.Vision.kMountToLLAngleDeg - getAngle() + limelight.getTableY());
     }
     public double getHeightOffset() {
@@ -163,7 +163,7 @@ public class Arm extends SubsystemBase {
     }
     public double getHorizontalDistance() {
         limelight.periodic();
-        return (getHeightOffset() / (Math.tan(getHAnlgeRadians())))+ getLlOffset();
+        return (getHeightOffset() / (Math.tan(getHAngleRadians())))+ getLlOffset();
     }
 
     public double getDiagonalDistance() {
@@ -220,11 +220,10 @@ public class Arm extends SubsystemBase {
     public void periodic() {
         if (getGroundLimitPressed()) {
             // setZero();
-        } /*
+        }
         SmartDashboard.putNumber("Arm Angle", getAngle());
         SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance());
         SmartDashboard.putNumber("offset", getLlOffset());
-        SmartDashboard.putNumber("hAngle", getHAnlge());
         SmartDashboard.putNumber("GetAngleTrig", getAngleTrig());
         SmartDashboard.putNumber("Height Difference", Constants.Vision.kGroundToTargetInches - getHeight());
 
