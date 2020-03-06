@@ -79,7 +79,11 @@ public final class Constants {
         public static final int kShootFar = kFarShotButtonNumber;
         public static final int kAutoAlign = 6;
         public static final int kShootClose = kCloseShotButtonNumber;
-        public static final int kShootInitiation = kInitiationLineShotButtonNumber;
+		public static final int kShootInitiation = kInitiationLineShotButtonNumber;
+		// Climb Down 7, Climb up 8
+		public static final int kClimbUp = 8;
+		public static final int kClimbDown = 7;
+
 
         // Driver B
         public static final int kDriverBJoystickPort = 1;
@@ -260,5 +264,23 @@ public final class Constants {
         public static final double kClosedLoopPeakOutput = 0.5; // Used for both positive and negative direction
 
         public static final double kCurrentLimit = 60; // amps
-    }
+	}
+	
+	public static class Climb {
+		// Ports
+		public static final int kClimbLeft = 11;
+		public static final int kClimbRight = 12;
+
+		// Configuration
+		public static final double kClimbRamp = 0.25;
+		public static final boolean kClimbInverted = false;
+
+		public static final double kClimbCurrentLimit = 30.0;
+		public static final double kClimbCurrentPeak = 40.0;
+		public static final double kClimbCurrentDelay = 1.0; // Seconds
+
+		public static final double kClimbUpPower = 1.0;
+		public static final double kClimbDownPower = -1.0;
+		
+	}
 }

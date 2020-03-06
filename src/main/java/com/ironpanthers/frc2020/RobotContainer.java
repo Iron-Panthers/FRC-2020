@@ -8,10 +8,11 @@
 package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.auto.commands.Shoot3Baseline;
-import com.ironpanthers.frc2020.commands.FullShooterSequence;
 import com.ironpanthers.frc2020.commands.arm.ArmAndSpinShooter;
 import com.ironpanthers.frc2020.commands.arm.ArmHold;
 import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
+import com.ironpanthers.frc2020.commands.climb.ClimbDown;
+import com.ironpanthers.frc2020.commands.climb.ClimbUp;
 import com.ironpanthers.frc2020.commands.drive.GearShift;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
@@ -22,6 +23,7 @@ import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
 import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
 import com.ironpanthers.frc2020.subsystems.Arm;
+import com.ironpanthers.frc2020.subsystems.Climb;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
@@ -51,6 +53,7 @@ public class RobotContainer {
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	private final Arm arm = new Arm(limelightWrapper);
 	private final SteeringAdjuster steerer = new SteeringAdjuster(limelightWrapper, arm::getHorizontalDistance, arm);
+	private final Climb climb = new Climb();
 
 	private final AutoSelector autoSelector = new AutoSelector();
 
@@ -92,8 +95,11 @@ public class RobotContainer {
 	private final JoystickButton autoShotHeight = new JoystickButton(joystickB, Constants.OI.kAutoShotHeightButton);
 	// private final JoystickButton getDistance = new JoystickButton(joystickB,
 	// Constants.OI.kLimelightTest);
-	// private final JoystickButton fullShooterSequence = new JoystickButton(joystickB, 4);
+	// private final JoystickButton fullShooterSequence = new
+	// JoystickButton(joystickB, 4);
 	private final JoystickButton resetBallsHeld = new JoystickButton(joystickB, Constants.OI.kResetBallsHeld);
+	private final JoystickButton climbUp = new JoystickButton(joystickA, Constants.OI.kClimbUp);
+	private final JoystickButton climbDown = new JoystickButton(joystickA, Constants.OI.kClimbDown);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -152,10 +158,13 @@ public class RobotContainer {
 				Constants.Shooter.kInitiationVelocity, Constants.Shooter.kOuterGoalThreshold, conveyorBelt,
 				limelightWrapper));
 		// fullShooterSequence
-		// 		.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees, shooter,
-		// 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
+		// .whenPressed(new FullShooterSequence(steerer, drive, arm,
+		// Constants.Arm.kInitiationLineDegrees, shooter,
+		// Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
 		// getDistance.whileHeld(new VisionTesting(limelightWrapper, arm));
 		resetBallsHeld.whenPressed(new ResetBallsHeld(conveyorBelt));
+		climbUp.whileHeld(new ClimbUp(climb));
+		climbDown.whileHeld(new ClimbDown(climb));
 	}
 
 	public void smartDashboard() {
