@@ -77,6 +77,9 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public void initialize() {
         final var encoderStartTicks = conveyor.getPosition();
+        if (direction == Direction.kIn && conveyor.ballsHeld == 3) targetEncoderPosition += 10000;
+        if (direction == Direction.kIn && conveyor.ballsHeld == 4) targetEncoderPosition += 14000;
+
         targetEncoderPosition = direction == Direction.kIn
                 ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
                 : encoderStartTicks + Constants.Conveyor.kShiftEncoderDistance;
@@ -84,10 +87,11 @@ public class ShiftConveyor extends CommandBase {
         if (direction == Direction.kIn) {
             if (conveyor.ballsHeld >= 5 && conveyor.lastBallRan) {
                 cancel();
-            }  else if (conveyor.ballsHeld >= 5 && !conveyor.lastBallRan) {
+            }  else if (conveyor.ballsHeld == 5 && !conveyor.lastBallRan) {
                 targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
             }
         }
+
       
     }
 

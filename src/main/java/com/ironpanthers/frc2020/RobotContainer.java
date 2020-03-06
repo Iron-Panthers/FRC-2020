@@ -16,6 +16,7 @@ import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
+import com.ironpanthers.frc2020.commands.intake.OuttakeSequence;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
 import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
 import com.ironpanthers.frc2020.commands.vision.TurnToTargetW;
@@ -98,13 +99,15 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		// Driver A
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
+		intakeButton.whenReleased(new Outtake(shooter, conveyorBelt));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
 		turnToTargetButton.whenPressed(new TurnToTargetW(drive, steerer, limelightWrapper)); // Test New Turn To Target
 
 		// Driver B
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
-		emergencyOuttake.whileHeld(new Outtake(shooter));
+		driverBIntake.whenReleased(new Outtake(shooter, conveyorBelt));
+		emergencyOuttake.whileHeld(new Outtake(shooter, conveyorBelt));
 		fullShooterSequence
 				.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees, shooter,
 						Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));

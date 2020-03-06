@@ -57,7 +57,7 @@ public class ConveyorBelt extends SubsystemBase {
 	}
 
 	public boolean conveyorFull() {
-		return ballsHeld >= 5;
+		return ballsHeld == 5;
 	}
 
 	@Override

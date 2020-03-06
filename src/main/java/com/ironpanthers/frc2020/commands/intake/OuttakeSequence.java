@@ -24,6 +24,6 @@ public class OuttakeSequence extends SequentialCommandGroup {
   public OuttakeSequence(Shooter shooter, ConveyorBelt conveyor) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new Outtake(shooter),new ShiftConveyor(Direction.kOut, conveyor));
+    super(new Outtake(shooter, conveyor),new ShiftConveyor(Direction.kOut, conveyor));
   }
 }

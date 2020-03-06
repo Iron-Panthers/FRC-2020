@@ -15,9 +15,10 @@ public class Outtake extends CommandBase {
 	Shooter shooter;
 	int counter;
 	Timer timer;
-	public Outtake(Shooter shooter) {
+	public Outtake(Shooter shooter,ConveyorBelt conveyor){
 		counter = 0;
 		this.shooter = shooter;
+		this.conveyor = conveyor;
 		timer = new Timer();
 
 		// Use addRequirements() here to declare subsystem dependencies.
@@ -29,6 +30,9 @@ public class Outtake extends CommandBase {
 	public void initialize() {
 		timer.reset();
 		timer.start();
+		if (!conveyor.getBannerSensor()) {
+			conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
+		}
 	}
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
