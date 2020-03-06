@@ -118,6 +118,7 @@ public final class Constants {
         public static final double kIntakeRollerSpeed = 1.0;
 		public static final double kIntakeFlywheelSpeed = -1.0; // tbd
 		public static final double kOuttakeRollerSpeed = -1.0;
+		public static final double kConveyorInSpeed = -0.75;
         public static final double kManualConveyorSpeed = 0.75;
         public static final double kConveyorSpeedFar = 0.25;
 

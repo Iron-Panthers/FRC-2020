@@ -18,7 +18,6 @@ import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.ResetBallsHeld;
-import com.ironpanthers.frc2020.commands.intake.ResetConveyor;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
 import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
@@ -130,7 +129,7 @@ public class RobotContainer {
 		// Driver A
 		driveShift.whileHeld(new GearShift(drive));
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
-		intakeButton.whenReleased(new ResetConveyor(conveyorBelt));
+		intakeButton.whenReleased(new Outtake(shooter, conveyorBelt));
 		shootFar.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
 				Constants.Shooter.kInnerGoalThreshold, limelightWrapper, Constants.Conveyor.kConveyorSpeedFar));
 		shootClose.whenPressed(new ShooterSequence(shooter, conveyorBelt, Constants.Shooter.kFarVelocity,
@@ -143,6 +142,7 @@ public class RobotContainer {
 		driverBStopShooterButton.whenPressed(new StopShooter(shooter));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
+		driverBIntake.whenReleased(new Outtake(shooter, conveyorBelt));
 		closeShotPosition.whenPressed(
 				new ArmAndSpinShooter(arm, Constants.Arm.kCloseShotDegrees, shooter, Constants.Shooter.kCloseVelocity,
 						Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
@@ -151,7 +151,7 @@ public class RobotContainer {
 		// framePerimeterHeightPosition
 		// .whenPressed(new ArmToTarget(arm, Constants.Arm.kFrameHeightDegrees,
 		// limelightWrapper));
-		emergencyOuttake.whileHeld(new Outtake(shooter));
+		emergencyOuttake.whileHeld(new Outtake(shooter, conveyorBelt));
 		// emergencyIntake.whileHeld(new EmergencyIntake(shooter, conveyorBelt,
 		// emergencyIntake::get));
 		autoShotHeight.whenPressed(new ArmAndSpinShooter(arm, Constants.Arm.kInitiationLineDegrees, shooter,

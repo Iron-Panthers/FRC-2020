@@ -73,16 +73,16 @@ public class ShiftConveyor extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        final var encoderStartTicks = conveyor.getPosition();
-        targetEncoderPosition = direction == Direction.kIn
-                ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
-                : encoderStartTicks + Constants.Conveyor.kShiftEncoderDistance;
+        // final var encoderStartTicks = conveyor.getPosition();
+        // targetEncoderPosition = direction == Direction.kIn
+        //         ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
+        //         : encoderStartTicks + Constants.Conveyor.kShiftEncoderDistance;
 
         if (direction == Direction.kIn) {
             if (conveyor.ballsHeld >= 5 && conveyor.lastBallRan) {
                 cancel();
             } else if (conveyor.ballsHeld >= 5 && !conveyor.lastBallRan) {
-                targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
+                // targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
             }
         }
 
@@ -96,7 +96,9 @@ public class ShiftConveyor extends CommandBase {
                 cancel();
             }
         }
-        conveyor.setPosition(targetEncoderPosition);
+		// conveyor.setPosition(targetEncoderPosition);
+		conveyor.setPower(Constants.Conveyor.kConveyorInSpeed);
+		
     }
 
     // Called once the command ends or is interrupted.
@@ -118,15 +120,14 @@ public class ShiftConveyor extends CommandBase {
             }
         }
         else if (isOuttake) {
-           CommandScheduler.getInstance().schedule(new Outtake(shooter)); 
+           CommandScheduler.getInstance().schedule(new Outtake(shooter, conveyor));
         }
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition,
-                Constants.Conveyor.kPositionErrorTolerance)
-                || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn);
+        return (conveyor.getBannerSensor()
+                || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn));
     }
 }
