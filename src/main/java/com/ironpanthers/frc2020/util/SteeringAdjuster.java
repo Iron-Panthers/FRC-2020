@@ -99,7 +99,15 @@ public class SteeringAdjuster {
         
         // reset last recorded error to error just recorded
         
-    }
+	}
+	
+	public double getLeftSteeringAdjustNoInnerHole() {
+		return updateSteeringValues(0);
+	}
+
+	public double getRightSteeringAdjustNoInnerHole() {
+		return -updateSteeringValues(0);
+	}
     
     // If the target is on the right of the screen, the steering value will be
     // positive.

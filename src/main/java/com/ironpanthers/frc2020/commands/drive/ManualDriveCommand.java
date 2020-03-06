@@ -35,7 +35,7 @@ public class ManualDriveCommand extends CommandBase {
         final var direction = reverseTrigger.get();
         final var x = direction ? 0-Deadband.apply(turn.getAsDouble(), 0.1) : Deadband.apply(turn.getAsDouble(), 0.1);
 
-        var xPowd = 0.0;
+		var xPowd = 0.0;
 		// More sensitive in low gear
 		if (drive.isLowGear()) {
 			xPowd = Math.copySign(Math.pow(Math.abs(x), 2.75), x);
@@ -81,7 +81,8 @@ public class ManualDriveCommand extends CommandBase {
 
     private double skim(double v) {
         // Turn gain can be substituted with the slider value on the joystick, but 1.0
-        // is preferred by our drivers
+		// is preferred by our drivers
+		
         double turnGain = 1.0;
         if (v > 1.0) {
             return ((v - 1.0) * turnGain);

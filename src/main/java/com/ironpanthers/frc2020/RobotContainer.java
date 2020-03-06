@@ -62,8 +62,10 @@ public class RobotContainer {
 	private final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
 
 	// Hubert
-	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA,
 			Constants.OI.kStopShooterButton); // 3
+	// Driver A Buttons
+	private final JoystickButton driveShift = new JoystickButton(joystickA, Constants.OI.kDriveShiftButton);
+	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA,
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
 	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign); // 6
 	private final JoystickButton emergencyShootA = new JoystickButton(joystickA, Constants.OI.kEmergencyShootButton); // 8
@@ -108,6 +110,7 @@ public class RobotContainer {
 	 */
 	private void configureButtonBindings() {
 		// Driver A
+		driveShift.whileHeld(new GearShift(drive));
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new Outtake(shooter, conveyorBelt));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
@@ -150,11 +153,14 @@ public class RobotContainer {
 	 *
 	 * @return the command to run in autonomous
 	 */
-	public Command getAutonomousCommand() throws IOException {
-		try {
-			return new TestAutonomous(drive);
-		} catch (IOException e) {
-			throw e;
-		}
+	public Command getAutonomousCommand() /* throws IOException */ {
+		// try {
+		// return new TestAutonomous(drive);
+		return new Shoot3Baseline(arm, Constants.Arm.kInitiationLineDegrees, shooter,
+				Constants.Shooter.kInitiationVelocity, Constants.Shooter.kInnerGoalThreshold, conveyorBelt, drive,
+				limelightWrapper);
+		// } catch (IOException e) {
+		// throw e;
+		// }
 	}
 }

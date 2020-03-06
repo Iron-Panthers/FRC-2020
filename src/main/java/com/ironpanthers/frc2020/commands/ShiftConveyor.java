@@ -25,10 +25,10 @@ public class ShiftConveyor extends CommandBase {
     private final ConveyorBelt conveyor;
     private int targetEncoderPosition;
     private boolean isShoot;
+    private boolean isOuttake;
     private Shooter shooter;
     private LimelightWrapper lWrapper;
     private int threshold;
-    private Arm arm;
 
     /**
      * Create a new ShiftConveyor command to shift the conveyor stack by one
@@ -63,7 +63,6 @@ public class ShiftConveyor extends CommandBase {
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter, int threshold,
             LimelightWrapper lWrapper, Arm arm, int velocity) {
         this.direction = direction;
-        this.arm = arm;
         this.conveyor = conveyor;
         isShoot = true;
         this.shooter = shooter;
@@ -85,7 +84,7 @@ public class ShiftConveyor extends CommandBase {
         targetEncoderPosition = direction == Direction.kIn
                 ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
                 : encoderStartTicks + Constants.Conveyor.kShiftEncoderDistance;
-        
+
         if (direction == Direction.kIn) {
             if (conveyor.ballsHeld >= 5 && conveyor.lastBallRan) {
                 cancel();
@@ -120,7 +119,7 @@ public class ShiftConveyor extends CommandBase {
             conveyor.lastBallRan = false;
             if (conveyor.ballsHeld > 0) {
                 CommandScheduler.getInstance()
-                        .schedule(new ShooterSequence2(arm, shooter, conveyor, shooter.velocity, threshold, lWrapper));
+                        .schedule(new ShooterSequence(shooter, conveyor, shooter.velocity, threshold, lWrapper));
             } else {
                 shooter.stopShooter();
                 CommandScheduler.getInstance().schedule(new ArmToTarget(arm, 0, lWrapper));
@@ -133,6 +132,7 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public boolean isFinished() {
         return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition,
-                Constants.Conveyor.kPositionErrorTolerance) || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn);
+                Constants.Conveyor.kPositionErrorTolerance)
+                || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn);
     }
 }

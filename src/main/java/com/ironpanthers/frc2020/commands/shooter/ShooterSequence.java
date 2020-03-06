@@ -7,8 +7,7 @@
 
 package com.ironpanthers.frc2020.commands.shooter;
 
-import com.ironpanthers.frc2020.commands.ShiftConveyor;
-import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
+import com.ironpanthers.frc2020.commands.intake.ConveyorOuttake;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
@@ -25,6 +24,12 @@ public class ShooterSequence extends SequentialCommandGroup {
 	public ShooterSequence(Shooter shooter, ConveyorBelt conveyor, int velocity, int threshold,LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper), new ShiftConveyor(Direction.kOut, conveyor));
+		super(new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper), new ConveyorOuttake(conveyor));
+	}
+
+	public ShooterSequence(Shooter shooter, ConveyorBelt conveyor, int velocity, int threshold,LimelightWrapper lWrapper, double conveyorSpeed) {
+		// Add your commands in the super() call, e.g.
+		// super(new FooCommand(), new BarCommand());
+		super(new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper), new ConveyorOuttake(conveyor));
 	}
 }

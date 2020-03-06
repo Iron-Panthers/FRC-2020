@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
+    private ConveyorBelt conveyor;
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -84,9 +85,9 @@ public class Robot extends TimedRobot {
             if (m_autonomousCommand != null)
                 m_autonomousCommand.schedule();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     /**

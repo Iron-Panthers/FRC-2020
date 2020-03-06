@@ -75,7 +75,7 @@ public final class Constants {
 		public static final int kDriverAJoystickPort = 0;
 		public static final int kDriveShiftButton = 2;
         public static final int kIntakeButton = 4;
-        public static final int kResetConveyorButton = 3;
+        // public static final int kResetConveyorButton = 3;
         public static final int kShootFar = kFarShotButtonNumber;
         public static final int kAutoAlign = 6;
         public static final int kShootClose = kCloseShotButtonNumber;
@@ -84,7 +84,8 @@ public final class Constants {
         // Driver B
         public static final int kDriverBJoystickPort = 1;
         public static final int kManualArmButton = 1;
-		public static final int kDriverBIntakeButton = 2;
+        public static final int kDriverBIntakeButton = 2;
+        
 		public static final int kEmergencyOuttakeButton = 3;
 		public static final int kFullShooterSequenceButton = 4;
 		public static final int kMoveConveyorButton = 5;
@@ -116,7 +117,10 @@ public final class Constants {
         public static final double kIntakeRollerSpeed = 1.0;
 		public static final double kIntakeFlywheelSpeed = -1.0; // tbd
 		public static final double kOuttakeRollerSpeed = -1.0;
-		public static final double kManualConveyorSpeed = 0.5;
+        public static final double kManualConveyorSpeed = 0.75;
+        public static final double kConveyorSpeedFar = 0.25;
+
+		public static final double kConveyorTime = 2.5; // Seconds, needs testing
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
@@ -179,9 +183,6 @@ public final class Constants {
         
         
 		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
-		public static final double kCloseDistance = 20.0; // Inches
-		public static final double kInitiationDistance = 156.0; // Inches
-		public static final double kFarDistance = 200.0; // Not tested, placeholder
     }
 
     public static class Shooter {
@@ -224,7 +225,7 @@ public final class Constants {
 
         public static final int kCANCoderId = 0;
         public static final int kRemoteSensorSlot = 0; // RemoteSensor0 for CANCoder
-        public static final double kCANCoderOffset = 0.0;
+        public static final double kCANCoderOffset = 0.0; // 0.5 works, but too risky to have a negative angle which can cause raw units to be almost 4096
 
 		public static final int kBrakePort = 4; // TBD
 		
@@ -237,7 +238,7 @@ public final class Constants {
         public static final double kArmInitialHeight = 0; // TODO find this value
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 2.0; // TBD, started with 90 max error being 1.0 power, P = 1/90
+        public static final double kP = 2.0; // Up is positive encoder direction, but negative voltage (3/5/20)
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
@@ -247,7 +248,7 @@ public final class Constants {
         // units
 		public static final double kCanCoderCoefficient = 360.0 / 4096.0; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
         // Setpoints
-        public static final double kPositionErrorTolerance = 2;
+        public static final double kPositionErrorTolerance = 1.5;
 
         public static final double kCloseShotDegrees = 14.0; // Tested 2/27/20 on comp robot
         public static final double kInitiationLineDegrees = 45.0; // Tested 2/29/20
@@ -264,11 +265,6 @@ public final class Constants {
         public static final double kUseTopLimitRange = 40.0;
 
         // TODO(james)
-        public static final double kSlowdownThreshold = 1; // Threshold to soft limit in which the output of the arm
-        // motors are scaled down
-        public static final double kBottomSlowdownZone = kBottomSoftLimit + kSlowdownThreshold;
-        public static final double kTopSlowdownZone = kTopSoftLimit - kSlowdownThreshold;
-        public static final double kSlowClosedLoopPeakOutput = 0.25; // for when in a slow zone
         public static final double kClosedLoopPeakOutput = 0.5; // Used for both positive and negative direction
 
         public static final double kCurrentLimit = 60; // amps

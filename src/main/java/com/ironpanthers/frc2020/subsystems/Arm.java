@@ -71,6 +71,7 @@ public class Arm extends SubsystemBase {
         armLeft.setNeutralMode(NeutralMode.Brake);
         armRight.setNeutralMode(NeutralMode.Brake);
         armRight.follow(armLeft);
+        armRight.setInverted(InvertType.OpposeMaster);
 
         // Current Limits and Power Limits
         armLeft.configClosedLoopPeakOutput(Constants.Arm.kPIDIdx, Constants.Arm.kClosedLoopPeakOutput);
@@ -85,7 +86,7 @@ public class Arm extends SubsystemBase {
         // forwardLimitSwitch = new DigitalInput(Constants.Arm.kHighLimitSwitchPort);
         reverseLimitSwitch = new DigitalInput(Constants.Arm.kGroundLimitSwitchPort);
         armLeft.configForwardSoftLimitEnable(true);
-        armLeft.configReverseSoftLimitEnable(true);
+		armLeft.configReverseSoftLimitEnable(true);
         armLeft.configForwardSoftLimitThreshold(Constants.Arm.kTopSoftLimit);
         armLeft.configReverseSoftLimitThreshold(Constants.Arm.kBottomSoftLimit);
 
@@ -220,15 +221,10 @@ public class Arm extends SubsystemBase {
         if (getGroundLimitPressed()) {
             // setZero();
         } /*
-           * else if (getHighLimitPressed()) {
-           * setSensorPosition(Constants.Arm.kTopPositionDegrees); }
-           */
-        SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
         SmartDashboard.putNumber("Arm Angle", getAngle());
-        SmartDashboard.putNumber("Arm Height", getHeight());
         SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance());
         SmartDashboard.putNumber("offset", getLlOffset());
-        SmartDashboard.putNumber("hAngle", Math.toDegrees(getHAnlgeRadians()));
+        SmartDashboard.putNumber("hAngle", getHAnlge());
         SmartDashboard.putNumber("GetAngleTrig", getAngleTrig());
         SmartDashboard.putNumber("Height Difference", Constants.Vision.kGroundToTargetInches - getHeight());
 

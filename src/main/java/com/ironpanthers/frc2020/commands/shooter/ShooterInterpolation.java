@@ -13,6 +13,7 @@ import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
+import com.ironpanthers.util.CircularBuffer;
 import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +25,8 @@ public class ShooterInterpolation extends CommandBase {
     private LimelightWrapper lWrapper;
     private ConveyorBelt conveyorBelt;
     private Arm arm;
-    private double horizontalDistance;
+	private double horizontalDistance;
+	private CircularBuffer buffer;
 
     /**
      * Creates a new ShootAtVelocity.
@@ -38,6 +40,7 @@ public class ShooterInterpolation extends CommandBase {
         this.arm = arm;
         this.conveyorBelt = conveyorBelt;
         addRequirements(shooter);
+		buffer = new CircularBuffer(10);
     }
 
     // Called when the command is initially scheduled.
@@ -48,15 +51,15 @@ public class ShooterInterpolation extends CommandBase {
             cancel();
         }
         horizontalDistance = arm.getHorizontalDistance();
-        shooter.velocity = shooter.interpolateY(horizontalDistance, shooter.velocityTable);
+		shooter.velocity = shooter.interpolateY(horizontalDistance, shooter.velocityTable);
+		buffer.clear();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         shooter.setVelocity(shooter.velocity);
-        shooter.setIntakeMotor(Constants.Shooter.kIntakeMotorSpeed); //TODO: ELOON TEST
-        SmartDashboard.putNumber("SV", shooter.velocity);
+		buffer.addValue(shooter.getVelocity());
     }
 
     // Called once the command ends or is interrupted.
@@ -71,7 +74,7 @@ public class ShooterInterpolation extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (Util.epsilonEquals(shooter.getVelocity(), shooter.velocity, threshold)) {
+        if (Util.epsilonEquals(buffer.getAverage(), shooter.velocity, threshold)) {
 			return true;
 		} else {
 			return false;
