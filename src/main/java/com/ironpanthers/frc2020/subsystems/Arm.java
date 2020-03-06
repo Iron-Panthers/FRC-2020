@@ -51,15 +51,15 @@ public class Arm extends SubsystemBase {
         diskBrake = new Solenoid(Constants.Arm.kBrakePort);
 		canCoder.configFactoryDefault();
 		canCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
-        canCoder.configSensorDirection(Constants.Arm.kSensorPhase);
+        canCoder.configSensorDirection(Constants.Arm.kCANCoderPhase);
         canCoder.configMagnetOffset(Constants.Arm.kCANCoderOffset);
 		calibrateCANCoder();
         canCoder.configFeedbackCoefficient(Constants.Arm.kCanCoderCoefficient, "deg", SensorTimeBase.PerSecond); // Degrees per second, output in degrees
-        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
         armLeft.configRemoteFeedbackFilter(canCoder, Constants.Arm.kRemoteSensorSlot);
         armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0); // Should be the same number as Constants.Arm.kRemoteSensorSlot
-        armLeft.setSensorPhase(Constants.Arm.kSensorPhase); // Up is positive
-        armLeft.setInverted(false);
+        armLeft.setSensorPhase(Constants.Arm.kArmFalconPhase); // Up is positive
+        armLeft.setInverted(Constants.Arm.kArmFalconPhase); // Sensor phase and inversion should be the same, but cancoder is facing the opposite direction, getting the opposite phase
         
         armLeft.setNeutralMode(NeutralMode.Brake);
         armRight.setNeutralMode(NeutralMode.Brake);
@@ -79,7 +79,7 @@ public class Arm extends SubsystemBase {
         // forwardLimitSwitch = new DigitalInput(Constants.Arm.kHighLimitSwitchPort);
         reverseLimitSwitch = new DigitalInput(Constants.Arm.kGroundLimitSwitchPort);
         armLeft.configForwardSoftLimitEnable(true);
-        armLeft.configReverseSoftLimitEnable(true);
+		armLeft.configReverseSoftLimitEnable(true);
         armLeft.configForwardSoftLimitThreshold(Constants.Arm.kTopSoftLimit);
         armLeft.configReverseSoftLimitThreshold(Constants.Arm.kBottomSoftLimit);
 
@@ -223,7 +223,9 @@ public class Arm extends SubsystemBase {
             setSensorPosition(Constants.Arm.kTopPositionDegrees);
         }*/
         // SmartDashboard.putBoolean("Ground Limit", getGroundLimitPressed());
-        SmartDashboard.putNumber("Arm Angle", getAngle());
+		SmartDashboard.putNumber("Arm Angle", getAngle());
+		SmartDashboard.putNumber("Arm Position", getPosition());
+		SmartDashboard.putNumber("Arm Voltage", getOutputVoltage());
         // SmartDashboard.putNumber("Arm Height", getHeight2());
         SmartDashboard.putNumber("getHorizontalDistance", getHorizontalDistance());
         // SmartDashboard.putNumber("offset", getLlOffset());

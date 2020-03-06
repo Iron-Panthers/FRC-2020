@@ -114,7 +114,10 @@ public final class Constants {
         public static final double kIntakeRollerSpeed = 1.0;
 		public static final double kIntakeFlywheelSpeed = -1.0; // tbd
 		public static final double kOuttakeRollerSpeed = -1.0;
-		public static final double kManualConveyorSpeed = 0.25;
+        public static final double kManualConveyorSpeed = 0.75;
+        public static final double kConveyorSpeedFar = 0.25;
+
+		public static final double kConveyorTime = 2.5; // Seconds, needs testing
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
@@ -214,18 +217,20 @@ public final class Constants {
 
         public static final int kCANCoderId = 0;
         public static final int kRemoteSensorSlot = 0; // RemoteSensor0 for CANCoder
-        public static final double kCANCoderOffset = 0.0;
+        public static final double kCANCoderOffset = 0.0; // 0.5 works, but too risky to have a negative angle which can cause raw units to be almost 4096
 
 		public static final int kBrakePort = 4; // TBD
 		
-		public static final boolean kSensorPhase = true;
+		// CANCoder facing the opposite direction, so the two are inverted compared to each other
+		public static final boolean kCANCoderPhase = true;
+		public static final boolean kArmFalconPhase = false;
 
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
         public static final double kArmInitialHeight = 0; // TODO find this value
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 2.0; // TBD, started with 90 max error being 1.0 power, P = 1/90
+        public static final double kP = 2.0; // Up is positive encoder direction, but negative voltage (3/5/20)
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
@@ -247,16 +252,11 @@ public final class Constants {
 
         // Soft Limits
         public static final double kTopPositionDegrees = 78.0; // 90 degrees, should be close to top position
-        public static final int kBottomSoftLimit = (int) (0 / kCanCoderCoefficient); // Convert into native units
+        public static final int kBottomSoftLimit = (int) (1.0 / kCanCoderCoefficient); // Convert into native units
         public static final int kTopSoftLimit = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
         public static final double kUseTopLimitRange = 40.0;
 
         // TODO(james)
-        public static final double kSlowdownThreshold = 1; // Threshold to soft limit in which the output of the arm
-        // motors are scaled down
-        public static final double kBottomSlowdownZone = kBottomSoftLimit + kSlowdownThreshold;
-        public static final double kTopSlowdownZone = kTopSoftLimit - kSlowdownThreshold;
-        public static final double kSlowClosedLoopPeakOutput = 0.25; // for when in a slow zone
         public static final double kClosedLoopPeakOutput = 0.5; // Used for both positive and negative direction
 
         public static final double kCurrentLimit = 60; // amps

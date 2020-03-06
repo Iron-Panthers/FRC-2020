@@ -1,6 +1,9 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
+import com.ironpanthers.frc2020.commands.intake.Outtake;
+import com.ironpanthers.frc2020.commands.intake.OuttakeSequence;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
@@ -21,6 +24,7 @@ public class ShiftConveyor extends CommandBase {
     private final ConveyorBelt conveyor;
     private int targetEncoderPosition;
     private boolean isShoot;
+    private boolean isOuttake;
     private Shooter shooter;
     private LimelightWrapper lWrapper;
     private int threshold;
@@ -46,6 +50,14 @@ public class ShiftConveyor extends CommandBase {
         addRequirements(conveyor);
     }
 
+    public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter) {
+        this.direction = direction;
+        this.conveyor = conveyor;
+        this.shooter = shooter;
+        isOuttake = true;
+        addRequirements(conveyor, shooter);
+    }
+
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter, int threshold,
             LimelightWrapper lWrapper) {
         this.direction = direction;
@@ -65,15 +77,15 @@ public class ShiftConveyor extends CommandBase {
         targetEncoderPosition = direction == Direction.kIn
                 ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
                 : encoderStartTicks + Constants.Conveyor.kShiftEncoderDistance;
-        
+
         if (direction == Direction.kIn) {
             if (conveyor.ballsHeld >= 5 && conveyor.lastBallRan) {
                 cancel();
-            }  else if (conveyor.ballsHeld >= 5 && !conveyor.lastBallRan) {
+            } else if (conveyor.ballsHeld >= 5 && !conveyor.lastBallRan) {
                 targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
             }
         }
-      
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -84,8 +96,6 @@ public class ShiftConveyor extends CommandBase {
                 cancel();
             }
         }
-        SmartDashboard.putNumber("Conveyor Position", conveyor.getPosition());
-        SmartDashboard.putNumber("Conveyor Target Position", targetEncoderPosition);
         conveyor.setPosition(targetEncoderPosition);
     }
 
@@ -107,8 +117,8 @@ public class ShiftConveyor extends CommandBase {
                 lWrapper.turnOffLight();
             }
         }
-        if (interrupted && !conveyor.getBannerSensor() && (direction == Direction.kIn)) {
-            conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
+        else if (isOuttake) {
+           CommandScheduler.getInstance().schedule(new Outtake(shooter)); 
         }
     }
 
@@ -116,6 +126,7 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public boolean isFinished() {
         return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition,
-                Constants.Conveyor.kPositionErrorTolerance) || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn);
+                Constants.Conveyor.kPositionErrorTolerance)
+                || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn);
     }
 }
