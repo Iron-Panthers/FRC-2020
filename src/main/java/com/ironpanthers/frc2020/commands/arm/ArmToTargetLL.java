@@ -9,6 +9,7 @@ package com.ironpanthers.frc2020.commands.arm;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.util.Util;
 
@@ -18,14 +19,16 @@ public class ArmToTargetLL extends CommandBase {
 	private Arm arm;
 	private double target;
 	private LimelightWrapper lWrapper;
+	private LightMode mode;
 
 	/**
 	 * Creates a new ArmToTarget.
 	 */
-	public ArmToTargetLL(Arm arm, double target, LimelightWrapper lWrapper) {
+	public ArmToTargetLL(Arm arm, double target, LimelightWrapper lWrapper,LightMode mode) {
 		this.arm = arm;
 		this.target = target;
 		this.lWrapper = lWrapper;
+		this.mode = mode;
 		addRequirements(arm);
 		// Use addRequirements() here to declare subsystem dependencies.
 	}
@@ -33,7 +36,7 @@ public class ArmToTargetLL extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-        lWrapper.turnOnLight();
+		lWrapper.setLightMode(mode);
         arm.setPosition(target);
 	}
 

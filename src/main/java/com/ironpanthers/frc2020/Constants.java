@@ -72,8 +72,8 @@ public final class Constants {
         public static final int kInitiationLineShotButtonNumber = 10;
         public static final int kFarShotButtonNumber = 11;
 		// Driver A
+		public static final int kDriverAJoystickPort = 0;
 		public static final int kDriveShiftButton = 2;
-        public static final int kDriverAJoystickPort = 0;
         public static final int kIntakeButton = 4;
         // public static final int kResetConveyorButton = 3;
         public static final int kShootFar = kFarShotButtonNumber;
@@ -87,12 +87,16 @@ public final class Constants {
         public static final int kDriverBIntakeButton = 2;
         
 		public static final int kEmergencyOuttakeButton = 3;
+		public static final int kFullShooterSequenceButton = 4;
+		public static final int kMoveConveyorButton = 5;
 		public static final int kStopShooterButton = 6;
-		public static final int kMoveConveyorButton = 4;
-		public static final int kResetBallsHeld = 5;
         public static final int kCloseShotButton = kCloseShotButtonNumber;
         public static final int kFarShotButton = kFarShotButtonNumber;
         public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
+		public static int kCloseTrenchButton = 11;
+		public static int kControlPanel = 9;
+		public static int kEmergencyShootButton = 8;
+		public static int kShoot = 6; 
 		
     }
 
@@ -108,7 +112,6 @@ public final class Constants {
         public static final int kPIDIdx = 0;
         public static final double kConveyorClosedLoopRamp = 0.6;
         public static final double kConveyorPositionKp = 0.216;
-        public static final double kConveyorVelocityKp = 0.0; // TODO pick
 
         // Powers
         public static final double kIntakeRollerSpeed = 1.0;
@@ -121,8 +124,9 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 25000;
+        public static final int kShiftEncoderDistance = 26000;
         public static final int kShiftEncoderDistanceLast = 11000;
+		public static double kConveyorTime = 2.5;
 
     }
 
@@ -151,7 +155,7 @@ public final class Constants {
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.0175;
+        public static final double kP = 0.013;
 
         /**
          * I value in PID
@@ -167,13 +171,15 @@ public final class Constants {
         public static final double kS = 0.08;
 
         /** Conversion constant estimating magnitude of top line as it moves further away */
-        public static final double kTopLineMagnitudeTimesDistance = 51 * 201.825; //TODO measure for practice field
+        public static final double kTopLineMagnitudeTimesDistance = 100 * 118.7; //TODO measure for practice field
+
+        public static final double kTargetWidthInches = 30; //TODO measure for practice field
 
         /** Conversion constant relating distance from outer goal to hole to the length of the line on the top of the outer goal target*/
         //This was taken from field measurements. The outer hole is 2 ft 5.25 inches in front of the inner hole, and the diameter of the hexagon is 2 ft 6 inches
         public static final double kOuterToHoleDistancePerTlLength = 29.25 / 30;
 
-        public static double kAutoAlignTolerance = 1;
+        public static double kAutoAlignTolerance = .5;
         
         
 		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
@@ -206,7 +212,9 @@ public final class Constants {
         public static final int kFarVelocity = 13500; // Needs Testing
         public static final double kFarDistance = 310.0; // 2/29/20
 
-        public static final double kCurrentLimit = 40; // amps
+		public static final double kCurrentLimit = 40; // amps
+		
+		public static final double kIntakeMotorSpeed = -.5;
     }
 
     public static class Arm {
@@ -240,7 +248,7 @@ public final class Constants {
         // units
 		public static final double kCanCoderCoefficient = 360.0 / 4096.0; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
         // Setpoints
-        public static final double kPositionErrorTolerance = 0.5;
+        public static final double kPositionErrorTolerance = 1.5;
 
         public static final double kCloseShotDegrees = 14.0; // Tested 2/27/20 on comp robot
         public static final double kInitiationLineDegrees = 45.0; // Tested 2/29/20

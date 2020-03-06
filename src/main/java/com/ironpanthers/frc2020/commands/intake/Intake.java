@@ -13,7 +13,9 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Intake extends CommandBase {
 	/**
@@ -35,34 +37,32 @@ public class Intake extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (conveyor.ballsHeld >= 5) cancel();
-	
+		if (conveyor.conveyorFull())
+			cancel();
 	}
+
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		if (conveyor.conveyorFull())
+			cancel();
 		shooter.setIntakeMotors(Constants.Conveyor.kIntakeRollerSpeed, Constants.Conveyor.kIntakeFlywheelSpeed);
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		shooter.setIntakeMotors(0, 0);	
+		if (interrupted || conveyor.conveyorFull()) {
+			shooter.setIntakeMotors(0, 0);
+		}
 		if (!interrupted && conveyor.ballsHeld < 5) {
-			conveyor.ballsHeld++;	
-		} else if (interrupted && !conveyor.getBannerSensor()) {
-            conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
-        }
-		
+			conveyor.ballsHeld++;
+		} 
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (conveyor.getBannerSensor()) {
-			return true;
-		} else {
-			return false;
-		}
+		return conveyor.getBannerSensor();
 	}
 }

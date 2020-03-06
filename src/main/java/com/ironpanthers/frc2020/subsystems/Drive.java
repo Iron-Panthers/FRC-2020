@@ -6,8 +6,8 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.util.PhoenixUtil;
 import com.ironpanthers.util.Dashboard;
+import com.ironpanthers.util.PhoenixUtil;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotController;
@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -159,6 +158,10 @@ public class Drive extends SubsystemBase {
 	}
 	
 	public boolean isLowGear() {
+		return shifter.get();
+	}
+
+    public boolean isLowGear() {
 		return shifter.get();
 	}
 

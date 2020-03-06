@@ -31,33 +31,38 @@ public class TurnToTargetW extends CommandBase {
 		this.drive = drive;
 		this.steerer = steerer;
 		lWrapper = limelightWrapper;
+		counter = 0;
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		counter = 0;
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
         drive.setOutputPercent(steerer.getLeftSteeringAdjust(), steerer.getRightSteeringAdjust());
-        SmartDashboard.putNumber("fuko", steerer.getLeftSteeringAdjust());
+		SmartDashboard.putNumber("fuko", steerer.getLeftSteeringAdjust());
+		SmartDashboard.putBoolean("running turn", true);
+
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
 		drive.setOutputPercent(0.0, 0.0);
+		SmartDashboard.putBoolean("running turn", false);
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		if (Util.epsilonEquals(lWrapper.getTableX(), steerer.getInnerHoleAdjust(), Constants.Vision.kAutoAlignTolerance)) {
+		if (Util.epsilonEquals(lWrapper.getTableX(), -steerer.getInnerHoleAdjust(), Constants.Vision.kAutoAlignTolerance)) {
 			counter++;
 		}
-		if (counter >= 10 || steerer.adjustedSteeringValue == 0) {
+		if (counter >= 10) {
 			return true;
 		} else {
 			return false;

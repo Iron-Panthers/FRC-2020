@@ -55,6 +55,7 @@ public class ConveyorOuttake extends CommandBase {
 	public void end(boolean interrupted) {
 		conveyor.stop();
 		conveyor.ballsHeld = 0;
+		conveyor.lastBallRan = false;
 	}
 
 	// Returns true when the command should end.

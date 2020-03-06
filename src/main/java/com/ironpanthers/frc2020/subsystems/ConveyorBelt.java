@@ -10,6 +10,7 @@ package com.ironpanthers.frc2020.subsystems;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,10 +33,7 @@ public class ConveyorBelt extends SubsystemBase {
 		input = new DigitalInput(Constants.Conveyor.kBannerSensorPort);
 		conveyorMotor = new TalonFX(Constants.Conveyor.kConveyorMotorId);
 		conveyorMotor.setInverted(false);
-
 		conveyorMotor.config_kP(Constants.Conveyor.kPIDIdx, Constants.Conveyor.kConveyorPositionKp);
-		usingPositionGains = true;
-
 		conveyorMotor.configClosedloopRamp(Constants.Conveyor.kConveyorClosedLoopRamp);
 		conveyorMotor.setSelectedSensorPosition(0);
 	}
@@ -79,7 +77,7 @@ public class ConveyorBelt extends SubsystemBase {
 	}
 
 	public boolean conveyorFull() {
-		return ballsHeld >= 5;
+		return ballsHeld == 5;
 	}
 
 	@Override
