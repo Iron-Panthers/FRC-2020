@@ -22,7 +22,7 @@ public class Outtake extends CommandBase {
 	Shooter shooter;
 	int counter;
 	Timer timer;
-	public Outtake(Shooter shooter) {
+	public Outtake(Shooter shooter, ConveyorBelt conveyor) {
 		counter = 0;
 		this.conveyor = conveyor;
 		this.shooter = shooter;
@@ -37,6 +37,9 @@ public class Outtake extends CommandBase {
 	public void initialize() {
 		timer.reset();
 		timer.start();
+		if (!conveyor.getBannerSensor()) {
+			conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
+		}
 	}
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
@@ -53,6 +56,6 @@ public class Outtake extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return timer.hasElapsed(2);
+		return timer.hasElapsed(0.5);
 	}
 }

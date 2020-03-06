@@ -18,12 +18,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class OuttakeSequence extends SequentialCommandGroup {
-  /**
-   * Creates a new OuttakeSequence.
-   */
-  public OuttakeSequence(Shooter shooter, ConveyorBelt conveyor) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new Outtake(shooter),new ShiftConveyor(Direction.kOut, conveyor));
-  }
+	/**
+	 * Creates a new OuttakeSequence.
+	 */
+	public OuttakeSequence(Shooter shooter, ConveyorBelt conveyor) {
+		// Add your commands in the super() call, e.g.
+		// super(new FooCommand(), new BarCommand());
+		super(new Outtake(shooter, conveyor), new ShiftConveyor(Direction.kOut, conveyor));
+	}
 }
