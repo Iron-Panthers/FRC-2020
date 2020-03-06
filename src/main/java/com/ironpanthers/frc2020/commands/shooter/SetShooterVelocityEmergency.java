@@ -5,64 +5,54 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.commands.vision;
-
-import java.util.function.BooleanSupplier;
+package com.ironpanthers.frc2020.commands.shooter;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.subsystems.Drive;
+import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
+import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
-import com.ironpanthers.frc2020.util.SteeringAdjuster;
 import com.ironpanthers.util.Util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class TurnToTarget extends CommandBase {
-	private final Drive drive;
-	private int counter;
-	SteeringAdjuster steerer;
+public class SetShooterVelocityEmergency extends CommandBase {
+	private final Shooter shooter;
+	private int velocity, tempVelocity;
+	private final int threshold;
 
-	BooleanSupplier seeTarget;
-
-	LimelightWrapper lWrapper;
-
-	public TurnToTarget(Drive drive, SteeringAdjuster steerer,
-			LimelightWrapper limelightWrapper) {
-		this.drive = drive;
-		this.steerer = steerer;
-		lWrapper = limelightWrapper;
+	/**
+	 * Creates a new ShootAtVelocity.
+	 */
+	public SetShooterVelocityEmergency(Shooter shooter, int velocity, int threshold, ConveyorBelt conveyorBelt, LimelightWrapper lWrapper) {
+		// Use addRequirements() here to declare subsystem dependencies.
+		this.shooter = shooter;
+		this.velocity = velocity;
+		this.threshold = threshold;
+		addRequirements(shooter);
+		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		counter = 0;
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		//calls with 0.0 as param because we are aiming at the center of the target
-		drive.setOutputPercent(-steerer.updateSteeringValues(0.0), steerer.updateSteeringValues(0.0));
+		shooter.setVelocity(velocity);
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		drive.setOutputPercent(0.0, 0.0);
+		
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-
-		if (Util.epsilonEquals(lWrapper.getTableX(), 0, Constants.Vision.kAutoAlignTolerance)) {
-			counter++;
-		}
-		if (counter >= 10) {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 }

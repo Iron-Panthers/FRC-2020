@@ -17,6 +17,8 @@ import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.OuttakeSequence;
+import com.ironpanthers.frc2020.commands.shooter.SetShooterVelocityEmergency;
+import com.ironpanthers.frc2020.commands.shooter.Shoot;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
 import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
 import com.ironpanthers.frc2020.commands.vision.TurnToTargetW;
@@ -59,18 +61,25 @@ public class RobotContainer {
 	private final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
 	private final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
 
-	// Driver A Buttons
+	// Hubert
 	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA,
 			Constants.OI.kStopShooterButton); // 3
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
 	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign); // 6
+	private final JoystickButton emergencyShootA = new JoystickButton(joystickA, Constants.OI.kEmergencyShootButton); // 8
 
-	// Driver B Buttons
-	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton);
-	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton);
-	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton);
-	private final JoystickButton fullShooterSequence = new JoystickButton(joystickB,
-			Constants.OI.kFullShooterSequenceButton);
+	// Cherolin
+	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton); //2
+	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton); //2
+	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton); //3
+	private final JoystickButton closeShot = new JoystickButton(joystickB, Constants.OI.kCloseShotButton); //12
+	private final JoystickButton lineShot = new JoystickButton(joystickB, Constants.OI.kInitiationLineShotButtonNumber); //10
+	private final JoystickButton closeTrench = new JoystickButton(joystickB, Constants.OI.kCloseTrenchButton); //11
+	private final JoystickButton controlPanel = new JoystickButton(joystickB, Constants.OI.kControlPanel); //9
+	private final JoystickButton emergencyShootB = new JoystickButton(joystickB, Constants.OI.kEmergencyShootButton); // 8
+	private final JoystickButton shoot = new JoystickButton(joystickB, Constants.OI.kShoot); //6 
+
+
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -85,6 +94,7 @@ public class RobotContainer {
 		arm.calibrateCANCoder();
 		resetBallsHeld();
 	}
+
 	public void initializeTeleop() {
 		arm.calibrateCANCoder();
 	}
@@ -101,16 +111,29 @@ public class RobotContainer {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new Outtake(shooter, conveyorBelt));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
-		turnToTargetButton.whenPressed(new TurnToTargetW(drive, steerer, limelightWrapper)); // Test New Turn To Target
+		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, limelightWrapper)); // Test New Turn To Target
 
 		// Driver B
+		shoot.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		driverBIntake.whenReleased(new Outtake(shooter, conveyorBelt));
 		emergencyOuttake.whileHeld(new Outtake(shooter, conveyorBelt));
-		fullShooterSequence
-				.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees, shooter,
-						Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper));
+		closeShot.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kCloseShotDegrees, shooter,
+				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
+				Constants.Shooter.kCloseVelocity));
+		lineShot.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees, shooter,
+				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
+				Constants.Shooter.kInitiationVelocity));
+		closeTrench.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kCloseTrenchDegrees, shooter,
+				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
+				Constants.Shooter.kCloseTrenchVelocity));
+		controlPanel.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kFarShotDegrees, shooter,
+				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
+				Constants.Shooter.kFarVelocity));
+		emergencyShootA.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity, Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
+		emergencyShootB.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity, Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
+
 	}
 
 	public void resetBallsHeld() {

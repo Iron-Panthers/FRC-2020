@@ -61,7 +61,7 @@ public class ShiftConveyor extends CommandBase {
     }
 
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter, int threshold,
-            LimelightWrapper lWrapper, Arm arm) {
+            LimelightWrapper lWrapper, Arm arm, int velocity) {
         this.direction = direction;
         this.arm = arm;
         this.conveyor = conveyor;
@@ -69,6 +69,7 @@ public class ShiftConveyor extends CommandBase {
         this.shooter = shooter;
         this.threshold = threshold;
         this.lWrapper = lWrapper;
+        shooter.velocity = velocity;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
     }
@@ -77,8 +78,9 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public void initialize() {
         final var encoderStartTicks = conveyor.getPosition();
+        if (direction == Direction.kIn && conveyor.ballsHeld == 2) targetEncoderPosition -= 2000;
         if (direction == Direction.kIn && conveyor.ballsHeld == 3) targetEncoderPosition += 10000;
-        if (direction == Direction.kIn && conveyor.ballsHeld == 4) targetEncoderPosition += 14000;
+        if (direction == Direction.kIn && conveyor.ballsHeld == 4) targetEncoderPosition += 15500;
 
         targetEncoderPosition = direction == Direction.kIn
                 ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance

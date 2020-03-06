@@ -92,6 +92,10 @@ public final class Constants {
         public static final int kCloseShotButton = kCloseShotButtonNumber;
         public static final int kFarShotButton = kFarShotButtonNumber;
         public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
+		public static int kCloseTrenchButton = 11;
+		public static int kControlPanel = 9;
+		public static int kEmergencyShootButton = 8;
+		public static int kShoot = 6; 
 		
     }
 
@@ -116,8 +120,9 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 25500;
+        public static final int kShiftEncoderDistance = 26000;
         public static final int kShiftEncoderDistanceLast = 11000;
+		public static double kConveyorTime = 2.5;
 
     }
 
@@ -242,7 +247,7 @@ public final class Constants {
         // units
 		public static final double kCanCoderCoefficient = 360.0 / 4096.0; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
         // Setpoints
-        public static final double kPositionErrorTolerance = 0.5;
+        public static final double kPositionErrorTolerance = 2;
 
         public static final double kCloseShotDegrees = 14.0; // Tested 2/27/20 on comp robot
         public static final double kInitiationLineDegrees = 45.0; // Tested 2/29/20
