@@ -51,7 +51,7 @@ public class Arm extends SubsystemBase {
         diskBrake = new Solenoid(Constants.Arm.kBrakePort);
         canCoder.configFactoryDefault();
         canCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
-        canCoder.configSensorDirection(Constants.Arm.kSensorPhase);
+        canCoder.configSensorDirection(Constants.Arm.kCANCoderPhase);
         canCoder.configMagnetOffset(Constants.Arm.kCANCoderOffset);
         calibrateCANCoder();
         canCoder.configFeedbackCoefficient(Constants.Arm.kCanCoderCoefficient, "deg", SensorTimeBase.PerSecond); // Degrees
@@ -60,12 +60,12 @@ public class Arm extends SubsystemBase {
                                                                                                                  // output
                                                                                                                  // in
                                                                                                                  // degrees
-        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
         armLeft.configRemoteFeedbackFilter(canCoder, Constants.Arm.kRemoteSensorSlot);
         armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0); // Should be the same number as
                                                                                   // Constants.Arm.kRemoteSensorSlot
-        armLeft.setSensorPhase(Constants.Arm.kSensorPhase); // Up is positive
-        armLeft.setInverted(true); // I think this has to be the same as the sensor phase. @Ingi?
+        armLeft.setSensorPhase(Constants.Arm.kArmFalconPhase); // Up is positive
+        armLeft.setInverted(Constants.Arm.kArmFalconPhase); // I think this has to be the same as the sensor phase. @Ingi?
 
         armRight.setInverted(InvertType.OpposeMaster);
         armLeft.setNeutralMode(NeutralMode.Brake);
@@ -84,8 +84,8 @@ public class Arm extends SubsystemBase {
         // Reverse needs to be the lowest value, so the ground position
         // forwardLimitSwitch = new DigitalInput(Constants.Arm.kHighLimitSwitchPort);
         reverseLimitSwitch = new DigitalInput(Constants.Arm.kGroundLimitSwitchPort);
-        armLeft.configForwardSoftLimitEnable(false);
-        armLeft.configReverseSoftLimitEnable(false);
+        armLeft.configForwardSoftLimitEnable(true);
+        armLeft.configReverseSoftLimitEnable(true);
         armLeft.configForwardSoftLimitThreshold(Constants.Arm.kTopSoftLimit);
         armLeft.configReverseSoftLimitThreshold(Constants.Arm.kBottomSoftLimit);
 

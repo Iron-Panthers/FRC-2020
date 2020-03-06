@@ -223,7 +223,9 @@ public final class Constants {
 
 		public static final int kBrakePort = 4; // TBD
 		
-		public static final boolean kSensorPhase = true;
+		// CANCoder facing the opposite direction, so the two are inverted compared to each other
+		public static final boolean kCANCoderPhase = true;
+		public static final boolean kArmFalconPhase = false;
 
         public static final int kPIDIdx = 0;
         public static final double kArmAngleOffset = 0; // TODO find this value
@@ -252,7 +254,7 @@ public final class Constants {
 
         // Soft Limits
         public static final double kTopPositionDegrees = 78.0; // 90 degrees, should be close to top position
-        public static final int kBottomSoftLimit = (int) (0 / kCanCoderCoefficient); // Convert into native units
+        public static final int kBottomSoftLimit = (int) (1.0 / kCanCoderCoefficient); // Convert into native units
         public static final int kTopSoftLimit = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
         public static final double kUseTopLimitRange = 40.0;
 

@@ -35,7 +35,15 @@ public class ManualDriveCommand extends CommandBase {
         final var direction = reverseTrigger.get();
         final var x = direction ? 0-Deadband.apply(turn.getAsDouble(), 0.1) : Deadband.apply(turn.getAsDouble(), 0.1);
 
-        final var xPowd = Math.copySign(Math.pow(Math.abs(x), 2.75), x);
+        var xPowd = 0.0;
+		// More sensitive in low gear
+		if (drive.isLowGear()) {
+			xPowd = Math.copySign(Math.pow(Math.abs(x), 2.75), x);
+		}
+		// Less sensitive in high gear, needs testing for power
+		else {
+			xPowd = Math.copySign(Math.pow(Math.abs(x), 3.5), x);
+		}
 
         final var leftOutputUnscaled = (direction ? y + xPowd : -y - xPowd);
         final var rightOutputUnscaled = (direction ? y - xPowd : -y + xPowd);

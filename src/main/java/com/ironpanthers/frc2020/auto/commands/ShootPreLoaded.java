@@ -23,7 +23,7 @@ public class ShootPreLoaded extends ParallelCommandGroup {
 	/**
 	 * Creates a new ShootPreLoaded.
 	 */
-	public ShootPreLoaded(Arm arm, int target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
+	public ShootPreLoaded(Arm arm, double target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
 		super(new ArmToTarget(arm, target, lWrapper), new ShooterSequence(shooter, conveyor, velocity, threshold, lWrapper));

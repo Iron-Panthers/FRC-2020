@@ -157,6 +157,10 @@ public class Drive extends SubsystemBase {
         shifter.set(true);
     }
 
+    public boolean isLowGear() {
+		return shifter.get();
+	}
+
     // OUTPUT-WRITING METHODS
 
     /**
