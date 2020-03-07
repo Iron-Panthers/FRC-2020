@@ -123,7 +123,7 @@ public class RobotContainer {
 		// Driver B
 		reduceBallsHeldByOne.whenPressed(new ReduceBallsByOne(conveyorBelt));
 		stopShooterB.whenPressed(new StopShooter(shooter));
-		shootClose.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter, 0.75));
+		shootClose.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter, 1));
 		shootFar.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter, 0.25));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));

@@ -254,9 +254,9 @@ public final class Constants {
         // Setpoints
         public static final double kPositionErrorTolerance = 2.5;
 
-        public static final double kCloseShotDegrees = 14.0; 
+        public static final double kCloseShotDegrees = 16.0; //goes to 13
         public static final double kInitiationLineDegrees = 46.0; 
-        public static final double kCloseTrenchDegrees = 54.0; 
+        public static final double kCloseTrenchDegrees = 54.0; //goes to 51
         public static final double kFarShotDegrees = 54.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
