@@ -48,17 +48,7 @@ public class ShiftConveyor extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
     }
-    public ShiftConveyor(Direction direction, ConveyorBelt conveyor,Shooter shooter, boolean isOuttake) {
-        this.direction = direction;
-        this.conveyor = conveyor;
-        this.shooter = shooter;
-        this.isOuttake = isOuttake;
-        isShoot = false;
-        
-
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(conveyor);
-    }
+   
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor,Shooter shooter) {
         this.direction = direction;
         this.conveyor = conveyor;
@@ -102,11 +92,6 @@ public class ShiftConveyor extends CommandBase {
                 targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
             }
         }
-        if (isOuttake) {
-            targetEncoderPosition =Constants.Conveyor.kShiftEncoderDistance2;
-        }
-
-      
     }
 
     // Called every time the scheduler runs while the command is scheduled.

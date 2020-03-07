@@ -8,6 +8,7 @@
 package com.ironpanthers.frc2020.commands.intake;
 
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -17,6 +18,7 @@ public class ConveyorOuttake extends CommandBase {
 
 	private ConveyorBelt conveyor;
 	private Timer timer;
+	private Arm arm;
 	private double speed;
 	/**
 	 * Creates a new ConveyorOuttake.
@@ -29,12 +31,14 @@ public class ConveyorOuttake extends CommandBase {
 		speed = Constants.Conveyor.kManualConveyorSpeed;
 	}
 
-	public ConveyorOuttake(ConveyorBelt conveyor, double conveyorSpeed) {
+	public ConveyorOuttake(ConveyorBelt conveyor, double conveyorSpeed, Arm arm) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		addRequirements(conveyor);
 		this.conveyor = conveyor;
+		this.arm = arm;
 		this.timer = new Timer();
 		speed = conveyorSpeed;
+		addRequirements(conveyor, arm);
 	}
 
 	// Called when the command is initially scheduled.
@@ -42,6 +46,7 @@ public class ConveyorOuttake extends CommandBase {
 	public void initialize() {
 		timer.reset();
 		timer.start();
+		arm.engageBrake();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -54,6 +59,9 @@ public class ConveyorOuttake extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		conveyor.stop();
+		arm.stop();
+		arm.releaseBrake();
+
 		conveyor.ballsHeld = 0;
 		conveyor.lastBallRan = false;
 	}

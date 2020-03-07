@@ -26,10 +26,10 @@ public class ReduceBallsByOne extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    conveyor.setPosition(conveyor.getPosition() - Constants.Conveyor.kShiftEncoderDistance);
     if (conveyor.ballsHeld > 0) {
       conveyor.ballsHeld--;
     }
+    conveyor.setPosition(conveyor.getPosition() - Constants.Conveyor.kShiftEncoderDistance);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
