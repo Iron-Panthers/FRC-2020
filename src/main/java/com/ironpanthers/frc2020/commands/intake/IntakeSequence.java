@@ -26,6 +26,6 @@ public class IntakeSequence extends SequentialCommandGroup {
 	public IntakeSequence(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new Intake(shooter, conveyor, button),new ShiftConveyor(Direction.kIn, conveyor, shooter));
+		super(new Intake(shooter, conveyor, button),new ShiftConveyor(Direction.kIn, conveyor, shooter, false));
 	}
 }

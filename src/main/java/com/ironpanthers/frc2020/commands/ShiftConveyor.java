@@ -48,11 +48,23 @@ public class ShiftConveyor extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
     }
+    public ShiftConveyor(Direction direction, ConveyorBelt conveyor,Shooter shooter, boolean isOuttake) {
+        this.direction = direction;
+        this.conveyor = conveyor;
+        this.shooter = shooter;
+        this.isOuttake = isOuttake;
+        isShoot = false;
+        
+
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(conveyor);
+    }
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor,Shooter shooter) {
         this.direction = direction;
         this.conveyor = conveyor;
         this.shooter = shooter;
         isShoot = false;
+        
 
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
@@ -89,6 +101,9 @@ public class ShiftConveyor extends CommandBase {
             }  else if (conveyor.ballsHeld == 5 && !conveyor.lastBallRan) {
                 targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
             }
+        }
+        if (isOuttake) {
+            targetEncoderPosition =Constants.Conveyor.kShiftEncoderDistance2;
         }
 
       

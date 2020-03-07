@@ -27,9 +27,9 @@ public class Shoot extends SequentialCommandGroup {
   /**
    * Creates a new Shoot.
    */
-  public Shoot(Drive drive, SteeringAdjuster steerer, ConveyorBelt conveyor, Arm arm, LimelightWrapper lWrapper, Shooter shooter) {
+  public Shoot(Drive drive, SteeringAdjuster steerer, ConveyorBelt conveyor, Arm arm, LimelightWrapper lWrapper, Shooter shooter, double convSpeed) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new ConveyorOuttake(conveyor, .75), new ArmToTargetLL(arm, 0, lWrapper, LightMode.OFF), new StopShooter(shooter));
+    super(new ConveyorOuttake(conveyor, convSpeed), new ArmToTargetLL(arm, 0, lWrapper, LightMode.OFF), new StopShooter(shooter));
   }
 }

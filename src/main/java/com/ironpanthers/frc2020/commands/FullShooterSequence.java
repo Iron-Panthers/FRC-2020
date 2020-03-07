@@ -41,6 +41,6 @@ public class FullShooterSequence extends SequentialCommandGroup {
             int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper, int velocity) {
         // Add your commands in the super() call, e.g.
         // super(new FooCommand(), new BarCommand());super();
-        super(new ArmToTargetLL(arm, target, lWrapper, LightMode.OFF), new SetShooterVelocityEmergency(shooter, velocity, threshold, conveyor, lWrapper));
+        super(new ArmToTargetLL(arm, target, lWrapper, LightMode.ON), new SetShooterVelocityEmergency(shooter, velocity, threshold, conveyor, lWrapper));
     }
 }

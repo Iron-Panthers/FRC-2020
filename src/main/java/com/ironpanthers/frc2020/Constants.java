@@ -75,10 +75,9 @@ public final class Constants {
 		public static final int kDriverAJoystickPort = 0;
 		public static final int kDriveShiftButton = 2;
         public static final int kIntakeButton = 4;
-        // public static final int kResetConveyorButton = 3;
-        public static final int kShootFar = kFarShotButtonNumber;
-        public static final int kAutoAlign = 6;
-        public static final int kShootClose = kCloseShotButtonNumber;
+        public static final int kResetConveyorButton = 3;
+        public static final int kShootFar = 7;
+        public static final int kShootClose = 6;
         public static final int kShootInitiation = kInitiationLineShotButtonNumber;
 
         // Driver B
@@ -96,7 +95,9 @@ public final class Constants {
 		public static int kCloseTrenchButton = 11;
 		public static int kControlPanel = 9;
 		public static int kEmergencyShootButton = 8;
-		public static int kShoot = 6; 
+		public static int kShoot = 6;
+		public static int kStopShooterButtonB = 4;
+		public static int kReduceBallsHeld = 5; 
 		
     }
 
@@ -120,11 +121,12 @@ public final class Constants {
         public static final double kManualConveyorSpeed = 0.75;
         public static final double kConveyorSpeedFar = 0.25;
 
-		public static final double kConveyorTime = 2.5; // Seconds, needs testing
+		public static final double kConveyorTime = 1.8; // Seconds, needs testing
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
         public static final int kShiftEncoderDistance = 26000;
+        public static final int kShiftEncoderDistance2 = 22000;
 		public static final int kShiftEncoderDistanceLast = 11000;
 		
 		public static final int kSecondBallModifier = -2000;
@@ -158,7 +160,7 @@ public final class Constants {
         /**
          * Proportional control constant
          */
-        public static final double kP = 0.013;
+        public static final double kP = 0.008;
 
         /**
          * I value in PID
@@ -206,13 +208,13 @@ public final class Constants {
         public static final int kCloseVelocity = 10000; // Tested 2/29/20, horizontal distance: 
         public static final double kCloseDistance = 40.0; // Tested 3/1/20
 
-        public static final int kInitiationVelocity = 11000; // Tested 2/29/20
+        public static final int kInitiationVelocity = 12000; // Tested 2/29/20
         public static final double kInitiationDistance = 135.0; // Tested 2/29/20
 
-        public static final int kCloseTrenchVelocity = 11000; // Tested 2/29/20
+        public static final int kCloseTrenchVelocity = 12500; // Tested 2/29/20
         public static final double kCloseTrenchDistance = 170.0; // Needs Testing
 
-        public static final int kFarVelocity = 13500; // Needs Testing
+        public static final int kFarVelocity = 15500; // Needs Testing
         public static final double kFarDistance = 310.0; // 2/29/20
 
 		public static final double kCurrentLimit = 40; // amps
@@ -251,11 +253,11 @@ public final class Constants {
         // units
 		public static final double kCanCoderCoefficient = 360.0 / 4096.0; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
         // Setpoints
-        public static final double kPositionErrorTolerance = 1.5;
+        public static final double kPositionErrorTolerance = 2.5;
 
-        public static final double kCloseShotDegrees = 14.0; // Tested 2/27/20 on comp robot
-        public static final double kInitiationLineDegrees = 45.0; // Tested 2/29/20
-        public static final double kCloseTrenchDegrees = 52.0; // Tested 3/1/20
+        public static final double kCloseShotDegrees = 14.0; 
+        public static final double kInitiationLineDegrees = 46.0; 
+        public static final double kCloseTrenchDegrees = 54.0; 
         public static final double kFarShotDegrees = 54.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units

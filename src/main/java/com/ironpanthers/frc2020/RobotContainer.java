@@ -19,6 +19,7 @@ import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.intake.OuttakeSequence;
+import com.ironpanthers.frc2020.commands.intake.ReduceBallsByOne;
 import com.ironpanthers.frc2020.commands.shooter.SetShooterVelocityEmergency;
 import com.ironpanthers.frc2020.commands.shooter.Shoot;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
@@ -68,19 +69,22 @@ public class RobotContainer {
 	private final JoystickButton driveShift = new JoystickButton(joystickA, Constants.OI.kDriveShiftButton);
 	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA, Constants.OI.kStopShooterButton);
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
-	private final JoystickButton turnToTargetButton = new JoystickButton(joystickA, Constants.OI.kAutoAlign); // 6
 	private final JoystickButton emergencyShootA = new JoystickButton(joystickA, Constants.OI.kEmergencyShootButton); // 8
 
-	// Cherilyn
-	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton); //2
+	// Cherolin
+	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton); //1
 	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton); //2
 	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton); //3
+	private final JoystickButton stopShooterB = new JoystickButton(joystickB, Constants.OI.kStopShooterButtonB); //4
+	private final JoystickButton reduceBallsHeldByOne = new JoystickButton(joystickB, Constants.OI.kReduceBallsHeld); //5
 	private final JoystickButton closeShot = new JoystickButton(joystickB, Constants.OI.kCloseShotButton); //12
 	private final JoystickButton lineShot = new JoystickButton(joystickB, Constants.OI.kInitiationLineShotButtonNumber); //10
 	private final JoystickButton closeTrench = new JoystickButton(joystickB, Constants.OI.kCloseTrenchButton); //11
 	private final JoystickButton controlPanel = new JoystickButton(joystickB, Constants.OI.kControlPanel); //9
 	private final JoystickButton emergencyShootB = new JoystickButton(joystickB, Constants.OI.kEmergencyShootButton); // 8
-	private final JoystickButton shoot = new JoystickButton(joystickB, Constants.OI.kShoot); //6 
+	private final JoystickButton shootClose = new JoystickButton(joystickB, Constants.OI.kShootClose); //6 
+	private final JoystickButton shootFar = new JoystickButton(joystickB, Constants.OI.kShootFar); //7
+
 
 
 
@@ -115,10 +119,12 @@ public class RobotContainer {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new Outtake(shooter, conveyorBelt));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
-		turnToTargetButton.whenPressed(new TurnToTarget(drive, steerer, limelightWrapper)); // Test New Turn To Target
 
 		// Driver B
-		shoot.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter));
+		reduceBallsHeldByOne.whenPressed(new ReduceBallsByOne(conveyorBelt));
+		stopShooterB.whenPressed(new StopShooter(shooter));
+		shootClose.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter, 0.75));
+		shootFar.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter, 0.25));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		driverBIntake.whenReleased(new Outtake(shooter, conveyorBelt));
@@ -145,6 +151,7 @@ public class RobotContainer {
 	}
 
 	public void smartDashboard() {
+		SmartDashboard.putNumber("balls held", conveyorBelt.ballsHeld);
 		SmartDashboard.putNumber("Auto Selector Value", autoSelector.getAutoPotNumber());
 		SmartDashboard.putNumber("Auto Selector Voltage", autoSelector.getPotVoltage());
 	}
