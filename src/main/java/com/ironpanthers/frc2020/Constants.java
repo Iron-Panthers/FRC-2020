@@ -268,10 +268,12 @@ public final class Constants {
         // units
         public static final double kFrameHeightDegrees = 53.00; // Height at which robot is 45 inches tall
 
-        // Soft Limits
+		// Soft Limits
+		public static final double kClimbDegrees = 69.0; // 71.75 calculated arm angle would make the climb hooks go to a max of 11.99 inches outside frame perimeter
         public static final double kTopPositionDegrees = 78.0; // 90 degrees, should be close to top position
         public static final int kBottomSoftLimit = (int) (1.0 / kCanCoderCoefficient); // Convert into native units
-        public static final int kTopSoftLimit = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
+		public static final int kTopSoftLimitEndgame = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
+		public static final int kTopSoftLimit = (int) (kFrameHeightDegrees / kCanCoderCoefficient);
         public static final double kUseTopLimitRange = 40.0;
 
         // TODO(james)
@@ -295,6 +297,12 @@ public final class Constants {
 
 		public static final double kClimbUpPower = 1.0;
 		public static final double kClimbDownPower = -1.0;
-		
+
+		public static final double kClimbP = 0.05; // TBD
+		public static final int kClimbPIDSlot = 0;
+
+		public static final int kClimbUnwindDistance = 10000;
+		public static final int kClimbWindDistance = 0-kClimbUnwindDistance;
+		public static final int kClimbTolarance = 500;
 	}
 }

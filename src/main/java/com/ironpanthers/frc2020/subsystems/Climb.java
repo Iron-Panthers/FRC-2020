@@ -34,6 +34,11 @@ public class Climb extends SubsystemBase {
 
 		climbLeft.configOpenloopRamp(Constants.Climb.kClimbRamp);
 		climbLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, Constants.Climb.kClimbCurrentLimit, Constants.Climb.kClimbCurrentPeak, Constants.Climb.kClimbCurrentDelay));
+		climbLeft.config_kP(Constants.Climb.kClimbPIDSlot, Constants.Climb.kClimbP);
+	}
+
+	public void setPosition(int nativeUnits) {
+		climbLeft.set(TalonFXControlMode.Position, nativeUnits);
 	}
 
 	public void setPower(double power) {
@@ -50,6 +55,14 @@ public class Climb extends SubsystemBase {
 
 	public void stop() {
 		setPower(0);
+	}
+
+	public int getPosition() {
+		return climbLeft.getSelectedSensorPosition();
+	}
+
+	public void setZero() {
+		climbLeft.setSelectedSensorPosition(0);
 	}
 
 	@Override

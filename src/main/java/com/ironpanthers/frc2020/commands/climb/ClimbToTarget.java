@@ -5,58 +5,55 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.commands.arm;
+package com.ironpanthers.frc2020.commands.climb;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.subsystems.Arm;
+import com.ironpanthers.frc2020.subsystems.Climb;
+import com.ironpanthers.util.CircularBuffer;
 import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ArmToTarget extends CommandBase {
-	private Arm arm;
-	private double target;
+public class ClimbToTarget extends CommandBase {
+
+	private Climb climb;
+	private CircularBuffer buffer;
+	private int target;
 
 	/**
-	 * Creates a new ArmToTarget.
-	 * @param double target in degrees
+	 * Creates a new DeployClimb.
 	 */
-	public ArmToTarget(Arm arm, double angle) {
-		this.arm = arm;
-		this.target = angle;
-		addRequirements(arm);
+	public ClimbToTarget(Climb climb, int target) {
+		this.climb = climb;
+		buffer = new CircularBuffer(25);
+		this.target = target;
+		addRequirements(climb);
 		// Use addRequirements() here to declare subsystem dependencies.
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		arm.releaseBrake();
-		arm.calibrateCANCoder();
-		// Only in endgame go above 45 inches
-		if (target == Constants.Arm.kClimbDegrees) {
-			arm.configureForwardSoftLimit(Constants.Arm.kTopSoftLimitEndgame);
-		}
-		else {
-			arm.configureForwardSoftLimit(Constants.Arm.kTopSoftLimit);
-		}
-		arm.setPosition(target);
+		climb.setZero();
+		buffer.clear();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		climb.setPosition(target);
+		buffer.addValue(climb.getPosition());
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		arm.stop();
+		climb.stop();
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(arm.getAngle(), target, Constants.Arm.kPositionErrorTolerance);
+		return Util.epsilonEquals(buffer.getAverage(), target, Constants.Climb.kClimbTolarance);
 	}
 }
