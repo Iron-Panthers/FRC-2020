@@ -11,75 +11,48 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
-import com.ironpanthers.util.CircularBuffer;
 import com.ironpanthers.util.Util;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SetShooterVelocity extends CommandBase {
+public class SetShooterVelocityEmergency extends CommandBase {
 	private final Shooter shooter;
 	private int velocity, tempVelocity;
 	private final int threshold;
-	private final CircularBuffer buffer;
-	private final Timer timer;
 
 	/**
 	 * Creates a new ShootAtVelocity.
 	 */
-	public SetShooterVelocity(Shooter shooter, int velocity, int threshold, ConveyorBelt conveyorBelt, LimelightWrapper lWrapper) {
+	public SetShooterVelocityEmergency(Shooter shooter, int velocity, int threshold, ConveyorBelt conveyorBelt, LimelightWrapper lWrapper) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		this.shooter = shooter;
 		this.velocity = velocity;
 		this.threshold = threshold;
 		addRequirements(shooter);
-		buffer = new CircularBuffer(10);
-		timer = new Timer();
 		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		if (shooter.fullShotDone == true) {
-			cancel();
-		}
-		// SmartDashboard.putNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
-		// tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
-		timer.reset();
-		timer.start();
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		// tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
-		// if (tempVelocity != velocity) {
-		// 	velocity = tempVelocity;
-		// }
-		if (shooter.fullShotDone == true) {
-			cancel();
-		}
-		SmartDashboard.putBoolean("fullShotDone", shooter.fullShotDone);
 		shooter.setVelocity(velocity);
-		shooter.setIntakeMotor(Constants.Shooter.kIntakeMotorSpeed); //TODO: ELOON TEST
-		buffer.addValue(shooter.getVelocity());
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		if (interrupted) {
-			shooter.stopShooter();
-			shooter.setIntakeMotor(0);
-		}
+		
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(buffer.getAverage(), velocity, threshold);
-		// return timer.hasPeriodPassed(2);
+		return false;
 	}
 }

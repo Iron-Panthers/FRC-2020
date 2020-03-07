@@ -7,6 +7,8 @@
 
 package com.ironpanthers.frc2020.util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * Add your docs here.
  */
@@ -29,6 +31,12 @@ public class ThreeDimensionalSegment {
         ycomp = Math.abs(y1 - y2);
         zcomp = Math.sqrt(magnitude * magnitude - xcomp * xcomp - ycomp * ycomp);
         this.magnitude = magnitude;
+
+        SmartDashboard.putNumber("xcomp", xcomp);
+        SmartDashboard.putNumber("ycomp", ycomp);
+        SmartDashboard.putNumber("zcomp", zcomp);
+        SmartDashboard.putNumber("magnitude", magnitude);
+
     }
 
     /**

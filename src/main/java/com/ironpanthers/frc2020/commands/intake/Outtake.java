@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package com.ironpanthers.frc2020.commands.intake;
 
 import com.ironpanthers.frc2020.Constants;
@@ -22,10 +15,10 @@ public class Outtake extends CommandBase {
 	Shooter shooter;
 	int counter;
 	Timer timer;
-	public Outtake(Shooter shooter, ConveyorBelt conveyor) {
+	public Outtake(Shooter shooter,ConveyorBelt conveyor){
 		counter = 0;
-		this.conveyor = conveyor;
 		this.shooter = shooter;
+		this.conveyor = conveyor;
 		timer = new Timer();
 
 		// Use addRequirements() here to declare subsystem dependencies.
@@ -44,7 +37,7 @@ public class Outtake extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		shooter.setIntakeMotors(-Constants.Conveyor.kIntakeRollerSpeed, -Constants.Conveyor.kIntakeFlywheelSpeed);
+		shooter.setIntakeMotors(-Constants.Conveyor.kIntakeRollerSpeed, .25);
 	}
 
 	// Called once the command ends or is interrupted.

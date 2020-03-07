@@ -1,16 +1,16 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
+import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
-import com.ironpanthers.frc2020.commands.intake.OuttakeSequence;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
+import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.util.Util;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -49,23 +49,27 @@ public class ShiftConveyor extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
     }
-
-    public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter) {
+   
+    public ShiftConveyor(Direction direction, ConveyorBelt conveyor,Shooter shooter) {
         this.direction = direction;
         this.conveyor = conveyor;
         this.shooter = shooter;
-        isOuttake = true;
-        addRequirements(conveyor, shooter);
+        isShoot = false;
+        
+
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(conveyor);
     }
 
     public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter, int threshold,
-            LimelightWrapper lWrapper) {
+            LimelightWrapper lWrapper, Arm arm, int velocity) {
         this.direction = direction;
         this.conveyor = conveyor;
         isShoot = true;
         this.shooter = shooter;
         this.threshold = threshold;
         this.lWrapper = lWrapper;
+        shooter.velocity = velocity;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
     }
@@ -85,7 +89,6 @@ public class ShiftConveyor extends CommandBase {
                 // targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
             }
         }
-
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -116,7 +119,7 @@ public class ShiftConveyor extends CommandBase {
                         .schedule(new ShooterSequence(shooter, conveyor, shooter.velocity, threshold, lWrapper));
             } else {
                 shooter.stopShooter();
-                lWrapper.turnOffLight();
+                lWrapper.setLightMode(LightMode.OFF);
             }
         }
         else if (isOuttake) {

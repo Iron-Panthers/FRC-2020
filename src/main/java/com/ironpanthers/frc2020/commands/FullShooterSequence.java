@@ -1,8 +1,13 @@
 package com.ironpanthers.frc2020.commands;
 
+import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
+import com.ironpanthers.frc2020.commands.arm.ArmHold;
 import com.ironpanthers.frc2020.commands.arm.ArmInterpolation;
 import com.ironpanthers.frc2020.commands.arm.ArmToTargetLL;
 import com.ironpanthers.frc2020.commands.intake.ConveyorOuttake;
+import com.ironpanthers.frc2020.commands.shooter.SetShooterVelocity;
+import com.ironpanthers.frc2020.commands.shooter.SetShooterVelocityEmergency;
 
 /*----------------------------------------------------------------------------*/
 
@@ -14,13 +19,16 @@ import com.ironpanthers.frc2020.commands.intake.ConveyorOuttake;
 
 import com.ironpanthers.frc2020.commands.shooter.ShooterInterpolation;
 import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
+import com.ironpanthers.frc2020.commands.vision.TurnToTargetW;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -32,12 +40,9 @@ public class FullShooterSequence extends SequentialCommandGroup {
      */
 
     public FullShooterSequence(SteeringAdjuster steerer, Drive drive, Arm arm, double target, Shooter shooter,
-            int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
+            int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper, int velocity) {
         // Add your commands in the super() call, e.g.
         // super(new FooCommand(), new BarCommand());super();
-        super(new ArmToTargetLL(arm, target, lWrapper), new TurnToTarget(drive, steerer, lWrapper),
-                new ArmInterpolation(shooter, conveyor, lWrapper, arm),
-                new ShooterInterpolation(arm, shooter, threshold, conveyor, lWrapper),
-                new ConveyorOuttake(conveyor));
+        super(new ArmToTargetLL(arm, target, lWrapper, LightMode.ON), new ParallelCommandGroup(new ArmHold(arm), new SetShooterVelocityEmergency(shooter, velocity, threshold, conveyor, lWrapper)));
     }
 }

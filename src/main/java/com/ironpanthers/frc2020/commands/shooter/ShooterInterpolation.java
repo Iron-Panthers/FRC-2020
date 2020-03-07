@@ -7,9 +7,11 @@
 
 package com.ironpanthers.frc2020.commands.shooter;
 
+import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.util.CircularBuffer;
 import com.ironpanthers.util.Util;
@@ -36,16 +38,16 @@ public class ShooterInterpolation extends CommandBase {
         this.threshold = threshold;
         this.lWrapper = lWrapper;
         this.arm = arm;
-		this.conveyorBelt = conveyorBelt;
+        this.conveyorBelt = conveyorBelt;
+        addRequirements(shooter);
 		buffer = new CircularBuffer(10);
-        addRequirements(shooter, conveyorBelt);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         if (conveyorBelt.ballsHeld == 0) { 
-            lWrapper.turnOffLight();
+            lWrapper.setLightMode(LightMode.OFF);
             cancel();
         }
         horizontalDistance = arm.getHorizontalDistance();
@@ -57,7 +59,6 @@ public class ShooterInterpolation extends CommandBase {
     @Override
     public void execute() {
         shooter.setVelocity(shooter.velocity);
-		SmartDashboard.putNumber("SV", shooter.velocity);
 		buffer.addValue(shooter.getVelocity());
     }
 
