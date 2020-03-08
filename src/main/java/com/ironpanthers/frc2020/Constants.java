@@ -193,6 +193,9 @@ public final class Constants {
         
         
 		//public static final double X_ADJUST_PER_DEGREE = 0; //TODO measure (not used currently)
+		// Powers
+		public static final double kLightPower = 1.0;
+		public static final int kLightId = 31;
     }
 
     public static class Shooter {
@@ -229,7 +232,7 @@ public final class Constants {
 
     public static class Arm {
         public static final int kLeftMotorId = 9;
-        public static final int kRightMotorId = 10;
+		public static final int kRightMotorId = 10;
         public static final int kHighLimitSwitchPort = 1;
         public static final int kGroundLimitSwitchPort = 0;
 
@@ -276,10 +279,10 @@ public final class Constants {
 		public static final int kTopSoftLimit = (int) (kFrameHeightDegrees / kCanCoderCoefficient);
         public static final double kUseTopLimitRange = 40.0;
 
-        // TODO(james)
         public static final double kClosedLoopPeakOutput = 0.5; // Used for both positive and negative direction
 
-        public static final double kCurrentLimit = 60; // amps
+		public static final double kCurrentLimit = 60; // amps
+		
 	}
 	
 	public static class Climb {

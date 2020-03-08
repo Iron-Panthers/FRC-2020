@@ -7,17 +7,20 @@
 
 package com.ironpanthers.frc2020.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.ironpanthers.frc2020.Constants;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -34,7 +37,7 @@ public class Arm extends SubsystemBase {
     private final DigitalInput reverseLimitSwitch;
     private final LimelightWrapper limelight;
     private final Solenoid diskBrake;
-    public int targetHeight;
+	public int targetHeight;
 
     /**
      * Creates a new Arm. For limits, forward refers to the front, in which the arm
@@ -44,12 +47,14 @@ public class Arm extends SubsystemBase {
      * As usual, only one of these should ever be constructed.
      */
     public Arm(LimelightWrapper limelight) {
-        this.limelight = limelight;
+		this.limelight = limelight;
         armLeft = new TalonFX(Constants.Arm.kLeftMotorId);
         armRight = new TalonFX(Constants.Arm.kRightMotorId);
         canCoder = new CANCoder(Constants.Arm.kCANCoderId);
         diskBrake = new Solenoid(Constants.Arm.kBrakePort);
-        canCoder.configFactoryDefault();
+		canCoder.configFactoryDefault();
+		armLeft.configFactoryDefault();
+		armRight.configFactoryDefault();
         canCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
         canCoder.configSensorDirection(Constants.Arm.kCANCoderPhase);
         canCoder.configMagnetOffset(Constants.Arm.kCANCoderOffset);
@@ -60,7 +65,7 @@ public class Arm extends SubsystemBase {
                                                                                                                  // output
                                                                                                                  // in
                                                                                                                  // degrees
-        canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+		canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
         armLeft.configRemoteFeedbackFilter(canCoder, Constants.Arm.kRemoteSensorSlot);
         armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0); // Should be the same number as
                                                                                   // Constants.Arm.kRemoteSensorSlot
@@ -71,8 +76,8 @@ public class Arm extends SubsystemBase {
         armLeft.setNeutralMode(NeutralMode.Brake);
         armRight.setNeutralMode(NeutralMode.Brake);
         armRight.follow(armLeft);
-        armRight.setInverted(InvertType.OpposeMaster);
-
+		armRight.setInverted(InvertType.OpposeMaster);
+		
         // Current Limits and Power Limits
         armLeft.configClosedLoopPeakOutput(Constants.Arm.kPIDIdx, Constants.Arm.kClosedLoopPeakOutput);
         SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true,
@@ -103,7 +108,7 @@ public class Arm extends SubsystemBase {
 
     public void setVoltage(double voltage) {
         armLeft.set(TalonFXControlMode.PercentOutput, voltage / RobotController.getBatteryVoltage());
-    }
+	}
 
     public void stop() {
         setPower(0);
