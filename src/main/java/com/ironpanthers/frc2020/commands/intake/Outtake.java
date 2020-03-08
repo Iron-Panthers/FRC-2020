@@ -31,7 +31,7 @@ public class Outtake extends CommandBase {
 		timer.reset();
 		timer.start();
 		if (!conveyor.getBannerSensor()) {
-			conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
+			conveyor.setPosition(conveyor.getPosition() + 20000);
 		}
 	}
 	// Called every time the scheduler runs while the command is scheduled.
