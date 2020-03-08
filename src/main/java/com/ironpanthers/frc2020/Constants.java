@@ -75,10 +75,16 @@ public final class Constants {
 		public static final int kDriverAJoystickPort = 0;
 		public static final int kDriveShiftButton = 2;
         public static final int kIntakeButton = 4;
-        public static final int kResetConveyorButton = 3;
-        public static final int kShootFar = 7;
+		public static final int kResetConveyorButton = 3;
+		public static final int kReduceBallsHeld = 7; 
+        public static final int kShootFar = 5;
         public static final int kShootClose = 6;
-        public static final int kShootInitiation = kInitiationLineShotButtonNumber;
+		public static final int kShootInitiation = kInitiationLineShotButtonNumber;
+		public static final int kCloseTrenchButton = 11;
+		public static final int kControlPanel = 9;
+		public static final int kEmergencyShootButton = 8;
+		public static final int kShoot = 6;
+		public static final int kStopShooterButtonB = 4;
 
         // Driver B
         public static final int kDriverBJoystickPort = 1;
@@ -92,12 +98,6 @@ public final class Constants {
         public static final int kCloseShotButton = kCloseShotButtonNumber;
         public static final int kFarShotButton = kFarShotButtonNumber;
         public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
-		public static int kCloseTrenchButton = 11;
-		public static int kControlPanel = 9;
-		public static int kEmergencyShootButton = 8;
-		public static int kShoot = 6;
-		public static int kStopShooterButtonB = 4;
-		public static int kReduceBallsHeld = 5; 
 		
     }
 

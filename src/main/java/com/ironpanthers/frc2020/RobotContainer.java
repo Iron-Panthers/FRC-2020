@@ -71,7 +71,7 @@ public class RobotContainer {
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
 	private final JoystickButton emergencyShootA = new JoystickButton(joystickA, Constants.OI.kEmergencyShootButton); // 8
 
-	// Cherolin
+	// Cherilyn
 	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton); //1
 	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton); //2
 	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton); //3
