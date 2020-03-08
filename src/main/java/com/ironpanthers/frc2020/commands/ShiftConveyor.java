@@ -2,7 +2,6 @@ package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
-import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
@@ -77,16 +76,20 @@ public class ShiftConveyor extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        // final var encoderStartTicks = conveyor.getPosition();
-        // targetEncoderPosition = direction == Direction.kIn
-        //         ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
-        //         : encoderStartTicks + Constants.Conveyor.kShiftEncoderDistance;
+        final var encoderStartTicks = conveyor.getPosition();
+        if (direction == Direction.kIn && conveyor.ballsHeld == 2) targetEncoderPosition += Constants.Conveyor.kSecondBallModifier;
+        if (direction == Direction.kIn && conveyor.ballsHeld == 3) targetEncoderPosition += Constants.Conveyor.kThirdBallModifier;
+        if (direction == Direction.kIn && conveyor.ballsHeld == 4) targetEncoderPosition += Constants.Conveyor.kFourthBallModifier;
+
+        targetEncoderPosition = direction == Direction.kIn
+                ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
+                : encoderStartTicks + Constants.Conveyor.kShiftEncoderDistance;
 
         if (direction == Direction.kIn) {
             if (conveyor.ballsHeld >= 5 && conveyor.lastBallRan) {
                 cancel();
-            } else if (conveyor.ballsHeld >= 5 && !conveyor.lastBallRan) {
-                // targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
+            }  else if (conveyor.ballsHeld == 5 && !conveyor.lastBallRan) {
+                targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
             }
         }
     }
@@ -99,9 +102,7 @@ public class ShiftConveyor extends CommandBase {
                 cancel();
             }
         }
-		// conveyor.setPosition(targetEncoderPosition);
-		conveyor.setPower(Constants.Conveyor.kConveyorInSpeed);
-		
+        conveyor.setPosition(targetEncoderPosition);
     }
 
     // Called once the command ends or is interrupted.
@@ -122,15 +123,13 @@ public class ShiftConveyor extends CommandBase {
                 lWrapper.setLightMode(LightMode.OFF);
             }
         }
-        else if (isOuttake) {
-           CommandScheduler.getInstance().schedule(new Outtake(shooter, conveyor));
-        }
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (conveyor.getBannerSensor()
-                || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn));
+        return Util.epsilonEquals(conveyor.getPosition(), targetEncoderPosition,
+                Constants.Conveyor.kPositionErrorTolerance)
+                || (conveyor.conveyorFull() && conveyor.lastBallRan && direction == Direction.kIn);
     }
 }
