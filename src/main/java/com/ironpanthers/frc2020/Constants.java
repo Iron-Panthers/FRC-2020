@@ -242,7 +242,7 @@ public final class Constants {
         public static final double kArmInitialHeight = 0; // TODO find this value
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 3.0; // Up is positive encoder direction, but negative voltage (3/5/20)
+        public static final double kP = 4.0; // Up is positive encoder direction, but negative voltage (3/5/20)
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
