@@ -161,14 +161,13 @@ public class RobotContainer {
 	 *
 	 * @return the command to run in autonomous
 	 */
-	public Command getAutonomousCommand() /* throws IOException */ {
-		// try {
-		// return new TestAutonomous(drive);
+	public Command getAutonomousCommand() throws IOException {
+		try {
 		return new Shoot3Baseline(arm, Constants.Arm.kInitiationLineDegrees, shooter,
 				Constants.Shooter.kInitiationVelocity, Constants.Shooter.kInnerGoalThreshold, conveyorBelt, drive,
-				limelightWrapper);
-		// } catch (IOException e) {
-		// throw e;
-		// }
+				limelightWrapper).andThen(new TestAutonomous(drive));
+		} catch (IOException e) {
+		throw e;
+		}
 	}
 }

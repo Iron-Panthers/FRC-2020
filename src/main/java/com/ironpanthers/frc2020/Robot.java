@@ -7,6 +7,8 @@
 
 package com.ironpanthers.frc2020;
 
+import java.io.IOException;
+
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.util.LightMode;
 
@@ -75,7 +77,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        // try {
+        try {
             m_robotContainer.setLightMode(LightMode.PIPELINE);
 
 			m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -83,11 +85,10 @@ public class Robot extends TimedRobot {
 						
             if (m_autonomousCommand != null)
 				m_autonomousCommand.schedule();
-		// }
 
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

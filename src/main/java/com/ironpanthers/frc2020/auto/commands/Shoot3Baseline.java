@@ -7,6 +7,7 @@
 
 package com.ironpanthers.frc2020.auto.commands;
 
+import com.ironpanthers.frc2020.commands.shooter.StopShooter;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -25,6 +26,6 @@ public class Shoot3Baseline extends SequentialCommandGroup {
 	public Shoot3Baseline(Arm arm, double target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, Drive drive, LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new ShootPreLoaded(arm, target, shooter, velocity, threshold, conveyor, lWrapper));
+		super(new ShootPreLoaded(arm, target, shooter, velocity, threshold, conveyor, lWrapper), new StopShooter(shooter));
 	}
 }
