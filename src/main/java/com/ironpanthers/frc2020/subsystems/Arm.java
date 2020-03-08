@@ -226,6 +226,6 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("offset", getLlOffset());
         SmartDashboard.putNumber("GetAngleTrig", getAngleTrig());
         SmartDashboard.putNumber("Height Difference", Constants.Vision.kGroundToTargetInches - getHeight());
-
+		SmartDashboard.putNumber("Arm Error", armLeft.getClosedLoopError() * Constants.Arm.kCanCoderCoefficient);
     }
 }

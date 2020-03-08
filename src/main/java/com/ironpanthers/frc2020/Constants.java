@@ -242,7 +242,7 @@ public final class Constants {
         public static final double kArmInitialHeight = 0; // TODO find this value
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 2.0; // Up is positive encoder direction, but negative voltage (3/5/20)
+        public static final double kP = 3.0; // Up is positive encoder direction, but negative voltage (3/5/20)
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
@@ -252,11 +252,11 @@ public final class Constants {
         // units
 		public static final double kCanCoderCoefficient = 360.0 / 4096.0; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
         // Setpoints
-        public static final double kPositionErrorTolerance = 2.5;
+        public static final double kPositionErrorTolerance = 0.5;
 
-        public static final double kCloseShotDegrees = 16.0; //goes to 13
+        public static final double kCloseShotDegrees = 13.0; //goes to 13
         public static final double kInitiationLineDegrees = 46.0; 
-        public static final double kCloseTrenchDegrees = 54.0; //goes to 51
+        public static final double kCloseTrenchDegrees = 51.0; //goes to 51
         public static final double kFarShotDegrees = 54.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
