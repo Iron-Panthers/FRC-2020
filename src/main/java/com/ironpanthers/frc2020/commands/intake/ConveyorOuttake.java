@@ -19,6 +19,8 @@ public class ConveyorOuttake extends CommandBase {
 	private ConveyorBelt conveyor;
 	private Timer timer;
 	private double speed;
+	private Arm arm;
+	private boolean isArm;
 	/**
 	 * Creates a new ConveyorOuttake.
 	 */
@@ -28,20 +30,25 @@ public class ConveyorOuttake extends CommandBase {
 		this.conveyor = conveyor;
 		this.timer = new Timer();
 		speed = Constants.Conveyor.kConveyorSpeedClose;
+		isArm = false;
 	}
 
-	public ConveyorOuttake(ConveyorBelt conveyor, double conveyorSpeed) {
+	public ConveyorOuttake(ConveyorBelt conveyor, double conveyorSpeed, Arm arm) {
 		// Use addRequirements() here to declare subsystem dependencies.
-		addRequirements(conveyor);
 		this.conveyor = conveyor;
 		this.timer = new Timer();
+		this.arm = arm;
+		isArm = true;
 		speed = conveyorSpeed;
-		addRequirements(conveyor);
+		addRequirements(conveyor, arm);
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		if (isArm) {
+			arm.engageBrake();
+		}
 		timer.reset();
 		timer.start();
 	}
@@ -56,7 +63,9 @@ public class ConveyorOuttake extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		conveyor.stop();
-
+		if (isArm) {
+			arm.releaseBrake();
+		}
 		conveyor.ballsHeld = 0;
 		conveyor.lastBallRan = false;
 	}
