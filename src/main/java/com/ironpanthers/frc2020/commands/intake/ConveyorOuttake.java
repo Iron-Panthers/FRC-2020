@@ -27,7 +27,7 @@ public class ConveyorOuttake extends CommandBase {
 		addRequirements(conveyor);
 		this.conveyor = conveyor;
 		this.timer = new Timer();
-		speed = Constants.Conveyor.kManualConveyorSpeed;
+		speed = Constants.Conveyor.kConveyorSpeedClose;
 	}
 
 	public ConveyorOuttake(ConveyorBelt conveyor, double conveyorSpeed) {
