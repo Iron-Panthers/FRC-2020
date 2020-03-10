@@ -38,7 +38,7 @@ public class TestAutonomous extends SequentialCommandGroup {
                     drive.getLeftPIDController(), drive.getRightPIDController(), drive::setOutputVolts, drive);
 
             // Add commands to the group via `addCommands` to handle scheduling
-            addCommands(new InstantCommand(drive::shiftLow, drive),
+            addCommands(new InstantCommand(drive::shiftHigh, drive),
                     new InstantCommand(() -> drive.resetToPosition(trajectory.sample(0).poseMeters), drive),
                     trajectoryTrackingCommand, new RunCommand(() -> drive.setOutputVolts(0, 0)));
         } catch (IOException e) {
