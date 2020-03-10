@@ -46,20 +46,20 @@ public final class Constants {
 
         public static final int kShifterPCMId = 5;
 
-        public static final double kGearRatio = 5.10;
-        public static final double kTrackWidthMeters = 0.7204688778663988; // empirical from characterization data
+        public static final double kGearRatio = 5.1;
+        public static final double kTrackWidthMeters = 0.6579; // empirical from characterization data
         public static final double kWheelDiameterMeters = 0.1524;
         public static final double kWheelRadiusMeters = kWheelDiameterMeters / 2;
 
         // GENERATE FROM CHARACTERIZATION TOOL
-        // LAST GENERATED: 2020-02-04
+        // LAST GENERATED: 2020-03-09
         // BY: Ingi Helgason (helgason.ingi@gmail.com)
         // UPDATE THIS COMMENT IF YOU CHANGE ANY OF THE DRIVEBASE GAINS
-        public static final double kS = 0.252;
-        public static final double kV = 2.22;
-        public static final double kA = 0.207;
+        public static final double kS = 0.319;
+        public static final double kV = 1.27;
+        public static final double kA = 0.348;
 
-        public static final double kP = 2.6;
+        public static final double kP = 1.37;
 
         public static final double kCurrentLimit = 20.0; // amps
         public static final double kCurrentTrigger = 40.0;

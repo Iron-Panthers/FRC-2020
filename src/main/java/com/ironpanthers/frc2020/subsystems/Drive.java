@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -210,16 +211,16 @@ public class Drive extends SubsystemBase {
         var rightDistanceMeters = rightDistanceMeters();
 
         // DEBUG VALUES
-        // SmartDashboard.putNumber("drive/heading", heading.getDegrees());
-        // SmartDashboard.putNumber("drive/leftVoltage (v)", leftVoltage());
-        // SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
-        // SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
-        // SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
-        // SmartDashboard.putString("drive/wheelSpeeds", getWheelSpeeds().toString());
-        // SmartDashboard.putString("drive/heading", heading().toString());
-        // SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
-        // SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
-        // SmartDashboard.putString("drive/currentPose", currentPose.toString());
+        SmartDashboard.putNumber("drive/heading", heading.getDegrees());
+        SmartDashboard.putNumber("drive/leftVoltage (v)", leftVoltage());
+        SmartDashboard.putNumber("drive/rightVoltage (v)", rightVoltage());
+        SmartDashboard.putNumber("drive/leftDistance (m)", leftDistanceMeters);
+        SmartDashboard.putNumber("drive/rightDistance (m)", rightDistanceMeters);
+        SmartDashboard.putString("drive/wheelSpeeds", getWheelSpeeds().toString());
+        SmartDashboard.putString("drive/heading", heading().toString());
+        SmartDashboard.putNumber("drive/rightEncoderP", right1.getSelectedSensorPosition());
+        SmartDashboard.putNumber("drive/leftEncoderP", left1.getSelectedSensorPosition());
+        SmartDashboard.putString("drive/currentPose", currentPose.toString());
 
         currentPose = odometry.update(heading, leftDistanceMeters, rightDistanceMeters);
         Dashboard.getInstance().publishRobotPose(currentPose);
