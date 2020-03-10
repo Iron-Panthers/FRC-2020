@@ -20,7 +20,7 @@ package com.ironpanthers.frc2020;
 public final class Constants {
     public static final int CONTROL_PANEL_MOTOR_PORT = 0; //tbd
     public static final double CONTROL_PANEL_MOTOR_SPEED = 0.5; //tbd
-    public static final int ENCODER_TICKS_PER_INCH = 1000; //need to test
+    //public static final int ENCODER_TICKS_PER_INCH = 1000; //need to test
     /** Number of rotations between colors in rotation control */
     public static final int POSITION_CONTROL_ROTATIONS = 25; //tbd
     public static int ROTATIONS = 0;

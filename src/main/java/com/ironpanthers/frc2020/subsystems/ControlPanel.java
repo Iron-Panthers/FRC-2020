@@ -20,20 +20,32 @@ public class ControlPanel extends SubsystemBase {
    * Creates a new ControlPanel.
    */
   public static TalonFX controlPanelMotor;
+  public static ColorMatcher colorMatcher;
 
   public ControlPanel() {
     controlPanelMotor = new TalonFX(Constants.CONTROL_PANEL_MOTOR_PORT);
+    colorMatcher = new ColorMatcher();
   }
 
   public static void colorRotation(int rotations, int direction) { // Direction: -1 for counter-clockwise, 1 for clockwise
-    controlPanelMotor.setSelectedSensorPosition(0);
-    double distance = rotations * Constants.ENCODER_TICKS_PER_INCH * 12.5; // Each rotation is 12.5 inches apart
-    if(controlPanelMotor.getSelectedSensorPosition() < distance){
-      controlPanelMotor.set(ControlMode.PercentOutput, direction * Constants.CONTROL_PANEL_MOTOR_SPEED);
-    } else {
-      controlPanelMotor.set(ControlMode.PercentOutput, 0);
+    int counter = 0;
+    while(counter<rotations){
+      String currentColor = colorMatcher.getColor();
+      while(colorMatcher.getColor().equals(currentColor)){
+        controlPanelMotor.set(ControlMode.PercentOutput, direction * Constants.CONTROL_PANEL_MOTOR_SPEED);
+      }
+      counter++;
     }
+    controlPanelMotor.set(ControlMode.PercentOutput, 0);
   }
+  //   controlPanelMotor.setSelectedSensorPosition(0);
+  //   double distance = rotations * Constants.ENCODER_TICKS_PER_INCH * 12.5; // Each rotation is 12.5 inches apart
+  //   if(controlPanelMotor.getSelectedSensorPosition() < distance){
+  //     controlPanelMotor.set(ControlMode.PercentOutput, direction * Constants.CONTROL_PANEL_MOTOR_SPEED);
+  //   } else {
+  //     controlPanelMotor.set(ControlMode.PercentOutput, 0);
+  //   }
+  // }
 
   public static void positionControl(char initColor) {
     String gameData = DriverStation.getInstance().getGameSpecificMessage();
