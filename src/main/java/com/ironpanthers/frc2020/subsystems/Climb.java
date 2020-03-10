@@ -8,6 +8,7 @@
 package com.ironpanthers.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -31,6 +32,9 @@ public class Climb extends SubsystemBase {
 		climbLeft.setInverted(Constants.Climb.kClimbInverted);
 		climbRight.follow(climbLeft);
 		climbRight.setInverted(InvertType.FollowMaster); // They are attached on the same side of the robot
+
+		climbLeft.setNeutralMode(NeutralMode.Brake);
+		climbRight.setNeutralMode(NeutralMode.Brake);
 
 		climbLeft.configOpenloopRamp(Constants.Climb.kClimbRamp);
 		climbLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, Constants.Climb.kClimbCurrentLimit, Constants.Climb.kClimbCurrentPeak, Constants.Climb.kClimbCurrentDelay));
