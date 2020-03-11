@@ -5,58 +5,45 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.commands.arm;
+package com.ironpanthers.frc2020.commands.climb;
 
-import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.subsystems.Arm;
-import com.ironpanthers.util.Util;
+import com.ironpanthers.frc2020.subsystems.Climb;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ArmToTarget extends CommandBase {
-	private Arm arm;
-	private double target;
-
+public class ClimbDown extends CommandBase {
 	/**
-	 * Creates a new ArmToTarget.
-	 * @param double target in degrees
+	 * Creates a new ClimbDown.
 	 */
-	public ArmToTarget(Arm arm, double angle) {
-		this.arm = arm;
-		this.target = angle;
-		addRequirements(arm);
+	Climb climb;
+
+	public ClimbDown(Climb climb) {
+		this.climb = climb;
+
 		// Use addRequirements() here to declare subsystem dependencies.
+		addRequirements(climb);
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		arm.releaseBrake();
-		arm.calibrateCANCoder();
-		// Only in endgame go above 45 inches
-		if (target == Constants.Arm.kClimbDegrees) {
-			arm.configureForwardSoftLimit(Constants.Arm.kTopSoftLimitEndgame);
-		}
-		else {
-			arm.configureForwardSoftLimit(Constants.Arm.kTopSoftLimit);
-		}
-		arm.setPosition(target);
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		climb.climbDown();
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		arm.stop();
+		climb.stop();
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(arm.getAngle(), target, Constants.Arm.kPositionErrorTolerance);
+		return false;
 	}
 }

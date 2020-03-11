@@ -5,27 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.ironpanthers.frc2020.auto.commands;
+package com.ironpanthers.frc2020.commands;
 
+import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
-import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
+import com.ironpanthers.frc2020.commands.climb.ClimbToTarget;
 import com.ironpanthers.frc2020.subsystems.Arm;
-import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
-import com.ironpanthers.frc2020.subsystems.Shooter;
-import com.ironpanthers.frc2020.util.LimelightWrapper;
+import com.ironpanthers.frc2020.subsystems.Climb;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class ShootPreLoaded extends ParallelCommandGroup {
+public class ClimbDeploySequence extends ParallelCommandGroup {
 	/**
-	 * Creates a new ShootPreLoaded.
+	 * Creates a new ClimbDeploySequence.
 	 */
-	public ShootPreLoaded(Arm arm, double target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
+	public ClimbDeploySequence(Climb climb, Arm arm) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());
-		super(new ArmToTarget(arm, target), new ShooterSequence(shooter, conveyor, velocity, threshold, lWrapper));
+		super(new ArmToTarget(arm, Constants.Arm.kClimbDegrees),
+				new ClimbToTarget(climb, Constants.Climb.kClimbUnwindDistance));
 	}
 }

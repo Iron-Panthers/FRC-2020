@@ -46,20 +46,20 @@ public final class Constants {
 
         public static final int kShifterPCMId = 5;
 
-        public static final double kGearRatio = 5.10;
-        public static final double kTrackWidthMeters = 0.7204688778663988; // empirical from characterization data
+        public static final double kGearRatio = 5.1;
+        public static final double kTrackWidthMeters = 0.6579; // empirical from characterization data
         public static final double kWheelDiameterMeters = 0.1524;
         public static final double kWheelRadiusMeters = kWheelDiameterMeters / 2;
 
         // GENERATE FROM CHARACTERIZATION TOOL
-        // LAST GENERATED: 2020-02-04
+        // LAST GENERATED: 2020-03-09
         // BY: Ingi Helgason (helgason.ingi@gmail.com)
         // UPDATE THIS COMMENT IF YOU CHANGE ANY OF THE DRIVEBASE GAINS
-        public static final double kS = 0.252;
-        public static final double kV = 2.22;
-        public static final double kA = 0.207;
+        public static final double kS = 0.319;
+        public static final double kV = 1.27;
+        public static final double kA = 0.348;
 
-        public static final double kP = 2.6;
+        public static final double kP = 1.37;
 
         public static final double kCurrentLimit = 20.0; // amps
         public static final double kCurrentTrigger = 40.0;
@@ -68,36 +68,30 @@ public final class Constants {
     }
 
     public static class OI {
-        public static final int kCloseShotButtonNumber = 12;
-        public static final int kInitiationLineShotButtonNumber = 10;
-        public static final int kFarShotButtonNumber = 11;
 		// Driver A
 		public static final int kDriverAJoystickPort = 0;
 		public static final int kDriveShiftButton = 2;
         public static final int kIntakeButton = 4;
-		public static final int kResetConveyorButton = 3;
-		public static final int kReduceBallsHeld = 7; 
-        public static final int kShootFar = 5;
-        public static final int kShootClose = 6;
-		public static final int kShootInitiation = kInitiationLineShotButtonNumber;
-		public static final int kCloseTrenchButton = 11;
-		public static final int kControlPanel = 9;
-		public static final int kEmergencyShootButton = 8;
-		public static final int kShoot = 6;
-		public static final int kStopShooterButtonB = 4;
+        public static final int kStopShooterButton = 7;
+        public static final int kClimbDown = 5;
+        public static final int kClimbUp = 6;
+        public static final int kArmToClimb = 9; // Will be used for the arm climb setpoint, which eliminates the 45inch soft limit on the arm
 
         // Driver B
         public static final int kDriverBJoystickPort = 1;
         public static final int kManualArmButton = 1;
         public static final int kDriverBIntakeButton = 2;
         
-		public static final int kEmergencyOuttakeButton = 3;
-		public static final int kFullShooterSequenceButton = 4;
-		public static final int kMoveConveyorButton = 5;
-		public static final int kStopShooterButton = 6;
-        public static final int kCloseShotButton = kCloseShotButtonNumber;
-        public static final int kFarShotButton = kFarShotButtonNumber;
-        public static final int kAutoShotHeightButton = kInitiationLineShotButtonNumber;
+        public static final int kEmergencyOuttakeButton = 3;
+        public static final int kStopShooterButtonB = 4;
+        public static final int kShootFar = 5;
+        public static final int kShootClose = 6;
+        public static final int kReduceBallsHeld = 7; 
+        public static final int kEmergencyShootButton = 8; // Used for Drivers A and B
+        public static final int kControlPanel = 9;
+        public static final int kShootInitiation = 10;
+		public static final int kCloseTrenchButton = 11;
+        public static final int kCloseShotButton = 12;
 		
     }
 
@@ -118,7 +112,7 @@ public final class Constants {
         public static final double kIntakeRollerSpeed = 1.0;
 		public static final double kIntakeFlywheelSpeed = -1.0; // tbd
 		public static final double kOuttakeRollerSpeed = -1.0;
-        public static final double kManualConveyorSpeed = 0.75;
+        public static final double kConveyorSpeedClose = 1.0;
         public static final double kConveyorSpeedFar = 0.25;
 
 		public static final double kConveyorTime = 1.8; // Seconds, needs testing
@@ -262,15 +256,41 @@ public final class Constants {
         // units
         public static final double kFrameHeightDegrees = 53.00; // Height at which robot is 45 inches tall
 
-        // Soft Limits
+		// Soft Limits
+		public static final double kClimbDegrees = 69.0; // 71.75 calculated arm angle would make the climb hooks go to a max of 11.99 inches outside frame perimeter
         public static final double kTopPositionDegrees = 78.0; // 90 degrees, should be close to top position
         public static final int kBottomSoftLimit = (int) (1.0 / kCanCoderCoefficient); // Convert into native units
-        public static final int kTopSoftLimit = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
+		public static final int kTopSoftLimitEndgame = (int) ((kTopPositionDegrees - 1) / kCanCoderCoefficient); // Convert into native units
+		public static final int kTopSoftLimit = (int) (kFrameHeightDegrees / kCanCoderCoefficient);
         public static final double kUseTopLimitRange = 40.0;
 
         // TODO(james)
         public static final double kClosedLoopPeakOutput = 0.5; // Used for both positive and negative direction
 
         public static final double kCurrentLimit = 60; // amps
-    }
+	}
+	
+	public static class Climb {
+		// Ports
+		public static final int kClimbLeft = 11;
+		public static final int kClimbRight = 12;
+
+		// Configuration
+		public static final double kClimbRamp = 0.25;
+		public static final boolean kClimbInverted = false;
+
+		public static final double kClimbCurrentLimit = 30.0;
+		public static final double kClimbCurrentPeak = 40.0;
+		public static final double kClimbCurrentDelay = 1.0; // Seconds
+
+		public static final double kClimbUpPower = 1.0;
+		public static final double kClimbDownPower = -1.0;
+
+		public static final double kClimbP = 0.05; // TBD
+		public static final int kClimbPIDSlot = 0;
+
+		public static final int kClimbUnwindDistance = 100000; // TBD, 2048 CPR * 100 Gear reduction * 3 rotations is ~600k
+		public static final int kClimbWindDistance = 0-kClimbUnwindDistance;
+		public static final int kClimbTolarance = 500;
+	}
 }

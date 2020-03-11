@@ -91,7 +91,11 @@ public class Arm extends SubsystemBase {
         armLeft.configReverseSoftLimitThreshold(Constants.Arm.kBottomSoftLimit);
 
         configPIDF(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD, Constants.Arm.kF, Constants.Arm.kPIDIdx);
-    }
+	}
+	
+	public void configureForwardSoftLimit(int limitNativeUnits) {
+		armLeft.configForwardSoftLimitThreshold(limitNativeUnits);
+	}
 
     public void setPower(double power) {
         armLeft.set(TalonFXControlMode.PercentOutput, power);
@@ -127,7 +131,7 @@ public class Arm extends SubsystemBase {
      */
     public void setPosition(double degrees) {
         armLeft.set(TalonFXControlMode.Position, degrees / Constants.Arm.kCanCoderCoefficient);
-    }
+	}
 
     public double getHeight() {
         return Math.sqrt(Math.pow(Constants.Vision.kPivotToLL, 2) - Math.pow(getPivotToLLHorizontleD(getAngle()), 2))
@@ -214,7 +218,11 @@ public class Arm extends SubsystemBase {
 
     public void setSensorPosition(double degrees) {
         canCoder.setPosition(degrees);
-    }
+	}
+	
+	public void overrideSoftLimits(boolean override) {
+		armLeft.overrideLimitSwitchesEnable(override);
+	}
 
     @Override
     public void periodic() {

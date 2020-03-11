@@ -11,6 +11,7 @@ import com.ironpanthers.frc2020.commands.shooter.SetShooterVelocity;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -25,6 +26,7 @@ public class ArmAndSpinShooter extends ParallelCommandGroup {
 	public ArmAndSpinShooter(Arm arm, double target, Shooter shooter, int velocity, int threshold, ConveyorBelt conveyor, LimelightWrapper lWrapper) {
 		// Add your commands in the super() call, e.g.
 		// super(new FooCommand(), new BarCommand());super();
-		super(new ArmToTarget(arm, target, lWrapper), new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper));
+		super(new ArmToTargetLL(arm, target, lWrapper, LightMode.ON),
+				new SetShooterVelocity(shooter, velocity, threshold, conveyor, lWrapper));
 	}
 }
