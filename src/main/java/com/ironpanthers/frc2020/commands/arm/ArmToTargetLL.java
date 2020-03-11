@@ -11,6 +11,7 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
+import com.ironpanthers.util.CircularBuffer;
 import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -20,6 +21,7 @@ public class ArmToTargetLL extends CommandBase {
 	private double target;
 	private LimelightWrapper lWrapper;
 	private LightMode mode;
+	private CircularBuffer buffer;
 
 	/**
 	 * Creates a new ArmToTarget.
@@ -29,6 +31,7 @@ public class ArmToTargetLL extends CommandBase {
 		this.target = target;
 		this.lWrapper = lWrapper;
 		this.mode = mode;
+		buffer = new CircularBuffer(25);
 		addRequirements(arm);
 		// Use addRequirements() here to declare subsystem dependencies.
 	}
@@ -36,6 +39,7 @@ public class ArmToTargetLL extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		buffer.clear();
 		lWrapper.setLightMode(mode);
         arm.setPosition(target);
 	}
@@ -43,6 +47,7 @@ public class ArmToTargetLL extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		buffer.addValue(arm.getAngle());
 	}
 
 	// Called once the command ends or is interrupted.
@@ -54,6 +59,6 @@ public class ArmToTargetLL extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return Util.epsilonEquals(arm.getAngle(), target, Constants.Arm.kPositionErrorTolerance);
+		return Util.epsilonEquals(buffer.getAverage(), target, Constants.Arm.kPositionErrorTolerance);
 	}
 }
