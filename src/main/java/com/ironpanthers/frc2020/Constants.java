@@ -113,7 +113,7 @@ public final class Constants {
 		public static final double kIntakeFlywheelSpeed = -1.0; // tbd
 		public static final double kOuttakeRollerSpeed = -1.0;
         public static final double kConveyorSpeedClose = 1.0;
-        public static final double kConveyorSpeedFar = 0.25;
+        public static final double kConveyorSpeedFar = 0.50;
 
 		public static final double kConveyorTime = 1.8; // Seconds, needs testing
 
@@ -204,7 +204,7 @@ public final class Constants {
         public static final int kInitiationVelocity = 12000; // Tested 2/29/20
         public static final double kInitiationDistance = 135.0; // Tested 2/29/20
 
-        public static final int kCloseTrenchVelocity = 12500; // Tested 2/29/20
+        public static final int kCloseTrenchVelocity = 13500; // Tested 3/10/20
         public static final double kCloseTrenchDistance = 170.0; // Needs Testing
 
         public static final int kFarVelocity = 15500; // Needs Testing
@@ -236,7 +236,7 @@ public final class Constants {
         public static final double kArmInitialHeight = 0; // TODO find this value
         public static final double kMaxManualSpeed = 0.5;
 
-        public static final double kP = 4.0; // Up is positive encoder direction, but negative voltage (3/5/20)
+        public static final double kP = 5.5; // Up is positive encoder direction, but negative voltage (3/5/20)
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0;
@@ -249,8 +249,8 @@ public final class Constants {
         public static final double kPositionErrorTolerance = 0.5;
 
         public static final double kCloseShotDegrees = 13.0; //goes to 13
-        public static final double kInitiationLineDegrees = 46.0; 
-        public static final double kCloseTrenchDegrees = 51.0; //goes to 51
+        public static final double kInitiationLineDegrees = 42.0; 
+        public static final double kCloseTrenchDegrees = 46.0; //goes to 51
         public static final double kFarShotDegrees = 54.0; // Tested angle for shooting behind control panel at
                                                                    // 14k native
         // units
