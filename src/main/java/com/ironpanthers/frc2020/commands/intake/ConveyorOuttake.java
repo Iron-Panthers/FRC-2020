@@ -77,7 +77,7 @@ public class ConveyorOuttake extends CommandBase {
 			return timer.hasElapsed(Constants.Conveyor.kConveyorTime * 4/3);
 		}
 		else {
-			return timer.hasElapsed(Constants.Conveyor.kConveyorTime * 2 * 4/3);
+			return timer.hasElapsed(Constants.Conveyor.kConveyorTime * 4);
 		}
 		
 	}
