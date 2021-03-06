@@ -15,8 +15,6 @@ import com.ironpanthers.frc2020.commands.FullShooterSequence;
 import com.ironpanthers.frc2020.commands.arm.ArmHold;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
-import com.ironpanthers.frc2020.commands.climb.ClimbDown;
-import com.ironpanthers.frc2020.commands.climb.ClimbUp;
 import com.ironpanthers.frc2020.commands.drive.GearShift;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
@@ -26,7 +24,6 @@ import com.ironpanthers.frc2020.commands.shooter.SetShooterVelocityEmergency;
 import com.ironpanthers.frc2020.commands.shooter.Shoot;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
 import com.ironpanthers.frc2020.subsystems.Arm;
-import com.ironpanthers.frc2020.subsystems.Climb;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;
 import com.ironpanthers.frc2020.subsystems.Shooter;
@@ -58,7 +55,6 @@ public class RobotContainer {
 	private final ConveyorBelt conveyorBelt = new ConveyorBelt();
 	private final Arm arm = new Arm(limelightWrapper);
 	private final SteeringAdjuster steerer = new SteeringAdjuster(limelightWrapper, arm::getHorizontalDistance, arm);
-	private final Climb climb = new Climb();
 
 	// Hardware
 	private final AutoSelector autoSelector = new AutoSelector();
@@ -72,12 +68,9 @@ public class RobotContainer {
 	// Driver A Buttons
 	private final JoystickButton driveShift = new JoystickButton(joystickA, Constants.OI.kDriveShiftButton); // 2
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
-	private final JoystickButton climbDown = new JoystickButton(joystickA, Constants.OI.kClimbDown); // 5
-	private final JoystickButton climbUp = new JoystickButton(joystickA, Constants.OI.kClimbUp); // 6
 	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA,
 			Constants.OI.kStopShooterButton); // 7
 	private final JoystickButton emergencyShootA = new JoystickButton(joystickA, Constants.OI.kEmergencyShootButton); // 8
-	private final JoystickButton armToClimb = new JoystickButton(joystickA, Constants.OI.kArmToClimb); // 9
 
 	// Cherilyn
 	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton); // 1
@@ -124,9 +117,6 @@ public class RobotContainer {
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new Outtake(shooter, conveyorBelt));
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
-		climbDown.whileHeld(new ClimbDown(climb));
-		climbUp.whileHeld(new ClimbUp(climb));
-		armToClimb.whenPressed(new ArmToTarget(arm, Constants.Arm.kClimbDegrees));
 
 		// Driver B
 		reduceBallsHeldByOne.whenPressed(new ReduceBallsByOne(conveyorBelt));

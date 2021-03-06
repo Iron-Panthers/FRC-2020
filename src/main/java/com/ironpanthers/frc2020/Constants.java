@@ -52,8 +52,7 @@ public final class Constants {
         public static final double kWheelRadiusMeters = kWheelDiameterMeters / 2;
 
         // GENERATE FROM CHARACTERIZATION TOOL
-        // LAST GENERATED: 2020-03-09
-        // BY: Ingi Helgason (helgason.ingi@gmail.com)
+        // does not match with 2021 version robot (values are Bad)
         // UPDATE THIS COMMENT IF YOU CHANGE ANY OF THE DRIVEBASE GAINS
         public static final double kS = 0.319;
         public static final double kV = 1.27;
@@ -73,9 +72,6 @@ public final class Constants {
 		public static final int kDriveShiftButton = 2;
         public static final int kIntakeButton = 4;
         public static final int kStopShooterButton = 7;
-        public static final int kClimbDown = 5;
-        public static final int kClimbUp = 6;
-        public static final int kArmToClimb = 9; // Will be used for the arm climb setpoint, which eliminates the 45inch soft limit on the arm
 
         // Driver B
         public static final int kDriverBJoystickPort = 1;
@@ -268,29 +264,5 @@ public final class Constants {
         public static final double kClosedLoopPeakOutput = 0.5; // Used for both positive and negative direction
 
         public static final double kCurrentLimit = 60; // amps
-	}
-	
-	public static class Climb {
-		// Ports
-		public static final int kClimbLeft = 11;
-		public static final int kClimbRight = 12;
-
-		// Configuration
-		public static final double kClimbRamp = 0.25;
-		public static final boolean kClimbInverted = false;
-
-		public static final double kClimbCurrentLimit = 30.0;
-		public static final double kClimbCurrentPeak = 40.0;
-		public static final double kClimbCurrentDelay = 1.0; // Seconds
-
-		public static final double kClimbUpPower = 1.0;
-		public static final double kClimbDownPower = -1.0;
-
-		public static final double kClimbP = 0.05; // TBD
-		public static final int kClimbPIDSlot = 0;
-
-		public static final int kClimbUnwindDistance = 100000; // TBD, 2048 CPR * 100 Gear reduction * 3 rotations is ~600k
-		public static final int kClimbWindDistance = 0-kClimbUnwindDistance;
-		public static final int kClimbTolarance = 500;
 	}
 }
