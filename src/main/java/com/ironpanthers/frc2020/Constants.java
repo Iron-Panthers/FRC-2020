@@ -82,7 +82,6 @@ public final class Constants {
         public static final int kStopShooterButtonB = 4;
         public static final int kShootFar = 5;
         public static final int kShootClose = 6;
-        public static final int kReduceBallsHeld = 7; 
         public static final int kEmergencyShootButton = 8; // Used for Drivers A and B
         public static final int kControlPanel = 9;
         public static final int kShootInitiation = 10;

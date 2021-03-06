@@ -19,7 +19,6 @@ import com.ironpanthers.frc2020.commands.drive.GearShift;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
-import com.ironpanthers.frc2020.commands.intake.ReduceBallsByOne;
 import com.ironpanthers.frc2020.commands.shooter.SetShooterVelocityEmergency;
 import com.ironpanthers.frc2020.commands.shooter.Shoot;
 import com.ironpanthers.frc2020.commands.shooter.StopShooter;
@@ -77,7 +76,6 @@ public class RobotContainer {
 	private final JoystickButton driverBIntake = new JoystickButton(joystickB, Constants.OI.kDriverBIntakeButton); // 2
 	private final JoystickButton emergencyOuttake = new JoystickButton(joystickB, Constants.OI.kEmergencyOuttakeButton); // 3
 	private final JoystickButton stopShooterB = new JoystickButton(joystickB, Constants.OI.kStopShooterButtonB); // 4
-	private final JoystickButton reduceBallsHeldByOne = new JoystickButton(joystickB, Constants.OI.kReduceBallsHeld); // 5
 	private final JoystickButton closeShot = new JoystickButton(joystickB, Constants.OI.kCloseShotButton); // 12
 	private final JoystickButton lineShot = new JoystickButton(joystickB, Constants.OI.kShootInitiation); // 10
 	private final JoystickButton closeTrench = new JoystickButton(joystickB, Constants.OI.kCloseTrenchButton); // 11
@@ -119,7 +117,6 @@ public class RobotContainer {
 		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
 
 		// Driver B
-		reduceBallsHeldByOne.whenPressed(new ReduceBallsByOne(conveyorBelt));
 		stopShooterB.whenPressed(new StopShooter(shooter));
 		shootClose.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter,
 				Constants.Conveyor.kConveyorSpeedClose));
