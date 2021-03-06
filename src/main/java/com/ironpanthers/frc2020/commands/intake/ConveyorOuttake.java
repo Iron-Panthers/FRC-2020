@@ -74,10 +74,10 @@ public class ConveyorOuttake extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		if (speed > 0.5) {
-			return timer.hasElapsed(Constants.Conveyor.kConveyorTime);
+			return timer.hasElapsed(Constants.Conveyor.kConveyorTime * 4/3);
 		}
 		else {
-			return timer.hasElapsed(Constants.Conveyor.kConveyorTime * 2);
+			return timer.hasElapsed(Constants.Conveyor.kConveyorTime * 2 * 4/3);
 		}
 		
 	}

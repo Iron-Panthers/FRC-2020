@@ -39,6 +39,8 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -137,16 +139,16 @@ public class RobotContainer {
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		driverBIntake.whenReleased(new Outtake(shooter, conveyorBelt));
 		emergencyOuttake.whileHeld(new Outtake(shooter, conveyorBelt));
-		closeShot.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kCloseShotDegrees, shooter,
+		closeShot.whenPressed(new FullShooterSequence(steerer, drive, arm, 41, shooter,
 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
-				Constants.Shooter.kCloseVelocity));
+				Constants.Shooter.kCloseTrenchVelocity)); // TODO dajfasdk;fasdfjksadkl;fs
 		lineShot.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees, shooter,
 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
 				Constants.Shooter.kInitiationVelocity));
-		closeTrench.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kCloseTrenchDegrees, shooter,
+		closeTrench.whenPressed(new FullShooterSequence(steerer, drive, arm, 46, shooter, // TODO " KILL ME "
 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
 				Constants.Shooter.kCloseTrenchVelocity));
-		controlPanel.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kFarShotDegrees, shooter,
+		controlPanel.whenPressed(new FullShooterSequence(steerer, drive, arm, 31, shooter, // TODO DOCODOOCOCODC
 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper, Constants.Shooter.kFarVelocity));
 		emergencyShootA.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity,
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
@@ -172,9 +174,9 @@ public class RobotContainer {
 	 */
 	public Command getAutonomousCommand() throws IOException {
 		try {
-			return new Shoot3Baseline(arm, Constants.Arm.kInitiationLineDegrees, shooter,
+			return new Shoot3Baseline(arm, 44, shooter,
 					Constants.Shooter.kInitiationVelocity, Constants.Shooter.kInnerGoalThreshold, conveyorBelt, drive,
-					limelightWrapper).andThen(new TestAutonomous(drive));
+					limelightWrapper).andThen(new ParallelCommandGroup(new Outtake(shooter, conveyorBelt), new TestAutonomous(drive)));
 		} catch (IOException e) {
 			throw e;
 		}

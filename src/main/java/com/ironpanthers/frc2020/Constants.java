@@ -108,14 +108,14 @@ public final class Constants {
         public static final double kConveyorClosedLoopRamp = 0.6;
         public static final double kConveyorPositionKp = 0.216;
 
-        // Powers
+        // Powers TODO AAAAAAAAAA DOCUMENTATION
         public static final double kIntakeRollerSpeed = 1.0;
-		public static final double kIntakeFlywheelSpeed = -1.0; // tbd
-		public static final double kOuttakeRollerSpeed = -1.0;
-        public static final double kConveyorSpeedClose = 1.0;
+		public static final double kIntakeFlywheelSpeed = -0.6; // tbd
+		public static final double kOuttakeRollerSpeed = -0.6;
+        public static final double kConveyorSpeedClose = 0.6;
         public static final double kConveyorSpeedFar = 0.25;
 
-		public static final double kConveyorTime = 1.8; // Seconds, needs testing
+		public static final double kConveyorTime = 1.9; // Seconds, needs testing
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;

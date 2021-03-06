@@ -51,7 +51,7 @@ public class ConveyorBelt extends SubsystemBase {
 	}
 
 	public void setPower(double power) {
-		conveyorMotor.set(TalonFXControlMode.PercentOutput, power);
+		conveyorMotor.set(TalonFXControlMode.PercentOutput, power * 3 / 4);
 	}
 
 	public void stop() {

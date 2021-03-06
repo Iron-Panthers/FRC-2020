@@ -11,12 +11,15 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class TestAutonomous extends SequentialCommandGroup {
     /**
@@ -27,22 +30,9 @@ public class TestAutonomous extends SequentialCommandGroup {
      *              to use.
      */
     public TestAutonomous(Drive drive) throws IOException {
-        try {
-            var trajectory = TrajectoryUtil.fromPathweaverJson(
-                    Paths.get(Filesystem.getDeployDirectory().toString(), "paths", "facingPortIntoTrench.json"));
-
-
-            // Alias of trajectory-tracking command for readability
-            var trajectoryTrackingCommand = new ReportingRAMSETECommand(trajectory, drive::getCurrentPose,
-                    new RamseteController(2, 0.7), drive.getFeedforward(), drive.getKinematics(), drive::getWheelSpeeds,
-                    drive.getLeftPIDController(), drive.getRightPIDController(), drive::setOutputVolts, drive);
-
             // Add commands to the group via `addCommands` to handle scheduling
             addCommands(new InstantCommand(drive::shiftHigh, drive),
-                    new InstantCommand(() -> drive.resetToPosition(trajectory.sample(0).poseMeters), drive),
-                    trajectoryTrackingCommand, new RunCommand(() -> drive.setOutputVolts(0, 0)));
-        } catch (IOException e) {
-            throw e;
-        }
+            new ParallelDeadlineGroup(new WaitCommand(1.5), new RunCommand(() -> drive.setOutputVolts(4, 4))),
+            new RunCommand(() -> drive.setOutputVolts(0, 0)));
     }
 }
