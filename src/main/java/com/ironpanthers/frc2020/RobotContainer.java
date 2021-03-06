@@ -9,23 +9,14 @@ package com.ironpanthers.frc2020;
 
 import java.io.IOException;
 
-import com.ironpanthers.frc2020.auto.commands.Shoot3Baseline;
-import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
-import com.ironpanthers.frc2020.commands.FullShooterSequence;
-import com.ironpanthers.frc2020.commands.arm.ArmHold;
-import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
-import com.ironpanthers.frc2020.commands.arm.ManualArmCommand;
-import com.ironpanthers.frc2020.commands.drive.GearShift;
-import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
-import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
-import com.ironpanthers.frc2020.commands.intake.Outtake;
-import com.ironpanthers.frc2020.commands.shooter.SetShooterVelocityEmergency;
-import com.ironpanthers.frc2020.commands.shooter.Shoot;
-import com.ironpanthers.frc2020.commands.shooter.StopShooter;
-import com.ironpanthers.frc2020.subsystems.Arm;
-import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
-import com.ironpanthers.frc2020.subsystems.Drive;
-import com.ironpanthers.frc2020.subsystems.Shooter;
+import com.ironpanthers.frc2020.auto.commands.*;
+import com.ironpanthers.frc2020.commands.*;
+import com.ironpanthers.frc2020.commands.arm.*;
+import com.ironpanthers.frc2020.commands.drive.*;
+import com.ironpanthers.frc2020.commands.intake.*;
+import com.ironpanthers.frc2020.commands.shooter.*;
+import com.ironpanthers.frc2020.subsystems.*;
+
 import com.ironpanthers.frc2020.util.LightMode;
 import com.ironpanthers.frc2020.util.LimelightWrapper;
 import com.ironpanthers.frc2020.util.SteeringAdjuster;
