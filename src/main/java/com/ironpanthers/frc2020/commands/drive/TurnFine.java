@@ -27,9 +27,9 @@ public class TurnFine extends CommandBase {
   @Override
   public void execute() {
     if (direction == 'L') {
-      drive.setOutputPercent(-0.1, +0.1);
+      drive.setOutputPercent(0.075, -0.075);
     } else {
-      drive.setOutputPercent(+0.1, -0.1);
+      drive.setOutputPercent(-0.075, 0.075);
     }
 
     // TODO: implement run logic
