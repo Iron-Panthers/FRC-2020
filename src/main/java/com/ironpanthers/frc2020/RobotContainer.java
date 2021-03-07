@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -58,9 +59,8 @@ public class RobotContainer {
 	// Driver A Buttons
 	private final JoystickButton driveShift = new JoystickButton(joystickA, Constants.OI.kDriveShiftButton); // 2
 	private final JoystickButton intakeButton = new JoystickButton(joystickA, Constants.OI.kIntakeButton); // 4
-	private final JoystickButton driverAStopShooterButton = new JoystickButton(joystickA,
-			Constants.OI.kStopShooterButton); // 7
-	private final JoystickButton emergencyShootA = new JoystickButton(joystickA, Constants.OI.kEmergencyShootButton); // 8
+	private final JoystickButton turnFineLeft = new JoystickButton(joystickA, Constants.OI.kTurnFineLeft); // 7
+	private final JoystickButton turnFineRight = new JoystickButton(joystickA, Constants.OI.kTurnFineRight); // 8
 
 	// Cherilyn
 	private final JoystickButton manualArm = new JoystickButton(joystickB, Constants.OI.kManualArmButton); // 1
@@ -105,7 +105,8 @@ public class RobotContainer {
 		driveShift.whileHeld(new GearShift(drive));
 		intakeButton.whileHeld(new IntakeSequence(shooter, conveyorBelt, intakeButton::get));
 		intakeButton.whenReleased(new Outtake(shooter, conveyorBelt));
-		driverAStopShooterButton.whenPressed(new StopShooter(shooter));
+		turnFineLeft.whileHeld(new TurnFine(drive, 'L'));
+		turnFineRight.whileHeld(new TurnFine(drive, 'R'));
 
 		// Driver B
 		stopShooterB.whenPressed(new StopShooter(shooter));
@@ -128,8 +129,6 @@ public class RobotContainer {
 				Constants.Shooter.kCloseTrenchVelocity));
 		controlPanel.whenPressed(new FullShooterSequence(steerer, drive, arm, 31, shooter, // TODO DOCODOOCOCODC
 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper, Constants.Shooter.kFarVelocity));
-		emergencyShootA.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity,
-				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
 		emergencyShootB.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity,
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
 
