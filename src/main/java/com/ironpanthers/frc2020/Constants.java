@@ -85,11 +85,11 @@ public final class Constants {
         public static final int kShootFar = 5;
         public static final int kShootClose = 6;
         public static final int kEmergencyShootButton = 8;
-        public static final int kControlPanel = 9;
-        public static final int kShootInitiation = 10;
-		public static final int kCloseTrenchButton = 11;
-        public static final int kCloseShotButton = 12;
-		
+
+        public static final int kZone1 = 9;
+        public static final int kZone2 = 10;
+        public static final int kZone3 = 11;
+        public static final int kZone4 = 12;		
     }
 
     public static class Conveyor {
