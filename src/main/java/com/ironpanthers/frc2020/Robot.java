@@ -7,8 +7,6 @@
 
 package com.ironpanthers.frc2020;
 
-import java.io.IOException;
-
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.util.LightMode;
 
@@ -26,7 +24,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
-    private ConveyorBelt conveyor;
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -77,18 +74,13 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        try {
-            m_robotContainer.setLightMode(LightMode.PIPELINE);
+        m_robotContainer.setLightMode(LightMode.PIPELINE);
 
-			m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-			m_robotContainer.initializeAuto();
-						
-            if (m_autonomousCommand != null)
-				m_autonomousCommand.schedule();
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        m_robotContainer.initializeAuto();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (m_autonomousCommand != null)
+            m_autonomousCommand.schedule();
     }
 
     /**
@@ -106,7 +98,7 @@ public class Robot extends TimedRobot {
         // Cancel autonomous upon teleop
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
-		}
+        }
     }
 
     /**

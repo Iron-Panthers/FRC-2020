@@ -116,13 +116,8 @@ public final class Constants {
 
         // Encoder Stuff
         public static final int kPositionErrorTolerance = 350;
-        public static final int kShiftEncoderDistance = 26000;
+        public static final int kShiftEncoderDistance = 26000 * 5/3;
 		public static final int kShiftEncoderDistanceLast = 11000;
-		
-		public static final int kSecondBallModifier = -1000;
-		public static final int kThirdBallModifier = 10000;
-		public static final int kFourthBallModifier = 15500;
-
     }
 
     public static class Vision {
@@ -243,7 +238,7 @@ public final class Constants {
         // units
 		public static final double kCanCoderCoefficient = 360.0 / 4096.0; // 4096 units per rotation, 360 degrees per rotation for CANCoder. Should be 2pi / 4096 for radians
         // Setpoints
-        public static final double kPositionErrorTolerance = 0.5;
+        public static final double kPositionErrorTolerance = 0.15;
 
         public static final double kCloseShotDegrees = 13.0; //goes to 13
         public static final double kInitiationLineDegrees = 42.0; 

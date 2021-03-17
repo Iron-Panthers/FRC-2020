@@ -13,18 +13,16 @@ import com.ironpanthers.frc2020.Constants;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Intake extends CommandBase {
-	/**
-	 * Creates a new Intake.
-	 */
 	Shooter shooter;
 	ConveyorBelt conveyor;
 	BooleanSupplier button;
 
+	/**
+	 * Creates a new Intake.
+	 */
 	public Intake(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button) {
 		this.button = button;
 		this.conveyor = conveyor;
@@ -55,7 +53,7 @@ public class Intake extends CommandBase {
 		if (interrupted || conveyor.conveyorFull()) {
 			shooter.setIntakeMotors(0, 0);
 		}
-		if (!interrupted && conveyor.ballsHeld < 5) {
+		if (!interrupted && conveyor.ballsHeld < 3) {
 			conveyor.ballsHeld++;
 		} 
 	}

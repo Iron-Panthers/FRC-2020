@@ -36,7 +36,6 @@ public class ManualDriveCommand extends CommandBase {
         final var x = direction ? 0-Deadband.apply(turn.getAsDouble(), 0.1) : Deadband.apply(turn.getAsDouble(), 0.1);
 
 		var xPowd = 0.0;
-        // TODO goodness me documentation
 		if (drive.isLowGear()) {
 			xPowd = Math.copySign(Math.pow(Math.abs(x), 3.5), x) / 5;
 		}

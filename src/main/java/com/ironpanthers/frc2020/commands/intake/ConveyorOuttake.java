@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ConveyorOuttake extends CommandBase {
-
 	private ConveyorBelt conveyor;
 	private Timer timer;
 	private double speed;

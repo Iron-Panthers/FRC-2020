@@ -10,7 +10,6 @@ package com.ironpanthers.frc2020.subsystems;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.util.Util;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,11 +19,8 @@ public class ConveyorBelt extends SubsystemBase {
 	public DigitalInput input;
 	public boolean lastBallRan;
 
-	// TODO only conditionally initialize with 3?
 	public int ballsHeld = 0;
 	
-	private boolean usingPositionGains;
-
 	/**
 	 * Create a new ConveyorBelt subsystem. As usual, only one of these should ever
 	 * be constructed.
@@ -51,7 +47,7 @@ public class ConveyorBelt extends SubsystemBase {
 	}
 
 	public void setPower(double power) {
-		conveyorMotor.set(TalonFXControlMode.PercentOutput, power * 3 / 4);
+		conveyorMotor.set(TalonFXControlMode.PercentOutput, power);
 	}
 
 	public void stop() {
@@ -59,14 +55,10 @@ public class ConveyorBelt extends SubsystemBase {
 	}
 
 	public boolean conveyorFull() {
-		return ballsHeld == 5;
+		return ballsHeld == 3;
 	}
 
 	@Override
 	public void periodic() {
-		// SmartDashboard.putNumber("ballsHeld", ballsHeld);
-		// SmartDashboard.putBoolean("lastBallRan", lastBallRan);
-
-		// This method will be called once per scheduler run
 	}
 }
