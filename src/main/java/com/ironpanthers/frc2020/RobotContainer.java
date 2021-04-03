@@ -9,6 +9,7 @@ package com.ironpanthers.frc2020;
 
 import com.ironpanthers.frc2020.auto.commands.*;
 import com.ironpanthers.frc2020.commands.*;
+import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
 import com.ironpanthers.frc2020.commands.arm.*;
 import com.ironpanthers.frc2020.commands.drive.*;
 import com.ironpanthers.frc2020.commands.intake.*;
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -75,7 +77,7 @@ public class RobotContainer {
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
-				new ManualDriveCommand(joystickA::getY, joystickA::getX, new JoystickButton(joystickA, 1), drive));
+				new ManualDriveCommand(joystickA::getY, joystickA::getX, new JoystickButton(joystickA, 1), new JoystickButton(joystickA, 11), drive));
 		arm.setDefaultCommand(new ArmHold(arm));
 		compressor.setClosedLoopControl(true);
 		// Configure the button bindings
@@ -115,13 +117,13 @@ public class RobotContainer {
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 
 		zone1.whenPressed(
-				new FullShooterSequence(steerer, drive, arm, 48, shooter, Constants.Shooter.kInnerGoalThreshold,
-						conveyorBelt, limelightWrapper, Constants.Shooter.kCloseTrenchVelocity));
+				new FullShooterSequence(steerer, drive, arm, 49.25, shooter, Constants.Shooter.kInnerGoalThreshold,
+						conveyorBelt, limelightWrapper, 13_000));
 		zone2.whenPressed(
-				new FullShooterSequence(steerer, drive, arm, 45, shooter, Constants.Shooter.kInnerGoalThreshold,
+				new FullShooterSequence(steerer, drive, arm, 47, shooter, Constants.Shooter.kInnerGoalThreshold,
 						conveyorBelt, limelightWrapper, Constants.Shooter.kInitiationVelocity));
 		zone3.whenPressed(
-				new FullShooterSequence(steerer, drive, arm, 40, shooter, Constants.Shooter.kInnerGoalThreshold,
+				new FullShooterSequence(steerer, drive, arm, 43.25, shooter, Constants.Shooter.kInnerGoalThreshold,
 						conveyorBelt, limelightWrapper, Constants.Shooter.kCloseTrenchVelocity));
 		zone4.whenPressed(new FullShooterSequence(steerer, drive, arm, 30, shooter,
 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper, Constants.Shooter.kFarVelocity));
@@ -130,7 +132,6 @@ public class RobotContainer {
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
 
 		push.whileHeld(new ConveyorOuttake(conveyorBelt));
-
 	}
 
 	public void resetBallsHeld() {

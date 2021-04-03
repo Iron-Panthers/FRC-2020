@@ -13,14 +13,17 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class ManualDriveCommand extends CommandBase {
     private final DoubleSupplier forward, turn;
-    private final Trigger reverseTrigger;
+    private final Trigger reverseTrigger, fastTurnTrigger;
     private final Drive drive;
+    private boolean fastTurn=false;
+    private boolean lastVal=false;
 
-    public ManualDriveCommand(DoubleSupplier forward, DoubleSupplier turn, Trigger reverseTrigger, Drive drive) {
+    public ManualDriveCommand(DoubleSupplier forward, DoubleSupplier turn, Trigger reverseTrigger, Trigger fastTurnTrigger, Drive drive) {
         addRequirements(drive);
         this.forward = forward;
         this.turn = turn;
         this.reverseTrigger = reverseTrigger;
+        this.fastTurnTrigger = fastTurnTrigger;
         this.drive = drive;
     }
 
@@ -35,12 +38,19 @@ public class ManualDriveCommand extends CommandBase {
         final var direction = reverseTrigger.get();
         final var x = direction ? 0-Deadband.apply(turn.getAsDouble(), 0.1) : Deadband.apply(turn.getAsDouble(), 0.1);
 
+        if (fastTurnTrigger.get() && fastTurnTrigger.get() != lastVal)
+            fastTurn = !fastTurn;
+        lastVal = fastTurnTrigger.get();
+
 		var xPowd = 0.0;
 		if (drive.isLowGear()) {
-			xPowd = Math.copySign(Math.pow(Math.abs(x), 3.5), x) / 5;
-		}
-		else {
-			xPowd = Math.copySign(Math.pow(Math.abs(x), 3.5), x) / 5;
+            xPowd = Math.copySign(Math.pow(Math.abs(x), 3.5), x);
+            if (!fastTurn)
+                xPowd /= 5;
+		} else {
+            xPowd = Math.copySign(Math.pow(Math.abs(x), 3.5), x);
+            if (!fastTurn)
+                xPowd /= 5;
 		}
 
         final var leftOutputUnscaled = (direction ? y + xPowd : -y - xPowd);
