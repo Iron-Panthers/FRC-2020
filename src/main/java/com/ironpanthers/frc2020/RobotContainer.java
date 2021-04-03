@@ -75,6 +75,8 @@ public class RobotContainer {
 
 	private final JoystickButton push = new JoystickButton(joystickB, 3);
 
+	private final JoystickButton shooterIntake = new JoystickButton(joystickB, 5); // 5
+
 	public RobotContainer() {
 		drive.setDefaultCommand(
 				new ManualDriveCommand(joystickA::getY, joystickA::getX, new JoystickButton(joystickA, 1), new JoystickButton(joystickA, 11), drive));
@@ -132,6 +134,8 @@ public class RobotContainer {
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
 
 		push.whileHeld(new ConveyorOuttake(conveyorBelt));
+
+		shooterIntake.whileHeld(new ShooterIntakeSequence(shooter, conveyorBelt, shooterIntake::get));
 	}
 
 	public void resetBallsHeld() {
