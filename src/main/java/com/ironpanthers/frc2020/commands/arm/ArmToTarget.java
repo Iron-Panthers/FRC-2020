@@ -35,6 +35,10 @@ public class ArmToTarget extends CommandBase {
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
+		if (Util.epsilonEquals(arm.getAngle(), target, Constants.Arm.kPositionErrorTolerance)) {
+			this.cancel();
+		}
+		
 		buffer.clear();
 		arm.releaseBrake();
 		arm.calibrateCANCoder();
