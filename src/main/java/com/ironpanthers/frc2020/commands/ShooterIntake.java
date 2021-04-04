@@ -38,14 +38,14 @@ public class ShooterIntake extends CommandBase {
 		if (conveyor.conveyorFull())
 			cancel();
         shooter.setVelocity(-13_000);
-        shooter.setIntakeMotor(-Constants.Conveyor.kIntakeRollerSpeed);
+        // shooter.setIntakeMotor(-Constants.Conveyor.kIntakeRollerSpeed);
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
 		shooter.stopShooter();
-		shooter.setIntakeMotor(0);
+		// shooter.setIntakeMotor(0);
 		if (!interrupted && conveyor.ballsHeld < 3) {
 			conveyor.ballsHeld++;
 		} 
