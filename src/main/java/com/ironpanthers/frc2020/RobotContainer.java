@@ -123,10 +123,10 @@ public class RobotContainer {
 						conveyorBelt, limelightWrapper, 13_000));
 		zone2.whenPressed(
 				new FullShooterSequence(steerer, drive, arm, 47, shooter, Constants.Shooter.kInnerGoalThreshold,
-						conveyorBelt, limelightWrapper, Constants.Shooter.kInitiationVelocity));
+						conveyorBelt, limelightWrapper, Constants.Shooter.kInitiationVelocity - 500));
 		zone3.whenPressed(
 				new FullShooterSequence(steerer, drive, arm, 43.25, shooter, Constants.Shooter.kInnerGoalThreshold,
-						conveyorBelt, limelightWrapper, Constants.Shooter.kCloseTrenchVelocity));
+						conveyorBelt, limelightWrapper, Constants.Shooter.kCloseTrenchVelocity - 500));
 		zone4.whenPressed(new FullShooterSequence(steerer, drive, arm, 30, shooter,
 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper, Constants.Shooter.kFarVelocity));
 
