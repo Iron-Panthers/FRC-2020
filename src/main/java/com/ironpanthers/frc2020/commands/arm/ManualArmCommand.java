@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ManualArmCommand extends CommandBase {
 	private Arm arm;
 	private DoubleSupplier forward;
+
 	/**
 	 * Creates a new ManualArmCommand.
 	 */

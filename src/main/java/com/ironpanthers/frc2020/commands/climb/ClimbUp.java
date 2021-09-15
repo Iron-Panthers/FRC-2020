@@ -16,11 +16,11 @@ public class ClimbUp extends CommandBase {
 	 * Creates a new ClimbUp.
 	 */
 	Climb climb;
+
 	public ClimbUp(Climb climb) {
 		this.climb = climb;
 		// Use addRequirements() here to declare subsystem dependencies.
 		addRequirements(climb);
-
 	}
 
 	// Called when the command is initially scheduled.

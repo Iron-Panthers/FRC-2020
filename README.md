@@ -10,3 +10,4 @@ Obvious TODOS:
 - [ ] Clarify shot setpoint controls (remove reduntant controls, add valuable ones)
 - [ ] Create controls writeup/graphic
 - [ ] Simple autonomous that doesn't leave a hard-to-exit state for teleop
+- [ ] Pick a single shot sequence and use it rather than having several different ones

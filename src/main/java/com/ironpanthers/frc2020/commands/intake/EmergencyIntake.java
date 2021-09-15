@@ -23,7 +23,8 @@ public class EmergencyIntake extends CommandBase {
 	Shooter shooter;
 	ConveyorBelt conveyor;
 	BooleanSupplier button;
-	public EmergencyIntake(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button){
+
+	public EmergencyIntake(Shooter shooter, ConveyorBelt conveyor, BooleanSupplier button) {
 		this.button = button;
 		this.conveyor = conveyor;
 		this.shooter = shooter;
@@ -40,22 +41,22 @@ public class EmergencyIntake extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-        //Intake
+		// Intake
 		shooter.setIntakeMotors(Constants.Conveyor.kIntakeRollerSpeed, Constants.Conveyor.kIntakeFlywheelSpeed);
-		
+
 	}
 
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
 
-        shooter.setIntakeMotors(0, 0);
+		shooter.setIntakeMotors(0, 0);
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-			return false;
-    }
-    
+		return false;
+	}
+
 }

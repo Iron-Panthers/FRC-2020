@@ -21,6 +21,7 @@ public class ConveyorOuttake extends CommandBase {
 	private double speed;
 	private Arm arm;
 	private boolean isArm;
+
 	/**
 	 * Creates a new ConveyorOuttake.
 	 */
@@ -75,10 +76,9 @@ public class ConveyorOuttake extends CommandBase {
 	public boolean isFinished() {
 		if (speed > 0.5) {
 			return timer.hasElapsed(Constants.Conveyor.kConveyorTime);
-		}
-		else {
+		} else {
 			return timer.hasElapsed(Constants.Conveyor.kConveyorTime * 4);
 		}
-		
+
 	}
 }

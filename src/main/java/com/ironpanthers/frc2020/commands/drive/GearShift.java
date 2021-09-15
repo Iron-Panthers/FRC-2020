@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class GearShift extends CommandBase {
 
 	private Drive drive;
+
 	/**
 	 * Creates a new GearShift.
 	 */

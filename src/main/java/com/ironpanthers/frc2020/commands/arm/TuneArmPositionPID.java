@@ -1,3 +1,5 @@
+// THIS CLASS KEPT ONLY FOR TESTING PURPOSES
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -17,6 +19,7 @@ public class TuneArmPositionPID extends CommandBase {
 	private Arm arm;
 	private double p, i, d, f;
 	private double pos;
+
 	/**
 	 * Creates a new TuneArmPositionPID.
 	 */

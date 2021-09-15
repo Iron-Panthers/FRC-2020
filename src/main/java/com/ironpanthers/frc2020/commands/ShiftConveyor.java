@@ -46,13 +46,12 @@ public class ShiftConveyor extends CommandBase {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
     }
-   
-    public ShiftConveyor(Direction direction, ConveyorBelt conveyor,Shooter shooter) {
+
+    public ShiftConveyor(Direction direction, ConveyorBelt conveyor, Shooter shooter) {
         this.direction = direction;
         this.conveyor = conveyor;
         this.shooter = shooter;
         isShoot = false;
-        
 
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(conveyor);
@@ -75,9 +74,12 @@ public class ShiftConveyor extends CommandBase {
     @Override
     public void initialize() {
         final var encoderStartTicks = conveyor.getPosition();
-        if (direction == Direction.kIn && conveyor.ballsHeld == 2) targetEncoderPosition += Constants.Conveyor.kSecondBallModifier;
-        if (direction == Direction.kIn && conveyor.ballsHeld == 3) targetEncoderPosition += Constants.Conveyor.kThirdBallModifier;
-        if (direction == Direction.kIn && conveyor.ballsHeld == 4) targetEncoderPosition += Constants.Conveyor.kFourthBallModifier;
+        if (direction == Direction.kIn && conveyor.ballsHeld == 2)
+            targetEncoderPosition += Constants.Conveyor.kSecondBallModifier;
+        if (direction == Direction.kIn && conveyor.ballsHeld == 3)
+            targetEncoderPosition += Constants.Conveyor.kThirdBallModifier;
+        if (direction == Direction.kIn && conveyor.ballsHeld == 4)
+            targetEncoderPosition += Constants.Conveyor.kFourthBallModifier;
 
         targetEncoderPosition = direction == Direction.kIn
                 ? encoderStartTicks - Constants.Conveyor.kShiftEncoderDistance
@@ -86,7 +88,7 @@ public class ShiftConveyor extends CommandBase {
         if (direction == Direction.kIn) {
             if (conveyor.ballsHeld >= 5 && conveyor.lastBallRan) {
                 cancel();
-            }  else if (conveyor.ballsHeld == 5 && !conveyor.lastBallRan) {
+            } else if (conveyor.ballsHeld == 5 && !conveyor.lastBallRan) {
                 targetEncoderPosition -= Constants.Conveyor.kShiftEncoderDistanceLast;
             }
         }

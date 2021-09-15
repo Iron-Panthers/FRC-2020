@@ -55,7 +55,7 @@ public class Intake extends CommandBase {
 		}
 		if (!interrupted && conveyor.ballsHeld < 5) {
 			conveyor.ballsHeld++;
-		} 
+		}
 	}
 
 	// Returns true when the command should end.

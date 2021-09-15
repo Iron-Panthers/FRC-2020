@@ -20,6 +20,7 @@ public class Climb extends SubsystemBase {
 
 	private TalonFX climbLeft;
 	private TalonFX climbRight;
+
 	/**
 	 * Creates a new Climb.
 	 */
@@ -37,7 +38,8 @@ public class Climb extends SubsystemBase {
 		climbRight.setNeutralMode(NeutralMode.Brake);
 
 		climbLeft.configOpenloopRamp(Constants.Climb.kClimbRamp);
-		climbLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, Constants.Climb.kClimbCurrentLimit, Constants.Climb.kClimbCurrentPeak, Constants.Climb.kClimbCurrentDelay));
+		climbLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, Constants.Climb.kClimbCurrentLimit,
+				Constants.Climb.kClimbCurrentPeak, Constants.Climb.kClimbCurrentDelay));
 		climbLeft.config_kP(Constants.Climb.kClimbPIDSlot, Constants.Climb.kClimbP);
 	}
 

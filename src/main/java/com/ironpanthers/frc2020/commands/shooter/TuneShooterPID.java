@@ -1,3 +1,5 @@
+// THIS CLASS KEPT ONLY FOR TESTING PURPOSES
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -19,6 +21,7 @@ public class TuneShooterPID extends CommandBase {
 	 */
 	private Shooter shooter;
 	double p, i, d, f, vel;
+
 	public TuneShooterPID(Shooter shooter) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		addRequirements(shooter);

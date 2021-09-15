@@ -21,6 +21,7 @@ public class ArmToTarget extends CommandBase {
 
 	/**
 	 * Creates a new ArmToTarget.
+	 * 
 	 * @param double target in degrees
 	 */
 	public ArmToTarget(Arm arm, double angle) {
@@ -28,7 +29,7 @@ public class ArmToTarget extends CommandBase {
 		this.target = angle;
 		buffer = new CircularBuffer(25);
 		addRequirements(arm);
-		
+
 		// Use addRequirements() here to declare subsystem dependencies.
 	}
 
@@ -41,8 +42,7 @@ public class ArmToTarget extends CommandBase {
 		// Only in endgame go above 45 inches
 		if (target == Constants.Arm.kClimbDegrees) {
 			arm.configureForwardSoftLimit(Constants.Arm.kTopSoftLimitEndgame);
-		}
-		else {
+		} else {
 			arm.configureForwardSoftLimit(Constants.Arm.kTopSoftLimit);
 		}
 		arm.setPosition(target);

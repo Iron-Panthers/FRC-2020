@@ -80,10 +80,10 @@ public class ReportingRAMSETECommand extends CommandBase {
     }
 
     /**
-     * Constructs a new ReportingRAMSETECommand that, when executed, will follow the provided
-     * trajectory. Performs no PID control and calculates no feedforwards; outputs
-     * are the raw wheel speeds from the RAMSETE controller, and will need to be
-     * converted into a usable form by the user.
+     * Constructs a new ReportingRAMSETECommand that, when executed, will follow the
+     * provided trajectory. Performs no PID control and calculates no feedforwards;
+     * outputs are the raw wheel speeds from the RAMSETE controller, and will need
+     * to be converted into a usable form by the user.
      *
      * @param trajectory            The trajectory to follow.
      * @param pose                  A function that supplies the robot pose - use

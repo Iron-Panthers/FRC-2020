@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SetShooterVelocity extends CommandBase {
+class SetShooterVelocity extends CommandBase {
 	private final Shooter shooter;
 	private int velocity;
 	private final int threshold;
@@ -28,7 +28,8 @@ public class SetShooterVelocity extends CommandBase {
 	/**
 	 * Creates a new ShootAtVelocity.
 	 */
-	public SetShooterVelocity(Shooter shooter, int velocity, int threshold, ConveyorBelt conveyorBelt, LimelightWrapper lWrapper) {
+	public SetShooterVelocity(Shooter shooter, int velocity, int threshold, ConveyorBelt conveyorBelt,
+			LimelightWrapper lWrapper) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		this.shooter = shooter;
 		this.velocity = velocity;
@@ -36,7 +37,8 @@ public class SetShooterVelocity extends CommandBase {
 		addRequirements(shooter);
 		buffer = new CircularBuffer(10);
 		timer = new Timer();
-		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
+		// SmartDashboard.putNumber("Shooter Test Velocity",
+		// Constants.Shooter.kTestVelocity);
 	}
 
 	// Called when the command is initially scheduled.
@@ -45,8 +47,10 @@ public class SetShooterVelocity extends CommandBase {
 		if (shooter.fullShotDone == true) {
 			cancel();
 		}
-		// SmartDashboard.putNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
-		// tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
+		// SmartDashboard.putNumber("Shooter Velocity Monkey",
+		// Constants.Shooter.kFarVelocity);
+		// tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey",
+		// Constants.Shooter.kFarVelocity);
 		timer.reset();
 		timer.start();
 	}
@@ -54,9 +58,10 @@ public class SetShooterVelocity extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		// tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey", Constants.Shooter.kFarVelocity);
+		// tempVelocity = (int) SmartDashboard.getNumber("Shooter Velocity Monkey",
+		// Constants.Shooter.kFarVelocity);
 		// if (tempVelocity != velocity) {
-		// 	velocity = tempVelocity;
+		// velocity = tempVelocity;
 		// }
 		if (shooter.fullShotDone == true) {
 			cancel();

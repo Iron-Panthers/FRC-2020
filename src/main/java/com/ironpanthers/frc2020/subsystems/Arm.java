@@ -65,7 +65,8 @@ public class Arm extends SubsystemBase {
         armLeft.configSelectedFeedbackSensor(RemoteFeedbackDevice.RemoteSensor0); // Should be the same number as
                                                                                   // Constants.Arm.kRemoteSensorSlot
         armLeft.setSensorPhase(Constants.Arm.kArmFalconPhase); // Up is positive
-        armLeft.setInverted(Constants.Arm.kArmFalconPhase); // I think this has to be the same as the sensor phase. @Ingi?
+        armLeft.setInverted(Constants.Arm.kArmFalconPhase); // I think this has to be the same as the sensor phase.
+                                                            // @Ingi?
 
         armRight.setInverted(InvertType.OpposeMaster);
         armLeft.setNeutralMode(NeutralMode.Brake);
@@ -79,23 +80,23 @@ public class Arm extends SubsystemBase {
                 Constants.Arm.kCurrentLimit, Constants.Arm.kCurrentLimit, 0);
         armLeft.configSupplyCurrentLimit(currentConfig);
         armLeft.configClosedloopRamp(Constants.Arm.kRampRate);
-      
+
         // Limit switches
         // Forward needs to be the highest positive value, so the high position
         // Reverse needs to be the lowest value, so the ground position
         // forwardLimitSwitch = new DigitalInput(Constants.Arm.kHighLimitSwitchPort);
         reverseLimitSwitch = new DigitalInput(Constants.Arm.kGroundLimitSwitchPort);
         armLeft.configForwardSoftLimitEnable(true);
-		armLeft.configReverseSoftLimitEnable(true);
+        armLeft.configReverseSoftLimitEnable(true);
         armLeft.configForwardSoftLimitThreshold(Constants.Arm.kTopSoftLimit);
         armLeft.configReverseSoftLimitThreshold(Constants.Arm.kBottomSoftLimit);
 
         configPIDF(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD, Constants.Arm.kF, Constants.Arm.kPIDIdx);
-	}
-	
-	public void configureForwardSoftLimit(int limitNativeUnits) {
-		armLeft.configForwardSoftLimitThreshold(limitNativeUnits);
-	}
+    }
+
+    public void configureForwardSoftLimit(int limitNativeUnits) {
+        armLeft.configForwardSoftLimitThreshold(limitNativeUnits);
+    }
 
     public void setPower(double power) {
         armLeft.set(TalonFXControlMode.PercentOutput, power);
@@ -131,7 +132,7 @@ public class Arm extends SubsystemBase {
      */
     public void setPosition(double degrees) {
         armLeft.set(TalonFXControlMode.Position, degrees / Constants.Arm.kCanCoderCoefficient);
-	}
+    }
 
     public double getHeight() {
         return Math.sqrt(Math.pow(Constants.Vision.kPivotToLL, 2) - Math.pow(getPivotToLLHorizontleD(getAngle()), 2))
@@ -162,12 +163,14 @@ public class Arm extends SubsystemBase {
     public double getHAngleRadians() {
         return Math.toRadians(90 - Constants.Vision.kMountToLLAngleDeg - getAngle() + limelight.getTableY());
     }
+
     public double getHeightOffset() {
         return (Constants.Vision.kGroundToTargetInches - getHeight());
     }
+
     public double getHorizontalDistance() {
         limelight.periodic();
-        return (getHeightOffset() / (Math.tan(getHAngleRadians())))+ getLlOffset();
+        return (getHeightOffset() / (Math.tan(getHAngleRadians()))) + getLlOffset();
     }
 
     public double getDiagonalDistance() {
@@ -218,11 +221,11 @@ public class Arm extends SubsystemBase {
 
     public void setSensorPosition(double degrees) {
         canCoder.setPosition(degrees);
-	}
-	
-	public void overrideSoftLimits(boolean override) {
-		armLeft.overrideLimitSwitchesEnable(override);
-	}
+    }
+
+    public void overrideSoftLimits(boolean override) {
+        armLeft.overrideLimitSwitchesEnable(override);
+    }
 
     @Override
     public void periodic() {
@@ -234,6 +237,6 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("offset", getLlOffset());
         SmartDashboard.putNumber("GetAngleTrig", getAngleTrig());
         SmartDashboard.putNumber("Height Difference", Constants.Vision.kGroundToTargetInches - getHeight());
-		SmartDashboard.putNumber("Arm Error", armLeft.getClosedLoopError() * Constants.Arm.kCanCoderCoefficient);
+        SmartDashboard.putNumber("Arm Error", armLeft.getClosedLoopError() * Constants.Arm.kCanCoderCoefficient);
     }
 }

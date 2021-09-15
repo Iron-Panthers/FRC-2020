@@ -20,7 +20,7 @@ public class ConveyorBelt extends SubsystemBase {
 	public boolean lastBallRan;
 
 	public int ballsHeld = 0;
-	
+
 	/**
 	 * Create a new ConveyorBelt subsystem. As usual, only one of these should ever
 	 * be constructed.

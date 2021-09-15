@@ -15,7 +15,8 @@ public class Outtake extends CommandBase {
 	Shooter shooter;
 	int counter;
 	Timer timer;
-	public Outtake(Shooter shooter,ConveyorBelt conveyor){
+
+	public Outtake(Shooter shooter, ConveyorBelt conveyor) {
 		counter = 0;
 		this.shooter = shooter;
 		this.conveyor = conveyor;
@@ -34,6 +35,7 @@ public class Outtake extends CommandBase {
 			conveyor.setPosition(conveyor.getPosition() + Constants.Conveyor.kShiftEncoderDistance);
 		}
 	}
+
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
@@ -43,7 +45,7 @@ public class Outtake extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		shooter.setIntakeMotors(0, 0);	
+		shooter.setIntakeMotors(0, 0);
 	}
 
 	// Returns true when the command should end.
