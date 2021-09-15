@@ -9,7 +9,6 @@ package com.ironpanthers.frc2020.commands.shooter;
 
 import com.ironpanthers.frc2020.commands.arm.ArmToTargetLL;
 import com.ironpanthers.frc2020.commands.intake.ConveyorOuttake;
-import com.ironpanthers.frc2020.commands.vision.TurnToTarget;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Drive;

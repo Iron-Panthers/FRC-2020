@@ -148,8 +148,6 @@ public class Drive extends SubsystemBase {
         return right;
     }
 
-    // TODO verify shifter behaves as expected
-
     public void shiftHigh() {
         shifter.set(false);
     }

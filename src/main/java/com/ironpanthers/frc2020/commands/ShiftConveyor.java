@@ -1,7 +1,6 @@
 package com.ironpanthers.frc2020.commands;
 
 import com.ironpanthers.frc2020.Constants;
-import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
 import com.ironpanthers.frc2020.commands.shooter.ShooterSequence;
 import com.ironpanthers.frc2020.subsystems.Arm;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
@@ -23,7 +22,6 @@ public class ShiftConveyor extends CommandBase {
     private final ConveyorBelt conveyor;
     private int targetEncoderPosition;
     private boolean isShoot;
-    private boolean isOuttake;
     private Shooter shooter;
     private LimelightWrapper lWrapper;
     private int threshold;

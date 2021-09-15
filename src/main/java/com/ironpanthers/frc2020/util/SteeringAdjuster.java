@@ -20,11 +20,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class SteeringAdjuster {
 
-    private double[] totalErrors;
-    private double sumOfErrors;
-    private double lastError;
+    // private double[] totalErrors;
+    // private double sumOfErrors;
+    // private double lastError;
     private Arm arm;
-    private double deltaError;
+    // private double deltaError;
 
     LimelightWrapper limelight;
 
@@ -35,10 +35,10 @@ public class SteeringAdjuster {
     // readd DoubleSupplier horizontalDistance, DoubleSupplier diagonalDistance,
     // eventually
     public SteeringAdjuster(LimelightWrapper limelight, DoubleSupplier horizontalDistance, Arm arm) {
-        totalErrors = new double[100];
-        sumOfErrors = 0.0;
-        lastError = 0.0;
-        deltaError = 0.0;
+        // totalErrors = new double[100];
+        // sumOfErrors = 0.0;
+        // lastError = 0.0;
+        // deltaError = 0.0;
 
         this.limelight = limelight;
         this.arm = arm;

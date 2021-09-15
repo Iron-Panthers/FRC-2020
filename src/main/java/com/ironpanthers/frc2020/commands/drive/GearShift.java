@@ -7,7 +7,6 @@
 
 package com.ironpanthers.frc2020.commands.drive;
 
-import com.ironpanthers.frc2020.Robot;
 import com.ironpanthers.frc2020.subsystems.Drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;

@@ -7,8 +7,6 @@
 
 package com.ironpanthers.frc2020.commands.intake;
 
-import com.ironpanthers.frc2020.commands.ShiftConveyor;
-import com.ironpanthers.frc2020.commands.ShiftConveyor.Direction;
 import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.subsystems.Shooter;
 

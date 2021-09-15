@@ -9,7 +9,6 @@ package com.ironpanthers.frc2020;
 
 import java.io.IOException;
 
-import com.ironpanthers.frc2020.subsystems.ConveyorBelt;
 import com.ironpanthers.frc2020.util.LightMode;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -26,7 +25,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
-    private ConveyorBelt conveyor;
 
     /**
      * This function is run when the robot is first started up and should be used

@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetShooterVelocity extends CommandBase {
 	private final Shooter shooter;
-	private int velocity, tempVelocity;
+	private int velocity;
 	private final int threshold;
 	private final CircularBuffer buffer;
 	private final Timer timer;
@@ -63,7 +63,7 @@ public class SetShooterVelocity extends CommandBase {
 		}
 		SmartDashboard.putBoolean("fullShotDone", shooter.fullShotDone);
 		shooter.setVelocity(velocity);
-		shooter.setIntakeMotor(Constants.Shooter.kIntakeMotorSpeed); //TODO: ELOON TEST
+		shooter.setIntakeMotor(Constants.Shooter.kIntakeMotorSpeed);
 		buffer.addValue(shooter.getVelocity());
 	}
 
