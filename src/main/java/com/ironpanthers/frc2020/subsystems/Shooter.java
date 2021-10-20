@@ -181,7 +181,12 @@ public class Shooter extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Shooter Velocity", getVelocity());
+		double velocity = getVelocity();
+		SmartDashboard.putNumber("Shooter Velocity", velocity);
+		if (velocity > 100)
+			SmartDashboard.putBoolean("SHOOTER ON", true);
+		else
+			SmartDashboard.putBoolean("SHOOTER ON", false);
 		// This method will be called once per scheduler run
 		SmartDashboard.putNumber("Pre Accel Velocity", shooter3.getSelectedSensorVelocity());
 

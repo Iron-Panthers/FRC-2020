@@ -35,7 +35,7 @@ public class TestAutonomous extends SequentialCommandGroup {
             // Add commands to the group via `addCommands` to handle scheduling
             addCommands(new InstantCommand(drive::shiftHigh, drive),
                     new InstantCommand(() -> drive.resetToPosition(trajectory.sample(0).poseMeters), drive),
-                    trajectoryTrackingCommand, new RunCommand(() -> drive.setOutputVolts(0, 0)));
+                    trajectoryTrackingCommand, new RunCommand(() -> drive.setOutputVolts(0, 0), drive));
         } catch (IOException e) {
             throw e;
         }

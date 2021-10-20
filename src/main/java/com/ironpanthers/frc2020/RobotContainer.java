@@ -19,6 +19,7 @@ import com.ironpanthers.frc2020.commands.climb.ClimbDown;
 import com.ironpanthers.frc2020.commands.climb.ClimbUp;
 import com.ironpanthers.frc2020.commands.drive.GearShift;
 import com.ironpanthers.frc2020.commands.drive.ManualDriveCommand;
+import com.ironpanthers.frc2020.commands.intake.ConveyorOuttake;
 import com.ironpanthers.frc2020.commands.intake.IntakeSequence;
 import com.ironpanthers.frc2020.commands.intake.Outtake;
 import com.ironpanthers.frc2020.commands.shooter.SetShooterVelocityEmergency;
@@ -133,7 +134,7 @@ public class RobotContainer {
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		driverBIntake.whenReleased(new Outtake(shooter, conveyorBelt));
-		emergencyOuttake.whileHeld(new Outtake(shooter, conveyorBelt));
+		emergencyOuttake.whileHeld(new ConveyorOuttake(conveyorBelt));
 		closeShot.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kCloseShotDegrees, shooter,
 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
 				Constants.Shooter.kCloseVelocity));
