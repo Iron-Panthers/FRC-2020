@@ -130,7 +130,7 @@ public final class Constants {
 
     public static class Vision {
 
-        public static final String kLimelightName = "limelight-a"; 
+        public static final String kLimelightName = "limelight-c"; 
 
         /**
          * Height from ground to pivot in inches
