@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import com.ironpanthers.frc2020.auto.commands.Shoot3Baseline;
 import com.ironpanthers.frc2020.auto.commands.TestAutonomous;
+import com.ironpanthers.frc2020.commands.AutoAim;
 import com.ironpanthers.frc2020.commands.FullShooterSequence;
 import com.ironpanthers.frc2020.commands.arm.ArmHold;
 import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
@@ -65,6 +66,7 @@ public class RobotContainer {
 	// Joysticks
 	private final Joystick joystickA = new Joystick(Constants.OI.kDriverAJoystickPort);
 	private final Joystick joystickB = new Joystick(Constants.OI.kDriverBJoystickPort);
+	private final Joystick joystickC = new Joystick(2); // for testing only !!!
 
 	// Hubert
 	// Driver A Buttons
@@ -89,6 +91,7 @@ public class RobotContainer {
 	private final JoystickButton emergencyShootB = new JoystickButton(joystickB, Constants.OI.kEmergencyShootButton); // 8
 	private final JoystickButton shootClose = new JoystickButton(joystickB, Constants.OI.kShootClose); // 6
 	private final JoystickButton shootFar = new JoystickButton(joystickB, Constants.OI.kShootFar); // 7
+	private final JoystickButton autoAim = new JoystickButton(joystickC, 1);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -147,6 +150,7 @@ public class RobotContainer {
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
 		emergencyShootB.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity,
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
+		autoAim.whileHeld(new AutoAim(drive, limelightWrapper));
 
 	}
 
