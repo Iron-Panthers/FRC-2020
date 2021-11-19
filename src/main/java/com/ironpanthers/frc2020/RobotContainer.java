@@ -129,21 +129,18 @@ public class RobotContainer {
 		stopShooterB.whenPressed(new StopShooter(shooter));
 		shootClose.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter,
 				Constants.Conveyor.kConveyorSpeedClose));
-		shootFar.whenPressed(new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter,
-				Constants.Conveyor.kConveyorSpeedFar));
+		shootFar.whenPressed(
+				new Shoot(drive, steerer, conveyorBelt, arm, limelightWrapper, shooter, Constants.Conveyor.kConveyorSpeedFar));
 		manualArm.whileHeld(new ManualArmCommand(arm, joystickB::getY));
 		driverBIntake.whileHeld(new IntakeSequence(shooter, conveyorBelt, driverBIntake::get));
 		driverBIntake.whenReleased(new Outtake(shooter, conveyorBelt));
 		emergencyOuttake.whileHeld(new ConveyorOuttake(conveyorBelt));
 		closeShot.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kCloseShotDegrees, shooter,
-				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
-				Constants.Shooter.kCloseVelocity));
+				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper, Constants.Shooter.kCloseVelocity));
 		lineShot.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kInitiationLineDegrees, shooter,
-				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
-				Constants.Shooter.kInitiationVelocity));
+				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper, Constants.Shooter.kInitiationVelocity));
 		closeTrench.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kCloseTrenchDegrees, shooter,
-				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper,
-				Constants.Shooter.kCloseTrenchVelocity));
+				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper, Constants.Shooter.kCloseTrenchVelocity));
 		controlPanel.whenPressed(new FullShooterSequence(steerer, drive, arm, Constants.Arm.kFarShotDegrees, shooter,
 				Constants.Shooter.kInnerGoalThreshold, conveyorBelt, limelightWrapper, Constants.Shooter.kFarVelocity));
 		emergencyShootA.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity,

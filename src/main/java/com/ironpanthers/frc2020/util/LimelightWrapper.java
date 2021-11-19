@@ -1,6 +1,5 @@
 package com.ironpanthers.frc2020.util;
 
-
 import com.ironpanthers.frc2020.Constants;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -42,27 +41,29 @@ public class LimelightWrapper {
      * set the light on, off, blink, or to follow the pipeline
      */
     public void setLightMode(LightMode mode) {
-        switch(mode) {
-            case PIPELINE:
-                table.getEntry("ledMode").setNumber(0);
-                break;
-            case ON:
-                table.getEntry("ledMode").setNumber(3);
-                break;
-            case BLINK:
-                table.getEntry("ledMode").setNumber(2);
-                break;
-            case OFF:
-                table.getEntry("ledMode").setNumber(1);
-                break;
-            default:
-                table.getEntry("ledMode").setNumber(0);
+        switch (mode) {
+        case PIPELINE:
+            table.getEntry("ledMode").setNumber(0);
+            break;
+        case ON:
+            table.getEntry("ledMode").setNumber(3);
+            break;
+        case BLINK:
+            table.getEntry("ledMode").setNumber(2);
+            break;
+        case OFF:
+            table.getEntry("ledMode").setNumber(1);
+            break;
+        default:
+            table.getEntry("ledMode").setNumber(0);
         }
     }
 
     /**
-     * it should be noted that this does not return in terms of pixels. Docs say: 
-     * "Horizontal Offset From Crosshair To Target (LL1: -27 degrees to 27 degrees | LL2: -29.8 to 29.8 degrees)"
+     * it should be noted that this does not return in terms of pixels. Docs say:
+     * "Horizontal Offset From Crosshair To Target (LL1: -27 degrees to 27 degrees |
+     * LL2: -29.8 to 29.8 degrees)"
+     * 
      * @return
      */
     public double getTableX() {
