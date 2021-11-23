@@ -8,6 +8,7 @@ import com.ironpanthers.frc2020.util.LimelightWrapper;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import com.ironpanthers.frc2020.subsystems.Drive;
@@ -16,6 +17,7 @@ public class AutoAim extends CommandBase {
   private PIDController steeringController;
   private Drive drive;
   private LimelightWrapper limelight;
+  private ShuffleboardTab limeboard;
 
   /** Creates a new AutoAim. */
   public AutoAim(Drive drive, LimelightWrapper limelight) {
@@ -23,6 +25,8 @@ public class AutoAim extends CommandBase {
     steeringController = new PIDController(.1, 0, 0);
     this.drive = drive;
     this.limelight = limelight;
+    this.limeboard = Shuffleboard.getTab("steering");
+    limeboard.add("pid", steeringController);
     addRequirements(drive);
   }
 
@@ -31,7 +35,6 @@ public class AutoAim extends CommandBase {
   public void initialize() {
     drive.setOutputPercent(0.0, 0.0);
     steeringController.setSetpoint(0);
-    Shuffleboard.getTab("steering").add(steeringController);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
