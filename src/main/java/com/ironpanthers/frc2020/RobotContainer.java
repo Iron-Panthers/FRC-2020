@@ -152,7 +152,7 @@ public class RobotContainer {
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
 		emergencyShootB.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity,
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
-		autoAim.whileHeld(new AutoAim(drive, limelightWrapper));
+		autoAim.whileHeld(new AutoAim(drive, arm, limelightWrapper));
 
 	}
 

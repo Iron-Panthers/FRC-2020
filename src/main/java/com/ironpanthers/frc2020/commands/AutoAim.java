@@ -12,18 +12,22 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import com.ironpanthers.frc2020.subsystems.Drive;
+import com.ironpanthers.frc2020.commands.arm.ArmToTarget;
+import com.ironpanthers.frc2020.subsystems.Arm;
 
 public class AutoAim extends CommandBase {
   private PIDController steeringController;
   private Drive drive;
+  private Arm arm;
   private LimelightWrapper limelight;
   private ShuffleboardTab limeboard;
 
   /** Creates a new AutoAim. */
-  public AutoAim(Drive drive, LimelightWrapper limelight) {
+  public AutoAim(Drive drive, Arm arm, LimelightWrapper limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
     steeringController = new PIDController(.1, 0, 0);
     this.drive = drive;
+    this.arm = arm;
     this.limelight = limelight;
     this.limeboard = Shuffleboard.getTab("steering");
     limeboard.add("pid", steeringController);
@@ -34,6 +38,7 @@ public class AutoAim extends CommandBase {
   @Override
   public void initialize() {
     drive.setOutputPercent(0.0, 0.0);
+    new ArmToTarget(arm, 65).schedule();
     steeringController.setSetpoint(0);
   }
 
