@@ -64,6 +64,7 @@ public class AutoAim extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     arm.engageBrake();
+    arm.setPower(0);
   }
 
   // Returns true when the command should end.
