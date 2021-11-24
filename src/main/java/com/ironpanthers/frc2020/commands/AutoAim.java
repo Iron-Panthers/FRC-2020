@@ -41,9 +41,10 @@ public class AutoAim extends CommandBase {
   @Override
   public void initialize() {
     drive.setOutputPercent(0.0, 0.0);
-    new ArmToTarget(arm, 65).schedule();
     steeringController.setSetpoint(0);
     armController.setSetpoint(0);
+    arm.releaseBrake();
+    arm.setPosition(65);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -56,13 +57,13 @@ public class AutoAim extends CommandBase {
     drive.setOutputPercent(driveGoal, -driveGoal);
 
     double armGoal = armController.calculate(yOffset);
-    arm.releaseBrake();
     arm.setPower(armGoal);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    arm.engageBrake();
   }
 
   // Returns true when the command should end.
