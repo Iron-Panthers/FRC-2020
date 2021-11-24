@@ -27,7 +27,7 @@ public class AutoAim extends CommandBase {
   public AutoAim(Drive drive, Arm arm, LimelightWrapper limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
     steeringController = new PIDController(.022, 0, .002);
-    armController = new PIDController(0.001, 0, 0);
+    armController = new PIDController(0.01, 0, 0);
     this.drive = drive;
     this.arm = arm;
     this.limelight = limelight;
@@ -56,7 +56,8 @@ public class AutoAim extends CommandBase {
     drive.setOutputPercent(driveGoal, -driveGoal);
 
     double armGoal = armController.calculate(yOffset);
-    new ArmToTarget(arm, armGoal).schedule();
+    arm.releaseBrake();
+    arm.setPower(armGoal);
   }
 
   // Called once the command ends or is interrupted.
@@ -67,6 +68,6 @@ public class AutoAim extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return steeringController.getPositionError() < .1;
+    return false;
   }
 }
