@@ -17,6 +17,7 @@ import com.ironpanthers.frc2020.subsystems.Arm;
 
 public class AutoAim extends CommandBase {
   private PIDController steeringController;
+  private PIDController armController;
   private Drive drive;
   private Arm arm;
   private LimelightWrapper limelight;
@@ -26,11 +27,13 @@ public class AutoAim extends CommandBase {
   public AutoAim(Drive drive, Arm arm, LimelightWrapper limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
     steeringController = new PIDController(.022, 0, .002);
+    armController = new PIDController(0.001, 0, 0);
     this.drive = drive;
     this.arm = arm;
     this.limelight = limelight;
     this.limeboard = Shuffleboard.getTab("steering");
-    limeboard.add("pid", steeringController);
+    limeboard.add("steering pid", steeringController);
+    limeboard.add("arm pid", armController);
     addRequirements(drive);
   }
 
@@ -40,17 +43,20 @@ public class AutoAim extends CommandBase {
     drive.setOutputPercent(0.0, 0.0);
     new ArmToTarget(arm, 65).schedule();
     steeringController.setSetpoint(0);
+    armController.setSetpoint(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double xOffset = limelight.getTableX();
-    // int yOffset = limelight.getTableY();
+    double yOffset = limelight.getTableY();
 
-    double goal = steeringController.calculate(xOffset);
+    double driveGoal = steeringController.calculate(xOffset);
+    drive.setOutputPercent(driveGoal, -driveGoal);
 
-    drive.setOutputPercent(goal, -goal);
+    double armGoal = armController.calculate(yOffset);
+    new ArmToTarget(arm, armGoal).schedule();
   }
 
   // Called once the command ends or is interrupted.
