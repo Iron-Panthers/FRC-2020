@@ -27,7 +27,7 @@ public class AutoAim extends CommandBase {
   public AutoAim(Drive drive, Arm arm, LimelightWrapper limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
     steeringController = new PIDController(.022, 0, .002);
-    armController = new PIDController(0.01, 0, 0);
+    armController = new PIDController(0.04, 0, 0);
     this.drive = drive;
     this.arm = arm;
     this.limelight = limelight;
