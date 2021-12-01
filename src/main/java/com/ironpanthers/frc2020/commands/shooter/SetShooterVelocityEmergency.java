@@ -21,13 +21,15 @@ public class SetShooterVelocityEmergency extends CommandBase {
 	/**
 	 * Creates a new ShootAtVelocity.
 	 */
-	public SetShooterVelocityEmergency(Shooter shooter, int velocity, int threshold, ConveyorBelt conveyorBelt, LimelightWrapper lWrapper) {
+	public SetShooterVelocityEmergency(Shooter shooter, int velocity, int threshold, ConveyorBelt conveyorBelt,
+			LimelightWrapper lWrapper) {
 		// Use addRequirements() here to declare subsystem dependencies.
 		this.shooter = shooter;
 		this.velocity = velocity;
 		this.threshold = threshold;
 		addRequirements(shooter);
-		// SmartDashboard.putNumber("Shooter Test Velocity", Constants.Shooter.kTestVelocity);
+		// SmartDashboard.putNumber("Shooter Test Velocity",
+		// Constants.Shooter.kTestVelocity);
 	}
 
 	// Called when the command is initially scheduled.
@@ -44,7 +46,7 @@ public class SetShooterVelocityEmergency extends CommandBase {
 	// Called once the command ends or is interrupted.
 	@Override
 	public void end(boolean interrupted) {
-		
+		shooter.stopShooter();
 	}
 
 	// Returns true when the command should end.

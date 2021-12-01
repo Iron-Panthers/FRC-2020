@@ -93,7 +93,11 @@ public class RobotContainer {
 	private final JoystickButton emergencyShootB = new JoystickButton(joystickB, Constants.OI.kEmergencyShootButton); // 8
 	private final JoystickButton shootClose = new JoystickButton(joystickB, Constants.OI.kShootClose); // 6
 	private final JoystickButton shootFar = new JoystickButton(joystickB, Constants.OI.kShootFar); // 7
-	private final JoystickButton autoAim = new JoystickButton(joystickC, 1);
+
+	private final JoystickButton limeShot = new JoystickButton(joystickC, 1);
+	private final JoystickButton autoAim = new JoystickButton(joystickC, 2);
+	private final JoystickButton limeFeed = new JoystickButton(joystickC, 3);
+	private final JoystickButton autoAimAndShoot = new JoystickButton(joystickC, 6);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -152,8 +156,10 @@ public class RobotContainer {
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
 		emergencyShootB.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity,
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
-		autoAim.whileHeld(new AutoAim(drive, arm, limelightWrapper));
 
+		autoAim.whileHeld(new AutoAim(drive, arm, limelightWrapper));
+		limeShot.whenHeld(new SetShooterVelocityEmergency(shooter, 6000, 200, conveyorBelt, limelightWrapper));
+		limeFeed.whileHeld(new ConveyorOuttake(conveyorBelt));
 	}
 
 	public void resetBallsHeld() {
