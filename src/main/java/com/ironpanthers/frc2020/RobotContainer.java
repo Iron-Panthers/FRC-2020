@@ -97,7 +97,6 @@ public class RobotContainer {
 	private final JoystickButton limeShot = new JoystickButton(joystickC, 1);
 	private final JoystickButton autoAim = new JoystickButton(joystickC, 2);
 	private final JoystickButton limeFeed = new JoystickButton(joystickC, 3);
-	private final JoystickButton autoAimAndShoot = new JoystickButton(joystickC, 6);
 
 	public RobotContainer() {
 		drive.setDefaultCommand(
@@ -157,7 +156,7 @@ public class RobotContainer {
 		emergencyShootB.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity,
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
 
-		autoAim.whenHeld(new AutoAim(drive, arm, limelightWrapper, true));
+		autoAim.whileHeld(new AutoAim(drive, arm, limelightWrapper, false));
 		limeShot.whenHeld(new SetShooterVelocityEmergency(shooter, 6000, 200, conveyorBelt, limelightWrapper));
 		limeFeed.whenHeld(new ConveyorOuttake(conveyorBelt));
 		// autoAimAndShoot.whenHeld()
