@@ -22,12 +22,14 @@ public class AutoAim extends CommandBase {
   private Arm arm;
   private LimelightWrapper limelight;
   private ShuffleboardTab limeboard;
+  private Boolean finishWhenAligned = false;
 
   /** Creates a new AutoAim. */
-  public AutoAim(Drive drive, Arm arm, LimelightWrapper limelight) {
+  public AutoAim(Drive drive, Arm arm, LimelightWrapper limelight, Boolean finishWhenAligned) {
     // Use addRequirements() here to declare subsystem dependencies.
     steeringController = new PIDController(.022, 0, .002);
     armController = new PIDController(0.04, 0, 0);
+    this.finishWhenAligned = finishWhenAligned;
     this.drive = drive;
     this.arm = arm;
     this.limelight = limelight;
@@ -70,6 +72,10 @@ public class AutoAim extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (Boolean.FALSE.equals(finishWhenAligned)) {
+      return false;
+    }
+
+    return Math.abs(limelight.getTableX()) <= 3 && Math.abs(limelight.getTableY()) <= 3;
   }
 }

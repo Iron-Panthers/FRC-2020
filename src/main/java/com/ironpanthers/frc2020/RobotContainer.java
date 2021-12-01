@@ -157,9 +157,10 @@ public class RobotContainer {
 		emergencyShootB.whileHeld(new SetShooterVelocityEmergency(shooter, Constants.Shooter.kCloseVelocity,
 				Constants.Shooter.kOuterGoalThreshold, conveyorBelt, limelightWrapper));
 
-		autoAim.whileHeld(new AutoAim(drive, arm, limelightWrapper));
+		autoAim.whenHeld(new AutoAim(drive, arm, limelightWrapper, true));
 		limeShot.whenHeld(new SetShooterVelocityEmergency(shooter, 6000, 200, conveyorBelt, limelightWrapper));
-		limeFeed.whileHeld(new ConveyorOuttake(conveyorBelt));
+		limeFeed.whenHeld(new ConveyorOuttake(conveyorBelt));
+		// autoAimAndShoot.whenHeld()
 	}
 
 	public void resetBallsHeld() {
